@@ -20,6 +20,7 @@ import './lib/StatusColumn.js';
 
 const gantt = new Gantt({
     appendTo : 'container',
+    readOnly : true,
 
     dependencyIdField : 'wbsCode',
 

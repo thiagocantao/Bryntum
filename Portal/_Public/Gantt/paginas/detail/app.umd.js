@@ -71,14 +71,51 @@ const gantt = new Gantt({
             disabled: true
         },
         //contextMenu: {
-        //    // ConfiguraÁ„o do menu de contexto
+        //    // Configura√ß√£o do menu de contexto
         //    items: {
         //        customItem: {
         //            text: 'Item Personalizado',
-        //            icon: 'b-icon b-icon-add' // Õcone opcional
-        //            // ... outras configuraÁıes do item ...
+        //            icon: 'b-icon b-icon-add' // √çcone opcional
+        {
+            type: 'buttonGroup',
+            items: [
+                {
+                    type    : 'button',
+                    color   : 'b-blue',
+                    ref     : 'editButton',
+                    icon    : 'b-fa b-fa-edit',
+                    text    : 'Editar',
+                    onClick() {
+                        gantt.readOnly = false;
+                        gantt.widgetMap.addTaskButton.disabled = false;
+                        gantt.widgetMap.editButton.disabled = true;
+                    }
+                }
+            ]
+        },
+        {
+            type: 'buttonGroup',
+            items: [
+                {
+                    type    : 'button',
+                    color   : 'b-green',
+                    ref     : 'addTaskButton',
+                    icon    : 'b-fa b-fa-plus',
+                    text    : 'Adicionar tarefa',
+                    disabled: true,
+                    onClick() {
+                        const added = gantt.taskStore.rootNode.appendChild({ name: 'New task', duration: 1 });
+                        gantt.project.commitAsync().then(() => {
+                            gantt.scrollRowIntoView(added);
+                            gantt.features.cellEdit.startEditing({ record: added, field: 'name' });
+                        });
+                    }
+                }
+            ]
+        },
+        //            // ... outras configura√ß√µes do item ...
         //        },
-        //        // Adicione outros itens conforme necess·rio
+        //        // Adicione outros itens conforme necess√°rio
         //    },
         //},
         //taskNonWorkingTime: {
@@ -199,7 +236,7 @@ const gantt = new Gantt({
                     data: JSON.stringify(arrayTask)
                 };
 
-                //isIE È uma funÁ„o de ~/script/custom/util/browser.js
+                //isIE √© uma fun√ß√£o de ~/script/custom/util/browser.js
                 if (isIE()) {
                     configAjax.headers = { typeResult: "getHtmlGantt", idprojeto: idProjeto };
                     configAjax.success = function (data) {
@@ -297,7 +334,7 @@ const gantt = new Gantt({
                             callbackAtualizaTela.PerformCallback(codigoItem);
                         };
 
-                        window.top.showModal("'" + baseUrlEAP + "&AM=RW&Altura='" + (dimensions.height - 40), 'EdiÁ„o', dimensions.width, dimensions.height, retorno, myArguments);
+                        window.top.showModal("'" + baseUrlEAP + "&AM=RW&Altura='" + (dimensions.height - 40), 'Edi√ß√£o', dimensions.width, dimensions.height, retorno, myArguments);
                     }
                 }, {
                     type: 'button',
@@ -315,8 +352,8 @@ const gantt = new Gantt({
 
                         var myArguments = new Object();
                         myArguments.param1 = '';
-                        myArguments.param2 = ' (VISUALIZA«√O) ';
-                        window.top.showModal("'" + baseUrlEAP + "&AM=RO&Altura='" + (dimensions.height - 40), 'VisualizaÁ„o', dimensions.width, dimensions.height, recarregar, myArguments);
+                        myArguments.param2 = ' (VISUALIZA√á√ÉO) ';
+                        window.top.showModal("'" + baseUrlEAP + "&AM=RO&Altura='" + (dimensions.height - 40), 'Visualiza√ß√£o', dimensions.width, dimensions.height, recarregar, myArguments);
                     }
                 },
                 {
@@ -391,7 +428,7 @@ const gantt = new Gantt({
     listeners: {
         // Adiciona um ouvinte para o evento 'beforecontextmenu'
         beforecontextmenu: event => {
-            // Impede a aÁ„o padr„o do menu de contexto
+            // Impede a a√ß√£o padr√£o do menu de contexto
             event.preventDefault();
 
             // Oculta o menu de contexto (substitua 'contextMenuElement' pelo elemento real do menu)

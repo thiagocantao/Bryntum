@@ -32,12 +32,23 @@ class GanttToolbar extends Toolbar {
             items : [{
                 type  : 'buttonGroup',
                 items : [{
+                    color    : 'b-blue',
+                    ref      : 'editButton',
+                    icon     : 'b-fa b-fa-edit',
+                    text     : 'Editar',
+                    tooltip  : 'Habilitar edicao',
+                    onAction : 'up.onEnableEditClick'
+                }]
+            }, {
+                type  : 'buttonGroup',
+                items : [{
                     color    : 'b-green',
                     ref      : 'addTaskButton',
                     icon     : 'b-fa b-fa-plus',
                     text     : 'Adicionar tarefa',
                     tooltip  : 'Adicionar nova tarefa',
-                    onAction : 'up.onAddTaskClick'
+                    onAction : 'up.onAddTaskClick',
+                    disabled : true
                 }]
             }, {
                 color: 'b-blue',
@@ -119,7 +130,7 @@ class GanttToolbar extends Toolbar {
                         url  : '../_datasets/launch-saas.json'
                     }, {
                         id   : 2,
-                        name : "Execução",
+                        name : "ExecuÃ§Ã£o",
                         url  : '../_datasets/tasks-workedhours.json'
                         },
                         {
@@ -219,7 +230,7 @@ class GanttToolbar extends Toolbar {
                             data: JSON.stringify(arrayTask)
                         };
 
-                        //isIE é uma função de ~/script/custom/util/browser.js
+                        //isIE Ã© uma funÃ§Ã£o de ~/script/custom/util/browser.js
                         if (isIE()) {
                             configAjax.headers = { typeResult: "getHtmlGantt", idprojeto: idProjeto };
                             configAjax.success = function (data) {
@@ -374,7 +385,7 @@ class GanttToolbar extends Toolbar {
                     //    checked      : false
                     //    },
                         {
-                        text    : 'Esconder gráfico',
+                        text    : 'Esconder grÃ¡fico',
                         cls     : 'b-separator',
                         subGrid : 'normal',
                         checked : false
@@ -421,6 +432,12 @@ class GanttToolbar extends Toolbar {
     }
 
     // region controller methods
+
+    onEnableEditClick() {
+        this.gantt.readOnly = false;
+        this.widgetMap.addTaskButton.disabled = false;
+        this.widgetMap.editButton.disabled = true;
+    }
 
     async onAddTaskClick() {
         const {
@@ -743,6 +760,7 @@ class Task extends TaskModel {
 const gantt = new Gantt({
     appendTo: 'container',
     locale: 'pt',
+    readOnly: true,
     //dependencyIdField : 'wbsCode',
     selectionMode     : {
         cell       : false,
@@ -1055,7 +1073,7 @@ const gantt = new Gantt({
                 //                    type: 'combo',
                 //                    label: 'Campo 4',
                 //                    field: 'campo4',
-                //                    items: ['Opção 1', 'Opção 2']
+                //                    items: ['OpÃ§Ã£o 1', 'OpÃ§Ã£o 2']
                 //                }
                 //            ]
                 //        }
@@ -1110,8 +1128,8 @@ const gantt = new Gantt({
     },
     listeners: {
         rowDrag: ({ task, index }) => {
-            console.log(`Tarefa ${task.name} foi movida para a posição ${index}`);
-            // Adicione seu código para lidar com a reordenação aqui
+            console.log(`Tarefa ${task.name} foi movida para a posiÃ§Ã£o ${index}`);
+            // Adicione seu cÃ³digo para lidar com a reordenaÃ§Ã£o aqui
         },
     },
     tbar : {
@@ -1236,7 +1254,7 @@ async function limparTarefasAlteradas() {
 async function obterTarefasAlteradas() {
     limparTarefasAlteradas();
 
-    // Obtém as alterações na taskStore
+    // ObtÃ©m as alteraÃ§Ãµes na taskStore
     const changes = gantt.taskStore.changes;
 
     if (!changes) {
@@ -1390,7 +1408,7 @@ function carregarArquivoXML() {
                 const xmlString = e.target.result;
                 const jsonData = convertXMLtoJSON(xmlString);
 
-                // Faça o que quiser com o JSON, como carregá-lo na sua Gantt
+                // FaÃ§a o que quiser com o JSON, como carregÃ¡-lo na sua Gantt
                 console.log(jsonData);
 
                 gantt.project.stores.forEach(store => store.removeAll());

@@ -25,12 +25,26 @@ class GanttToolbar extends Toolbar {
                     type  : 'buttonGroup',
                     items : [
                         {
+                            color    : 'b-blue',
+                            ref      : 'editButton',
+                            icon     : 'b-fa b-fa-edit',
+                            text     : 'Editar',
+                            tooltip  : 'Habilitar edicao',
+                            onAction : 'up.onEnableEditClick'
+                        }
+                    ]
+                },
+                {
+                    type  : 'buttonGroup',
+                    items : [
+                        {
                             color    : 'b-green',
                             ref      : 'addTaskButton',
                             icon     : 'b-fa b-fa-plus',
                             text     : 'Create',
                             tooltip  : 'Create new task',
-                            onAction : 'up.onAddTaskClick'
+                            onAction : 'up.onAddTaskClick',
+                            disabled : true
                         }
                     ]
                 },
@@ -324,6 +338,12 @@ class GanttToolbar extends Toolbar {
 
     // region controller methods
 
+    onEnableEditClick() {
+        this.gantt.readOnly = false;
+        this.widgetMap.addTaskButton.disabled = false;
+        this.widgetMap.editButton.disabled = true;
+    }
+
     async onAddTaskClick() {
         const
             { gantt } = this,
@@ -603,6 +623,7 @@ class Task extends TaskModel {
 
 const gantt = new Gantt({
     appendTo : 'container',
+    readOnly : true,
 
     dependencyIdField : 'wbsCode',
 

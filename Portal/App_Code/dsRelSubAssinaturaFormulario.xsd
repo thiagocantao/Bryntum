@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsRelSubAssinaturaFormulario" targetNamespace="http://tempuri.org/dsRelSubAssinaturaFormulario.xsd" xmlns:mstns="http://tempuri.org/dsRelSubAssinaturaFormulario.xsd" xmlns="http://tempuri.org/dsRelSubAssinaturaFormulario.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsRelSubAssinaturaFormulario" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsRelSubAssinaturaFormulario" msprop:Generator_UserDSName="dsRelSubAssinaturaFormulario">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tbAssinaturas" msprop:Generator_TableClassName="tbAssinaturasDataTable" msprop:Generator_TableVarName="tabletbAssinaturas" msprop:Generator_RowChangedName="tbAssinaturasRowChanged" msprop:Generator_TablePropName="tbAssinaturas" msprop:Generator_RowDeletingName="tbAssinaturasRowDeleting" msprop:Generator_RowChangingName="tbAssinaturasRowChanging" msprop:Generator_RowEvHandlerName="tbAssinaturasRowChangeEventHandler" msprop:Generator_RowDeletedName="tbAssinaturasRowDeleted" msprop:Generator_RowClassName="tbAssinaturasRow" msprop:Generator_UserTableName="tbAssinaturas" msprop:Generator_RowEvArgName="tbAssinaturasRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NomeUsuario" msprop:Generator_ColumnVarNameInTable="columnNomeUsuario" msprop:Generator_ColumnPropNameInRow="NomeUsuario" msprop:Generator_ColumnPropNameInTable="NomeUsuarioColumn" msprop:Generator_UserColumnName="NomeUsuario">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CPF" msprop:Generator_ColumnVarNameInTable="columnCPF" msprop:Generator_ColumnPropNameInRow="CPF" msprop:Generator_ColumnPropNameInTable="CPFColumn" msprop:Generator_UserColumnName="CPF" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="16" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DataAssinatura" msprop:Generator_ColumnVarNameInTable="columnDataAssinatura" msprop:Generator_ColumnPropNameInRow="DataAssinatura" msprop:Generator_ColumnPropNameInTable="DataAssinaturaColumn" msprop:Generator_UserColumnName="DataAssinatura" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ChaveAssinatura" msprop:Generator_ColumnVarNameInTable="columnChaveAssinatura" msprop:Generator_ColumnPropNameInRow="ChaveAssinatura" msprop:Generator_ColumnPropNameInTable="ChaveAssinaturaColumn" msprop:Generator_UserColumnName="ChaveAssinatura" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoFormulario" msprop:Generator_ColumnVarNameInTable="columnCodigoFormulario" msprop:Generator_ColumnPropNameInRow="CodigoFormulario" msprop:Generator_ColumnPropNameInTable="CodigoFormularioColumn" msprop:Generator_UserColumnName="CodigoFormulario" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,237 @@
+﻿body {
+    text-rendering: optimizeLegibility; 
+    font-family:Verdana;
+    background-color: #EBEBEB;
+}
+
+#dvFiltro {
+    border-bottom: 1px solid #E6E6E6;
+    padding: 3px;
+    background-color:#f2f2f2;
+    height: 34px;
+    vertical-align: middle;
+    text-align: right;
+}
+
+#dvFooter {
+    border-top: 1px solid #E6E6E6;
+    border-bottom: 1px solid #E6E6E6;
+    padding: 3px;
+    background-color:#ebebeb;
+    height: 20px;
+    vertical-align: middle;
+    text-align: right;
+    font-family: Verdana;
+    font-size: 7pt;
+}
+
+#dvBoard {
+    border-bottom:0px solid silver;
+    width: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    font-size:12px; 
+    background-color: #EBEBEB;
+    padding-left: 5px;
+    padding-right: 5px; 
+}
+
+#spHeaderBoard{
+   font-size:14px;   
+    background-color: #EBEBEB;
+}
+
+#spBodyBoard {
+    width: auto;
+    overflow-y: scroll;
+    overflow-x: hidden; 
+
+}
+
+
+
+.board {
+    table-layout: fixed;
+    width:100%;
+    height:100%;
+    text-align:center;
+    border-collapse: collapse;
+    border: 0px solid silver;
+    border-bottom: 0px;    
+    background-color: #EBEBEB;
+}
+
+thead{
+    display: table-header-group;
+    vertical-align: middle;
+    font-weight:bold;
+    line-height:20px;
+    background-color:#EBEBEB;
+    text-align:left;
+}
+
+.board td{
+    border-left: 0px solid #EBEBEB;
+    border-right: 5px solid #EBEBEB;
+    vertical-align:top;
+    padding-bottom:5px;
+    padding-top:5px;
+    font-size:12px;
+}
+
+
+.ItemBacklog {
+    width: 98%;
+    min-height: 40px;
+    max-height: 100px;
+    border: 0px solid gray;
+    margin-bottom: 4px;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 1px 2px 10px #dfdfdf;
+    font-family: verdana;
+}
+
+/*Parte interna da Div "ItemBackLog"
+------------------------------------------------- (Início)*/
+.TableItemBacklog {
+    line-height: 14px;
+    text-align: right;
+}
+
+.TdImagemDetalhe {
+    cursor: pointer;
+    width: 16px;
+    padding: 5px;
+    text-align: left;
+}
+
+.TdIdItemBacklog {
+    width: 40px;
+    border: 0px solid black;
+    text-align: left;
+    padding: 5px;
+    font-size: 11px;
+    color: #8b8b8b;
+}
+
+.TdEstimativaItemBacklog {
+    padding: 5px;
+    width: 115px;
+    text-align: left;
+    color: #8b8b8b;
+}
+
+.TdImportanciaItemBacklog {
+    padding: 5px;
+    width: 115px;
+    text-align: left;
+    color: #8b8b8b;
+}
+
+.TdTituloItem {
+    padding: 5px;
+    text-align: left;
+    font-size: 11px;
+    color: #8b8b8b;
+}
+
+.TableTituloItem{
+    min-height:30px;
+    text-align:center;
+}
+
+.TableResponsavelItem
+{
+    
+}
+
+.TdRecurso {
+    padding: 5px;
+    font-weight: bold;
+    color: #a0c477;
+}
+/*---------------------------------------(FIM) */
+
+
+.TipoClassificacaoItem1 {
+    background-color: #fff;
+    border: 1px solid #a0c477;
+}
+
+.TipoClassificacaoItem2{
+    background-color:#F9F577;
+    
+}
+
+.TipoClassificacaoItem3{
+    background-color:#F9F577;
+}
+
+.TipoClassificacaoItem4{
+    background-color:#E8E8E8;
+}
+
+.TipoClassificacaoItem9999{
+    background-color:#DDDDDD;
+}
+
+.situacaoItem1 {
+    width: 3px;
+    background: #a0c477;
+}
+
+.situacaoItem2
+{
+    width:5px;
+    background-color:Teal;
+}
+
+.situacaoItem3
+{
+    width:5px;
+    background-color:Teal;
+}
+
+.situacaoItem4
+{
+    width:5px;
+    background-color:Teal;
+}
+
+.situacaoItem9999
+{
+    width:5px;
+    background-color:yellow;
+}
+
+.SeparadorTipoClassificacaoItem1{
+    border-bottom: 0px solid #fff200;
+}
+
+.SeparadorTipoClassificacaoItem2{
+    border-bottom: 0px solid #ff7d00;
+}
+
+.SeparadorTipoClassificacaoItem3{
+    border-bottom: 0px solid #ff2700;
+}
+
+.SeparadorTipoClassificacaoItem4{
+    border-bottom: 0px dashed #ffd800;
+}
+
+.ItemBacklog table{
+    width:100%;
+}
+
+.ItemBacklog td {
+    clear:both;
+    border-left: none;
+    border-right: none;
+    vertical-align:middle;
+}
+
+[draggable=true] {
+    cursor: move;
+}

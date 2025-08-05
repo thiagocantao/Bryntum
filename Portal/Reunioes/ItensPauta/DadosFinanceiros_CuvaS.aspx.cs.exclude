@@ -1,0 +1,180 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Drawing;
+using System.Web.Script.Serialization;
+
+public partial class Reunioes_ItensPauta_DadosFinanceiros_CuvaS : System.Web.UI.Page
+{
+    dados cDados;
+
+    protected int codigoReuniao;
+    protected int alturaPrincipal;
+
+    protected int codigoUsuario;
+    protected int codigoEntidade;
+
+    string corPrevisto;
+    string corReal;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        codigoReuniao = int.Parse(Request.QueryString["cr"]);
+        alturaPrincipal = int.Parse(Request.QueryString["al"]);
+
+        cDados = CdadosUtil.GetCdados(null);
+        cDados.aplicaEstiloVisual(this);
+
+        codigoUsuario = Convert.ToInt32(cDados.getInfoSistema("IDUsuarioLogado"));
+        codigoEntidade = Convert.ToInt32(cDados.getInfoSistema("CodigoEntidade"));
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        InicializaDados();
+    }
+
+    private void InicializaDados()
+    {
+        string comandoSql;
+
+        #region Comando SQL
+
+        comandoSql = string.Format(@"
+DECLARE @CodigoEntidade INT
+    SET @CodigoEntidade = {0}
+ 
+ SELECT Parametro, 
+        Valor 
+   FROM ParametroConfiguracaoSistema
+  WHERE Parametro LIKE 'corPrevisto' 
+    AND CodigoEntidade = @CodigoEntidade
+ 
+ SELECT Parametro, 
+        Valor 
+   FROM ParametroConfiguracaoSistema
+  WHERE Parametro LIKE 'corReal' 
+    AND CodigoEntidade = @CodigoEntidade"
+            , codigoEntidade);
+
+        #endregion
+
+        DataSet ds = cDados.getDataSet(comandoSql);
+        if (ds.Tables[0].Rows.Count == 1 && !ds.Tables[0].Rows[0].IsNull("Valor"))
+            corPrevisto = ds.Tables[0].Rows[0]["Valor"].ToString();
+        else
+            corPrevisto = "#FFFF00";
+        if (ds.Tables[1].Rows.Count == 1 && !ds.Tables[1].Rows[0].IsNull("Valor"))
+            corReal = ds.Tables[1].Rows[0]["Valor"].ToString();
+        else
+            corReal = "#0000FF";
+    }
+
+    protected void callback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        string comandoSql;
+
+        #region Comando SQL
+
+        comandoSql = string.Format(@"
+DECLARE @CodigoEntidade INT,
+        @CodigoUsuario INT,
+        @CodigoEvento INT,
+        @CodigoObjeto BIGINT,
+        @IniciaisTipoObjeto CHAR(4)
+    SET @CodigoEntidade = {0}
+    SET @CodigoUsuario = {1}
+    SET @CodigoEvento = {2}
+
+ SELECT @CodigoObjeto = e.CodigoObjetoAssociado,
+        @IniciaisTipoObjeto = (CASE ta.IniciaisTipoAssociacao WHEN 'PR' THEN 'PROJ' ELSE '' END)
+   FROM Evento AS e INNER JOIN
+        TipoAssociacao AS ta ON ta.CodigoTipoAssociacao = e.CodigoTipoAssociacao
+  WHERE e.CodigoEvento = @CodigoEvento
+
+ SELECT f.Periodo,
+        f.ValorPrevisto,
+        f.ValorPrevistoAcumulado,
+        f.ValorPrevistoPeriodo,
+        f.ValorReal,
+        f.ValorRealAcumulado,
+        f.ValorRealPeriodo
+   FROM dbo.f_getCurvaSFinanceiraGrupoProjeto(@CodigoEntidade, @CodigoUsuario, @CodigoObjeto, @IniciaisTipoObjeto, NULL) AS f"
+            , codigoEntidade
+            , codigoUsuario
+            , codigoReuniao);
+
+        #endregion
+
+        DataSet ds = cDados.getDataSet(comandoSql);
+        DataTable dtCurvaS = ds.Tables[0];
+        dtCurvaS.Columns.Add("ToolTipPrevisto");
+        dtCurvaS.Columns.Add("ToolTipReal");
+        foreach (DataRow row in dtCurvaS.Rows)
+        {
+            row["ToolTipPrevisto"] = string.Format(
+                "Orçamento(Acumulado): {0:c}<br>Orçamento(No Período): {1:c}"
+                , row["ValorPrevistoAcumulado"]
+                , row["ValorPrevistoPeriodo"]);
+            row["ToolTipReal"] = string.Format(
+                "Realizado(Acumulado): {0:c}<br>Realizado(No Período): {1:c}"
+                , row["ValorRealAcumulado"]
+                , row["ValorRealPeriodo"]);
+        }
+        List<string> dataSource = new List<string>();
+        JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+        foreach (DataRow row in dtCurvaS.Rows)
+        {
+            dataSource.Add(jsSerializer.Serialize(new
+            {
+                Periodo = row["Periodo"].ToString(),
+                ValorPrevisto = ObtemValorDecimal(row["ValorPrevisto"]),
+                ValorReal = ObtemValorDecimal(row["ValorReal"]),
+                ValorPrevistoAcumulado = ObtemValorDecimal(row["ValorPrevistoAcumulado"]),
+                ValorPrevistoPeriodo = ObtemValorDecimal(row["ValorPrevistoPeriodo"]),
+                ValorRealAcumulado = ObtemValorDecimal(row["ValorRealAcumulado"]),
+                ValorRealPeriodo = ObtemValorDecimal(row["ValorRealPeriodo"]),
+                ToolTipPrevisto = row["ToolTipPrevisto"].ToString(),
+                ToolTipReal = row["ToolTipReal"].ToString()
+            }));
+        }
+        var configGrafico = new
+        {
+            IdDivGrafico = "#divGrafico",
+            Titulo = "Curva S - Custos",
+            DataSource = string.Format("[{0}]", string.Join(",", dataSource)),
+            Series = new[]
+            {
+                new 
+                {
+                    valueField = "ValorPrevistoAcumulado",
+                    name = "Previsto",
+                    color = corPrevisto,
+                    tagField = "ToolTipPrevisto"
+                },
+                new 
+                {
+                    valueField = "ValorRealAcumulado",
+                    name = "Realizado",
+                    color = corReal,
+                    tagField = "ToolTipReal"
+                }
+            }
+        };
+
+        e.Result = string.Format("({0})",
+            jsSerializer.Serialize(configGrafico));
+    }
+
+    private decimal? ObtemValorDecimal(object objValor)
+    {
+        if (objValor is decimal)
+            return (decimal)objValor;
+
+        return null;
+    }
+}

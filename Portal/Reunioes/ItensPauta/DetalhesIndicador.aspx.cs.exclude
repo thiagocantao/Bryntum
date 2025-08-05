@@ -1,0 +1,312 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Xml.Serialization;
+using System.IO;
+using System.Web.Hosting;
+using System.Text;
+using System.Xml;
+using System.Web.Script.Serialization;
+
+public partial class Reunioes_ItensPauta_DetalhesIndicador : System.Web.UI.Page
+{
+    dados cDados;
+
+    protected int codigoReuniao;
+    protected int alturaPrincipal;
+    protected int codigoIndicador;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        codigoReuniao = int.Parse(Request.QueryString["cr"]);
+        alturaPrincipal = int.Parse(Request.QueryString["al"]);
+        codigoIndicador = int.Parse(Request.QueryString["co"]);
+
+        cDados = CdadosUtil.GetCdados(null);
+        cDados.aplicaEstiloVisual(this);
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        InicializaDados();
+
+        #region Comentarios - apagar quando não for necessário para consulta
+        /*string categorias = string.Empty;
+        string datasets = string.Empty;
+        string linhas = string.Empty;
+        StringBuilder xml = new StringBuilder();
+        xml.AppendFormat(@"<chart labelDisplay='Rotate' slantLabels='1' caption='Ano {0}' showValues='0' palette='2' divLineDecimalPrecision='1' limitsDecimalPrecision='1' PYAxisName='Valores' SYAxisName='Metas' numberPrefix='R$' formatNumberScale='0' plotGradientColor='' >", dtMetasPorPeriodo.Rows[0]["Ano"]);
+        foreach (DataRow row in dtMetasPorPeriodo.Select())
+        {
+            categorias += string.Format("<category label='{0}' baseFontSize='2' />", row["DescricaoPeriodo"].ToString());
+            datasets += string.Format("<set value='{0}' color='{1}' />", row["ValorResultadoPeriodo"].ToString().Replace(",", "."), ObtemCor(row["CorDesempenhoPeriodo"].ToString()));
+            //datasets += string.Format("{2}<set value='{0}' color='{1}' />{3}", row["ValorResultadoPeriodo"].ToString().Replace(",", "."), cor[row["CorDesempenhoPeriodo"].ToString()], string.Format("<dataset seriesName='{0}' >", metas.Rows[0]["NomeIndicador"]), "</dataset>");
+            linhas += string.Format("<set value='{0}' />", row["ValorMetaPeriodo"].ToString().Replace(",", "."));
+        }
+        xml.Append("<categories >" + categorias + "</categories>");
+        xml.Append(string.Format("<dataset seriesName='{0}' >", dtMetasPorPeriodo.Rows[0]["NomeIndicador"]) + datasets + "</dataset>");
+        //xml.Append(datasets);
+        xml.Append("<dataset seriesName='Metas' renderAs='Line' color='BBDA00' anchorSides='4' anchorRadius='5' anchorBorderColor='000000' anchorBorderThickness='1'>" + linhas + "</dataset>");
+        xml.Append("</chart>");
+        string fileName = string.Format("{0:yyyyMMddHHmmssfff}.xml", DateTime.Now);
+        
+        cDados.escreveXML(xml.ToString(), String.Format("ArquivosTemporarios\\{0}", fileName));
+
+        hfGeral.Set("caminhoArquivoXmlGrafico", String.Format("../../ArquivosTemporarios/{0}", fileName));*/
+
+        #endregion
+    }
+
+    private void InicializaDados()
+    {
+        int ano = DateTime.Today.Year;
+        string dbName = cDados.getDbName();
+        string dbOwner = cDados.getDbOwner();
+        string comandoSql;
+
+        #region Comando SQL
+        comandoSql = string.Format(@"
+DECLARE @CodigoReuniao INT 
+DECLARE @CodigoIndicador INT
+DECLARE @CodigoProjeto INT
+DECLARE @Ano INT
+
+    SET @CodigoReuniao = {2}
+    SET @CodigoIndicador = {3}
+    SET @Ano = {4}
+    
+ SELECT @CodigoProjeto = e.CodigoObjetoAssociado 
+   FROM Evento AS e 
+  WHERE e.CodigoEvento = @CodigoReuniao 
+    AND e.CodigoTipoAssociacao = dbo.f_GetCodigoTipoAssociacao('PR')
+ 
+EXEC {0}.{1}.p_getDadosMetaIndicadorOperacional 
+            @CodigoIndicador, 
+            @CodigoProjeto, 
+            @Ano"
+                    , dbName
+                    , dbOwner
+                    , codigoReuniao
+                    , codigoIndicador
+                    , ano);
+        #endregion
+
+        DataSet ds = cDados.getDataSet(comandoSql);
+        DataTable dt = ObtemDataTableMetas();
+        DataTable dtMetasPorPeriodo = ds.Tables[0];
+        ds.Tables.Add(dt);
+        var gruposMetas = dtMetasPorPeriodo.AsEnumerable()
+            .GroupBy(
+                r => new
+                {
+                    Ano = r.Field<short>("Ano"),
+                    CodigoMeta = r.Field<int>("CodigoMetaOperacional"),
+                    NomeIndicador = r.Field<string>("NomeIndicador")
+                });
+        foreach (var grupo in gruposMetas)
+        {
+            DataRow dr = dt.NewRow();
+            DataRow drMeta = grupo.First();
+            foreach (DataColumn col in dt.Columns)
+            {
+                if (string.IsNullOrWhiteSpace(col.Expression))
+                    dr[col] = drMeta[col.ColumnName];
+            }
+            dt.Rows.Add(dr);
+            #region Comentarios - apagar quando não for necessário para consulta
+            /*string nomeArquivoXml = GravaXmlGraficoMeta(
+                grupo.Key.NomeIndicador,
+                grupo.Key.Ano,
+                grupo.CopyToDataTable());
+
+            hfGeral.Set(
+                string.Format("caminhoArquivoXmlGrafico_cod{0}", grupo.Key.CodigoMeta), 
+                string.Format("../../ArquivosTemporarios/{0}", nomeArquivoXml));*/
+
+            #endregion
+        }
+        ds.Relations.Add("rel_Meta_Valores",
+            dt.Columns["CodigoMetaOperacional"],
+            dtMetasPorPeriodo.Columns["CodigoMetaOperacional"]);
+        dvMetas.DataSource = dt;
+        dvMetas.DataBind();
+    }
+
+    private string GravaXmlGraficoMeta(string nomeIndicador, short ano, DataTable dtValoresMeta)
+    {
+        XmlDocument xDoc = new XmlDocument();
+        XmlNode xNodeDeclaration = xDoc.CreateNode(XmlNodeType.XmlDeclaration, "", "");
+        XmlElement xElemChart = xDoc.CreateElement("chart");
+        XmlElement xElemCategories = xDoc.CreateElement("categories");
+        XmlElement xElemDataset1 = xDoc.CreateElement("dataset");
+        XmlElement xElemDataset2 = xDoc.CreateElement("dataset");
+        xDoc.AppendChild(xNodeDeclaration);
+        xDoc.AppendChild(xElemChart);
+        xElemChart.AppendChild(xElemCategories);
+        xElemChart.AppendChild(xElemDataset1);
+        xElemChart.AppendChild(xElemDataset2);
+
+        #region Atributos chart
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "labelDisplay", "Rotate"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "slantLabels", "1"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "caption", string.Format("Ano {0}", ano)));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "showValues", "0"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "palette", "2"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "divLineDecimalPrecision", "1"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "limitsDecimalPrecision", "1"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "PYAxisName", "Valores"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "SYAxisName", "Metas"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "numberPrefix", "R$"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "formatNumberScale", "0"));
+        xElemChart.Attributes.Append(CriaAtributoXml(xDoc, "plotGradientColor", ""));
+        #endregion
+
+        #region Atributos datasets
+        xElemDataset1.Attributes.Append(CriaAtributoXml(xDoc, "seriesName", nomeIndicador));
+
+        xElemDataset2.Attributes.Append(CriaAtributoXml(xDoc, "seriesName", "Metas"));
+        xElemDataset2.Attributes.Append(CriaAtributoXml(xDoc, "renderAs", "Line"));
+        xElemDataset2.Attributes.Append(CriaAtributoXml(xDoc, "color", "BBDA00"));
+        xElemDataset2.Attributes.Append(CriaAtributoXml(xDoc, "anchorSides", "4"));
+        xElemDataset2.Attributes.Append(CriaAtributoXml(xDoc, "anchorRadius", "5"));
+        xElemDataset2.Attributes.Append(CriaAtributoXml(xDoc, "anchorBorderColor", "000000"));
+        xElemDataset2.Attributes.Append(CriaAtributoXml(xDoc, "anchorBorderThickness", "1"));
+        #endregion
+
+        foreach (DataRow row in dtValoresMeta.Rows)
+        {
+            XmlElement xElemCategory = xDoc.CreateElement("category");
+            XmlElement xElemSet1 = xDoc.CreateElement("set");
+            XmlElement xElemSet2 = xDoc.CreateElement("set");
+
+            xElemCategories.AppendChild(xElemCategory);
+            xElemDataset1.AppendChild(xElemSet1);
+            xElemDataset2.AppendChild(xElemSet2);
+
+            xElemCategory.Attributes.Append(
+                CriaAtributoXml(xDoc, "label", row["DescricaoPeriodo"] as string));
+            xElemCategory.Attributes.Append(
+                CriaAtributoXml(xDoc, "baseFontSize", "2"));
+
+            xElemSet1.Attributes.Append(
+                CriaAtributoXml(xDoc, "value", row["ValorResultadoPeriodo"].ToString()));
+            xElemSet1.Attributes.Append(
+                CriaAtributoXml(xDoc, "color", ObtemCor(row["CorDesempenhoPeriodo"] as string)));
+
+            xElemSet2.Attributes.Append(
+                CriaAtributoXml(xDoc, "value", row["ValorMetaPeriodo"].ToString()));
+        }
+        string nomeArquivoXml = string.Format("{0:yyyyMMddHHmmssfff}.xml", DateTime.Now);
+        Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "ArquivosTemporarios", nomeArquivoXml);
+        xDoc.Save(nomeArquivoXml);
+
+        return nomeArquivoXml;
+    }
+
+    private XmlAttribute CriaAtributoXml(XmlDocument xmlDoc, string nome, string valor)
+    {
+        XmlAttribute xmlAttr = xmlDoc.CreateAttribute(nome);
+        xmlAttr.Value = valor;
+        return xmlAttr;
+    }
+
+    private string ObtemCor(string cor)
+    {
+        if (string.IsNullOrWhiteSpace(cor))
+            return null;
+
+        Dictionary<string, string> cores =
+            new Dictionary<string, string>();
+        cores["azul"] = "0000FF";
+        cores["vermelho"] = "FF0000";
+        cores["branco"] = "FFFFFF";
+        cores["verde"] = "00FF00";
+        cores["amarelo"] = "FFFF00";
+        cores["laranja"] = "FFA500";
+        cores["preto"] = "000000";
+
+        string hex = cores[cor.ToLower()];
+
+        return hex;
+    }
+
+    private static DataTable ObtemDataTableMetas()
+    {
+        DataTable dt = new DataTable("Metas");
+        dt.Columns.Add(new DataColumn("Ano", typeof(short)));
+        dt.Columns.Add(new DataColumn("NomeIndicador", typeof(string)));
+        dt.Columns.Add(new DataColumn("CodigoMetaOperacional", typeof(int)));
+        dt.Columns.Add(new DataColumn("MetaDescritiva", typeof(string)));
+        dt.Columns.Add(new DataColumn("IntervaloMeses", typeof(byte)));
+        dt.Columns.Add(new DataColumn("Polaridade", typeof(string)));
+        dt.Columns.Add(new DataColumn("AnalisePerformance", typeof(string)));
+        dt.Columns.Add(new DataColumn("DataAnaliseCritica", typeof(DateTime)));
+        dt.Columns.Add(new DataColumn("NomeUsuarioAnaliseCritica", typeof(string)));
+        string expr = "'Período ' + " +
+            "Iif(IntervaloMeses = 1, 'mensal', " +
+            "Iif(IntervaloMeses = 2, 'bimestral', " +
+            "Iif(IntervaloMeses = 3, 'trimestral', " +
+            "Iif(IntervaloMeses = 4, 'quadrimestral', " +
+            "Iif(IntervaloMeses = 6, 'semestral', " +
+            "Iif(IntervaloMeses = 12, 'anual', " +
+            "Iif(IntervaloMeses = 24, 'bianual', '')))))))";
+        dt.Columns.Add(new DataColumn("IntervaloPeriodo", typeof(string), expr));
+
+        return dt;
+    }
+
+    public string ObtemRotuloAnaliseCritica()
+    {
+        string rotulo;
+        if (Convert.IsDBNull(Eval("DataAnaliseCritica")))
+            rotulo = "Análise crítica";
+        else
+        {
+            DateTime data = (DateTime)Eval("DataAnaliseCritica");
+            string responsavel = (string)Eval("NomeUsuarioAnaliseCritica");
+            rotulo = string.Format(
+               "Análise crítica realizada dia {0:dd/MM/yyyy} às {0:HH:mm} por {1}",
+                data, responsavel);
+        }
+        return rotulo;
+    }
+
+    protected void callback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        string corSerieResultado = ObtemCor("preto");
+        if (dvMetas.VisibleItems.Count == 1)
+        {
+            List<string> jsonObjects = new List<string>();
+            var item = dvMetas.VisibleItems.Single();
+            var row = (DataRowView)item.DataItem;
+            object ano = row["Ano"];
+            object nomeSerieResultado = row["NomeIndicador"];
+            foreach (DataRow dr in row.Row.GetChildRows("rel_Meta_Valores"))
+            {
+                corSerieResultado = ObtemCor(dr["CorDesempenhoPeriodo"] as string);
+                var obj = new
+                {
+                    DescricaoPeriodo = dr.Field<string>("DescricaoPeriodo"),
+                    ValorResultadoPeriodo = dr.Field<decimal?>("ValorResultadoPeriodo"),
+                    ValorMetaPeriodo = dr.Field<decimal?>("ValorMetaPeriodo"),
+                    CorDesempenhoPeriodo = "#" + ObtemCor(dr.Field<string>("CorDesempenhoPeriodo"))
+                };
+                JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+                jsonObjects.Add(jsSerializer.Serialize(obj));
+            }
+            e.Result = string.Format(
+                "({{dataSource: [{0}], ano: {1}, nomeSerieResultado: '{2}', corSerieResultado: '#{3}'}})",
+                string.Join(",", jsonObjects), ano, nomeSerieResultado, corSerieResultado);
+        }
+        else
+        {
+            e.Result = string.Format(
+                "({{dataSource: null, ano: {0}, nomeSerieResultado: '{1}', corSerieResultado: '#{2}'}})",
+                DateTime.Now.Year, string.Empty, corSerieResultado);
+        }
+    }
+}

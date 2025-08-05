@@ -1,0 +1,1 @@
+﻿Esta pasta deverá ter permissão de leitura e escrita.

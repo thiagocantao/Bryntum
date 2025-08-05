@@ -1,0 +1,240 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DadosFinanceiros.aspx.cs"
+    Inherits="Reunioes_ItensPauta_DadosFinanceiros" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <style type="text/css">
+        div .divGrafico
+        {
+            border: 2px solid #669999;
+        }
+    </style>
+    <script src="../../scripts/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="../../scripts/jquery.globalize/globalize.js" type="text/javascript"></script>
+    <script src="../../scripts/jquery.globalize/cultures/globalize.culture.pt-BR.js"
+        type="text/javascript"></script>
+    <script src="../../scripts/dx.chartjs.js" type="text/javascript"></script>
+    <script src="../../scripts/UtilReuniao.js" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            callback.PerformCallback('');
+        });
+
+        function ConstroiGrafico(idDivGrafico, titulo, dataSource, series/*, mostraValorAbsoluto*/) {
+            $divGrafico = $(idDivGrafico);
+            $divGrafico.dxChart({
+                series: series,
+                commonAxisSettings: {
+                    visible: true
+                },
+                commonSeriesSettings: {
+                    argumentField: "Periodo",
+                    type: 'line',
+                    label: {
+                        visible: true,
+                        format: "percent",
+                        precision: 2
+                    }
+                },
+                dataSource: dataSource,
+                title: titulo,
+                legend: {
+                    verticalAlignment: "bottom",
+                    horizontalAlignment: "center"
+                },
+                /*rotated: true,*/
+                argumentAxis: {
+                    label: {
+                        visible: true
+                    }
+                },
+                valueAxis: {
+                    label: {
+                        format: "percent",
+                        visible: true
+                    }
+                }/*,
+                valueAxis: {
+                    label: {
+                        customizeText: function () {
+                            return this.value + '%';
+                        }
+                    }
+                },
+                customizeLabel: function (point) {
+                    if (mostraValorAbsoluto) {
+                        return {
+                            customizeText: function myfunction() {
+                                return Globalize.format(point.tag, 'c2');
+                            }
+                        }
+                    }
+                }*/
+            });
+        }
+
+        function OnCallbackComplete(s, e) {
+            if (e.result == null) return;
+
+            Globalize.culture('pt-BR');
+            var dadosGraficos = eval(e.result);
+            /*var qtdeGraficos = dadosGraficos.length;
+            for (var i = 0; i < qtdeGraficos; i++) {
+            var infoGrafico = dadosGraficos[i];
+            var idDivGrafico = infoGrafico.IdDivGrafico;
+            var titulo = infoGrafico.Titulo;
+            var series = infoGrafico.Series;
+            var dataSource = infoGrafico.DataSource;
+            var mostraValorAbsoluto = infoGrafico.MostraValorAbsoluto;
+            var exibirGrafico = infoGrafico.ExibirGrafico;
+            $divGrafico = $(idDivGrafico);
+            $divGrafico.width(((100 / qtdeGraficos) - 1) + '%');
+            $divGrafico.css("display", "inline-block");
+            $divGrafico.addClass("divGrafico");
+            ConstroiGrafico(idDivGrafico, titulo, dataSource, series, mostraValorAbsoluto);
+            AdicionaLendaGrafico(idDivGrafico, infoGrafico.Legendas);
+            }*/
+            var idDivGrafico = dadosGraficos.IdDivGrafico;
+            var titulo = dadosGraficos.Titulo;
+            var series = dadosGraficos.Series;
+            var dataSource = eval(dadosGraficos.DataSource);
+            $divGrafico = $(idDivGrafico);
+            $divGrafico.width('98%'/*((100 / qtdeGraficos) - 1) + '%'*/);
+            $divGrafico.css("display", "inline-block");
+            $divGrafico.addClass("divGrafico");
+            ConstroiGrafico(idDivGrafico, titulo, dataSource, series);
+        }
+
+        function AdicionaLendaGrafico(idDivGrafico, legendas) {
+            var $divGrafico = $(idDivGrafico);
+            var $divLegendas = $('<div></div>');
+            var conteudoTabelaLegendas = "<table>";
+            for (var i = 0; i < legendas.length; i++) {
+                conteudoTabelaLegendas += "<tr>";
+                var cor = legendas[i].split("|")[0];
+                var faixa = legendas[i].split("|")[1];
+                conteudoTabelaLegendas += "<td style='width:25px; background-color:" + cor + "'></td>";
+                conteudoTabelaLegendas += "<td class='legendas'>" + faixa + "</td>";
+                conteudoTabelaLegendas += "</tr>";
+            }
+            conteudoTabelaLegendas += '</table>';
+            $divLegendas.append(conteudoTabelaLegendas);
+            $divGrafico.append($divLegendas);
+        }
+    </script>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table width="100%">
+            <tr>
+                <td>
+                    <dx:ASPxDataView ID="dataView" runat="server" Width="100%" >
+                        <ItemTemplate>
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        <table width="100%">
+                                            <tr>
+                                                <td style="width: 50%">
+                                                    <dxe:ASPxLabel ID="ASPxLabel1" runat="server" Font-Bold="True"
+                                                        Font-Size="14pt" Text="Orçamento:">
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                                <td style="width: 25%">
+                                                    <dxe:ASPxLabel ID="ASPxLabel2" runat="server" Font-Bold="True"
+                                                        Font-Size="14pt" Text="Início:">
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                                <td style="width: 25%">
+                                                    <dxe:ASPxLabel ID="ASPxLabel3" runat="server" Font-Bold="True"
+                                                        Font-Size="14pt" Text="Término previsto:">
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <dxe:ASPxLabel ID="lblOrcamento" runat="server" Font-Size="14pt"
+                                                        Text='<%#Eval("ValorCustoPrevisto", "{0:c2}") %>'>
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                                <td>
+                                                    <dxe:ASPxLabel ID="lblInicio" runat="server" Font-Size="14pt"
+                                                        Text='<%#Eval("DataInicioProjeto", "{0:dd/MM/yyyy}") %>'>
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                                <td>
+                                                    <dxe:ASPxLabel ID="lblTermino" runat="server" Font-Size="14pt"
+                                                        Text='<%#Eval("DataTerminoPrevistoProjeto", "{0:dd/MM/yyyy}") %>'>
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxLabel ID="ASPxLabel4" runat="server" Font-Bold="True"
+                                            Font-Size="14pt" Text="Descrição:">
+                                        </dxe:ASPxLabel>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxMemo ID="memoDescricao" runat="server" Rows="10" Width="99%"
+                                            Font-Size="12pt" ReadOnly="True" Text='<%#Eval("descricaoObjetivoPrincipal") %>'>
+                                        </dxe:ASPxMemo>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                        </ItemTemplate>
+                        <PagerSettings Visible="False">
+                        </PagerSettings>
+                        <SettingsTableLayout ColumnCount="1" RowsPerPage="1" />
+                    </dx:ASPxDataView>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="divCurvaS" style="display: none">
+                    </div>
+                    <div id="divFisico" style="display: none">
+                    </div>
+                    <div id="divDespesa" style="display: none">
+                    </div>
+                    <div id="divReceita" style="display: none">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <%--<table id="tabelaGraficos" border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <div id="divFisico">
+                    </div>
+                </td>
+                <td>
+                    <div id="divDespesa">
+                    </div>
+                </td>
+                <td>
+                    <div id="divReceita">
+                    </div>
+                </td>
+            </tr>
+        </table>--%>
+    </div>
+    <dxcb:ASPxCallback ID="callback" runat="server" ClientInstanceName="callback" OnCallback="callback_Callback">
+        <ClientSideEvents CallbackComplete="function(s, e) {
+	OnCallbackComplete(s, e);
+}" />
+    </dxcb:ASPxCallback>
+    </form>
+</body>
+</html>

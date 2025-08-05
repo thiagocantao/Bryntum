@@ -1,0 +1,386 @@
+﻿#conteudoPrincipal {
+    margin: 0;
+    padding: 0;
+}
+
+.cabecalho-raia-backlog {
+    display: flex;
+    align-content: flex-end;
+    min-height: 65px;
+    background-color: #35B86B;
+    width: 335px;
+    align-items: baseline;
+    padding-top: 5px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2000;
+}
+
+.cabecalho-raia-sprint {
+    display: flex;
+    flex-direction: column;
+    width: 335px;
+    white-space: normal;
+    min-height: 65px;
+    background-color: #f86538;
+    color: white;
+    position: relative;
+    z-index: 2000;
+}
+
+.sprint-encerrada {
+    background-color: #989898 !important;
+}
+
+.kanban-agil-icones {
+    margin-left: 0.5rem;
+}
+
+.kanban-agil-cabecalho {
+    align-items: center;
+    background-color: whitesmoke;
+    border: 1px solid #b9d176;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    margin: 0 0 5px 0;
+    padding: 0;
+}
+
+.kanban-agil-data-sprint > div {
+    text-align: center;
+}
+
+
+#kanban {
+    overflow-x: scroll;
+    overflow-y:hidden;
+    white-space: nowrap;
+    width: 100%;
+    /*border: solid 2px #76B14D;*/
+    border-radius: 4px
+}
+
+
+.kanban-agil-raias-sprint {
+    display: flex;
+    flex-direction: row;
+}
+
+    .kanban-agil-raias-sprint > div {
+        margin-right: 10px;
+        margin-top: 0px;
+        background: gainsboro;
+    }
+
+.kanban-agil {
+    display: flex;
+    flex-direction: column;
+    /*flex-wrap: nowrap;*/
+    /*background-color: #ffffff;*/
+    border-radius: 4px;
+    list-style-type: none;
+    /*margin: 0.5rem;*/
+    /*min-height: 8.75rem;*/
+    padding: 0.5rem;
+    overflow: auto;
+    background-color: transparent;
+}
+
+    .kanban-agil > li {
+        display: inline-block;
+        flex: 0 0 auto;
+        margin: 5px;
+        padding: 0;
+        width: 275px;
+        background-color: transparent;
+    }
+
+
+.kanban-agil-tarefa {
+    position: relative;
+    min-height: 55px;
+    padding: 0px;
+    border-left: 5px solid var(--color_green_500);
+    border-radius: 5px 0 0 5px;
+    margin-bottom: 10px;
+    background-color: white;
+    min-width: 290px
+}
+
+.kanban-agil-tarefa-cabecalho-titulo {
+    background-color: var(--kanban-cor-de-fundo-titulo-card);
+    border-radius: 2px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 0 45px 0 5px;
+    /*white-space: nowrap;*/
+    white-space: break-spaces;
+}
+
+.kanban-agil-tarefa-cabecalho-titulo-bug {
+    background-color: var(--kanban-cor-de-fundo-titulo-card-bug);
+    border-radius: 2px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 0 45px 0 5px;
+    white-space: break-spaces;
+}
+
+.kanban-agil-tarefa-cabecalho-titulo-bloqueio {
+    background-color: #c2a8b8;
+    border-radius: 2px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 0 45px 0 5px;
+    white-space: break-spaces;
+}
+
+.kanban-agil-tarefa-menu {
+    cursor: pointer;
+    margin-right: 5px;
+    margin-top: 2px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+    .kanban-agil-tarefa-menu i {
+        font-size: 1.3rem;
+    }
+
+.kanban-agil-tarefa-menu-backlog {
+    cursor: pointer;
+    margin-right: 5px;
+    margin-top: 2px;
+    position: relative;
+    right: 0;
+    top: 0;
+    color: white
+}
+
+.kanban-agil-tarefa-menu-sprint {
+    cursor: pointer;
+    margin-right: 5px;
+    margin-top: 2px;
+    position: relative;
+    right: 0;
+    top: 0;
+}
+
+.kanban-agil-tarefa-usuario {
+    align-items: center;
+    display: flex;
+    margin: 0;
+    padding: 0.3rem 0 0.3rem 0.1rem;
+}
+
+.kanban-agil-tarefa-usuario-float-right {
+    align-items: center;
+    display: flex;
+    margin: 0;
+    padding: 0.3rem 0 0.3rem 0;
+    float: right;
+}
+
+.kanban-agil-tarefa-usuario-sigla {
+    align-items: center;
+    background: #515E6E;
+    border-radius: 50%;
+    cursor: default;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+}
+
+    .kanban-agil-tarefa-usuario-sigla > span {
+        color: #ffffff;
+        font-size: 0.8rem;
+    }
+
+.kanban-agil-tarefa-usuario-nome {
+    flex: 1;
+    font-size: 0.75rem;
+    font-weight: 400;
+    margin-left: 0.5rem;
+}
+
+.kanban-agil-tarefa-detalhes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 0;
+    padding: 0.3rem 0 0.5rem;
+    justify-content: left;
+    width: 100%;
+}
+
+.kanban-agil-tarefa-detalhes-contador-tarefas {
+    /*display: flex;*/
+    margin: 0;
+    padding: 0.5rem 0 1rem;
+    /*justify-content: space-between;*/
+    text-align: right;
+    font-size: 0.7rem;
+}
+
+.kanban-agil-tarefa-detalhes > div {
+    margin: 0 0.5rem;
+}
+
+    .kanban-agil-tarefa-detalhes > div > span {
+        display: block;
+        font-size: 0.8rem;
+        text-align: left;
+    }
+
+        .kanban-agil-tarefa-detalhes > div > span:first-child {
+            opacity: .7;
+        }
+
+    .kanban-agil-tarefa-detalhes > div.kanban-agil-tarefa-detalhes-data > span:nth-child(1) {
+        display: none;
+    }
+
+    .kanban-agil-tarefa-detalhes > div.atrasada > span:nth-child(2) {
+        color: #FF0000;
+    }
+
+.kanban-agil-tarefa-detalhes-anexo {
+    text-align: right;
+}
+
+.kanban-agil-tarefa-tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.kanban-agil-tarefa-tag {
+    background-color: #E2F0D9;
+    font-size: 0.6rem;
+    list-style-type: none;
+    margin: 0.25rem;
+    text-transform: uppercase;
+}
+
+.kanban-agil-tarefa-tag-status {
+    font-size: 0.6rem;
+    list-style-type: none;
+    margin: 0.25rem;
+    text-transform: uppercase;
+}
+
+#kanban .kanban-agil-tarefa-sombra {
+    background-color: white;
+}
+
+i.fa-paperclip {
+    color: #c7cbbc;
+}
+
+.no-data-to-display {
+    text-align: center;
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 25px;
+    right: 10px;
+    background-color: #7d8e38;
+    color: #FFFFFF !important;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+}
+
+.my-float {
+    margin-top: 22px;
+}
+
+
+
+.dropdown-menu {
+    position: absolute;
+    top: 25px !important;
+    left: 130px !important;
+    z-index: 1000;
+    display: none;
+    float: right;
+    min-width: 150px;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-weight: 400;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    will-change:unset !important;
+    transform:unset !important
+ }
+
+.quantidade-itens-backlog {
+    width: 100%;
+    margin-left: 5px;
+    color: white;
+    font-size:0.79em
+}
+
+.sprint-titulo {
+    font-size: 14px;
+    flex-grow: 80;
+    padding-right: 3px
+}
+
+.sprint-titulo-inicio-termino-ocupacao {
+    font-size: 12px;
+    padding-left: 3px;
+    display: flex;
+    flex-direction: row;
+    align-items: center
+}
+.sprint-titulo-icone-dash-tres-pontos {
+    padding-left: 3px;
+    display: flex;
+    flex-direction: row;
+}
+.sprint-titulo-icone-dashboard-numeros-sprint {
+    flex-grow: 1;
+    font-size: 18px;
+    padding-right: 5px
+}
+
+.sprint-titulo-quantidade-itens {
+    text-align: right;
+    font-size: 0.78em;
+    padding-right: 3px
+}
+.div-do-campo-de-inclusao-em-massa {
+    width: 305px;
+    padding-left: 5px
+}
+
+label {
+    /*display: inline-block;*/
+    display: initial !important;
+    margin-bottom: .5rem;
+    margin-left: 5px;
+}
+
+

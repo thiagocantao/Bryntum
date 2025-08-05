@@ -1,0 +1,38 @@
+@import '../../variables';
+
+.b-grid-header {
+
+    &.b-drag-proxy {
+        line-height       : normal;
+        font-weight       : $grid-header-font-weight;
+        background-color  : $grid-header-background-color;
+        outline           : 1px solid $grid-header-border-color; // to match invalid border
+        transition        : background-color 0.3s;
+        border-inline-end : none;
+
+        // Dragging parent
+        &.b-grid-header-parent {
+            justify-content : stretch;
+
+            > .b-grid-header-text {
+                border-inline-end : none;
+            }
+        }
+
+        .b-grid-header:last-child {
+            border-inline-end : none;
+        }
+    }
+
+    &.b-drop-placeholder {
+        opacity : .3;
+    }
+
+    &.b-drag-invalid {
+        &,
+        & .b-grid-header {
+            color   : $grid-header-invalid-drag-color;
+        }
+        outline : 1px solid $grid-header-invalid-drag-color;
+    }
+}

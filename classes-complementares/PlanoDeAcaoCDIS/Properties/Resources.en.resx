@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Incluir" xml:space="preserve">
+    <value>Include</value>
+  </data>
+  <data name="Editar" xml:space="preserve">
+    <value>Edit...</value>
+  </data>
+  <data name="Excluir" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Salvar" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="OPlanoDeAçãoAindaNãoPossuiTarefasCliqueNoB" xml:space="preserve">
+    <value>The action plan does not have tasks. Click on the button "add" to open the registration screen.</value>
+  </data>
+  <data name="Ações" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="CodigoDaTarefa" xml:space="preserve">
+    <value>Task code.</value>
+  </data>
+  <data name="PercentualConcluido" xml:space="preserve">
+    <value>% Completed</value>
+  </data>
+  <data name="Tarefa" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="Tarefa_DoisPontos" xml:space="preserve">
+    <value>Task:</value>
+  </data>
+  <data name="Prioridade" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="Prioridade_DoisPontos" xml:space="preserve">
+    <value>Priority:</value>
+  </data>
+  <data name="PrioridadeBaixa" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="PrioridadeMédia" xml:space="preserve">
+    <value>Average</value>
+  </data>
+  <data name="PrioridadeAlta" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Responsável" xml:space="preserve">
+    <value>Person in charge</value>
+  </data>
+  <data name="Responsável_DoisPontos" xml:space="preserve">
+    <value>Person in charge:</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Status_DoisPontos" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="InícioPrevisto" xml:space="preserve">
+    <value>Expected start</value>
+  </data>
+  <data name="InícioPrevisto_DoisPontos" xml:space="preserve">
+    <value>Expected start:</value>
+  </data>
+  <data name="TérminoPrevisto" xml:space="preserve">
+    <value>Expected conclusion</value>
+  </data>
+  <data name="TérminoPrevisto_DoisPontos" xml:space="preserve">
+    <value>Expected conclusion:</value>
+  </data>
+  <data name="EsforçoPrevistoH" xml:space="preserve">
+    <value>Expected effort (h)</value>
+  </data>
+  <data name="EsforçoPrevistoH_DoisPontos" xml:space="preserve">
+    <value>Expected effort (h):</value>
+  </data>
+  <data name="CustoPrevisto" xml:space="preserve">
+    <value>Estimated Cost</value>
+  </data>
+  <data name="CustoPrevisto_DoisPontos" xml:space="preserve">
+    <value>Estimated Cost:</value>
+  </data>
+  <data name="InícioReal" xml:space="preserve">
+    <value>Actual start</value>
+  </data>
+  <data name="InícioReal_DoisPontos" xml:space="preserve">
+    <value>Actual Start:</value>
+  </data>
+  <data name="ADataDeInícioRealDeveSerMenorOuIgualADataAtual" xml:space="preserve">
+    <value>Actual start date must be less than or equal to current date!</value>
+  </data>
+  <data name="TérminoReal" xml:space="preserve">
+    <value>Actual End</value>
+  </data>
+  <data name="TérminoReal_DoisPontos" xml:space="preserve">
+    <value>Actual End:</value>
+  </data>
+  <data name="EsforçoRealizadoH" xml:space="preserve">
+    <value>Effort Realized (h)</value>
+  </data>
+  <data name="EsforçoRealizadoH_DoisPontos" xml:space="preserve">
+    <value>Effort Realized (h):</value>
+  </data>
+  <data name="CustoRealizado" xml:space="preserve">
+    <value>Cost Realized</value>
+  </data>
+  <data name="CustoRealizado_DoisPontos" xml:space="preserve">
+    <value>Cost Realized:</value>
+  </data>
+  <data name="Anotações" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Anotações_DoisPontos" xml:space="preserve">
+    <value>Notes:</value>
+  </data>
+  <data name="PlanoDeAção_DoisPontos" xml:space="preserve">
+    <value>Action plan:</value>
+  </data>
+  <data name="ADataDeTérminoPrevistaDeveSerMaiorOuIgualADataDeInicio" xml:space="preserve">
+    <value>The scheduled end date must be greater than or equal to the start date.</value>
+  </data>
+  <data name="ADataDeTérminoRealDeveSerMenorOuIgualADataAtual" xml:space="preserve">
+    <value>The actual end date must be less than or equal to the current date.</value>
+  </data>
+  <data name="ADataDeInicioRealDeveSerInformada" xml:space="preserve">
+    <value>The actual start date must be informed.</value>
+  </data>
+  <data name="ADataDeTérminoRealDeveSerMaiorOuIgualADataDeInicio" xml:space="preserve">
+    <value>The actual end date must be greater than or equal to the start date.</value>
+  </data>
+  <data name="ADataDeTérminoRealDeveSerInformada" xml:space="preserve">
+    <value>The actual end date should be informed.</value>
+  </data>
+  <data name="SomenteTarefasEmExecuçãoPodemSerExcluídas_Exclamacao" xml:space="preserve">
+    <value>Only running tasks can be deleted!</value>
+  </data>
+  <data name="AsInformaçõesDaEmpresaInformadaNãoForamEnc" xml:space="preserve">
+    <value>The company informed information were not found in the database (table).</value>
+  </data>
+  <data name="VisualizarEmModoAmpliado" xml:space="preserve">
+    <value>View expanded mode.</value>
+  </data>
+  <data name="ADataDeTérminoPrevistaDeveSerMaiorOuIgualADataDeInício" xml:space="preserve">
+    <value>The expected end date must be greater than or equal to the start date!</value>
+  </data>
+  <data name="ADataDeInicioRealDeveSerInformada1" xml:space="preserve">
+    <value>The actual start date must be reported!</value>
+  </data>
+  <data name="ADataDeTérminoRealDeveSerMenorOuIgualADataAtual1" xml:space="preserve">
+    <value>Actual end date must be less than or equal to current date!</value>
+  </data>
+  <data name="ADataDeTérminoRealDeveSerMaiorOuIgualADataDeInício" xml:space="preserve">
+    <value>The actual end date must be greater than or equal to the start date!</value>
+  </data>
+  <data name="ADataDeTérminoRealDeveSerInformada1" xml:space="preserve">
+    <value>The actual end date should be informed!</value>
+  </data>
+  <data name="ADataDeInicioRealDeveSerInformadaParaEsteStatusDeTarefa" xml:space="preserve">
+    <value>Actual start date must be entered for this task status</value>
+  </data>
+  <data name="ADataDeInicioRealNaoPodeSerInformadaParaEsteStatusDeTarefa" xml:space="preserve">
+    <value>Actual start date cannot be entered for this task status</value>
+  </data>
+  <data name="ADataDeTerminoRealNaoPodeSerInformadaParaEsteStatusDeTarefa" xml:space="preserve">
+    <value>Actual finish date cannot be entered for this task status</value>
+  </data>
+  <data name="OCustoRealNaoPodeSerInformadaParaEsteStatusDeTarefa" xml:space="preserve">
+    <value>Actual cost cannot be reported for this task status</value>
+  </data>
+  <data name="OEsforcoRealNaoPodeSerInformadoParaEsteStatusDeTarefa" xml:space="preserve">
+    <value>Actual effort cannot be reported for this task status</value>
+  </data>
+</root>

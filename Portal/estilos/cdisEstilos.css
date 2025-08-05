@@ -1,0 +1,218 @@
+﻿/* Body */
+.body {
+    margin: 0px;
+    background-repeat: repeat-x;
+    background-color: #ffffff;
+    -ms-touch-action: double-tap-zoom;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+}
+  	.estiloPop{z-index:-1}
+.titleLabel {
+    color: #aaaaaa !important;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    font-size: 18px !important;
+    font-weight: 200 !important;
+    display: inline-block !important;
+    padding: 10px 10px 10px 10px !important;
+}
+
+.hide {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.headerGrid {
+    width: 100%;
+}
+	
+	.tituloGrid
+	{
+		width:420px;
+	}
+	
+	.titlePanel
+	{
+		height:30px;
+	}
+	
+	.mao {cursor: pointer;}
+	
+	.janelaFiltro
+	{
+		height: 120px;
+	}
+	.cadastro 
+	{
+		position: relative;
+		height: 18px; 
+		font-weight:normal;		
+	}
+	
+	.celulaGrid
+        {
+            width: 135px;
+        }
+        
+        .linhaEdicaoPeriodo
+        {
+            width: 140px;
+        }
+        
+        /* Links Grid */
+        /*
+    .LinkGrid a, a:link, a:Visited {
+        */
+    .LinkGrid a {
+        font-weight: normal;
+        color: #575757;
+        text-decoration: none;
+        padding:0px 5px;
+    }
+    .LinkGrid a, a:hover {
+        font-weight: normal;
+        color: #575757;
+    }    
+	
+	.LinkPrincipal 
+	{		
+		text-decoration:none;		
+	}    
+	
+	.LinkSecundario 
+	{		
+		text-decoration:none;		
+	}
+	
+	.SF 
+	{
+		color: Black;
+	}
+    .MarcoSF 
+    {
+		font-style:italic; color: Black;
+	}
+    .MarcoCor1 
+    {
+		font-style:italic; color: #666699;
+	}
+    .MarcoCor2 
+    {
+		font-style:italic; color: #0055ff;
+	}
+    .MarcoCor3 
+    {
+		font-style:italic; color: red;
+	}
+    .Cor1 
+    { 
+		color: #666699; 
+	}
+    .Cor2 
+    { 
+		color: #0055ff; 
+	}
+    .Cor3 
+    { 
+		color: red;
+	}
+	.mudaIndex
+	{
+		z-index: -50000;
+	}
+	.corBotao
+	{
+		background-color: White;
+	}
+	
+	tr.op:hover
+    {
+        background-color: Silver;
+        cursor: pointer;
+    }
+    
+    .NaoQuebraTexto
+    {
+        white-space:nowrap;
+    }
+
+.titulo {
+    color: #575757;
+    display: inline-block;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    font-size: 0.80rem;
+    padding-left: 42px;
+}
+
+.tituloLicenciado {
+    color: #575757;
+    display: inline-block;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    font-size: 0.80rem;
+    padding-left: 5px;
+}
+
+.textalignRight {
+    padding-left:15px;
+
+}
+
+.painelLogin {
+    border: 1pt solid #86cca7;
+    border-radius: 0;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    width: 494px;
+}
+
+html .dxrpControl_DevEx > tbody > tr.dxrpCR > .dxrpcontent {
+    background: #ffffff !important;
+}
+
+html .dxrpControl_DevEx > tbody > tr > .dxrpHeader_DevEx, .dxrpControl_DevEx > tbody > tr.dxrpCR > .dxrpcontent {
+    border: none;
+}
+
+html .dxrpControl_DevEx td.dxrpHeader_DevEx {
+    background: none;
+}
+
+html .btn-outline-secondary:hover {
+    background-color: #bbbbbb;
+    border-color: #bbb;
+}
+
+
+table#painelLogin table#esqueciSenhaLogin a {
+    color: #575757;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+}
+
+table#painelLogin table#esqueciSenhaLogin a:hover {
+    color: #a7a7a7;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+}
+
+table#painelLogin div.dxbButton_MaterialCompact.dxbButtonSys.dxbTSys {
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 100;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    text-transform: none;
+}
+
+html .dxbButton_MaterialCompact.dxbTSys {
+    text-transform: capitalize !important;
+}
+
+
+.centralizarAlterarSenha {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}

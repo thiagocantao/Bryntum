@@ -1,0 +1,43 @@
+@import '../variables.scss';
+
+// Both modes
+.b-tasknonworkingtime {
+    display          : flex;
+    position         : absolute;
+    background-color : $range-background-color;
+    z-index          : $resourcetimerange-zindex;
+    transition       : $event-default-transition; // always use transition, for hover effects etc
+    justify-content  : center;
+    align-items      : center;
+    padding          : $resourcetimerange-padding;
+    font-size        : 0.5em;
+    pointer-events   : all;
+    gap              : 0.5em;
+    overflow         : hidden;
+
+    [data-task-feature] {
+        font-size : $resourcetimerange-font-size; // em would be fraction of rowHeight, not usable here
+    }
+
+    .b-animating & {
+        transition : $event-default-transition, transform .2s, width .2s, height .2s, font-size .2s;
+    }
+
+    &.b-released {
+        display    : none;
+        transition : none;
+    }
+}
+
+// Bar mode
+.b-gantt-task > .b-tasknonworkingtime {
+    top            : 0;
+    height         : 100%;
+    font-size      : .8em;
+    color          : #555;
+    pointer-events : none;
+
+    i.b-fa {
+        margin-inline-end : 0;
+    }
+}

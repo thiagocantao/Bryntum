@@ -1,0 +1,44 @@
+@import '../../variables';
+
+.b-gridbase.b-sort .b-grid-header {
+    .b-sort-icon {
+        display : contents;
+    }
+
+    // icon for column sorted asc
+    &.b-sort {
+        .b-grid-header-text {
+            .b-sort-icon::before {
+                @include b-grid-header-icon($grid-header-icon-color);
+                content: "#{ $fa-var-arrow-up }";
+            }
+            // change header color in sorted column
+            color : $sort-color;
+
+            // display sort index badge next to icon when using multiple sorters
+            &[data-sort-index]::before {
+                content       : attr(data-sort-index);
+                position      : relative;
+                top           : 1em;
+                color         : $sort-index-color;
+                z-index       : 30;
+                font-size     : .6em;
+                order         : 1; // place last
+            }
+        }
+
+        //desc, rotate icon using transition
+        &.b-desc .b-grid-header-text .b-sort-icon::before {
+            transform : rotate(180deg);
+        }
+    }
+}
+
+.b-gridbase.b-sort:not(.b-column-resizing) .b-grid-header-container:not(.b-dragging-header) .b-grid-header {
+    // show sort icon on hover for columns not sorted or grouped by, but not while dragging or resizing
+    &.b-sortable.b-depth-0:hover:not(.b-sort):not(.b-group) .b-grid-header-text .b-sort-icon::before,
+    &.b-sortable.b-depth-0:focus:not(.b-sort):not(.b-group) .b-grid-header-text .b-sort-icon::before {
+        @include b-grid-header-icon($grid-header-icon-light-color);
+        content: "#{ $fa-var-sort-alpha-up }";
+    }
+}

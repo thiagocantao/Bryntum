@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsResumoProjeto" targetNamespace="http://tempuri.org/DsResumoProjeto.xsd" xmlns:mstns="http://tempuri.org/DsResumoProjeto.xsd" xmlns="http://tempuri.org/DsResumoProjeto.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsResumoProjeto" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DsResumoProjeto" msprop:Generator_UserDSName="DsResumoProjeto">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DadosProjeto" msprop:Generator_TableClassName="DadosProjetoDataTable" msprop:Generator_TableVarName="tableDadosProjeto" msprop:Generator_TablePropName="DadosProjeto" msprop:Generator_RowDeletingName="DadosProjetoRowDeleting" msprop:Generator_UserTableName="DadosProjeto" msprop:Generator_RowChangingName="DadosProjetoRowChanging" msprop:Generator_RowEvHandlerName="DadosProjetoRowChangeEventHandler" msprop:Generator_RowDeletedName="DadosProjetoRowDeleted" msprop:Generator_RowEvArgName="DadosProjetoRowChangeEvent" msprop:Generator_RowChangedName="DadosProjetoRowChanged" msprop:Generator_RowClassName="DadosProjetoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="UnidadeResponsavel" msprop:Generator_ColumnVarNameInTable="columnUnidadeResponsavel" msprop:Generator_ColumnPropNameInRow="UnidadeResponsavel" msprop:Generator_ColumnPropNameInTable="UnidadeResponsavelColumn" msprop:Generator_UserColumnName="UnidadeResponsavel" type="xs:string" minOccurs="0" />
+              <xs:element name="NomeProjeto" msprop:Generator_ColumnVarNameInTable="columnNomeProjeto" msprop:Generator_ColumnPropNameInRow="NomeProjeto" msprop:Generator_ColumnPropNameInTable="NomeProjetoColumn" msprop:Generator_UserColumnName="NomeProjeto" type="xs:string" minOccurs="0" />
+              <xs:element name="PercentualPrevistoRealizacao" msprop:Generator_ColumnVarNameInTable="columnPercentualPrevistoRealizacao" msprop:Generator_ColumnPropNameInRow="PercentualPrevistoRealizacao" msprop:Generator_ColumnPropNameInTable="PercentualPrevistoRealizacaoColumn" msprop:Generator_UserColumnName="PercentualPrevistoRealizacao" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PercentualRealizacao" msprop:Generator_ColumnVarNameInTable="columnPercentualRealizacao" msprop:Generator_ColumnPropNameInRow="PercentualRealizacao" msprop:Generator_ColumnPropNameInTable="PercentualRealizacaoColumn" msprop:Generator_UserColumnName="PercentualRealizacao" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DesempenhoFinanceiro" msprop:Generator_ColumnVarNameInTable="columnDesempenhoFinanceiro" msprop:Generator_ColumnPropNameInRow="DesempenhoFinanceiro" msprop:Generator_ColumnPropNameInTable="DesempenhoFinanceiroColumn" msprop:Generator_UserColumnName="DesempenhoFinanceiro" type="xs:decimal" minOccurs="0" />
+              <xs:element name="InicioPrevisto" msprop:Generator_ColumnVarNameInTable="columnInicioPrevisto" msprop:Generator_ColumnPropNameInRow="InicioPrevisto" msprop:Generator_ColumnPropNameInTable="InicioPrevistoColumn" msprop:Generator_UserColumnName="InicioPrevisto" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="InicioReal" msprop:Generator_ColumnVarNameInTable="columnInicioReal" msprop:Generator_ColumnPropNameInRow="InicioReal" msprop:Generator_ColumnPropNameInTable="InicioRealColumn" msprop:Generator_UserColumnName="InicioReal" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoPrevisto" msprop:Generator_ColumnVarNameInTable="columnTerminoPrevisto" msprop:Generator_ColumnPropNameInRow="TerminoPrevisto" msprop:Generator_ColumnPropNameInTable="TerminoPrevistoColumn" msprop:Generator_UserColumnName="TerminoPrevisto" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoReprogramadoFiscalizacao" msprop:Generator_ColumnVarNameInTable="columnTerminoReprogramadoFiscalizacao" msprop:Generator_ColumnPropNameInRow="TerminoReprogramadoFiscalizacao" msprop:Generator_ColumnPropNameInTable="TerminoReprogramadoFiscalizacaoColumn" msprop:Generator_UserColumnName="TerminoReprogramadoFiscalizacao" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ValorContratado" msprop:Generator_ColumnVarNameInTable="columnValorContratado" msprop:Generator_ColumnPropNameInRow="ValorContratado" msprop:Generator_ColumnPropNameInTable="ValorContratadoColumn" msprop:Generator_UserColumnName="ValorContratado" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorMedido" msprop:Generator_ColumnVarNameInTable="columnValorMedido" msprop:Generator_ColumnPropNameInRow="ValorMedido" msprop:Generator_ColumnPropNameInTable="ValorMedidoColumn" msprop:Generator_UserColumnName="ValorMedido" type="xs:decimal" minOccurs="0" />
+              <xs:element name="SaldoContratual" msprop:Generator_ColumnVarNameInTable="columnSaldoContratual" msprop:Generator_ColumnPropNameInRow="SaldoContratual" msprop:Generator_ColumnPropNameInTable="SaldoContratualColumn" msprop:Generator_UserColumnName="SaldoContratual" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CodigoContrato" msprop:Generator_ColumnVarNameInTable="columnCodigoContrato" msprop:Generator_ColumnPropNameInRow="CodigoContrato" msprop:Generator_ColumnPropNameInTable="CodigoContratoColumn" msprop:Generator_UserColumnName="CodigoContrato" type="xs:int" default="-1" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FotosProjeto" msprop:Generator_TableClassName="FotosProjetoDataTable" msprop:Generator_TableVarName="tableFotosProjeto" msprop:Generator_TablePropName="FotosProjeto" msprop:Generator_RowDeletingName="FotosProjetoRowDeleting" msprop:Generator_UserTableName="FotosProjeto" msprop:Generator_RowChangingName="FotosProjetoRowChanging" msprop:Generator_RowEvHandlerName="FotosProjetoRowChangeEventHandler" msprop:Generator_RowDeletedName="FotosProjetoRowDeleted" msprop:Generator_RowEvArgName="FotosProjetoRowChangeEvent" msprop:Generator_RowChangedName="FotosProjetoRowChanged" msprop:Generator_RowClassName="FotosProjetoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="Anexo" msprop:Generator_ColumnVarNameInTable="columnAnexo" msprop:Generator_ColumnPropNameInRow="Anexo" msprop:Generator_ColumnPropNameInTable="AnexoColumn" msprop:Generator_UserColumnName="Anexo" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:DadosProjeto" />
+      <xs:field xpath="mstns:CodigoProjeto" />
+    </xs:unique>
+    <xs:keyref name="FK_DadosProjeto_FotosProjeto" refer="Constraint1" msprop:rel_Generator_UserChildTable="FotosProjeto" msprop:rel_Generator_ChildPropName="GetFotosProjetoRows" msprop:rel_Generator_ParentPropName="DadosProjetoRow" msprop:rel_Generator_UserRelationName="FK_DadosProjeto_FotosProjeto" msprop:rel_Generator_RelationVarName="relationFK_DadosProjeto_FotosProjeto" msprop:rel_Generator_UserParentTable="DadosProjeto">
+      <xs:selector xpath=".//mstns:FotosProjeto" />
+      <xs:field xpath="mstns:CodigoProjeto" />
+    </xs:keyref>
+  </xs:element>
+</xs:schema>

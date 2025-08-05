@@ -1,0 +1,9 @@
+.b-schedule-selected-tick {
+    position         : absolute;
+    pointer-events   : none;
+    z-index          : -1;
+    background-color : $grid-focus-row-selected-background-color;
+    display          : flex;
+    justify-content  : center;
+    align-items      : center;
+}

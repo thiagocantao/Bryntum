@@ -1,0 +1,321 @@
+﻿using System;
+using System.Data;
+using System.Web.Services;
+using System.Xml;
+
+/// <summary>
+/// Summary description for Tasks
+/// </summary>
+[WebService(Namespace = "http://www.cdis.com.br/")]
+[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+public class Tasks : System.Web.Services.WebService
+{
+    dados cDados = CdadosUtil.GetCdados(null);
+    public int codigoEntidadeUsuarioResponsavel = -1;
+    int codigoUsuario = -1;
+    string tarefasAdicionadas = ";";
+    int index = 0;
+
+    [WebMethod]
+    public XmlDocument Get(int codigoProjeto, int codigoEntidade)
+    {
+        //cria  a variável para armazenar o XML_BryNTum
+        string xml = "";
+
+        string where = "";
+
+        int versaoLinhaBase = -1;
+
+        //Data Set contendo a tabela com os dados a serem carregados no gráfico de PIZZA
+        DataSet dsCrono = getCronogramaGantt(codigoEntidade, codigoProjeto, "-1", versaoLinhaBase, false, where);
+        string dataInicio = "";
+        string dataTermino = "";
+
+        xml += "<Tasks>";
+
+        foreach (DataRow dr in dsCrono.Tables[0].Rows)
+        {
+            if (tarefasAdicionadas.Contains(";" + dr["CodigoTarefa"] + ";") == false || index == 0)
+            {
+                if (index == 0)
+                {
+                    dataInicio = string.Format("Sch.util.Date.add(new Date({0:yyyy, M, d}), Sch.util.Date.MONTH, -2)", dr["Inicio"]);
+                    dataTermino = string.Format("Sch.util.Date.add(new Date({0:yyyy, M, d}), Sch.util.Date.MONTH, 2)", dr["Termino"]);
+                }
+
+                string codigoTarefaIn = dr["CodigoTarefa"].ToString();
+                string codigoRealTarefaIn = dr["CodigoRealTarefa"].ToString();
+                string sumariaIn = dr["IndicaTarefaSumario"].ToString();
+                string nomeIn = dr["NomeTarefa"].ToString();
+                string dataInicioIn = string.Format("{0:yyyy-MM-dd}", dr["Inicio"]) + "T00:00:00";
+                string dataTerminoIn = string.Format("{0:yyyy-MM-dd}", dr["Termino"]) + "T00:00:00";
+                string duracaoIn = string.Format("{0:n0}", dr["Duracao"]);
+                string percentualIn = string.Format("{0:n0}", dr["Concluido"]);
+                xml += retornaXML(dsCrono, codigoTarefaIn, codigoRealTarefaIn, sumariaIn, nomeIn, dataInicioIn, dataTerminoIn, duracaoIn, percentualIn);
+            }
+        }
+
+        xml += "</Tasks>";
+
+        XmlDocument dom = new XmlDocument();
+
+        dom.LoadXml(xml);
+
+        return dom;
+    }
+
+    public DataSet getCronogramaGantt(int codigoEntidade, int codigoProjeto, string codigoRecurso, int versaoLB, bool fazInner, string where)
+    {
+        string replanejamentoTasques = "N";
+
+        DataSet dsParam = cDados.getParametrosSistema(codigoEntidade, "TASQUES_ReplanejarCronograma");
+
+        if (cDados.DataSetOk(dsParam) && cDados.DataTableOk(dsParam.Tables[0]))
+            replanejamentoTasques = dsParam.Tables[0].Rows[0]["TASQUES_ReplanejarCronograma"].ToString();
+
+        bool usaVersaoReplanejamento = false;
+
+        if (replanejamentoTasques == "S")
+        {
+            string comandoSqlLB = string.Format(
+                 @"BEGIN	               
+                    DECLARE @CodigoProjeto INT
+
+	                SET @CodigoProjeto = {0}
+	                    
+	                SELECT ModeloLinhaBase, NumeroVersao
+		             FROM dbo.f_crono_GetVersoesLBProjeto(@CodigoProjeto) vlb
+		            WHERE VersaoLinhaBase = {1}
+                END
+               ", codigoProjeto, versaoLB);
+
+            DataSet dsLB = cDados.getDataSet(comandoSqlLB);
+
+            if (cDados.DataSetOk(dsLB) && cDados.DataTableOk(dsLB.Tables[0]))
+            {
+                usaVersaoReplanejamento = dsLB.Tables[0].Rows[0]["ModeloLinhaBase"].ToString().Trim() == "2";
+
+                if (!usaVersaoReplanejamento && dsLB.Tables[0].Rows[0]["NumeroVersao"].ToString() == "-1")
+                    versaoLB = -1;
+            }
+        }
+
+        if (usaVersaoReplanejamento)
+        {
+            string comandoSQL = string.Format(
+                 @"BEGIN 
+                DECLARE @CodigoProjeto int,
+                        @CodigoCronogramaLB Varchar(64)    
+
+                SET @CodigoProjeto = {2}
+    
+                SELECT @CodigoCronogramaLB = CodigoCronogramaProjeto
+                  FROM f_crono_GetVersoesLBProjeto(@CodigoProjeto)
+                 WHERE VersaoLinhaBase = {5} -- Parâmetro
+    
+                DECLARE @tmpRetorno TABLE
+                   (EstruturaHierarquica Varchar(8000))
+
+                  INSERT INTO @tmpRetorno
+                  SELECT f.EstruturaHierarquica
+                    FROM dbo.f_GetCronogramaProjeto(@CodigoProjeto,GetDate(), '{3}') AS f  INNER JOIN
+                         dbo.CronogramaProjeto AS cp ON (cp.CodigoProjeto = f.CodigoProjeto) LEFT JOIN
+                         dbo.TarefaCronogramaProjeto AS lb ON (lb.CodigoCronogramaProjeto = @CodigoCronogramaLB
+																                   AND lb.IDTarefa = f.IDTarefa)
+                   WHERE f.TarefaResumo = 0
+                     {4}
+
+                  SELECT f.EstruturaHierarquica, 
+                         f.CodigoNumeroTarefa AS CodigoTarefa, 
+                         f.NomeTarefa, 
+                         f.PercentualReal AS Concluido, 
+                         f.Trabalho, 
+                         f.Custo, 
+                         f.Inicio, 
+                         f.Termino,
+                         lb.InicioLB AS InicioLB,
+                         lb.TerminoLB AS TerminoLB, 
+                         f.Marco AS IndicaMarco, 
+                         f.TarefaResumo AS IndicaTarefaSumario, 
+                         f.Nivel, 
+                         f.IndicaCritica, 
+                         f.TerminoReal, 
+                         f.Duracao,
+                         f.InicioPrevisto, 
+                         f.TerminoPrevisto, 
+                         f.Predecessoras, 
+                         f.CodigoTarefa AS CodigoRealTarefa, 
+                         f.CodigoProjeto, 
+                         f.SequenciaTarefaCronograma,
+                         f.TarefaSuperior, 
+                         DATEDIFF(day, f.TerminoPrevisto, f.Termino) AS Desvio, 
+                         f.PercentualPrevisto, 
+                         f.CodigoCronogramaProjeto 
+                   FROM  {0}.{1}.f_GetCronogramaProjeto(@CodigoProjeto,GetDate(),'{3}') AS f  INNER JOIN
+                         {0}.{1}.CronogramaProjeto AS cp ON (cp.CodigoProjeto = f.CodigoProjeto) LEFT JOIN
+                         {0}.{1}.TarefaCronogramaProjeto AS lb ON (lb.CodigoCronogramaProjeto = @CodigoCronogramaLB
+																			               AND lb.IDTarefa = f.IDTarefa) LEFT JOIN
+                         @tmpRetorno AS tmp ON (tmp.EstruturaHierarquica  LIKE f.EstruturaHierarquica + '%') 
+                   WHERE f.TarefaResumo = 1      
+                  UNION
+                  SELECT f.EstruturaHierarquica, 
+			             f.CodigoNumeroTarefa AS CodigoTarefa, 
+			             f.NomeTarefa, 
+			             f.PercentualReal AS Concluido, 
+			             f.Trabalho, 
+			             f.Custo, 
+                         f.Inicio, 
+                         f.Termino,
+                         lb.InicioLB AS InicioLB,
+                         lb.TerminoLB AS TerminoLB, 
+                         f.Marco AS IndicaMarco, 
+                         f.TarefaResumo AS IndicaTarefaSumario, 
+                         f.Nivel, 
+                         f.IndicaCritica, 
+                         f.TerminoReal, 
+                         f.Duracao,
+                         f.InicioPrevisto, 
+                         f.TerminoPrevisto, 
+                         f.Predecessoras, 
+                         f.CodigoTarefa AS CodigoRealTarefa, 
+                         f.CodigoProjeto, 
+                         f.SequenciaTarefaCronograma,
+                         f.TarefaSuperior, 
+                         DATEDIFF(day, f.TerminoPrevisto, f.Termino) AS Desvio, 
+                         f.PercentualPrevisto, 
+                         f.CodigoCronogramaProjeto
+                    FROM {0}.{1}.f_GetCronogramaProjeto(@CodigoProjeto,GetDate(),'{3}') AS f  INNER JOIN
+                         {0}.{1}.CronogramaProjeto AS cp ON (cp.CodigoProjeto = f.CodigoProjeto) LEFT JOIN
+                         {0}.{1}.TarefaCronogramaProjeto AS lb ON (lb.CodigoCronogramaProjeto = @CodigoCronogramaLB
+																			                AND lb.IDTarefa = f.IDTarefa)
+                   WHERE f.TarefaResumo = 0
+                     {4}
+      
+                  ORDER BY f.SequenciaTarefaCronograma                   
+            END
+               
+               ", cDados.getDbName(), cDados.getDbOwner(), codigoProjeto, codigoRecurso, where, versaoLB);
+            return cDados.getDataSet(comandoSQL);
+        }
+        else
+        {
+            string innerJoinLB = "";
+
+            string innerLeft = fazInner ? "INNER" : "LEFT";
+
+            if (versaoLB != -1)
+            {
+                innerJoinLB = string.Format(@" INNER JOIN
+                               {0}.{1}.CronogramaProjeto AS cp ON (cp.CodigoProjeto = f.CodigoProjeto) LEFT JOIN
+                               {0}.{1}.TarefaCronogramaProjetoLinhaBase AS lb ON (lb.CodigoCronogramaProjeto = cp.CodigoCronogramaProjeto
+                                                                                AND lb.CodigoTarefa = f.CodigoNumeroTarefa
+                                                                                AND lb.VersaoLinhaBase = {2})", cDados.getDbName(), cDados.getDbOwner(), versaoLB + 1);
+            }
+
+            string comandoSQL = string.Format(
+                 @"BEGIN 
+	                DECLARE @CodigoProjeto int    
+        	
+	                SET @CodigoProjeto = {2}
+
+                    DECLARE @tmpRetorno TABLE
+                       (EstruturaHierarquica Varchar(8000))
+   
+                      INSERT INTO @tmpRetorno
+                      SELECT f.EstruturaHierarquica
+                        FROM {0}.{1}.f_GetCronogramaProjeto(@CodigoProjeto,GetDate(), '{3}') AS f {5}
+                       WHERE f.TarefaResumo = 0
+                         {4}
+  
+                      SELECT f.EstruturaHierarquica, f.CodigoNumeroTarefa AS CodigoTarefa, f.NomeTarefa, f.PercentualReal AS Concluido, f.Trabalho, f.Custo, 
+                            f.Inicio, 
+                            f.Termino,
+                            {6} AS InicioLB,
+                            {7} AS TerminoLB, 
+                            f.Marco AS IndicaMarco, f.TarefaResumo AS IndicaTarefaSumario, f.Nivel, f.IndicaCritica, f.TerminoReal, f.Duracao,
+                            f.InicioPrevisto, f.TerminoPrevisto, f.Predecessoras, f.CodigoTarefa AS CodigoRealTarefa, f.CodigoProjeto, f.SequenciaTarefaCronograma,
+                            f.TarefaSuperior, DATEDIFF(day, f.TerminoPrevisto, Termino) AS Desvio, f.PercentualPrevisto, f.CodigoCronogramaProjeto 
+                        FROM {0}.{1}.f_GetCronogramaProjeto(@CodigoProjeto,GetDate(),'-1') AS f {5} {8} JOIN
+                             @tmpRetorno AS tmp ON (tmp.EstruturaHierarquica  LIKE f.EstruturaHierarquica + '%') 
+                       WHERE f.TarefaResumo = 1      
+                      UNION
+                      SELECT f.EstruturaHierarquica, f.CodigoNumeroTarefa AS CodigoTarefa, f.NomeTarefa, f.PercentualReal AS Concluido, f.Trabalho, f.Custo, 
+                               f.Inicio, 
+                               f.Termino,
+                               {6} AS InicioLB,
+                               {7} AS TerminoLB, 
+                               f.Marco AS IndicaMarco, f.TarefaResumo AS IndicaTarefaSumario, f.Nivel, f.IndicaCritica, f.TerminoReal, f.Duracao,
+                               f.InicioPrevisto, f.TerminoPrevisto, f.Predecessoras, f.CodigoTarefa AS CodigoRealTarefa, f.CodigoProjeto, f.SequenciaTarefaCronograma,
+                               f.TarefaSuperior, DATEDIFF(day, f.TerminoPrevisto, Termino) AS Desvio, f.PercentualPrevisto, f.CodigoCronogramaProjeto
+                        FROM {0}.{1}.f_GetCronogramaProjeto(@CodigoProjeto,GetDate(),'{3}') AS f {5}
+                       WHERE f.TarefaResumo = 0
+                        {4}
+                      
+                      ORDER BY f.SequenciaTarefaCronograma                   
+                    END
+               ", cDados.getDbName(), cDados.getDbOwner(), codigoProjeto, codigoRecurso, where, innerJoinLB
+                    , innerJoinLB != "" ? "lb.InicioLB" : "f.InicioPrevisto"
+                    , innerJoinLB != "" ? "lb.TerminoLB" : "f.TerminoPrevisto"
+                    , innerLeft);
+            return cDados.getDataSet(comandoSQL);
+        }
+    }
+
+    private string retornaXML(DataSet dsCrono, string codigoTarefa, string codigoRealTarefa, string sumaria, string nome, string dataInicio, string dataTermino, string duracao, string percentual)
+    {
+        tarefasAdicionadas += codigoTarefa + ";";
+        index++;
+
+        string xml = string.Format(@"
+                    <Task>
+                        <Id>{0}</Id>
+                        <leaf>{7}</leaf>
+                        <Name>{1}</Name>
+                        <Duration>{4}</Duration>
+                        <PercentDone>{5}</PercentDone>
+                        <StartDate>{2}</StartDate>
+                        <EndDate>{3}</EndDate>{6}
+                        ", codigoTarefa
+                         , nome
+                         , dataInicio
+                         , dataTermino
+                         , duracao
+                         , percentual
+                         , sumaria == "1" ? @"
+                         <expanded>1</expanded>" : ""
+                         , sumaria == "1" ? "0" : "1");
+
+        if (sumaria == "1")
+        {
+            xml += "<Tasks>";
+            foreach (DataRow dr in dsCrono.Tables[0].Select("TarefaSuperior = '" + codigoRealTarefa + "'"))
+            {
+                string codigoTarefaIn = dr["CodigoTarefa"].ToString();
+                string codigoRealTarefaIn = dr["CodigoRealTarefa"].ToString();
+                string sumariaIn = dr["IndicaTarefaSumario"].ToString();
+                string nomeIn = dr["NomeTarefa"].ToString();
+                string dataInicioIn = string.Format("{0:yyyy-MM-dd}", dr["Inicio"]) + "T00:00:00";
+                string dataTerminoIn = string.Format("{0:yyyy-MM-dd}", dr["Termino"]) + "T00:00:00";
+                string duracaoIn = string.Format("{0:n0}", dr["Duracao"]);
+                string percentualIn = string.Format("{0:n0}", dr["Concluido"]);
+                xml += retornaXML(dsCrono, codigoTarefaIn, codigoRealTarefaIn, sumariaIn, nomeIn, dataInicioIn, dataTerminoIn, duracaoIn, percentualIn);
+            }
+            xml += "</Tasks>";
+        }
+
+        xml += @"
+                </Task>
+                ";
+
+        return xml;
+    }
+
+    [WebMethod]
+    public Object Update(object data)
+    {
+        string a = "";
+        return data;
+    }
+
+}
+

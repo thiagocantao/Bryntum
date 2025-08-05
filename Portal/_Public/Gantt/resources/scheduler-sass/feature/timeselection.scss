@@ -1,0 +1,70 @@
+@import '../variables';
+
+.b-sch-timeaxiscolumn .b-selected-time-span,
+.b-verticaltimeaxiscolumn .b-selected-time-span {
+    background      : $time-selection-header-background-color;
+    color           : #fff;
+    justify-content : space-between;
+    padding         : 0.4em;
+    opacity         : 1;
+
+    span {
+        white-space : nowrap;
+        overflow    : hidden;
+    }
+
+    .b-selection-start,
+    .b-selection-end {
+        align-self : flex-end;
+    }
+
+    .b-icon-close {
+        position : absolute;
+        top      : 0.2em;
+        right    : 0.4em;
+        cursor   : pointer;
+    }
+}
+
+.b-timelinebase.b-rtl {
+    .b-sch-timeaxiscolumn .b-selected-time-span,
+    .b-verticaltimeaxiscolumn .b-selected-time-span {
+        .b-icon-close {
+            left  : 0.4em;
+            right : auto;
+        }
+    }
+}
+
+// horizontal styles
+.b-sch-timeaxiscolumn .b-selected-time-span {
+    font-size : 0.7em;
+}
+
+// vertical adaptions
+.b-verticaltimeaxiscolumn .b-selected-time-span {
+    width : calc(100% - 2em);
+
+    span {
+        font-size : 0.7em;
+    }
+
+    .b-icon-close {
+        left : 0.4em;
+    }
+}
+
+.b-grid-header,
+.b-timeline-subgrid,
+.b-verticaltimeaxiscolumn {
+    .b-selected-time-span {
+        transition : none;
+        z-index    : 10; // Float above events
+    }
+}
+
+.b-timeline-subgrid .b-selected-time-span {
+    background : $time-selection-background-color;
+}
+
+

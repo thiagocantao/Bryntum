@@ -1,0 +1,11 @@
+@import '../../variables.scss';
+
+.b-container:focus {
+    outline : none;
+}
+
+.b-content-element {
+    position  : relative;
+    display   : flex;
+    flex-flow : row wrap;
+}

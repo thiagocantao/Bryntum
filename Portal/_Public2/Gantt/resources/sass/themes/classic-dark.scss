@@ -1,0 +1,8 @@
+@import '../../schedulerpro-sass/themes/classic-dark.scss';
+
+$percentcircle-background-color : #38383D;
+
+$indicator-dates-color : $grid-cell-border-color;
+$indicator-dates-hover-color : darken($grid-cell-border-color, 20);
+
+@import 'shared';

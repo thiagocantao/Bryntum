@@ -1,0 +1,276 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DevExpress.Web;
+
+public partial class Reunioes_SelecaoItensPautaReuniao : System.Web.UI.Page
+{
+    #region Constants
+
+    #region CONST_ComandoSelectRiscosQuestoes
+
+    private const string CONST_ComandoSelectRiscosQuestoes = @"
+ SELECT CodigoRiscoQuestao AS CodigoObjetoAssociado,
+        CASE WHEN  rq.IndicaRiscoQuestao = 'R' THEN 'Risco'
+             ELSE ( SELECT Valor 
+                      FROM ParametroConfiguracaoSistema pc
+                     WHERE pc.Parametro = 'labelQuestao'
+					   AND pc.CodigoEntidade = rq.CodigoEntidade )
+		END AS 'Tipo',
+		rq.DescricaoRiscoQuestao AS 'Descrição',
+		u.NomeUsuario AS 'Responsável',
+		CASE WHEN rq.ImpactoUrgencia = 1 THEN 'Baixo'
+		     WHEN rq.ImpactoUrgencia = 2 THEN 'Médio'
+		     WHEN rq.ImpactoUrgencia = 3 THEN 'Alto'
+		     ELSE CAST( rq.ImpactoUrgencia AS VARCHAR(5) )
+		END AS 'Impacto/ Urgência',
+		dbo.f_GetCodigoTipoAssociacao('RQ') AS CodigoTipoAssociacao
+   FROM RiscoQuestao rq INNER JOIN
+        Usuario u ON ( u.CodigoUsuario = rq.CodigoUsuarioResponsavel ) 
+  WHERE rq.CodigoProjeto = @CodigoObjeto
+    AND rq.DataExclusao IS NULL
+	AND NOT EXISTS (SELECT 1 
+	                  FROM ObjetoAssociadoEvento AS oae
+	                 WHERE oae.CodigoEvento = @CodigoEvento
+	                   AND oae.CodigoTipoObjetoAssociado = dbo.f_GetCodigoTipoAssociacao('RQ')
+	                   AND oae.CodigoObjetoAssociado = rq.CodigoRiscoQuestao)
+  ORDER BY
+        rq.DescricaoRiscoQuestao";
+
+    #endregion
+
+    #region CONST_ComandoSelectTarefasCronograma
+
+    private const string CONST_ComandoSelectTarefasCronograma = @"
+ SELECT tc.CodigoTarefa AS CodigoObjetoAssociado, 
+        tc.NomeTarefa AS 'Tarefa', 
+ISNULL(tc.InicioReal, ISNULL(tc.InicioLB, tc.Inicio))  AS 'Início',
+ISNULL(tc.TerminoReal, ISNULL(tc.TerminoLB, tc.Termino)) AS 'Término',
+dbo.f_GetCodigoTipoAssociacao('TC') AS CodigoTipoAssociacao,
+tc.SequenciaTarefaCronograma AS 'Sequência',
+tc1.NomeTarefa AS 'Tarefa Superior'
+   FROM CronogramaProjeto cp INNER JOIN
+        TarefaCronogramaProjeto tc ON ( tc.CodigoCronogramaProjeto = cp.CodigoCronogramaProjeto ) LEFT JOIN
+        TarefaCronogramaProjeto tc1 ON ( tc1.CodigoCronogramaProjeto = tc.CodigoCronogramaProjeto AND
+                                         tc1.CodigoTarefa = tc.CodigoTarefaSuperior )
+  WHERE cp.CodigoProjeto = @CodigoObjeto
+    AND tc.DataExclusao IS NULL
+    AND tc1.DataExclusao IS NULL
+AND cp.DataExclusao IS NULL
+AND NOT EXISTS (SELECT 1 
+                 FROM ObjetoAssociadoEvento AS oae
+                WHERE oae.CodigoEvento = @CodigoEvento
+                  AND oae.CodigoTipoObjetoAssociado = dbo.f_GetCodigoTipoAssociacao('TC')
+                  AND oae.CodigoObjetoAssociado = tc.CodigoTarefa)
+  ORDER BY
+        tc.NomeTarefa";
+
+    #endregion
+
+    #region CONST_ComandoSelectIndicadoresPR
+
+    private const string CONST_ComandoSelectIndicadoresPR = @"
+ SELECT DISTINCT 
+        i.CodigoIndicador AS CodigoObjetoAssociado, 
+        i.NomeIndicador AS 'Indicador',  
+        u.NomeUsuario AS 'Responsável', 
+        dbo.f_GetCodigoTipoAssociacao('IN') AS CodigoTipoAssociacao
+   FROM IndicadorOperacional AS i INNER JOIN 
+        Usuario AS u ON (u.CodigoUsuario = i.CodigoUsuarioResponsavel) INNER JOIN 
+        MetaOperacional AS mo ON (mo.CodigoIndicador = i.CodigoIndicador) 
+  WHERE mo.CodigoProjeto = @CodigoObjeto
+	AND NOT EXISTS (SELECT 1 
+	                  FROM ObjetoAssociadoEvento AS oae
+	                 WHERE oae.CodigoEvento = @CodigoEvento
+	                   AND oae.CodigoTipoObjetoAssociado = dbo.f_GetCodigoTipoAssociacao('IN')
+	                   AND oae.CodigoObjetoAssociado = i.CodigoIndicador)
+  ORDER BY
+        i.NomeIndicador";
+
+    #endregion
+
+    #region CONST_ComandoSelectIndicadoresUN
+
+    private const string CONST_ComandoSelectIndicadoresUN = @"
+ SELECT DISTINCT 
+        i.CodigoIndicador AS CodigoObjetoAssociado, 
+        i.NomeIndicador AS 'Indicador',  
+        u.NomeUsuario AS 'Responsável', 
+        dbo.f_GetCodigoTipoAssociacao('IN') AS CodigoTipoAssociacao
+   FROM IndicadorOperacional AS i INNER JOIN 
+        Usuario AS u ON (u.CodigoUsuario = i.CodigoUsuarioResponsavel) INNER JOIN 
+        MetaOperacional AS mo ON (mo.CodigoIndicador = i.CodigoIndicador) INNER JOIN
+        Projeto AS p ON (p.CodigoProjeto = mo.CodigoProjeto)
+  WHERE p.DataExclusao IS NULL
+    AND dbo.f_GetUnidadeSuperior(p.CodigoUnidadeNegocio, @CodigoObjeto) = @CodigoObjeto 
+	AND NOT EXISTS (SELECT 1 
+	                  FROM ObjetoAssociadoEvento AS oae
+	                 WHERE oae.CodigoEvento = @CodigoEvento
+	                   AND oae.CodigoTipoObjetoAssociado = dbo.f_GetCodigoTipoAssociacao('IN')
+	                   AND oae.CodigoObjetoAssociado = i.CodigoIndicador)
+  ORDER BY
+        i.NomeIndicador";
+
+    #endregion
+
+    #region CONST_ComandoSelectPendenciasReuniaoAnterior
+
+    private const string CONST_ComandoSelectPendenciasReuniaoAnterior = @"
+ SELECT 0 AS CodigoObjetoAssociado,
+        0 AS CodigoTipoAssociacao,
+        'Pendencias da Reuniao Anterior' AS 'Descrição'
+  WHERE NOT EXISTS (SELECT 1
+                      FROM ObjetoAssociadoEvento AS oae
+                     WHERE oae.CodigoEvento = @CodigoEvento
+                       AND oae.CodigoObjetoAssociado = 0
+                       AND oae.CodigoTipoObjetoAssociado = 0)";
+
+    #endregion
+
+    #region CONST_ComandoSelectDadosFinanceiros
+
+    private const string CONST_ComandoSelectDadosFinanceiros = @"
+ SELECT 0 AS CodigoObjetoAssociado,
+        -1 AS CodigoTipoAssociacao,
+        'Dados Financeiros' AS 'Descrição'
+  WHERE NOT EXISTS (SELECT 1
+                      FROM ObjetoAssociadoEvento AS oae
+                     WHERE oae.CodigoEvento = @CodigoEvento
+                       AND oae.CodigoObjetoAssociado = 0
+                       AND oae.CodigoTipoObjetoAssociado = -1)";
+
+    #endregion
+
+    #region CONST_ComandoSelectProjetos
+
+    private const string CONST_ComandoSelectProjetos = @"
+ SELECT p.CodigoProjeto AS CodigoObjetoAssociado,
+        p.NomeProjeto AS 'Nome',
+        s.DescricaoStatus AS 'Status',
+        u.NomeUsuario AS 'Gerente do Projeto', 
+        dbo.f_GetCodigoTipoAssociacao('PR') AS CodigoTipoAssociacao
+   FROM Projeto AS p INNER JOIN
+        Status AS s ON p.CodigoStatusProjeto = s.CodigoStatus INNER JOIN
+        Usuario AS u ON p.CodigoGerenteProjeto = u.CodigoUsuario
+  WHERE p.DataExclusao IS NULL
+    AND dbo.f_GetUnidadeSuperior(p.CodigoUnidadeNegocio, @CodigoObjeto) = @CodigoObjeto 
+	AND NOT EXISTS (SELECT 1 
+	                  FROM ObjetoAssociadoEvento AS oae
+	                 WHERE oae.CodigoEvento = @CodigoEvento
+	                   AND oae.CodigoTipoObjetoAssociado = dbo.f_GetCodigoTipoAssociacao('PR')
+	                   AND oae.CodigoObjetoAssociado = p.CodigoProjeto)
+  ORDER BY
+        p.NomeProjeto";
+
+    #endregion
+
+    #endregion
+
+    #region Fields
+
+    int codigoEvento;
+    int codigoObjetoEvento;
+    string iniciaisTipoAssociacao;
+    string iniciaisTipoItensPauta;
+    dados cDados;
+
+    #endregion
+
+    #region Properties
+
+    string _ConnectionString;
+    protected string ConnectionString
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(_ConnectionString))
+                _ConnectionString = cDados.classeDados.getStringConexao();
+            return _ConnectionString;
+        }
+    }
+
+    #endregion
+
+    #region Event Handlers
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        cDados = CdadosUtil.GetCdados(null);
+        try
+        {
+            if (cDados.getInfoSistema("IDUsuarioLogado") == null)
+                Response.Redirect("~/erros/erroInatividade.aspx");
+        }
+        catch
+        {
+            Response.RedirectLocation = String.Format(
+                "{0}erros/erroInatividade.aspx", cDados.getPathSistema());
+            Response.End();
+        }
+
+        sdsDados.ConnectionString = ConnectionString;
+        codigoEvento = int.Parse(Request.QueryString["ce"]);
+        codigoObjetoEvento = int.Parse(Request.QueryString["co"]);
+        iniciaisTipoAssociacao = Request.QueryString["ini"].ToUpper();
+        iniciaisTipoItensPauta = Request.QueryString["itip"].ToUpper();
+        switch (iniciaisTipoItensPauta)
+        {
+            case "RQ":
+                sdsDados.SelectCommand = CONST_ComandoSelectRiscosQuestoes;
+                break;
+            case "TC":
+                sdsDados.SelectCommand = CONST_ComandoSelectTarefasCronograma;
+                break;
+            case "IN":
+                if (iniciaisTipoAssociacao == "PR")
+                    sdsDados.SelectCommand = CONST_ComandoSelectIndicadoresPR;
+                else if (iniciaisTipoAssociacao == "UN" || iniciaisTipoAssociacao == "EN")
+                    sdsDados.SelectCommand = CONST_ComandoSelectIndicadoresUN;
+                break;
+            case "DF":
+                sdsDados.SelectCommand = CONST_ComandoSelectDadosFinanceiros;
+                break;
+            case "PRA":
+                sdsDados.SelectCommand = CONST_ComandoSelectPendenciasReuniaoAnterior;
+                break;
+            case "PR":
+                sdsDados.SelectCommand = CONST_ComandoSelectProjetos;
+                break;
+        }
+        cDados.aplicaEstiloVisual(Page);
+    }
+
+    protected void gvDados_DataBound(object sender, EventArgs e)
+    {
+        gvDados.Columns["CodigoObjetoAssociado"].Visible = false;
+        gvDados.Columns["CodigoTipoAssociacao"].Visible = false;
+        var colunas = gvDados.Columns.OfType<GridViewColumn>();
+        if (!colunas.Any(c => c is GridViewCommandColumn))
+        {
+            GridViewCommandColumn colSelecao = new GridViewCommandColumn(" ");
+            colSelecao.ShowSelectCheckbox = true;
+            colSelecao.VisibleIndex = 0;
+            colSelecao.Width = new Unit(30, UnitType.Pixel);
+            gvDados.Columns.Insert(0, colSelecao);
+        }
+        foreach (GridViewEditDataColumn col in colunas.Where(c => c is GridViewEditDataColumn))
+            col.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    }
+
+    protected void callback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(e.Parameter))
+            return;
+        string[] codigos = e.Parameter.Split(';');
+        foreach (string codigoObjetoAssociado in codigos)
+        {
+            sdsDados.InsertParameters["CodigoObjetoAssociado"].DefaultValue = codigoObjetoAssociado;
+            sdsDados.Insert();
+        }
+    }
+
+    #endregion
+}

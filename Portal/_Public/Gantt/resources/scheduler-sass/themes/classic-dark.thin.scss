@@ -1,0 +1,22 @@
+@import 'vars/classic-dark-vars';
+@import '../all';
+
+.b-sch-style-calendar.b-sch-event-wrap > .b-sch-event {
+    &,
+    & > .b-sch-event-segments > .b-sch-event {
+        --event-background-l : 20%;
+
+        &:hover {
+            --event-background-l : 26%;
+        }
+
+        &.b-sch-event-selected {
+            --event-background-l : 32%;
+        }
+
+        .b-sch-event-content *,
+        &.b-sch-event-selected .b-sch-event-content * {
+            color : #c0c1c2;
+        }
+    }
+}

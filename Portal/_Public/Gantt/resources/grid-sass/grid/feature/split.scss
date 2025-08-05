@@ -1,0 +1,29 @@
+.b-split-container {
+    display : flex;
+    width   : 100%;
+    height  : 100%;
+
+    &.b-split-horizontal,
+    &.b-split-both {
+        flex-direction : column;
+    }
+
+    &.b-split-vertical {
+        flex-direction : row;
+    }
+
+    .b-split-top,
+    .b-split-bottom {
+        display : flex;
+        flex    : 1;
+    }
+
+    > .b-gridbase,
+    > div > .b-gridbase {
+        flex       : 1;
+        // Override flex-basis from .b-outer to make each split same size
+        flex-basis : 0;
+        // Also override any configured height
+        height     : unset !important;
+    }
+}

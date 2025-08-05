@@ -1,0 +1,355 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+using DevExpress.Web;
+using System.Drawing;
+
+
+public partial class _Estrategia_wizard_atualizacaoResultados : System.Web.UI.Page
+{
+    dados cDados;
+    DataTable dtGrid = new DataTable();
+
+    private string resolucaoCliente = "";
+    private int idUsuarioLogado;
+    private int codigoEntidade;
+    private int alturaPrincipal = 0, larguraPrincipal = 0;
+
+    static private DataSet datasetDoGridDaTela;
+
+    public bool podeEditar = false;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        System.Collections.Specialized.OrderedDictionary listaParametrosDados = new System.Collections.Specialized.OrderedDictionary();
+
+        listaParametrosDados["RemoteIPUsuario"] = Session["RemoteIPUsuario"] + "";
+        listaParametrosDados["NomeUsuario"] = Session["NomeUsuario"] + "";
+
+        cDados = CdadosUtil.GetCdados(listaParametrosDados);
+        try
+        {
+            if (cDados.getInfoSistema("IDUsuarioLogado") == null)
+                Response.Redirect("~/erros/erroInatividade.aspx");
+        }
+        catch
+        {
+            Response.RedirectLocation = cDados.getPathSistema() + "erros/erroInatividade.aspx";
+            Response.End();
+        }
+
+        //Get dado do usuario logado, e do qual entidad ele pertenece.        
+        idUsuarioLogado = int.Parse(cDados.getInfoSistema("IDUsuarioLogado").ToString());
+        codigoEntidade = int.Parse(cDados.getInfoSistema("CodigoEntidade").ToString());
+
+        cDados.aplicaEstiloVisual(Page);
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        HeaderOnTela();
+
+        if (!IsPostBack && !IsCallback)
+        {
+            DataSet ds1 = cDados.getParametrosSistema("tituloPaginasWEB");
+            if (cDados.DataSetOk(ds1) && cDados.DataTableOk(ds1.Tables[0]))
+            {
+                Page.Title = ds1.Tables[0].Rows[0][0].ToString() + " - Atualização dos Resultados";
+            }
+        }
+        
+        filtraRegistros();
+
+        populaGrid();
+        
+
+        resolucaoCliente = cDados.getInfoSistema("ResolucaoCliente").ToString();
+        defineAlturaTela(resolucaoCliente);
+
+        if (!IsPostBack)
+        {
+            cDados.excluiNiveisAbaixo(1);
+            cDados.insereNivel(1, this);
+            Master.geraRastroSite();
+            Master.verificaAcaoFavoritos(true, lblTituloTela.Text, "RESULT", "EST", -1, Resources.traducao.adicionar_aos_favoritos);
+        }
+    }
+
+    private void HeaderOnTela()
+    {
+        // a pagina não pode ser armazenada no cache.
+        Response.Cache.SetCacheability(HttpCacheability.NoCache); // Ok
+
+        // inclui o arquivo de scripts desta tela
+        Header.Controls.Add(cDados.getLiteral(@"<link href=""../../estilos/cdisEstilos.css"" rel=""stylesheet"" type=""text/css"" />"));
+        Header.Controls.Add(cDados.getLiteral(@"<script type=""text/javascript"">var pastaImagens = ""../../imagens"";</script>"));
+        Header.Controls.Add(cDados.getLiteral(@"<script type=""text/javascript"" language=""javascript"" src=""../../scripts/AtualizacaoResultados.js""></script>"));
+        this.TH(this.TS("AtualizacaoResultados"));
+    }
+
+    #region VARIOS
+
+    private string getCodigoIndicador()
+    {
+        if (gvDados.FocusedRowIndex >= 0)
+        {
+            return gvDados.GetRowValues(gvDados.FocusedRowIndex, "CodigoIndicador").ToString();
+
+        }
+        else
+        {
+            return "-1";
+        }
+    }
+
+    private void defineAlturaTela(string resolucaoCliente)
+    {
+        // Calcula a altura da tela
+        alturaPrincipal = int.Parse(resolucaoCliente.Substring(resolucaoCliente.IndexOf('x') + 1));
+        larguraPrincipal = int.Parse(resolucaoCliente.Substring(0, resolucaoCliente.IndexOf('x')));
+
+        int altura = (alturaPrincipal - 135);
+        if (altura > 0)
+            gvDados.Settings.VerticalScrollableHeight = altura - 230;
+
+        gvDados.Width = new Unit(larguraPrincipal - 50);
+
+        pcDados.Width = larguraPrincipal - 80;
+
+        divDadosIndicador.Style.Add("overflow", "auto");
+        divDadosIndicador.Style.Add("height", (altura - 150) + "px");
+
+        divTabResultados.Style.Add("overflow", "auto");
+        divTabResultados.Style.Add("height", (altura - 150) + "px");
+        frmMetas.Style.Add("height", (altura - 150) + "px");
+        frmMetas.Style.Add("overflow", "auto");
+
+    }
+
+    private string getFormatacaoDado(int codigoDado)
+    {
+        string unidadeMedidaDado = "";
+        int casaDecimaisDado = 0;
+
+        DataSet dsDados = cDados.getDados("AND dun.IndicaUnidadeCriadoraDado = 'S' AND d.CodigoDado = " + codigoDado);
+
+        if (cDados.DataSetOk(dsDados) && cDados.DataTableOk(dsDados.Tables[0]))
+        {
+            casaDecimaisDado = dsDados.Tables[0].Rows[0]["CasasDecimais"] + "" != "" ? int.Parse(dsDados.Tables[0].Rows[0]["CasasDecimais"].ToString()) : 0;
+            unidadeMedidaDado = dsDados.Tables[0].Rows[0]["SiglaUnidadeMedida"] + "";
+        }
+
+        if (unidadeMedidaDado == "%")
+        {
+            return "{0:n" + casaDecimaisDado + "}" + unidadeMedidaDado;
+        }
+        else
+        {
+            if (unidadeMedidaDado.Contains("$"))
+            {
+                return unidadeMedidaDado + " {0:n" + casaDecimaisDado + "}";
+            }
+            else
+            {
+                return "{0:n" + casaDecimaisDado + "}";
+            }
+        }
+    }
+
+    private void filtraRegistros()
+    {
+        if (!IsPostBack && !IsCallback)
+        {
+            string nomeUsuario = "";
+            if (Request.QueryString["Filtro"] != null && Request.QueryString["Filtro"].ToString() == "NomeUsuario")
+            {
+                DataSet dsFiltro = cDados.getUsuarios(" AND u.CodigoUsuario = " + idUsuarioLogado);
+
+                if (cDados.DataSetOk(dsFiltro) && cDados.DataTableOk(dsFiltro.Tables[0]))
+                {
+                    nomeUsuario = dsFiltro.Tables[0].Rows[0]["NomeUsuario"].ToString();
+
+                    gvDados.FilterExpression = "[NomeUsuarioAtualizacao] = '" + nomeUsuario + "'";
+                }
+            }
+
+            if (Request.QueryString["Atrasados"] != null && Request.QueryString["Atrasados"].ToString() == "S")
+            {
+                if (gvDados.FilterExpression == "")
+                    gvDados.FilterExpression = string.Format("[Atrasado] = 'Sim'");
+                else
+                    gvDados.FilterExpression += string.Format(" AND [Atrasado] = 'Sim'");
+
+            }
+
+            if (Request.QueryString["DiasVencimento"] != null && Request.QueryString["DiasVencimento"].ToString() != "")
+            {
+                int diasVencimento = int.Parse(Request.QueryString["DiasVencimento"].ToString());
+                DateTime dataVencimento = DateTime.Now.AddDays(diasVencimento);
+
+                if (gvDados.FilterExpression == "")
+                    gvDados.FilterExpression = string.Format(" [Atualizacao] < #{0:yyyy-MM-dd}#", dataVencimento);
+                else
+                    gvDados.FilterExpression += string.Format(" AND [Atualizacao] < #{0:yyyy-MM-dd}#", dataVencimento);
+            }
+        }
+    }
+
+    #endregion
+       
+    #region Provavelmente não será preciso alterar nada aqui.
+
+    // retorna a primary key da tabela
+    private string getChavePrimaria()
+    {
+        if (gvDados.FocusedRowIndex >= 0)
+            return gvDados.GetRowValues(gvDados.FocusedRowIndex, "CodigoIndicador").ToString();
+        else
+            return "-1";
+    }
+
+    #endregion
+
+    #region GRIDVIEW
+
+    #region GvDados
+
+    //GridPrincipal
+    private void populaGrid()
+    {
+        string select = string.Format(@", CAST(CASE WHEN EXISTS 
+				(
+					SELECT TOP 1 1 
+						FROM {0}.{1}.[IndicadorUnidade]	AS [iu]
+							INNER JOIN {0}.{1}.[UnidadeNegocio]	AS [un]	ON 
+								(			un.[CodigoUnidadeNegocio] = iu.[CodigoUnidadeNegocio]                                    
+									AND un.[CodigoEntidade]			= {3} AND un.IndicaUnidadeNegocioAtiva = 'S' AND un.DataExclusao IS NULL)
+						WHERE
+									iu.[CodigoIndicador]		= i.[CodigoIndicador]
+							AND {0}.{1}.f_VerificaAcessoConcedido({2},  {3}, iu.[CodigoIndicador], NULL, 'IN', iu.[CodigoUnidadeNegocio], NULL, 'IN_RegRes') = 1
+				) THEN 1 ELSE 0 END AS Bit) AS [Permissoes] 
+            ", cDados.getDbName(), cDados.getDbOwner(), idUsuarioLogado, codigoEntidade);
+
+        string where = string.Format(@" AND EXISTS 
+				(
+					SELECT TOP 1 1 
+						FROM {0}.{1}.[IndicadorUnidade]	AS [iu]
+							INNER JOIN {0}.{1}.[UnidadeNegocio]	AS [un]	ON 
+								(			un.[CodigoUnidadeNegocio] = iu.[CodigoUnidadeNegocio]
+									AND un.[CodigoEntidade]			= {3} AND un.IndicaUnidadeNegocioAtiva = 'S' AND un.DataExclusao IS NULL)
+						WHERE
+									iu.[CodigoIndicador]		= i.[CodigoIndicador]
+							AND {0}.{1}.f_VerificaAcessoConcedido({2},  {3}, iu.[CodigoIndicador], NULL, 'IN', iu.[CodigoUnidadeNegocio], NULL, 'IN_VerRes') = 1
+				) 
+            ", cDados.getDbName(), cDados.getDbOwner(), idUsuarioLogado, codigoEntidade);
+
+
+        string podeAgruparPorMapa = "N";
+
+        DataSet dsParam = cDados.getParametrosSistema(codigoEntidade, "utilizaColunaMapaTelaIndicadores");
+
+        if (cDados.DataSetOk(dsParam) && cDados.DataTableOk(dsParam.Tables[0]))
+            podeAgruparPorMapa = dsParam.Tables[0].Rows[0]["utilizaColunaMapaTelaIndicadores"].ToString();
+
+        if (podeAgruparPorMapa == "N")
+        {
+            gvDados.Columns["MapaEstrategico"].Visible = false;
+            ((GridViewDataTextColumn)gvDados.Columns["MapaEstrategico"]).GroupIndex = -1;
+        }
+
+        string definicaoUnidade = "";
+
+        DataSet dsDefinicaoUnidade = cDados.getDefinicaoUnidade(codigoEntidade);
+        if (cDados.DataSetOk(dsDefinicaoUnidade) && cDados.DataTableOk(dsDefinicaoUnidade.Tables[0]))
+        {
+            definicaoUnidade = dsDefinicaoUnidade.Tables[0].Rows[0]["DescricaoTipoUnidadeNegocio"].ToString();
+        }
+
+        gvDados.Columns["NomeUnidadeNegocio"].Caption = definicaoUnidade;
+
+        if (!IsPostBack)
+        {
+            datasetDoGridDaTela = cDados.getIndicadoresUnidadeNegocio(idUsuarioLogado, codigoEntidade, codigoEntidade, select, podeAgruparPorMapa, where);
+        }
+        if (cDados.DataSetOk(datasetDoGridDaTela))
+        {
+            gvDados.DataSource = datasetDoGridDaTela.Tables[0];
+            gvDados.DataBind();
+        }
+    }
+
+    protected void gvDados_CustomButtonInitialize(object sender, ASPxGridViewCustomButtonEventArgs e)
+    {
+        if (gvDados.GetRowValues(e.VisibleIndex, "Permissoes") != null)
+        {
+            podeEditar = (bool)gvDados.GetRowValues(e.VisibleIndex, "Permissoes"); //(permissao & 2) > 0;
+
+            if (e.ButtonID.Equals("btnEditarCustom"))
+            {
+                if (podeEditar)
+                {
+                    e.Enabled = true;
+                }
+                else
+                {
+                    e.Text = "Detalhe da Meta";
+                    e.Enabled = true;
+                    e.Image.Url = "~/imagens/botoes/pFormulario.png";
+                }
+            }
+        }
+    }
+
+    #endregion
+        
+    #endregion
+
+    #region Eventos Menu Botões Inserção e Exportação
+
+    protected void menu_ItemClick(object source, DevExpress.Web.MenuItemEventArgs e)
+    {
+        string parameter = e.Item.Text == "" ? "XLS" : e.Item.Text;
+
+        System.Collections.Specialized.OrderedDictionary listaParametrosDados = new System.Collections.Specialized.OrderedDictionary();
+
+        listaParametrosDados["RemoteIPUsuario"] = Session["RemoteIPUsuario"] + "";
+        listaParametrosDados["NomeUsuario"] = Session["NomeUsuario"] + "";
+
+        cDados = CdadosUtil.GetCdados(listaParametrosDados);
+        cDados.eventoClickMenu((source as ASPxMenu), parameter, ASPxGridViewExporter1, "AtlResEst");
+    }
+
+    protected void menu_Init(object sender, EventArgs e)
+    {
+        System.Collections.Specialized.OrderedDictionary listaParametrosDados = new System.Collections.Specialized.OrderedDictionary();
+
+        listaParametrosDados["RemoteIPUsuario"] = Session["RemoteIPUsuario"] + "";
+        listaParametrosDados["NomeUsuario"] = Session["NomeUsuario"] + "";
+
+        cDados = CdadosUtil.GetCdados(listaParametrosDados);
+        cDados.setaDefinicoesBotoesInserirExportar((sender as ASPxMenu), false, "", false, true, false, "AtlResEst", lblTituloTela.Text, this);
+    }
+
+    #endregion
+    protected void ASPxGridViewExporter1_RenderBrick(object sender, ASPxGridViewExportRenderingEventArgs e)
+    {
+        if (e.RowType == GridViewRowType.Group)
+        {
+            if (e.Text.IndexOf(':') != -1)
+            {
+                string DescricaoColuna = e.Text.Substring(0, e.Text.IndexOf(':'));
+                string strValue = System.Text.RegularExpressions.Regex.Replace(DescricaoColuna + ": " + e.Value, @"<[^>]*>", " ");
+                e.TextValue = strValue;
+                e.Text = strValue;
+            }
+        }
+    }
+}

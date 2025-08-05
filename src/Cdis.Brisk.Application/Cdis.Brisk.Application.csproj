@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{17A15EDF-103E-4E97-80B9-D874734AB96B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cdis.Brisk.Application</RootNamespace>
+    <AssemblyName>Cdis.Brisk.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Applications\Cronograma\CronogramaGanttApplication.cs" />
+    <Compile Include="Applications\Cronograma\CronogramaGanttBalanceamentoApplication.cs" />
+    <Compile Include="Applications\Cronograma\CronogramaGanttPlanoAcaoApplication.cs" />
+    <Compile Include="Applications\Cronograma\CronogramaProjetoApplication.cs" />
+    <Compile Include="Applications\Cronograma\CronogramaGanttProjetoMetaApplication.cs" />
+    <Compile Include="Applications\Relatorio\CarteiraApplication.cs" />
+    <Compile Include="Applications\Relatorio\RelatorioPlanoTrabalhoApplication.cs" />
+    <Compile Include="Applications\Relatorio\RelatorioMinisterioApplication.cs" />
+    <Compile Include="Applications\StoredProcedure\PGravaRegistroPrevisaoOrcamentariaProjetoApplication.cs" />
+    <Compile Include="Applications\UnidadeNegocio\UnidadeNegocioApplication.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Applications\StoredProcedure\PGetOrcamentacaoProjetoApplication.cs" />
+    <Compile Include="UnitOfWorkApplication.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cdis.Brisk.DataTransfer\Cdis.Brisk.DataTransfer.csproj">
+      <Project>{BCFD7169-D740-455E-ADB1-23B33697AC35}</Project>
+      <Name>Cdis.Brisk.DataTransfer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Domain\Cdis.Brisk.Domain.csproj">
+      <Project>{3147F046-AE2D-4893-A262-6B63CF8E06A7}</Project>
+      <Name>Cdis.Brisk.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Core.Interface\Cdis.Brisk.Infra.Core.Interface.csproj">
+      <Project>{752EE204-9781-4F48-9B54-4814E54822DD}</Project>
+      <Name>Cdis.Brisk.Infra.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Core.Pdf\Cdis.Brisk.Infra.Core.Pdf.csproj">
+      <Project>{c3e4c834-9468-45a2-8983-655f8ffaf2ce}</Project>
+      <Name>Cdis.Brisk.Infra.Core.Pdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Core\Cdis.Brisk.Infra.Core.csproj">
+      <Project>{9A5304B0-F4A2-4DAD-ADCA-6E5FA5B48DD5}</Project>
+      <Name>Cdis.Brisk.Infra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Service\Cdis.Brisk.Service.csproj">
+      <Project>{2D37DBC3-A765-4C29-8082-1AA457231A7F}</Project>
+      <Name>Cdis.Brisk.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

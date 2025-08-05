@@ -1,0 +1,7 @@
+<%@ Page Language="C#" MasterPageFile="~/novaCdis.master" AutoEventWireup="true" CodeFile="FrameReunioes.aspx.cs"
+    Inherits="Reuniones_FrameReuniones" Title="Reuniones" %>
+<%@ MasterType VirtualPath="~/novaCdis.master" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="AreaTrabalho" runat="Server">
+    <iframe frameborder="0" name="framePrincipal" scrolling="auto" src="./reunioes.aspx?CUN=<%=codigoUnidade %>&MOD=<%=moduloSistema %>"
+                                            style="height: <%=alturaTabela %>" width="100%" marginheight="0"></iframe>
+</asp:Content>

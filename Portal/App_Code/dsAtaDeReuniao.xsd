@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsAtaDeReuniao" targetNamespace="http://tempuri.org/dsAtaDeReuniao.xsd" xmlns:mstns="http://tempuri.org/dsAtaDeReuniao.xsd" xmlns="http://tempuri.org/dsAtaDeReuniao.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsAtaDeReuniao" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsAtaDeReuniao" msprop:Generator_UserDSName="dsAtaDeReuniao">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ParticipanteEvento" msprop:Generator_TableClassName="ParticipanteEventoDataTable" msprop:Generator_TableVarName="tableParticipanteEvento" msprop:Generator_TablePropName="ParticipanteEvento" msprop:Generator_RowDeletingName="ParticipanteEventoRowDeleting" msprop:Generator_UserTableName="ParticipanteEvento" msprop:Generator_RowChangingName="ParticipanteEventoRowChanging" msprop:Generator_RowEvHandlerName="ParticipanteEventoRowChangeEventHandler" msprop:Generator_RowDeletedName="ParticipanteEventoRowDeleted" msprop:Generator_RowEvArgName="ParticipanteEventoRowChangeEvent" msprop:Generator_RowChangedName="ParticipanteEventoRowChanged" msprop:Generator_RowClassName="ParticipanteEventoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoEvento" msprop:Generator_ColumnVarNameInTable="columnCodigoEvento" msprop:Generator_ColumnPropNameInRow="CodigoEvento" msprop:Generator_ColumnPropNameInTable="CodigoEventoColumn" msprop:Generator_UserColumnName="CodigoEvento" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoParticipante" msprop:Generator_ColumnVarNameInTable="columnCodigoParticipante" msprop:Generator_ColumnPropNameInRow="CodigoParticipante" msprop:Generator_ColumnPropNameInTable="CodigoParticipanteColumn" msprop:Generator_UserColumnName="CodigoParticipante" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeParticipante" msprop:Generator_ColumnVarNameInTable="columnNomeParticipante" msprop:Generator_ColumnPropNameInRow="NomeParticipante" msprop:Generator_ColumnPropNameInTable="NomeParticipanteColumn" msprop:Generator_UserColumnName="NomeParticipante" type="xs:string" minOccurs="0" />
+              <xs:element name="EMail" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="EMail" msprop:Generator_ColumnVarNameInTable="columnEMail" msprop:Generator_ColumnPropNameInTable="EMailColumn" msprop:Generator_UserColumnName="EMail" type="xs:string" minOccurs="0" />
+              <xs:element name="Telefone" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Telefone" msprop:Generator_ColumnVarNameInTable="columnTelefone" msprop:Generator_ColumnPropNameInTable="TelefoneColumn" msprop:Generator_UserColumnName="Telefone" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TarefaToDoList" msprop:Generator_TableClassName="TarefaToDoListDataTable" msprop:Generator_TableVarName="tableTarefaToDoList" msprop:Generator_TablePropName="TarefaToDoList" msprop:Generator_RowDeletingName="TarefaToDoListRowDeleting" msprop:Generator_UserTableName="TarefaToDoList" msprop:Generator_RowChangingName="TarefaToDoListRowChanging" msprop:Generator_RowEvHandlerName="TarefaToDoListRowChangeEventHandler" msprop:Generator_RowDeletedName="TarefaToDoListRowDeleted" msprop:Generator_RowEvArgName="TarefaToDoListRowChangeEvent" msprop:Generator_RowChangedName="TarefaToDoListRowChanged" msprop:Generator_RowClassName="TarefaToDoListRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoEvento" msprop:Generator_ColumnVarNameInTable="columnCodigoEvento" msprop:Generator_ColumnPropNameInRow="CodigoEvento" msprop:Generator_ColumnPropNameInTable="CodigoEventoColumn" msprop:Generator_UserColumnName="CodigoEvento" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoTarefa" msprop:Generator_ColumnVarNameInTable="columnCodigoTarefa" msprop:Generator_ColumnPropNameInRow="CodigoTarefa" msprop:Generator_ColumnPropNameInTable="CodigoTarefaColumn" msprop:Generator_UserColumnName="CodigoTarefa" type="xs:int" minOccurs="0" />
+              <xs:element name="DescricaoTarefa" msprop:Generator_ColumnVarNameInTable="columnDescricaoTarefa" msprop:Generator_ColumnPropNameInRow="DescricaoTarefa" msprop:Generator_ColumnPropNameInTable="DescricaoTarefaColumn" msprop:Generator_UserColumnName="DescricaoTarefa" type="xs:string" minOccurs="0" />
+              <xs:element name="TerminoPrevisto" msprop:Generator_ColumnVarNameInTable="columnTerminoPrevisto" msprop:Generator_ColumnPropNameInRow="TerminoPrevisto" msprop:Generator_ColumnPropNameInTable="TerminoPrevistoColumn" msprop:Generator_UserColumnName="TerminoPrevisto" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CodigoUsuarioResponsavelTarefa" msprop:Generator_ColumnVarNameInTable="columnCodigoUsuarioResponsavelTarefa" msprop:Generator_ColumnPropNameInRow="CodigoUsuarioResponsavelTarefa" msprop:Generator_ColumnPropNameInTable="CodigoUsuarioResponsavelTarefaColumn" msprop:Generator_UserColumnName="CodigoUsuarioResponsavelTarefa" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoStatusTarefa" msprop:Generator_ColumnVarNameInTable="columnCodigoStatusTarefa" msprop:Generator_ColumnPropNameInRow="CodigoStatusTarefa" msprop:Generator_ColumnPropNameInTable="CodigoStatusTarefaColumn" msprop:Generator_UserColumnName="CodigoStatusTarefa" type="xs:int" minOccurs="0" />
+              <xs:element name="DescricaoStatusTarefa" msprop:Generator_ColumnVarNameInTable="columnDescricaoStatusTarefa" msprop:Generator_ColumnPropNameInRow="DescricaoStatusTarefa" msprop:Generator_ColumnPropNameInTable="DescricaoStatusTarefaColumn" msprop:Generator_UserColumnName="DescricaoStatusTarefa" type="xs:string" minOccurs="0" />
+              <xs:element name="Responsavel" msprop:Generator_ColumnVarNameInTable="columnResponsavel" msprop:Generator_ColumnPropNameInRow="Responsavel" msprop:Generator_ColumnPropNameInTable="ResponsavelColumn" msprop:Generator_UserColumnName="Responsavel" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Evento" msprop:Generator_TableClassName="EventoDataTable" msprop:Generator_TableVarName="tableEvento" msprop:Generator_TablePropName="Evento" msprop:Generator_RowDeletingName="EventoRowDeleting" msprop:Generator_UserTableName="Evento" msprop:Generator_RowChangingName="EventoRowChanging" msprop:Generator_RowEvHandlerName="EventoRowChangeEventHandler" msprop:Generator_RowDeletedName="EventoRowDeleted" msprop:Generator_RowEvArgName="EventoRowChangeEvent" msprop:Generator_RowChangedName="EventoRowChanged" msprop:Generator_RowClassName="EventoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoEvento" msprop:Generator_ColumnVarNameInTable="columnCodigoEvento" msprop:Generator_ColumnPropNameInRow="CodigoEvento" msprop:Generator_ColumnPropNameInTable="CodigoEventoColumn" msprop:Generator_UserColumnName="CodigoEvento" type="xs:int" minOccurs="0" />
+              <xs:element name="DescricaoResumida" msprop:Generator_ColumnVarNameInTable="columnDescricaoResumida" msprop:Generator_ColumnPropNameInRow="DescricaoResumida" msprop:Generator_ColumnPropNameInTable="DescricaoResumidaColumn" msprop:Generator_UserColumnName="DescricaoResumida" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoResponsavelEvento" msprop:Generator_ColumnVarNameInTable="columnCodigoResponsavelEvento" msprop:Generator_ColumnPropNameInRow="CodigoResponsavelEvento" msprop:Generator_ColumnPropNameInTable="CodigoResponsavelEventoColumn" msprop:Generator_UserColumnName="CodigoResponsavelEvento" type="xs:int" minOccurs="0" />
+              <xs:element name="LocalEvento" msprop:Generator_ColumnVarNameInTable="columnLocalEvento" msprop:Generator_ColumnPropNameInRow="LocalEvento" msprop:Generator_ColumnPropNameInTable="LocalEventoColumn" msprop:Generator_UserColumnName="LocalEvento" type="xs:string" minOccurs="0" />
+              <xs:element name="Pauta" msprop:Generator_ColumnVarNameInTable="columnPauta" msprop:Generator_ColumnPropNameInRow="Pauta" msprop:Generator_ColumnPropNameInTable="PautaColumn" msprop:Generator_UserColumnName="Pauta" type="xs:string" minOccurs="0" />
+              <xs:element name="ResumoEvento" msprop:Generator_ColumnVarNameInTable="columnResumoEvento" msprop:Generator_ColumnPropNameInRow="ResumoEvento" msprop:Generator_ColumnPropNameInTable="ResumoEventoColumn" msprop:Generator_UserColumnName="ResumoEvento" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoTipoEvento" msprop:Generator_ColumnVarNameInTable="columnCodigoTipoEvento" msprop:Generator_ColumnPropNameInRow="CodigoTipoEvento" msprop:Generator_ColumnPropNameInTable="CodigoTipoEventoColumn" msprop:Generator_UserColumnName="CodigoTipoEvento" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoObjetoAssociado" msprop:Generator_ColumnVarNameInTable="columnCodigoObjetoAssociado" msprop:Generator_ColumnPropNameInRow="CodigoObjetoAssociado" msprop:Generator_ColumnPropNameInTable="CodigoObjetoAssociadoColumn" msprop:Generator_UserColumnName="CodigoObjetoAssociado" type="xs:int" minOccurs="0" />
+              <xs:element name="DescricaoObjeto" msprop:Generator_ColumnVarNameInTable="columnDescricaoObjeto" msprop:Generator_ColumnPropNameInRow="DescricaoObjeto" msprop:Generator_ColumnPropNameInTable="DescricaoObjetoColumn" msprop:Generator_UserColumnName="DescricaoObjeto" type="xs:string" minOccurs="0" />
+              <xs:element name="DescricaoTipoEvento" msprop:Generator_ColumnVarNameInTable="columnDescricaoTipoEvento" msprop:Generator_ColumnPropNameInRow="DescricaoTipoEvento" msprop:Generator_ColumnPropNameInTable="DescricaoTipoEventoColumn" msprop:Generator_UserColumnName="DescricaoTipoEvento" type="xs:string" minOccurs="0" />
+              <xs:element name="InicioReal" msprop:Generator_ColumnVarNameInTable="columnInicioReal" msprop:Generator_ColumnPropNameInRow="InicioReal" msprop:Generator_ColumnPropNameInTable="InicioRealColumn" msprop:Generator_UserColumnName="InicioReal" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoReal" msprop:Generator_ColumnVarNameInTable="columnTerminoReal" msprop:Generator_ColumnPropNameInRow="TerminoReal" msprop:Generator_ColumnPropNameInTable="TerminoRealColumn" msprop:Generator_UserColumnName="TerminoReal" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Evento_ParticipanteEvento" msdata:parent="Evento" msdata:child="ParticipanteEvento" msdata:parentkey="CodigoEvento" msdata:childkey="CodigoEvento" msprop:Generator_UserChildTable="ParticipanteEvento" msprop:Generator_ChildPropName="GetParticipanteEventoRows" msprop:Generator_ParentPropName="EventoRow" msprop:Generator_UserRelationName="Evento_ParticipanteEvento" msprop:Generator_RelationVarName="relationEvento_ParticipanteEvento" msprop:Generator_UserParentTable="Evento" />
+      <msdata:Relationship name="Evento_TarefaToDoList" msdata:parent="Evento" msdata:child="TarefaToDoList" msdata:parentkey="CodigoEvento" msdata:childkey="CodigoEvento" msprop:Generator_UserChildTable="TarefaToDoList" msprop:Generator_ChildPropName="GetTarefaToDoListRows" msprop:Generator_ParentPropName="EventoRow" msprop:Generator_UserRelationName="Evento_TarefaToDoList" msprop:Generator_RelationVarName="relationEvento_TarefaToDoList" msprop:Generator_UserParentTable="Evento" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

@@ -1,0 +1,265 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using DevExpress.Web.ASPxTreeList;
+using DevExpress.Web;
+
+public partial class Reunioes_ExecucaoReuniao : System.Web.UI.Page
+{
+    int codigoReuniao;
+    int codigoUsuarioLogado;
+
+    dados cDados;
+
+    DataTable dtItensPauta;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        cDados = CdadosUtil.GetCdados(null);
+
+        AtualizaSessao();
+
+        codigoReuniao = int.Parse(Request.QueryString["cod"]);
+        codigoUsuarioLogado = Convert.ToInt32(
+            cDados.getInfoSistema("IDUsuarioLogado") ?? -1);
+
+        DefineAlturaTela();
+        if (!IsCallback)
+            Session["AJUSTE_ESPACO_DIPONIVEL"] = 0;
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        CarregaListaItens();
+        DefineUrlIncialFrame();
+        ConfiguraTamanhoFonte();
+        if (!(IsPostBack || IsCallback))
+            splitter.Panes["menu"].Collapsed = true;
+    }
+
+    private void ConfiguraTamanhoFonte()
+    {
+        if (!hfGeral.Contains("AjusteFonte"))
+            hfGeral.Add("AjusteFonte", 0);
+    }
+
+    private void AtualizaSessao()
+    {
+        if (!IsPostBack && !IsCallback)
+        {
+            hfDadosSessao.Set("CodigoEntidade", cDados.getInfoSistema("CodigoEntidade").ToString());
+            hfDadosSessao.Set("Resolucao", cDados.getInfoSistema("ResolucaoCliente").ToString());
+            hfDadosSessao.Set("IDUsuarioLogado", cDados.getInfoSistema("IDUsuarioLogado").ToString());
+            hfDadosSessao.Set("IDEstiloVisual", cDados.getInfoSistema("IDEstiloVisual").ToString());
+            hfDadosSessao.Set("NomeUsuarioLogado", cDados.getInfoSistema("NomeUsuarioLogado").ToString());
+            hfDadosSessao.Set("CodigoCarteira", cDados.getInfoSistema("CodigoCarteira").ToString());
+        }
+
+        cDados.setInfoSistema("CodigoEntidade", hfDadosSessao.Get("CodigoEntidade").ToString());
+        cDados.setInfoSistema("ResolucaoCliente", hfDadosSessao.Get("Resolucao").ToString());
+        cDados.setInfoSistema("IDUsuarioLogado", hfDadosSessao.Get("IDUsuarioLogado").ToString());
+        cDados.setInfoSistema("IDEstiloVisual", hfDadosSessao.Get("IDEstiloVisual").ToString());
+        cDados.setInfoSistema("NomeUsuarioLogado", hfDadosSessao.Get("NomeUsuarioLogado").ToString());
+        cDados.setInfoSistema("CodigoCarteira", hfDadosSessao.Get("CodigoCarteira").ToString());
+    }
+
+    private DataRow ObtemRegistroReuniao()
+    {
+        if (dtItensPauta == null || dtItensPauta.Rows.Count == 0)
+            return null;
+
+        int rowIndex = gvListaItrens.FocusedRowIndex;
+        if (rowIndex >= 0 && rowIndex < dtItensPauta.Rows.Count)
+            return dtItensPauta.Rows[rowIndex];
+
+        return dtItensPauta.AsEnumerable().Single(
+                    row => row.Field<string>("IniciaisTipoAssociacao") == "RE");
+    }
+
+    private void DefineUrlIncialFrame()
+    {
+        DataRow drReuniao = ObtemRegistroReuniao();
+        object codigoObjeto = drReuniao["CodigoObjeto"];
+        object codigoTipoAssociacaoReuniao = drReuniao["CodigoTipoObjeto"];
+        object iniciaisTipoAssociacao = drReuniao["IniciaisTipoAssociacao"];
+        string source = string.Format(
+            "ExecucaoReuniao_Item.aspx?cr={1}&cto={0}&co={2}&ini={3}",
+            codigoTipoAssociacaoReuniao,
+            codigoReuniao,
+            codigoObjeto,
+            iniciaisTipoAssociacao);
+        frmConteudo.Attributes["src"] = source;
+    }
+
+    private void CarregaListaItens()
+    {
+        dtItensPauta = ObtemItensPauta();
+        gvListaItrens.DataSource = dtItensPauta;
+        gvListaItrens.DataBind();
+    }
+
+    private DataTable ObtemItensPauta()
+    {
+        string comandoSql = string.Format(@"
+            DECLARE @CodigoReuniao INT
+                SET @CodigoReuniao = {2}
+
+            SELECT f.*,
+                   ta.IniciaisTipoAssociacao,               
+                   @CodigoReuniao AS CodigoReuniao,
+                   ISNULL(f.DescricaoTipoObjeto, f.NomeObjeto) AS DescricaoTipoObjeto2
+              FROM {0}.{1}.f_GetItensPautaReuniao(@CodigoReuniao) AS f LEFT JOIN
+                   {0}.{1}.TipoAssociacao AS ta ON ta.CodigoTipoAssociacao = f.CodigoTipoObjeto"
+                    , cDados.getDbName()
+                    , cDados.getDbOwner()
+                    , codigoReuniao);
+
+        DataTable dt = cDados.getDataSet(comandoSql).Tables[0];
+        DataRow drConsideracoesFinais = dt.NewRow();
+        drConsideracoesFinais["SequenciaApresentacao"] = dt.Rows.Count + 1;
+        drConsideracoesFinais["NomeObjeto"] = "Considerações Finais/ Pauta";
+        drConsideracoesFinais["CodigoTipoObjeto"] = -100;
+        drConsideracoesFinais["CodigoObjeto"] = -100;
+        drConsideracoesFinais["CodigoReuniao"] = codigoReuniao;
+        dt.Rows.Add(drConsideracoesFinais);
+        return dt;
+    }
+
+    private void DefineAlturaTela()
+    {
+        DefineAlturaTela(0);
+    }
+
+    private void DefineAlturaTela(int ajuste)
+    {
+        string resolucaoCliente = cDados.getInfoSistema("ResolucaoCliente").ToString();
+        int alturaPrincipal = int.Parse(resolucaoCliente.Substring(resolucaoCliente.IndexOf('x') + 1));
+        int alturaSplitter = (alturaPrincipal - 100) + ajuste;
+        int alturaFrame = (alturaPrincipal - 110) + ajuste;
+        splitter.Height = new Unit(alturaSplitter, UnitType.Pixel);
+        frmConteudo.Style.Add(HtmlTextWriterStyle.Height, alturaFrame + "px");
+    }
+
+    protected void gvListaItrens_CustomJSProperties(object sender, DevExpress.Web.ASPxGridViewClientJSPropertiesEventArgs e)
+    {
+        if (!e.Properties.ContainsKey("cpRowCount"))
+            e.Properties.Add("cpRowCount", 0);
+        e.Properties["cpRowCount"] = gvListaItrens.VisibleRowCount;
+    }
+
+    protected void callbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+    {
+        int ajuste;
+        if (int.TryParse(e.Parameter, out ajuste))
+        {
+            DefineAlturaTela(ajuste);
+            Session["AJUSTE_ESPACO_DIPONIVEL"] = ajuste;
+            var itemFullscreen = menu.Items.FindByName("fullscreen");
+            if (ajuste == 0)
+            {
+                itemFullscreen.Image.Url = "~/imagens/reuniao_fullscreen.png";
+                itemFullscreen.ToolTip = "Tela cheia";
+            }
+            else
+            {
+                itemFullscreen.Image.Url = "~/imagens/reuniao_fullscreen_exit.png";
+                itemFullscreen.ToolTip = "Tela normal";
+            }
+        }
+    }
+
+    protected void callback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        string[] parameters = e.Parameter.Split(';');
+        string acao = parameters[0];
+        DateTime data = DateTime.Parse(parameters[1]);
+
+        string comandoSql = string.Empty;
+        switch (acao)
+        {
+            case "iniciar":
+                #region Comando SQL
+                comandoSql = string.Format(@"
+ UPDATE {0}.{1}.Evento 
+    SET InicioReal = '{2:dd-MM-yyyy HH:mm:ss.fff}', 
+        DataUltimaAlteracao = getdate(), 
+        CodigoUsuarioUltimaAlteracao = {3} 
+  WHERE CodigoEvento = {4} "
+                        , cDados.getDbName()
+                        , cDados.getDbOwner()
+                        , data
+                        , codigoUsuarioLogado
+                        , codigoReuniao);
+                #endregion
+                break;
+            case "encerrar":
+                #region Comando SQL
+                comandoSql = string.Format(@"
+ UPDATE {0}.{1}.Evento 
+    SET TerminoReal = '{2:dd-MM-yyyy HH:mm:ss.fff}', 
+        DataUltimaAlteracao = getdate(), 
+        CodigoUsuarioUltimaAlteracao = {3} 
+  WHERE CodigoEvento = {4} "
+                        , cDados.getDbName()
+                        , cDados.getDbOwner()
+                        , data
+                        , codigoUsuarioLogado
+                        , codigoReuniao);
+                break;
+                #endregion
+            default:
+                break;
+        }
+        if (!string.IsNullOrEmpty(comandoSql))
+        {
+            int registrosAfetados = 0;
+            cDados.execSQL(comandoSql, ref registrosAfetados);
+        }
+    }
+
+    protected void calInicioReuniao_Load(object sender, EventArgs e)
+    {
+        DataRow drReuniao = ObtemRegistroReuniao();
+        if (drReuniao == null || !(drReuniao["DataInicioPrevisto"] is DateTime))
+            return;
+
+        var itemIniciar = menu.Items.FindByName("iniciar");
+        var itemEncerrar = menu.Items.FindByName("encerrar");
+        if (drReuniao["DataInicioReal"] is DateTime)
+        {
+            itemIniciar.ClientVisible = false;
+            itemEncerrar.ClientVisible = true;
+        }
+        else
+        {
+            DateTime dataInicioPrevisto = (DateTime)drReuniao["DataInicioPrevisto"];
+            calInicioReuniao.SelectedDate = dataInicioPrevisto;
+            calInicioReuniao.VisibleDate = dataInicioPrevisto;
+            timeHoraInicioReuniao.DateTime = dataInicioPrevisto;
+        }
+    }
+
+    protected void calTerminoReuniao_Load(object sender, EventArgs e)
+    {
+        DataRow drReuniao = ObtemRegistroReuniao();
+        if (drReuniao == null || !(drReuniao["DataTerminoPrevisto"] is DateTime))
+            return;
+
+        if (drReuniao["DataTerminoReal"] is DateTime)
+        {
+            var itemEncerrar = menu.Items.FindByName("encerrar");
+            itemEncerrar.ClientVisible = false;
+        }
+        else
+        {
+            DateTime dataTerminoPrevisto = (DateTime)drReuniao["DataTerminoPrevisto"];
+            calTerminoReuniao.SelectedDate = dataTerminoPrevisto;
+            calTerminoReuniao.VisibleDate = dataTerminoPrevisto;
+            timeHoraTerminoReuniao.DateTime = dataTerminoPrevisto;
+        }
+    }
+}

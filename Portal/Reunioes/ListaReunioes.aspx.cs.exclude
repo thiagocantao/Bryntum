@@ -1,0 +1,646 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Web.UI;
+using DevExpress.Web;
+using DevExpress.XtraPrinting;
+using DevExpress.XtraReports.Web;
+using System.Text.RegularExpressions;
+
+public partial class Reunioes_ListaReunioes : System.Web.UI.Page
+{
+    #region Fields
+
+    int codigoUsuario;
+    int codigoEntidade;
+    int codigoObjetoAssociado;
+    string iniciaisTipoObjeto;
+    string iniciaisTipoItensPauta;
+    string codigoModuloSistema;
+    string nomeObjetoReuniao;
+    string descricaoTipoObjetoReuniao;
+    bool editaMensagemEvento;
+
+    ReportViewer reportViewer;
+
+    dados cDados;
+
+    protected bool podeAdministrar;
+
+    #endregion
+
+    #region Properties
+
+    string _ConnectionString;
+    protected string ConnectionString
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(_ConnectionString))
+                _ConnectionString = cDados.classeDados.getStringConexao();
+            return _ConnectionString;
+        }
+    }
+
+    #endregion
+
+    #region Event Handlers
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        cDados = CdadosUtil.GetCdados(null);
+        try
+        {
+            if (cDados.getInfoSistema("IDUsuarioLogado") == null)
+                Response.Redirect("~/erros/erroInatividade.aspx");
+        }
+        catch
+        {
+            Response.RedirectLocation = String.Format(
+                "{0}erros/erroInatividade.aspx", cDados.getPathSistema());
+            Response.End();
+        }
+
+        codigoUsuario = Convert.ToInt32(cDados.getInfoSistema("IDUsuarioLogado"));
+        codigoEntidade = Convert.ToInt32(cDados.getInfoSistema("CodigoEntidade"));
+        codigoObjetoAssociado = int.Parse(Request.QueryString["co"]);
+        codigoModuloSistema = Request.QueryString["MOD"];
+        iniciaisTipoObjeto = Request.QueryString["ini"];
+        iniciaisTipoItensPauta = Request.QueryString["itip"];
+        nomeObjetoReuniao = Request.QueryString["no"];
+        switch (iniciaisTipoObjeto)
+        {
+            case "PR":
+                descricaoTipoObjetoReuniao = "Projeto:";
+                break;
+            case "UN":
+                descricaoTipoObjetoReuniao = "Unidade de Negócio:";
+                break;
+            case "EN":
+                descricaoTipoObjetoReuniao = "Entidade:";
+                break;
+            case "ME":
+                descricaoTipoObjetoReuniao = "Mapa Estratégico:";
+                break;
+        }
+        Session["CodigoUsuarioLogado"] = codigoUsuario;
+        Session["ce"] = codigoEntidade;
+
+        podeAdministrar = cDados.VerificaPermissaoUsuario(codigoUsuario, codigoEntidade, codigoObjetoAssociado, "null", iniciaisTipoObjeto, 0, "null", iniciaisTipoObjeto + "_AdmReu");
+
+        //cDados.aplicaEstiloVisual(Page);
+        sdsReunioes.ConnectionString = ConnectionString;
+        sdsResponsavel.ConnectionString = ConnectionString;
+        sdsTipoEvento.ConnectionString = ConnectionString;
+        sdsItensPauta.ConnectionString = ConnectionString;
+        sdsParticipantes.ConnectionString = ConnectionString;
+
+        editaMensagemEvento = true;
+        DataSet ds = cDados.getParametrosSistema(codigoEntidade, "editaMensagemEvento");
+        if (cDados.DataSetOk(ds) && cDados.DataTableOk(ds.Tables[0]))
+            editaMensagemEvento = ds.Tables[0].Rows[0]["editaMensagemEvento"].ToString().Equals("S");
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        DefineAlturaTela();
+    }
+
+    protected void callback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        string parameter = (e.Parameter ?? string.Empty).ToLower();
+        switch (parameter)
+        {
+            case "export":
+                MemoryStream stream = new MemoryStream();
+                XlsExportOptionsEx options = new XlsExportOptionsEx();
+                options.TextExportMode = TextExportMode.Value;
+                exporter.WriteXls(stream, options);
+                Session["exportStream"] = stream;
+                break;
+            case "enviar":
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    rel_EnvioPautaReuniao rel =
+                        (rel_EnvioPautaReuniao)reportViewer.Report;
+                    rel.ExportToHtml(ms);
+                    ms.Position = 0;
+                    using (StreamReader sr = new StreamReader(ms))
+                    {
+                        int codigoEvento = (int)rel.pCodigoEvento.Value;
+                        string strConteudoHtml = AjustaHtmlCorpoEmail(sr.ReadToEnd());
+                        string pauta = (string)rel.pResumoPauta.Value;
+                        string local = (string)rel.pLocalReuniao.Value;
+                        string assunto = (string)rel.pAssuntoReuniao.Value;
+                        string moderador = (string)rel.pResponsavelReuniao.Value;
+                        string emailModerador = (string)rel.pEmailResponsavelReuniao.Value;
+                        DateTime termino = (DateTime)rel.pDataTerminoPrevistoReuniao.Value;
+                        DateTime inicio = (DateTime)rel.pDataInicioPrevistoReuniao.Value;
+                        e.Result = EnviarEmailParticipantesReuniao(codigoEvento, strConteudoHtml,
+                            pauta, local, assunto, moderador, emailModerador, inicio, termino);
+                    }
+                }
+                break;
+        }
+    }
+
+    protected void gvDados_CustomButtonInitialize(object sender, ASPxGridViewCustomButtonEventArgs e)
+    {
+        if (e.CellType == GridViewTableCommandCellType.Data)
+        {
+            object[] values = (object[])gvDados.GetRowValues(e.VisibleIndex,
+                "InicioReal", "TerminoReal", "DataPublicacaoAta");
+            bool possuiInicioReal = !Convert.IsDBNull(values[0]);
+            bool possuiTerminoReal = !Convert.IsDBNull(values[1]);
+            bool possuiDataPublicacao = !Convert.IsDBNull(values[2]);
+            switch (e.ButtonID)
+            {
+                case "btnPlanejarReuniao":
+                    if (!podeAdministrar)
+                    {
+                        e.Enabled = false;
+                        e.Image.Url = "~/imagens/planejamentoReuniaoDes.png";
+                    }
+                    e.Image.ToolTip = possuiInicioReal ?
+                        "Consultar Planejamento da Reunião" : "Planejar Reunião";
+                    break;
+                case "btnRealizarReuniao":
+                    e.Image.ToolTip = possuiTerminoReal ?
+                        "Consultar Planejamento" : "Realizar Reunião";
+                    break;
+                case "btnFehcarAta":
+                    e.Image.ToolTip = possuiDataPublicacao ?
+                        "Consultar Ata" : "Fechar Ata";
+                    break;
+                case "btnExcluir":
+                    if (possuiInicioReal || !podeAdministrar)
+                    {
+                        e.Enabled = false;
+                        e.Image.Url = "~/imagens/botoes/excluirRegDes.png";
+                    }
+                    break;
+            }
+        }
+    }
+
+    protected void gvDados_HeaderFilterFillItems(object sender, ASPxGridViewHeaderFilterEventArgs e)
+    {
+        string fieldName = e.Column.FieldName;
+        if (fieldName == "Inicio" || fieldName == "Termino")
+        {
+            var periodos = e.Values.Where(v => v.IsFilterByValue).Select(
+                v => DateTime.Parse(v.Value)).Distinct(new MonthComparer()).ToList();
+            e.Values.RemoveAll(v => !v.IsShowAllFilter);
+            foreach (var p in periodos)
+            {
+                int ano = p.Year;
+                int mes = p.Month;
+                DateTime inicio = new DateTime(ano, mes, 1);
+                DateTime termino = new DateTime(ano, mes, DateTime.DaysInMonth(ano, mes));
+                string query = string.Format("[{0}] >= #{1} 00:00:00# And [{0}] <= #{2} 23:59:59#",
+                    fieldName, inicio.ToString("yyyy-MM-dd"), termino.ToString("yyyy-MM-dd"));
+                e.AddValue(UppercaseFirst(p.ToString("y")), p.ToString(), query);
+            }
+        }
+    }
+
+    protected void gvDados_RowInserting(object sender, DevExpress.Web.Data.ASPxDataInsertingEventArgs e)
+    {
+        DateTime inicio = (DateTime)e.NewValues["Inicio"];
+        DateTime termino = (DateTime)e.NewValues["Termino"];
+        DateTime horarioInicio = ConvertToDateTime(e.NewValues["HoraInicio"]);
+        DateTime horarioTermino = ConvertToDateTime(e.NewValues["HoraTermino"]);
+        e.NewValues["Inicio"] = inicio.Date.AddHours(horarioInicio.Hour).AddMinutes(horarioInicio.Minute);
+        e.NewValues["Termino"] = termino.Date.AddHours(horarioTermino.Hour).AddMinutes(horarioTermino.Minute);
+    }
+
+    protected void gvDados_RowUpdating(object sender, DevExpress.Web.Data.ASPxDataUpdatingEventArgs e)
+    {
+        DateTime inicio = (DateTime)e.NewValues["Inicio"];
+        DateTime termino = (DateTime)e.NewValues["Termino"];
+        DateTime horarioInicio = ConvertToDateTime(e.NewValues["HoraInicio"]);
+        DateTime horarioTermino = ConvertToDateTime(e.NewValues["HoraTermino"]);
+        e.NewValues["Inicio"] = inicio.Date.AddHours(horarioInicio.Hour).AddMinutes(horarioInicio.Minute);
+        e.NewValues["Termino"] = termino.Date.AddHours(horarioTermino.Hour).AddMinutes(horarioTermino.Minute);
+    }
+
+    protected void gvDados_CellEditorInitialize(object sender, ASPxGridViewEditorEventArgs e)
+    {
+        object inicioReal = gvDados.GetRowValues(e.VisibleIndex, "InicioReal");
+        bool eventoIniciado = !(inicioReal == null || Convert.IsDBNull(inicioReal));
+        e.Editor.ReadOnly = eventoIniciado;
+    }
+
+    protected void gvItensPauta_BeforePerformDataSelect(object sender, EventArgs e)
+    {
+        Session["CodigoEvento"] = ((ASPxGridView)sender).GetMasterRowKeyValue();
+    }
+
+    protected void gvItensPauta_CellEditorInitialize(object sender, ASPxGridViewEditorEventArgs e)
+    {
+        ASPxGridView grid = (ASPxGridView)sender;
+        if (e.Column.FieldName == "SequenciaApresentacao")
+        {
+            ASPxSpinEdit editor = (ASPxSpinEdit)e.Editor;
+            editor.MaxValue = grid.VisibleRowCount;
+            editor.Focus();
+        }
+        else if (e.Column.FieldName.Contains("IndicaMostra"))
+        {
+            ASPxCheckBox editor = (ASPxCheckBox)e.Editor;
+            string tipo = (string)grid.GetRowValues(
+                grid.FocusedRowIndex, "DescricaoTipoObjetoAssociado");
+            editor.ClientEnabled = (tipo.ToLower() == "projeto");
+        }
+    }
+
+    protected void gvItensPauta_Init(object sender, EventArgs e)
+    {
+        cDados.aplicaEstiloVisual((ASPxGridView)sender);
+    }
+
+    protected void gvParticipantes_Init(object sender, EventArgs e)
+    {
+        cDados.aplicaEstiloVisual((ASPxGridView)sender);
+    }
+
+    protected void teHoraInicio_Init(object sender, EventArgs e)
+    {
+        ASPxTimeEdit teHoraInicio = (ASPxTimeEdit)sender;
+        teHoraInicio.ID = "teHoraInicio";
+        cDados.aplicaEstiloVisual(teHoraInicio);
+    }
+
+    protected void teHoraTermino_Init(object sender, EventArgs e)
+    {
+        ASPxTimeEdit teHoraTermino = (ASPxTimeEdit)sender;
+        teHoraTermino.ID = "teHoraTermino";
+        cDados.aplicaEstiloVisual(teHoraTermino);
+    }
+
+    protected void gvParticipantes_CommandButtonInitialize(object sender, ASPxGridViewCommandButtonEventArgs e)
+    {
+        ASPxGridView grid = (ASPxGridView)sender;
+        if (IndicaReuniaoIniciada(gvDados.FocusedRowIndex))
+        {
+            e.Enabled = false;
+            e.Image.Url = e.ButtonType == ColumnCommandButtonType.Edit ?
+                "~/imagens/botoes/editarRegDes.PNG" :
+                "~/imagens/botoes/excluirRegDes.PNG";
+        }
+        if (e.ButtonType == ColumnCommandButtonType.Edit)
+        {
+            string indicaParticipanteExterno = (string)
+                grid.GetRowValues(e.VisibleIndex, "IndicaParticipanteExterno");
+            e.Visible = indicaParticipanteExterno == "S";
+        }
+        else if (e.ButtonType == ColumnCommandButtonType.Delete)
+        {
+            int codigoResponsavelEvento = Convert.ToInt32(
+                gvDados.GetRowValues(gvDados.FocusedRowIndex, "CodigoUsuario"));
+            int codigoParticipante = Convert.ToInt32(
+                grid.GetRowValues(e.VisibleIndex, "CodigoUsuario"));
+            if (codigoResponsavelEvento == codigoParticipante)
+            {
+                e.Enabled = false;
+                e.Image.ToolTip = "Não é possíbel excluir o moderador da reunião";
+                e.Image.Url = "~/imagens/botoes/excluirRegDes.PNG";
+            }
+        }
+    }
+
+    protected void gvItensPauta_CommandButtonInitialize(object sender, ASPxGridViewCommandButtonEventArgs e)
+    {
+        if (IndicaReuniaoIniciada(gvDados.FocusedRowIndex))
+        {
+            e.Enabled = false;
+            e.Image.Url = e.ButtonType == ColumnCommandButtonType.Edit ?
+                "~/imagens/botoes/editarRegDes.PNG" :
+                "~/imagens/botoes/excluirRegDes.PNG";
+        }
+    }
+
+    protected void OnInitBotoes(object sender, EventArgs e)
+    {
+        ASPxImage img = (ASPxImage)sender;
+        int rowIndex = gvDados.FocusedRowIndex;
+        bool indicaReuniaoIniciada = IndicaReuniaoIniciada(rowIndex);
+        if (indicaReuniaoIniciada)
+        {
+            img.ClientEnabled = false;
+            img.Cursor = "dafault";
+            img.ImageUrl = img.ImageUrl.Insert(img.ImageUrl.Length - 4, "Des");
+        }
+        else if (img.ID == "imgItensPautaDF" || img.ID == "imgItensPautaPRA")
+        {
+            string nomeColuna = img.ID == "imgItensPautaDF" ? "PautaIncluiDadosFinanceiros" : "PautaIncluiPendenciasReuniaoAnterior";
+            var dic = ObtemDicionarioDadosLinhaGrid(gvDados, rowIndex, nomeColuna);
+            if (dic[nomeColuna].ToString() == "S")
+            {
+                img.ClientEnabled = false;
+                img.Cursor = "dafault";
+                img.ImageUrl = img.ImageUrl.Insert(img.ImageUrl.Length - 4, "Des");
+            }
+        }
+    }
+
+    protected void reportViewer_Load(object sender, EventArgs e)
+    {
+        string colAssuntoReuniao = "DescricaoResumida";
+        string colCodigoReuniao = "CodigoEvento";
+        string colInicioReuniao = "Inicio";
+        string colTerminoReuniao = "Termino";
+        string colLocalReuniao = "LocalEvento";
+        string colResponsavelReuniao = "NomeUsuario";
+        string colEmailResponsavelReuniao = "EMail";
+        string colResumoPauta = "Pauta";
+
+        Dictionary<string, object> dictionary = ObtemDicionarioDadosLinhaGrid(
+            gvDados, colAssuntoReuniao, colCodigoReuniao, colInicioReuniao, colTerminoReuniao,
+            colEmailResponsavelReuniao, colLocalReuniao, colResponsavelReuniao, colResumoPauta);
+        reportViewer = (ReportViewer)sender;
+
+        rel_EnvioPautaReuniao rel = new rel_EnvioPautaReuniao();
+        rel.pAssuntoReuniao.Value = dictionary[colAssuntoReuniao];
+        rel.pCodigoEvento.Value = dictionary[colCodigoReuniao];
+        rel.pDataInicioPrevistoReuniao.Value = dictionary[colInicioReuniao];
+        rel.pDataTerminoPrevistoReuniao.Value = dictionary[colTerminoReuniao];
+        rel.pDescricaoTipoObjetoReuniao.Value = descricaoTipoObjetoReuniao;
+        rel.pLocalReuniao.Value = dictionary[colLocalReuniao];
+        rel.pNomeObjetoReuniao.Value = nomeObjetoReuniao;
+        rel.pResponsavelReuniao.Value = dictionary[colResponsavelReuniao];
+        rel.pEmailResponsavelReuniao.Value = dictionary[colEmailResponsavelReuniao];
+        rel.pResumoPauta.Value = dictionary[colResumoPauta];
+        rel.pTextoApresentacao.Value = ObtemTextoApresentacao(
+            reportViewer.Parent.NamingContainer.NamingContainer as ASPxNavBar);
+
+        reportViewer.Report = rel;
+    }
+
+    protected void gvDados_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+    {
+        if (e.RowType == GridViewRowType.Data)
+        {
+            if (gvDados.GetRowValues(e.VisibleIndex, "IndicaAtrasada").ToString() == "S")
+                e.Row.ForeColor = Color.Red;
+        }
+    }
+
+    protected void pageControl_Init(object sender, EventArgs e)
+    {
+        ASPxPageControl pageControl = (ASPxPageControl)sender;
+        if (gvDados.IsNewRowEditing)
+        {
+            pageControl.TabPages[1].ClientVisible = false;
+            pageControl.TabPages[2].ClientVisible = false;
+            pageControl.TabPages[3].ClientVisible = false;
+        }
+        else
+        {
+            object inicioReal = gvDados.GetRowValues(gvDados.FocusedRowIndex, "InicioReal");
+            pageControl.TabPages[3].ClientVisible = Convert.IsDBNull(inicioReal) || inicioReal == null;
+        }
+    }
+
+    protected void sdsReunioes_Inserted(object sender, System.Web.UI.WebControls.SqlDataSourceStatusEventArgs e)
+    {
+        if (e.Exception == null && e.AffectedRows > 0)
+        {
+            Session["CodigoNovoEvento"] =
+                e.Command.Parameters["@CodigoNovoEvento"].Value;
+        }
+    }
+
+    protected void gvDados_AfterPerformCallback(object sender, ASPxGridViewAfterPerformCallbackEventArgs e)
+    {
+        if (e.CallbackName == "UPDATEEDIT")
+        {
+            object codigoNovoEvento = Session["CodigoNovoEvento"];
+            if (codigoNovoEvento is int)
+            {
+                int index = gvDados.FindVisibleIndexByKeyValue(codigoNovoEvento);
+                Session["CodigoNovoEvento"] = null;
+                gvDados.StartEdit(index);
+            }
+        }
+    }
+
+    #endregion
+
+    #region Methods
+
+    protected bool IndicaReuniaoIniciada(int rowIndex)
+    {
+        return !Convert.IsDBNull(gvDados.GetRowValues(rowIndex, "InicioReal"));
+    }
+
+    static string UppercaseFirst(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return string.Empty;
+        return char.ToUpper(s[0]) + s.Substring(1);
+    }
+
+    private Control GetEditFormTemplateControl(string id)
+    {
+        ASPxPageControl pageControl = (ASPxPageControl)gvDados.FindEditFormTemplateControl("pageControl");
+        return pageControl.FindControl(id);
+    }
+
+    private void DefineAlturaTela()
+    {
+        string resolucaoCliente = cDados.getInfoSistema("ResolucaoCliente").ToString();
+        int alturaPrincipal = int.Parse(resolucaoCliente.Substring(resolucaoCliente.IndexOf('x') + 1));
+        int altura = (alturaPrincipal - 290);
+        gvDados.Settings.VerticalScrollableHeight = altura;
+    }
+
+    private static DateTime ConvertToDateTime(object value)
+    {
+        if (value == null || Convert.IsDBNull(value))
+            return new DateTime();
+
+        if (value is DateTime)
+            return (DateTime)value;
+
+        string strValue = value.ToString();
+        return DateTime.Parse(strValue);
+    }
+
+    private static string ObtemTextoApresentacao(ASPxNavBar navBar)
+    {
+        return (navBar.Groups[0].FindControl("memoTextoApresentacao") as ASPxMemo).Text;
+    }
+
+    private static Dictionary<string, object> ObtemDicionarioDadosLinhaGrid(ASPxGridView grid, int rowIndex, params string[] colunas)
+    {
+        int qtdeColunas = colunas.Length;
+        if (qtdeColunas < 1) return null;
+
+        object rowValues = grid.GetRowValues(grid.FocusedRowIndex, colunas);
+        object[] values = (qtdeColunas == 1) ?
+            new object[] { rowValues } : (object[])rowValues;
+        int indice = 0;
+        Dictionary<string, object> dictionary = values.ToDictionary(v => colunas[indice++]);
+        return dictionary;
+    }
+
+    private static Dictionary<string, object> ObtemDicionarioDadosLinhaGrid(ASPxGridView grid, params string[] colunas)
+    {
+        int rowIndex = grid.FocusedRowIndex;
+        return ObtemDicionarioDadosLinhaGrid(grid, rowIndex, colunas);
+    }
+
+    protected void memoTextoApresentacao_Init(object sender, EventArgs e)
+    {
+        ASPxMemo memo = (ASPxMemo)sender;
+        memo.ClientEnabled = editaMensagemEvento;
+        memo.Text = string.Format("Você foi convidado para uma reunião agendada no {0}, conforme informações apresentadas a seguir:", cDados.getNomeSistema());
+    }
+
+    private string EnviarEmailParticipantesReuniao(int codigoEvento, string strConteudoHtml, string pauta, string local, string assunto, string moderador, string emailModerador, DateTime inicio, DateTime termino)
+    {
+        var participantes = sdsParticipantes.Select(DataSourceSelectArguments.Empty);
+        var emailsParticipantes = participantes.OfType<DataRowView>().Select(r => (string)r["EMail"]);
+        pauta = Server.HtmlEncode(pauta).Replace("\n", "</p><p>");
+        pauta = string.Format("<p>{0}</p>", pauta);
+
+        StringBuilder conteudoAnexo = new StringBuilder();
+
+        #region Conteúdo anexo
+
+        conteudoAnexo.AppendLine("BEGIN:VCALENDAR");
+        conteudoAnexo.AppendLine("PRODID:-//Google Inc//Google Calendar 70.9054//EN");
+        conteudoAnexo.AppendLine("VERSION:2.0");
+        conteudoAnexo.AppendLine("CALSCALE:GREGORIAN");
+        conteudoAnexo.AppendLine("METHOD:PUBLISH");
+        conteudoAnexo.AppendLine("X-WR-CALNAME:Evento");
+        conteudoAnexo.AppendLine("X-WR-TIMEZONE:America/Sao_Paulo");
+        conteudoAnexo.AppendLine("X-WR-CALDESC:");
+        conteudoAnexo.AppendLine("BEGIN:VEVENT");
+        conteudoAnexo.AppendLine(string.Format("DTSTART:{0:yyyyMMddThhmmss}", inicio));
+        conteudoAnexo.AppendLine(string.Format("DTEND:{0:yyyyMMddThhmmss}", termino));
+        conteudoAnexo.AppendLine(string.Format("DTSTAMP:{0:yyyyMMddThhmmss}", inicio));
+        conteudoAnexo.AppendLine(string.Format("ORGANIZER;CN={0}:mailto:{1}", moderador, emailModerador));
+        conteudoAnexo.AppendLine(string.Format("UID:{0:yyyyMMddThhmmss}{1:yyyyMMddThhmmss}-CDIS_Generated", inicio, termino));
+        conteudoAnexo.AppendLine("ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED");
+        conteudoAnexo.AppendLine(string.Format(" ;CN=\"{0}\";RSVP=FALSE", moderador));
+        conteudoAnexo.AppendLine(string.Format(" :mailto:{0}", emailModerador));
+        foreach (string email in emailsParticipantes.Where(email => email != emailModerador))
+        {
+            conteudoAnexo.AppendLine("ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE");
+            conteudoAnexo.AppendLine(string.Format(" :mailto:{0}", email));
+        }
+        conteudoAnexo.AppendLine(string.Format("CREATED:{0:yyyyMMddThhmmss}Z", inicio));
+        conteudoAnexo.AppendLine("DESCRIPTION: ");
+        conteudoAnexo.AppendLine(string.Format("LAST-MODIFIED:{0:yyyyMMddThhmmss}Z", inicio));
+        conteudoAnexo.AppendLine(string.Format("LOCATION:{0}", local));
+        conteudoAnexo.AppendLine("SEQUENCE:0");
+        conteudoAnexo.AppendLine("STATUS:CONFIRMED");
+        conteudoAnexo.AppendLine(string.Format("SUMMARY;LANGUAGE=pt-br:{0}", assunto));
+        conteudoAnexo.AppendLine(string.Format("X-ALT-DESC;FMTTYPE=text/html:{0}", pauta));
+        conteudoAnexo.AppendLine("TRANSP:OPAQUE");
+        conteudoAnexo.AppendLine("END:VEVENT");
+        conteudoAnexo.AppendLine("END:VCALENDAR");
+
+        #endregion
+
+        int retornoStatus = 0;
+        string destinatarios = string.Join(";", emailsParticipantes);
+
+        string statusEnvio = cDados.enviarEmail(assunto, destinatarios, "",
+            strConteudoHtml, "", conteudoAnexo.ToString(), ref retornoStatus);
+
+        string msgError1 = string.Empty;
+        string msgError2 = string.Empty;
+        if (retornoStatus == 1)
+        {
+            string strCodigoEvento = codigoEvento.ToString();
+            string[] arrayParticipantesSelecionados = participantes
+                .OfType<DataRowView>().Select(r => r["CodigoUsuario"].ToString()).ToArray();
+            cDados.atualizaEnvioPauta(strCodigoEvento, codigoUsuario.ToString(), ref msgError1);
+            cDados.atualizaParticipantesEnvioPautaEmail(arrayParticipantesSelecionados, strCodigoEvento, ref msgError2);
+        }
+
+        return string.Format("{0}{3}{1}{3}{2}", statusEnvio, msgError1, msgError2, Environment.NewLine);
+    }
+
+    private string AjustaHtmlCorpoEmail(string strConteudoHtml)
+    {
+        string patternTagStyle = @"<style\b[^>]*>([\s\S]*?)</style>";
+        string trechoEstilos = Regex.Match(strConteudoHtml, patternTagStyle).Value;
+        string patternClasses = @"\.(?<nome>cs[A-Z0-9]*)\s*\{(?<conteudo>[\s\S]*?)\}";
+        strConteudoHtml = strConteudoHtml.Replace(trechoEstilos, string.Empty);
+        var listaClasses =
+            from e in Regex.Matches(trechoEstilos, patternClasses).OfType<Match>()
+            select new
+            {
+                Nome = e.Groups["nome"].Value,
+                Conteudo = e.Groups["conteudo"].Value
+            };
+
+        foreach (var classe in listaClasses)
+        {
+            //string pattern = @"<([A-Z][A-Z0-9]*)\b[^>]*(class\s*?=\s*?([""']).*?\3)[^>]*>";
+            string pattern = string.Format(@"<([A-Z][A-Z0-9]*)\b[^>]*(class\s*=\s*([""']){0}\3)[^>]*>", classe.Nome);
+            var matches = Regex.Matches(strConteudoHtml, pattern, RegexOptions.IgnoreCase);
+            foreach (Match m in matches)
+            {
+                string tag = m.Value;
+                string replace = string.Empty;
+                int posicao = tag.IndexOf(" style");
+                if (posicao == -1)
+                {
+                    replace = string.Format("{0} style=\"{1}\">"
+                        , tag.Substring(0, tag.Length - 1), classe.Conteudo);
+                }
+                else
+                {
+                    posicao = tag.IndexOf("\"", posicao);
+                    replace = tag.Insert(posicao + 1, classe.Conteudo);
+                }
+                strConteudoHtml = strConteudoHtml.Replace(tag, replace);
+            }
+        }
+
+        return strConteudoHtml;
+    }
+
+    #endregion
+
+    #region Classes
+
+    class MonthComparer : IEqualityComparer<DateTime>
+    {
+        public bool Equals(DateTime x, DateTime y)
+        {
+            return x.Month == y.Month && x.Year == y.Year;
+        }
+
+        public int GetHashCode(DateTime obj)
+        {
+            if (Object.ReferenceEquals(obj, null))
+                return 0;
+            return (obj.Year * 12 + obj.Month).GetHashCode();
+        }
+    }
+
+    #endregion
+    protected void exporter_RenderBrick(object sender, ASPxGridViewExportRenderingEventArgs e)
+    {
+        if (e.RowType == GridViewRowType.Group)
+        {
+            if (e.Text.IndexOf(':') != -1)
+            {
+                string DescricaoColuna = e.Text.Substring(0, e.Text.IndexOf(':'));
+                string strValue = System.Text.RegularExpressions.Regex.Replace(DescricaoColuna + ": " + e.Value, @"<[^>]*>", " ");
+                e.TextValue = strValue;
+                e.Text = strValue;
+            }
+        }
+    }
+}

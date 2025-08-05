@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsRelStatusReport0007" targetNamespace="http://tempuri.org/dsRelAcompanhamentoProjetos02.xsd" xmlns:mstns="http://tempuri.org/dsRelAcompanhamentoProjetos02.xsd" xmlns="http://tempuri.org/dsRelAcompanhamentoProjetos02.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection ConnectionStringObject="Data Source=cdisdb;Initial Catalog=desenv_portalEstrategia;Persist Security Info=True;User ID=usr_desenvolvimento;Password=12345678" IsAppSettingsProperty="false" Modifier="Assembly" Name="cdisdb.desenv_portalEstrategia.dbo" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsRelStatusReport0007" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsRelStatusReport0007" msprop:Generator_UserDSName="dsRelStatusReport0007">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="StatusReport" msprop:Generator_TableClassName="StatusReportDataTable" msprop:Generator_TableVarName="tableStatusReport" msprop:Generator_TablePropName="StatusReport" msprop:Generator_RowDeletingName="StatusReportRowDeleting" msprop:Generator_RowChangingName="StatusReportRowChanging" msprop:Generator_RowEvHandlerName="StatusReportRowChangeEventHandler" msprop:Generator_RowDeletedName="StatusReportRowDeleted" msprop:Generator_UserTableName="StatusReport" msprop:Generator_RowChangedName="StatusReportRowChanged" msprop:Generator_RowEvArgName="StatusReportRowChangeEvent" msprop:Generator_RowClassName="StatusReportRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoStatusReport" msprop:Generator_ColumnVarNameInTable="columnCodigoStatusReport" msprop:Generator_ColumnPropNameInRow="CodigoStatusReport" msprop:Generator_ColumnPropNameInTable="CodigoStatusReportColumn" msprop:Generator_UserColumnName="CodigoStatusReport" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoStatusReportSuperior" msprop:Generator_ColumnVarNameInTable="columnCodigoStatusReportSuperior" msprop:Generator_ColumnPropNameInRow="CodigoStatusReportSuperior" msprop:Generator_ColumnPropNameInTable="CodigoStatusReportSuperiorColumn" msprop:Generator_UserColumnName="CodigoStatusReportSuperior" type="xs:int" minOccurs="0" />
+              <xs:element name="DataEmissaoRelatorio" msprop:Generator_ColumnVarNameInTable="columnDataEmissaoRelatorio" msprop:Generator_ColumnPropNameInRow="DataEmissaoRelatorio" msprop:Generator_ColumnPropNameInTable="DataEmissaoRelatorioColumn" msprop:Generator_UserColumnName="DataEmissaoRelatorio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DataInicioPeriodoRelatorio" msprop:Generator_ColumnVarNameInTable="columnDataInicioPeriodoRelatorio" msprop:Generator_ColumnPropNameInRow="DataInicioPeriodoRelatorio" msprop:Generator_ColumnPropNameInTable="DataInicioPeriodoRelatorioColumn" msprop:Generator_UserColumnName="DataInicioPeriodoRelatorio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DataTerminoPeriodoRelatorio" msprop:Generator_ColumnVarNameInTable="columnDataTerminoPeriodoRelatorio" msprop:Generator_ColumnPropNameInRow="DataTerminoPeriodoRelatorio" msprop:Generator_ColumnPropNameInTable="DataTerminoPeriodoRelatorioColumn" msprop:Generator_UserColumnName="DataTerminoPeriodoRelatorio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CodigoObjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoObjeto" msprop:Generator_ColumnPropNameInRow="CodigoObjeto" msprop:Generator_ColumnPropNameInTable="CodigoObjetoColumn" msprop:Generator_UserColumnName="CodigoObjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoTipoAssociacaoObjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoTipoAssociacaoObjeto" msprop:Generator_ColumnPropNameInRow="CodigoTipoAssociacaoObjeto" msprop:Generator_ColumnPropNameInTable="CodigoTipoAssociacaoObjetoColumn" msprop:Generator_UserColumnName="CodigoTipoAssociacaoObjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeObjeto" msprop:Generator_ColumnVarNameInTable="columnNomeObjeto" msprop:Generator_ColumnPropNameInRow="NomeObjeto" msprop:Generator_ColumnPropNameInTable="NomeObjetoColumn" msprop:Generator_UserColumnName="NomeObjeto" type="xs:string" minOccurs="0" />
+              <xs:element name="PercentualFisicoPrevisto" msprop:Generator_ColumnVarNameInTable="columnPercentualFisicoPrevisto" msprop:Generator_ColumnPropNameInRow="PercentualFisicoPrevisto" msprop:Generator_ColumnPropNameInTable="PercentualFisicoPrevistoColumn" msprop:Generator_UserColumnName="PercentualFisicoPrevisto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PercentualFisicoRealizado" msprop:Generator_ColumnVarNameInTable="columnPercentualFisicoRealizado" msprop:Generator_ColumnPropNameInRow="PercentualFisicoRealizado" msprop:Generator_ColumnPropNameInTable="PercentualFisicoRealizadoColumn" msprop:Generator_UserColumnName="PercentualFisicoRealizado" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CorDesempenhoFisico" msprop:Generator_ColumnVarNameInTable="columnCorDesempenhoFisico" msprop:Generator_ColumnPropNameInRow="CorDesempenhoFisico" msprop:Generator_ColumnPropNameInTable="CorDesempenhoFisicoColumn" msprop:Generator_UserColumnName="CorDesempenhoFisico" type="xs:string" minOccurs="0" />
+              <xs:element name="AnaliseCritica" msprop:Generator_ColumnVarNameInTable="columnAnaliseCritica" msprop:Generator_ColumnPropNameInRow="AnaliseCritica" msprop:Generator_ColumnPropNameInTable="AnaliseCriticaColumn" msprop:Generator_UserColumnName="AnaliseCritica" type="xs:string" minOccurs="0" />
+              <xs:element name="DataAnalisePerformance" msprop:Generator_ColumnVarNameInTable="columnDataAnalisePerformance" msprop:Generator_ColumnPropNameInRow="DataAnalisePerformance" msprop:Generator_ColumnPropNameInTable="DataAnalisePerformanceColumn" msprop:Generator_UserColumnName="DataAnalisePerformance" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DesvioFisico" msprop:Generator_ColumnVarNameInTable="columnDesvioFisico" msprop:Generator_ColumnPropNameInRow="DesvioFisico" msprop:Generator_ColumnPropNameInTable="DesvioFisicoColumn" msprop:Generator_UserColumnName="DesvioFisico" type="xs:decimal" minOccurs="0" />
+              <xs:element name="SPI" msprop:Generator_ColumnVarNameInTable="columnSPI" msprop:Generator_ColumnPropNameInRow="SPI" msprop:Generator_ColumnPropNameInTable="SPIColumn" msprop:Generator_UserColumnName="SPI" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DataPrevisaoConclusao" msprop:Generator_ColumnVarNameInTable="columnDataPrevisaoConclusao" msprop:Generator_ColumnPropNameInRow="DataPrevisaoConclusao" msprop:Generator_ColumnPropNameInTable="DataPrevisaoConclusaoColumn" msprop:Generator_UserColumnName="DataPrevisaoConclusao" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DataInicioProjeto" msprop:Generator_ColumnVarNameInTable="columnDataInicioProjeto" msprop:Generator_ColumnPropNameInRow="DataInicioProjeto" msprop:Generator_ColumnPropNameInTable="DataInicioProjetoColumn" msprop:Generator_UserColumnName="DataInicioProjeto" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="QuantidadeEntregasPrazo" msprop:Generator_ColumnVarNameInTable="columnQuantidadeEntregasPrazo" msprop:Generator_ColumnPropNameInRow="QuantidadeEntregasPrazo" msprop:Generator_ColumnPropNameInTable="QuantidadeEntregasPrazoColumn" msprop:Generator_UserColumnName="QuantidadeEntregasPrazo" type="xs:int" minOccurs="0" />
+              <xs:element name="QuantidadeEntregasRealizadas" msprop:Generator_ColumnVarNameInTable="columnQuantidadeEntregasRealizadas" msprop:Generator_ColumnPropNameInRow="QuantidadeEntregasRealizadas" msprop:Generator_ColumnPropNameInTable="QuantidadeEntregasRealizadasColumn" msprop:Generator_UserColumnName="QuantidadeEntregasRealizadas" type="xs:int" minOccurs="0" />
+              <xs:element name="QuantidadeEntregasAtrasadas" msprop:Generator_ColumnVarNameInTable="columnQuantidadeEntregasAtrasadas" msprop:Generator_ColumnPropNameInRow="QuantidadeEntregasAtrasadas" msprop:Generator_ColumnPropNameInTable="QuantidadeEntregasAtrasadasColumn" msprop:Generator_UserColumnName="QuantidadeEntregasAtrasadas" type="xs:int" minOccurs="0" />
+              <xs:element name="DataTerminoPrevistoProjeto" msprop:Generator_ColumnVarNameInTable="columnDataTerminoPrevistoProjeto" msprop:Generator_ColumnPropNameInRow="DataTerminoPrevistoProjeto" msprop:Generator_ColumnPropNameInTable="DataTerminoPrevistoProjetoColumn" msprop:Generator_UserColumnName="DataTerminoPrevistoProjeto" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Valores" msprop:Generator_TableClassName="ValoresDataTable" msprop:Generator_TableVarName="tableValores" msprop:Generator_TablePropName="Valores" msprop:Generator_RowDeletingName="ValoresRowDeleting" msprop:Generator_RowChangingName="ValoresRowChanging" msprop:Generator_RowEvHandlerName="ValoresRowChangeEventHandler" msprop:Generator_RowDeletedName="ValoresRowDeleted" msprop:Generator_UserTableName="Valores" msprop:Generator_RowChangedName="ValoresRowChanged" msprop:Generator_RowEvArgName="ValoresRowChangeEvent" msprop:Generator_RowClassName="ValoresRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Ano" msprop:Generator_ColumnVarNameInTable="columnAno" msprop:Generator_ColumnPropNameInRow="Ano" msprop:Generator_ColumnPropNameInTable="AnoColumn" msprop:Generator_UserColumnName="Ano" type="xs:short" minOccurs="0" />
+              <xs:element name="Mes" msprop:Generator_ColumnVarNameInTable="columnMes" msprop:Generator_ColumnPropNameInRow="Mes" msprop:Generator_ColumnPropNameInTable="MesColumn" msprop:Generator_UserColumnName="Mes" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="Periodo" msprop:Generator_ColumnVarNameInTable="columnPeriodo" msprop:Generator_ColumnPropNameInRow="Periodo" msprop:Generator_ColumnPropNameInTable="PeriodoColumn" msprop:Generator_UserColumnName="Periodo" type="xs:string" minOccurs="0" />
+              <xs:element name="ValorPrevisto" msprop:Generator_ColumnVarNameInTable="columnValorPrevisto" msprop:Generator_ColumnPropNameInRow="ValorPrevisto" msprop:Generator_ColumnPropNameInTable="ValorPrevistoColumn" msprop:Generator_UserColumnName="ValorPrevisto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorRealizado" msprop:Generator_ColumnVarNameInTable="columnValorRealizado" msprop:Generator_ColumnPropNameInRow="ValorRealizado" msprop:Generator_ColumnPropNameInTable="ValorRealizadoColumn" msprop:Generator_UserColumnName="ValorRealizado" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CodigoStatusReport" msprop:Generator_ColumnVarNameInTable="columnCodigoStatusReport" msprop:Generator_ColumnPropNameInRow="CodigoStatusReport" msprop:Generator_ColumnPropNameInTable="CodigoStatusReportColumn" msprop:Generator_UserColumnName="CodigoStatusReport" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="StatusReport_Valores" msdata:parent="StatusReport" msdata:child="Valores" msdata:parentkey="CodigoStatusReport" msdata:childkey="CodigoStatusReport" msprop:Generator_UserChildTable="Valores" msprop:Generator_ChildPropName="GetValoresRows" msprop:Generator_UserRelationName="StatusReport_Valores" msprop:Generator_ParentPropName="StatusReportRow" msprop:Generator_RelationVarName="relationStatusReport_Valores" msprop:Generator_UserParentTable="StatusReport" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

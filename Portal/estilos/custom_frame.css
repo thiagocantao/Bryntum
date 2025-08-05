@@ -1,0 +1,209 @@
+﻿/* Html, Body */
+
+html, body {
+    max-width: 100%;
+    overflow: hidden !important;
+}
+
+/* Fim Html, Body */
+
+/* Grid */
+
+/* Fim Grid */
+
+/* Estilos Globais */
+
+html .dxgvControl_MaterialCompact, .dxgvDisabled_MaterialCompact {
+    border-style: none !important;
+}
+
+/* Fim Estilos Globais */
+
+/* Título */
+
+td#ASPxRoundPanel1 {
+    background-color: #ffffff !important;
+}
+
+/* Fim Título */
+
+/* Card */
+
+table.dxrpControl_MaterialCompact {
+    /*
+	border-radius: 10px !important;
+	*/
+    border: none;
+    /*
+	height: auto !important;
+	*/
+    /*
+	width: auto !important;
+	*/
+    width: 99% !important;
+    margin-left: 2px;
+}
+
+table.dxrpControl_MaterialCompact td {
+    background-color: transparent !important;
+    border-radius: 10px 10px 0 0 !important;
+    /*
+border-width: 0 0 1px 0;
+*/
+}
+
+table.dxrpControl_MaterialCompact td span.dxeBase {
+    color: #575757;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2pt !important;
+}
+
+table.dxrpControl_MaterialCompact td table > tbody > tr:nth-child(1) > td[align=right] {
+    padding-right: 0.25rem !important;
+}
+
+table.dxrpControl_MaterialCompact td table > tbody > tr:nth-child(1) > td[align=right] img {
+    background-color: transparent !important;
+    color: #95c477 !important;
+}
+
+/* Fim Card */
+
+form[action*="visaoCorporativa_"] > div table > tbody > tr > td {
+    /*
+	padding: 0.25rem !important;
+	*/
+    width: auto !important;
+}
+
+form[action*="visaoCorporativa_"] iframe {
+    /*
+	padding: 1rem;
+	*/
+    /*
+	height: auto !important;
+	*/
+    width: 100% !important;
+}
+
+
+img.dxeImage_MaterialCompact {
+    height: 36px !important;
+    padding-left: 1rem !important;
+    padding-right: 0.5rem !important;
+    width: 36px !important;
+}
+
+div#ASPxRoundPanel1_CRC > table td,
+div#ASPxRoundPanel1_CRC > table td a,
+div #ASPxRoundPanel1_CRC > table td span {
+    color: #575757;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+}
+
+/* ResumoProjeto.aspx */
+
+body[data-pagina=ResumoProjeto] td#resumoProjetoEntidade,
+body[data-pagina=ResumoProjeto] td#resumoProjetoEntidade td,
+body[data-pagina=ResumoProjeto] td#resumoProjetoEntidade td span {
+    font: 0.7rem 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+    color: #484848 !important;
+}
+
+/* Fim ResumoProjeto.aspx */
+
+/* Projetos/DadosProjeto/Graficos/Grafico009.aspx */
+
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico009] td#pDespesa_RPC,
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico009] td#pDespesa_RPC td,
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico009] td#pDespesa_RPC td span {
+    font: 0.7rem 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+    color: #484848 !important;
+}
+
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico009] td#pReceita_RPC,
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico009] td#pReceita_RPC td,
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico009] td#pReceita_RPC td span {
+    font: 0.7rem 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+    color: #484848 !important;
+}
+
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico009] span#pDespesa_RPHT {
+    font: 0.7rem 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+    font-size: 0.7rem;
+    font-weight: 600 !important;
+}
+
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico009] span#pReceita_RPHT {
+    font: 0.7rem 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+    font-size: 0.7rem;
+    font-weight: 600 !important;
+}
+
+/* Fim Projetos/DadosProjeto/Graficos/Grafico009.aspx */
+
+
+/* Projetos/DadosProjeto/Graficos/Grafico012.aspx */
+
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico012] a,
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico012] span {
+    font: 0.8rem 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+    font-size: 0.8rem;
+}
+
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico012] a[style*="color:Red"] {
+    color: orangered !important;
+}
+
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico012] span {
+    color: #575757;
+}
+
+body[data-pagina=ProjetosDadosProjetoGraficosGrafico012] table td {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+/* Fim Projetos/DadosProjeto/Graficos/Grafico012.aspx */
+
+/* NovoMapaEstrategico.aspx */
+
+body[data-pagina=NovoMapaEstrategico] {
+}
+
+/* Fim NovoMapaEstrategico.aspx */
+
+
+
+/* frameSelecaoBalanceamento_Resumo.aspx */
+
+body[data-pagina=frameSelecaoBalanceamento_Resumo] {
+}
+
+/* Fim frameSelecaoBalanceamento_Resumo.aspx */
+
+
+/* sobre.aspx */
+
+body[data-pagina=sobre] table#conteudoSobre {
+    color: #575757;
+    font: 0.8rem 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+    font-size: 0.8rem;
+}
+
+/* Fim sobre.aspx */
+
+form[action*=an_001] a[onclick],
+form[action*=an_002] a[onclick],
+form[action*=an_003] a[onclick],
+form[action*=an_004] a[onclick],
+form[action*=an_005] a[onclick],
+form[action*=an_006] a[onclick],
+form[action*=an_007] a[onclick] {
+    color: #35b86b !important;
+    text-decoration: none !important;
+}

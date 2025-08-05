@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D37DBC3-A765-4C29-8082-1AA457231A7F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cdis.Brisk.Service</RootNamespace>
+    <AssemblyName>Cdis.Brisk.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Transactions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Cronograma\CronogramaBalanceamentoService.cs" />
+    <Compile Include="Services\Cronograma\CronogramaDependenciaService.cs" />
+    <Compile Include="Services\Cronograma\CronogramaProjetoMetaService.cs" />
+    <Compile Include="Services\Cronograma\CronogramaProjetoService.cs" />
+    <Compile Include="Services\DataBaseObject\Function\FCronoGetVersoesLbProjetoService.cs" />
+    <Compile Include="Services\DataBaseObject\Function\FGetCarteirasEntidadeService.cs" />
+    <Compile Include="Services\DataBaseObject\Function\FGetCronogramaGanttProjetoService.cs" />
+    <Compile Include="Services\DataBaseObject\Function\FGetCronogramaPAService.cs" />
+    <Compile Include="Services\DataBaseObject\Function\FGetStatusPrevisaoFluxoCaixaService.cs" />
+    <Compile Include="Services\DataBaseObject\Function\FOrcGetEtapasPrevisaoOrcamentariaService.cs" />
+    <Compile Include="Services\DataBaseObject\StoredProcedure\PEapBuscaCodigoEapService.cs" />
+    <Compile Include="Services\DataBaseObject\StoredProcedure\PEnviaEmailService.cs" />
+    <Compile Include="Services\DataBaseObject\StoredProcedure\PGetOrcamentacaoProjetoService.cs" />
+    <Compile Include="Services\DataBaseObject\StoredProcedure\PGravaRegistroPrevisaoOrcamentariaProjetoService.cs" />
+    <Compile Include="Services\DataBaseObject\StoredProcedure\RelatorioMinisterio\PSescoopRelMinisterio5200Service.cs" />
+    <Compile Include="Services\DataBaseObject\StoredProcedure\RelatorioMinisterio\PSescoopRelMinisterio5400Service.cs" />
+    <Compile Include="Services\DataBaseObject\StoredProcedure\RelatorioMinisterio\PSescoopRelMinisterioDespesaService.cs" />
+    <Compile Include="Services\DataBaseObject\StoredProcedure\RelatorioMinisterio\PSescoopRelMinisterioReceitaService.cs" />
+    <Compile Include="Services\Estrategia\IndicadorService.cs" />
+    <Compile Include="Services\Estrategia\ObjetoEstrategiaService.cs" />
+    <Compile Include="Services\Parametro\ParametroConfiguracaoSistemaService.cs" />
+    <Compile Include="Services\Projeto\MemoriaCalculoService.cs" />
+    <Compile Include="Services\Projeto\ProjetoService.cs" />
+    <Compile Include="Services\Projeto\ProjetoUnidadeService.cs" />
+    <Compile Include="Services\Relatorio\PlanoTrabalho\RelatorioPlanoTrabalhoService.cs" />
+    <Compile Include="Services\UnidadeNegocio\UnidadeNegocioService.cs" />
+    <Compile Include="Services\Usuario\LogAcessoUsuarioService.cs" />
+    <Compile Include="Services\Usuario\UsuarioEsqueceuSenhaAtualizacaoService.cs" />
+    <Compile Include="Services\Usuario\UsuarioEsqueceuSenhaService.cs" />
+    <Compile Include="Services\Usuario\UsuarioService.cs" />
+    <Compile Include="Services\_Common\TextoPadraoSistemaService.cs" />
+    <Compile Include="UnitOfWorkService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cdis.Brisk.Domain\Cdis.Brisk.Domain.csproj">
+      <Project>{3147f046-ae2d-4893-a262-6b63cf8e06a7}</Project>
+      <Name>Cdis.Brisk.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Core.Interface\Cdis.Brisk.Infra.Core.Interface.csproj">
+      <Project>{752EE204-9781-4F48-9B54-4814E54822DD}</Project>
+      <Name>Cdis.Brisk.Infra.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Core\Cdis.Brisk.Infra.Core.csproj">
+      <Project>{9a5304b0-f4a2-4dad-adca-6e5fa5b48dd5}</Project>
+      <Name>Cdis.Brisk.Infra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Data.Repository\Cdis.Brisk.Infra.Data.Repository.csproj">
+      <Project>{7c62f31e-765e-43c6-9d5b-02a38db60144}</Project>
+      <Name>Cdis.Brisk.Infra.Data.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Data\Cdis.Brisk.Infra.Data.csproj">
+      <Project>{44b4057f-92e1-48a8-9d5f-642437c29e1a}</Project>
+      <Name>Cdis.Brisk.Infra.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

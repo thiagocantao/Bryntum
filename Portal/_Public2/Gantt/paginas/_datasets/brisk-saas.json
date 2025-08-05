@@ -1,0 +1,95 @@
+{
+    "success" : true,
+
+    "project" : {
+        "calendar"  : "general",
+        "startDate" : "2015-12-01",
+        "endDate" : "2016-12-31"
+    },
+
+     "tasks" : {
+        "rows" : [
+            {
+                "id": 1,
+                "name": "Capacitação em Biometria",
+                "previsto": "100,00%",
+                "percentDone": 74,                                            
+                "pesoLb": "308,88",
+                "peso": "100,00%",
+                "duracao": "163",
+                "trabalho": "390,74",
+                "inicio" : "13/01/2016",
+                "termino" : "-",
+                "expanded": true,
+                "children": [
+                    {
+                        "id": 2,
+                        "name": "Planejar",
+                        "previsto": "100,00%",
+                        "percentDone": 100,                                            
+                        "pesoLb": "71,75",
+                        "peso": "23,23%",
+                        "duracao": "163",
+                        "trabalho": "51,50",
+                        "inicio" : "13/01/2016",
+                        "termino" : "30/09/2016",                        
+                        "duration": 261,
+                        "startDate": "2016-01-13",
+                        "endDate": "2016-09-30",
+                        "expanded": true,
+                        "children": [
+                          {
+                            "id": 3,
+                            "name": "Localizar Problemas",
+                            "previsto": "100,00%",
+                            "percentDone": 100,
+                            "pesoLb": "19,25",
+                            "peso": "26,83%",
+                            "duracao": "45",
+                            "trabalho": "36,00",
+                            "inicio": "13/01/2016",
+                            "termino": "25/03/2016",
+                            "startDate": "2016-01-13",
+                            "duration": 72,
+                            "expanded": true,
+                            "color": "teal"
+                          },
+                          {
+                            "id": 4,
+                            "name": "Estabelecer planos de ação",
+                            "previsto": "100,00%",
+                            "percentDone": 100,
+                            "pesoLb": "25,38",
+                            "peso": "35,37%",
+                            "duracao": "21",
+                            "trabalho": "14,80",
+                            "inicio": "29/08/2016",
+                            "termino": "30/09/2016",
+                            "startDate": "2016-08-29",
+                            "duration": 33,
+                            "showInTimeline": true,
+                            "color": "teal"
+                          },
+                          {
+                            "id": 5,
+                            "name": "Outros",
+                            "previsto": "100,00%",
+                            "percentDone": 100,
+                            "pesoLb": "27,13",
+                            "peso": "37,80%",
+                            "duracao": "1",
+                            "trabalho": "0,70",
+                            "inicio": "17/09/2016",
+                            "termino": "20/09/2016",
+                            "startDate": "2016-09-17",
+                            "duration": 3,
+                            "color": "teal"
+                          }                            
+                        ]
+                                               
+                    }
+                ]            
+            }
+        ]
+    }    
+}

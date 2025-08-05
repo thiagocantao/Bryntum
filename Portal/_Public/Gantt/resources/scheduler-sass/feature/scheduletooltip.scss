@@ -1,0 +1,9 @@
+.b-sch-scheduletip {
+    // Ensure it doesn't change size as the content changes
+    min-width : 10em;
+
+    &.b-nonworking-time {
+        opacity        : 0;
+        pointer-events : none;
+    }
+}

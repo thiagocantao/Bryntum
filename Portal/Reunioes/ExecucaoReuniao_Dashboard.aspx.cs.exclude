@@ -1,0 +1,164 @@
+﻿using DevExpress.Web;
+using System;
+using System.Data;
+using System.Web.UI.WebControls;
+
+public partial class Reunioes_ExecucaoReuniao_Dashboard : System.Web.UI.Page
+{
+    private dados cDados;
+    private int codigoCarteira;
+    private int codigoEntidade;
+    private int codigoUsuarioLogado;
+
+    public int CodigoReuniao
+    {
+        get
+        {
+            return int.Parse(Request.QueryString["cr"]);
+        }
+    }
+
+    public string ConnectionString
+    {
+        get
+        {
+            return cDados.classeDados.getStringConexao();
+        }
+    }
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        cDados = CdadosUtil.GetCdados(null);
+
+        try
+        {
+            if (cDados.getInfoSistema("IDUsuarioLogado") == null)
+                Response.Redirect("~/erros/erroInatividade.aspx");
+        }
+        catch
+        {
+            Response.RedirectLocation = String.Format(
+                "{0}erros/erroInatividade.aspx", cDados.getPathSistema());
+            Response.End();
+        }
+        
+        codigoEntidade = Convert.ToInt32(cDados.getInfoSistema("CodigoEntidade"));
+        codigoCarteira = Convert.ToInt32(cDados.getInfoSistema("CodigoCarteira"));
+        codigoUsuarioLogado = Convert.ToInt32(cDados.getInfoSistema("IDUsuarioLogado"));
+        Session["ce"] = codigoEntidade;
+        Session["cul"] = codigoUsuarioLogado;
+        dataSource.ConnectionString = ConnectionString;
+        dsPlanoAcao.ConnectionString = ConnectionString;
+        dsStatusTarefa.ConnectionString = ConnectionString;
+        dsUsuarioReponsavel.ConnectionString = ConnectionString;
+    }
+
+    protected void Page_PreRender(object sender, EventArgs e)
+    {
+        lblTitulo.Font.Size = new FontUnit(14);
+        txtAnotacoes.Font.Size = new FontUnit(14);
+    }
+
+    protected void gvItensReuniao_CustomJSProperties(object sender, ASPxGridViewClientJSPropertiesEventArgs e)
+    {
+        string queryString = string.Format(
+            "?CodEntidade={0}&CodUsuario={1}&CodCarteira={2}&CodReuniao={3}"
+            , codigoEntidade, codigoUsuarioLogado, codigoCarteira, CodigoReuniao);
+        int rowCount = gvItensReuniao.VisibleRowCount;
+        e.Properties["cpQueryString"] = queryString;
+        e.Properties["cpRowCount"] = rowCount;
+    }
+
+    protected void callback_Callback(object source, CallbackEventArgs e)
+    {
+        string parametro = e.Parameter;
+        switch (parametro)
+        {
+            case "SalvarAnotacoes":
+                SalvarAnotacoes();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void SalvarAnotacoes()
+    {
+        var row = (DataRowView)gvItensReuniao.GetRow(gvItensReuniao.FocusedRowIndex);
+        long codigoObjeto = (long)row["CodigoObjetoAssociado"];
+        short codigoTipo = (short)row["CodigoTipoAssociacao"];
+        string deliberacao = txtAnotacoes.Text;
+        string comandoSql = string.Format(@"
+DECLARE @CodigoEvento int,
+        @CodigoObjetoAssociado int,
+        @CodigoTipoObjetoAssociado int,
+        @DataDeliberacao datetime
+        
+    SET @CodigoEvento = {0}
+    SET @CodigoObjetoAssociado = {1}
+    SET @CodigoTipoObjetoAssociado = {2}
+    SET @DataDeliberacao = GETDATE()
+
+ UPDATE ObjetoAssociadoEvento
+    SET DataDeliberacao = @DataDeliberacao
+       ,Deliberacao = '{3}'
+  WHERE CodigoEvento = @CodigoEvento
+    AND CodigoObjetoAssociado = @CodigoObjetoAssociado
+    AND CodigoTipoObjetoAssociado = @CodigoTipoObjetoAssociado", 
+    CodigoReuniao, codigoObjeto, codigoTipo, deliberacao);
+
+        int regAfetados = 0;
+        cDados.execSQL(comandoSql, ref regAfetados);
+    }
+
+    protected void gvPlanoAcao_CellEditorInitialize(object sender, ASPxGridViewEditorEventArgs e)
+    {
+        ASPxGridView grid = (ASPxGridView)sender;
+        string fieldName = e.Column.FieldName;
+        if (fieldName.Equals("CodigoUsuarioResponsavelTarefa"))
+        {
+            ASPxComboBox combo = (ASPxComboBox)e.Editor;
+            combo.ItemRequestedByValue += combo_ItemRequestedByValue;
+            combo.ItemsRequestedByFilterCondition += combo_ItemsRequestedByFilterCondition;
+        }
+    }
+
+    void combo_ItemsRequestedByFilterCondition(object source, ListEditItemsRequestedByFilterConditionEventArgs e)
+    {
+        ASPxComboBox comboBox = (ASPxComboBox)source;
+        SqlDataSource dataSource = dsUsuarioReponsavel;
+
+        string comandoSQL = cDados.getSQLComboUsuarios(codigoEntidade, e.Filter, "");
+
+        cDados.populaComboVirtual(dataSource, comandoSQL, comboBox, e.BeginIndex, e.EndIndex);
+    }
+
+    void combo_ItemRequestedByValue(object source, ListEditItemRequestedByValueEventArgs e)
+    {
+        if (string.IsNullOrEmpty(dsUsuarioReponsavel.ConnectionString))
+            dsUsuarioReponsavel.ConnectionString = cDados.classeDados.getStringConexao();
+        if (e.Value != null)
+        {
+            long value;
+            if (!Int64.TryParse(e.Value.ToString(), out value))
+                return;
+            ASPxComboBox comboBox = (ASPxComboBox)source;
+            SqlDataSource dataSource = dsUsuarioReponsavel;
+
+            dataSource.SelectCommand = cDados.getSQLComboUsuariosPorID(codigoEntidade);
+
+            dataSource.SelectParameters.Clear();
+            dataSource.SelectParameters.Add("ID", TypeCode.Int64, e.Value.ToString());
+
+            comboBox.DataBind();
+        }
+    }
+
+    protected void gvPlanoAcao_CustomCallback(object sender, ASPxGridViewCustomCallbackEventArgs e)
+    {
+        int rowIndex = gvItensReuniao.FocusedRowIndex;
+        Session["co"] = gvItensReuniao.GetRowValues(rowIndex, "CodigoObjetoAssociado");
+        Session["cto"] = gvItensReuniao.GetRowValues(rowIndex, "CodigoTipoAssociacao");
+        gvPlanoAcao.DataBind();
+    }
+}

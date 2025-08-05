@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS_AnaliseProblemasRiscosProjetos_unigest" targetNamespace="http://tempuri.org/DS_AnaliseProblemasRiscosProjetos_unigest.xsd" xmlns:mstns="http://tempuri.org/DS_AnaliseProblemasRiscosProjetos_unigest.xsd" xmlns="http://tempuri.org/DS_AnaliseProblemasRiscosProjetos_unigest.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS_AnaliseProblemasRiscosProjetos_unigest" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DS_AnaliseProblemasRiscosProjetos_unigest" msprop:Generator_UserDSName="DS_AnaliseProblemasRiscosProjetos_unigest">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtPlanoAcao" msprop:Generator_TableClassName="dtPlanoAcaoDataTable" msprop:Generator_TableVarName="tabledtPlanoAcao" msprop:Generator_RowChangedName="dtPlanoAcaoRowChanged" msprop:Generator_TablePropName="dtPlanoAcao" msprop:Generator_RowDeletingName="dtPlanoAcaoRowDeleting" msprop:Generator_RowChangingName="dtPlanoAcaoRowChanging" msprop:Generator_RowEvHandlerName="dtPlanoAcaoRowChangeEventHandler" msprop:Generator_RowDeletedName="dtPlanoAcaoRowDeleted" msprop:Generator_RowClassName="dtPlanoAcaoRow" msprop:Generator_UserTableName="dtPlanoAcao" msprop:Generator_RowEvArgName="dtPlanoAcaoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Descricao" msprop:Generator_ColumnVarNameInTable="columnDescricao" msprop:Generator_ColumnPropNameInRow="Descricao" msprop:Generator_ColumnPropNameInTable="DescricaoColumn" msprop:Generator_UserColumnName="Descricao" type="xs:string" minOccurs="0" />
+              <xs:element name="Responsavel" msprop:Generator_ColumnVarNameInTable="columnResponsavel" msprop:Generator_ColumnPropNameInRow="Responsavel" msprop:Generator_ColumnPropNameInTable="ResponsavelColumn" msprop:Generator_UserColumnName="Responsavel" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoRiscoQuestao" msprop:Generator_ColumnVarNameInTable="columnCodigoRiscoQuestao" msprop:Generator_ColumnPropNameInRow="CodigoRiscoQuestao" msprop:Generator_ColumnPropNameInTable="CodigoRiscoQuestaoColumn" msprop:Generator_UserColumnName="CodigoRiscoQuestao" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtComentario" msprop:Generator_TableClassName="dtComentarioDataTable" msprop:Generator_TableVarName="tabledtComentario" msprop:Generator_RowChangedName="dtComentarioRowChanged" msprop:Generator_TablePropName="dtComentario" msprop:Generator_RowDeletingName="dtComentarioRowDeleting" msprop:Generator_RowChangingName="dtComentarioRowChanging" msprop:Generator_RowEvHandlerName="dtComentarioRowChangeEventHandler" msprop:Generator_RowDeletedName="dtComentarioRowDeleted" msprop:Generator_RowClassName="dtComentarioRow" msprop:Generator_UserTableName="dtComentario" msprop:Generator_RowEvArgName="dtComentarioRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Descricao" msprop:Generator_ColumnVarNameInTable="columnDescricao" msprop:Generator_ColumnPropNameInRow="Descricao" msprop:Generator_ColumnPropNameInTable="DescricaoColumn" msprop:Generator_UserColumnName="Descricao" type="xs:string" minOccurs="0" />
+              <xs:element name="Data" msprop:Generator_ColumnVarNameInTable="columnData" msprop:Generator_ColumnPropNameInRow="Data" msprop:Generator_ColumnPropNameInTable="DataColumn" msprop:Generator_UserColumnName="Data" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Responsavel" msprop:Generator_ColumnVarNameInTable="columnResponsavel" msprop:Generator_ColumnPropNameInRow="Responsavel" msprop:Generator_ColumnPropNameInTable="ResponsavelColumn" msprop:Generator_UserColumnName="Responsavel" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoRiscoQuestao" msprop:Generator_ColumnVarNameInTable="columnCodigoRiscoQuestao" msprop:Generator_ColumnPropNameInRow="CodigoRiscoQuestao" msprop:Generator_ColumnPropNameInTable="CodigoRiscoQuestaoColumn" msprop:Generator_UserColumnName="CodigoRiscoQuestao" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtProjeto" msprop:Generator_TableClassName="dtProjetoDataTable" msprop:Generator_TableVarName="tabledtProjeto" msprop:Generator_RowChangedName="dtProjetoRowChanged" msprop:Generator_TablePropName="dtProjeto" msprop:Generator_RowDeletingName="dtProjetoRowDeleting" msprop:Generator_RowChangingName="dtProjetoRowChanging" msprop:Generator_RowEvHandlerName="dtProjetoRowChangeEventHandler" msprop:Generator_RowDeletedName="dtProjetoRowDeleted" msprop:Generator_RowClassName="dtProjetoRow" msprop:Generator_UserTableName="dtProjeto" msprop:Generator_RowEvArgName="dtProjetoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="NomeProjeto" msprop:Generator_ColumnVarNameInTable="columnNomeProjeto" msprop:Generator_ColumnPropNameInRow="NomeProjeto" msprop:Generator_ColumnPropNameInTable="NomeProjetoColumn" msprop:Generator_UserColumnName="NomeProjeto" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoUnidadeNegocio" msprop:Generator_ColumnVarNameInTable="columnCodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInRow="CodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInTable="CodigoUnidadeNegocioColumn" msprop:Generator_UserColumnName="CodigoUnidadeNegocio" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoObjetoEstrategia" msprop:Generator_ColumnVarNameInTable="columnCodigoObjetoEstrategia" msprop:Generator_ColumnPropNameInRow="CodigoObjetoEstrategia" msprop:Generator_ColumnPropNameInTable="CodigoObjetoEstrategiaColumn" msprop:Generator_UserColumnName="CodigoObjetoEstrategia" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoIndicadorDesafio" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicadorDesafio" msprop:Generator_ColumnPropNameInRow="CodigoIndicadorDesafio" msprop:Generator_ColumnPropNameInTable="CodigoIndicadorDesafioColumn" msprop:Generator_UserColumnName="CodigoIndicadorDesafio" type="xs:int" minOccurs="0" />
+              <xs:element name="TipoProjeto" msprop:Generator_ColumnVarNameInTable="columnTipoProjeto" msprop:Generator_ColumnPropNameInRow="TipoProjeto" msprop:Generator_ColumnPropNameInTable="TipoProjetoColumn" msprop:Generator_UserColumnName="TipoProjeto" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoPrograma" msprop:Generator_ColumnVarNameInTable="columnCodigoPrograma" msprop:Generator_ColumnPropNameInRow="CodigoPrograma" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInTable="CodigoProgramaColumn" msprop:Generator_UserColumnName="CodigoPrograma" type="xs:int" minOccurs="0" />
+              <xs:element name="NomePrograma" msprop:Generator_ColumnVarNameInTable="columnNomePrograma" msprop:Generator_ColumnPropNameInRow="NomePrograma" msprop:Generator_ColumnPropNameInTable="NomeProgramaColumn" msprop:Generator_UserColumnName="NomePrograma" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtRiscoQuestao" msprop:Generator_TableClassName="dtRiscoQuestaoDataTable" msprop:Generator_TableVarName="tabledtRiscoQuestao" msprop:Generator_RowChangedName="dtRiscoQuestaoRowChanged" msprop:Generator_TablePropName="dtRiscoQuestao" msprop:Generator_RowDeletingName="dtRiscoQuestaoRowDeleting" msprop:Generator_RowChangingName="dtRiscoQuestaoRowChanging" msprop:Generator_RowEvHandlerName="dtRiscoQuestaoRowChangeEventHandler" msprop:Generator_RowDeletedName="dtRiscoQuestaoRowDeleted" msprop:Generator_RowClassName="dtRiscoQuestaoRow" msprop:Generator_UserTableName="dtRiscoQuestao" msprop:Generator_RowEvArgName="dtRiscoQuestaoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Problema" msprop:Generator_ColumnVarNameInTable="columnProblema" msprop:Generator_ColumnPropNameInRow="Problema" msprop:Generator_ColumnPropNameInTable="ProblemaColumn" msprop:Generator_UserColumnName="Problema" type="xs:string" minOccurs="0" />
+              <xs:element name="Consequencia" msprop:Generator_ColumnVarNameInTable="columnConsequencia" msprop:Generator_ColumnPropNameInRow="Consequencia" msprop:Generator_ColumnPropNameInTable="ConsequenciaColumn" msprop:Generator_UserColumnName="Consequencia" type="xs:string" minOccurs="0" />
+              <xs:element name="Tratamento" msprop:Generator_ColumnVarNameInTable="columnTratamento" msprop:Generator_ColumnPropNameInRow="Tratamento" msprop:Generator_ColumnPropNameInTable="TratamentoColumn" msprop:Generator_UserColumnName="Tratamento" type="xs:string" minOccurs="0" />
+              <xs:element name="Responsavel" msprop:Generator_ColumnVarNameInTable="columnResponsavel" msprop:Generator_ColumnPropNameInRow="Responsavel" msprop:Generator_ColumnPropNameInTable="ResponsavelColumn" msprop:Generator_UserColumnName="Responsavel" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="CodigoRiscoQuestao" msprop:Generator_ColumnVarNameInTable="columnCodigoRiscoQuestao" msprop:Generator_ColumnPropNameInRow="CodigoRiscoQuestao" msprop:Generator_ColumnPropNameInTable="CodigoRiscoQuestaoColumn" msprop:Generator_UserColumnName="CodigoRiscoQuestao" type="xs:int" />
+              <xs:element name="TipoRiscoQuestao" msprop:Generator_ColumnVarNameInTable="columnTipoRiscoQuestao" msprop:Generator_ColumnPropNameInRow="TipoRiscoQuestao" msprop:Generator_ColumnPropNameInTable="TipoRiscoQuestaoColumn" msprop:Generator_UserColumnName="TipoRiscoQuestao" type="xs:string" minOccurs="0" />
+              <xs:element name="RiscoQuestao" msprop:Generator_ColumnVarNameInTable="columnRiscoQuestao" msprop:Generator_ColumnPropNameInRow="RiscoQuestao" msprop:Generator_ColumnPropNameInTable="RiscoQuestaoColumn" msprop:Generator_UserColumnName="RiscoQuestao" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtUnidade" msprop:Generator_TableClassName="dtUnidadeDataTable" msprop:Generator_TableVarName="tabledtUnidade" msprop:Generator_RowChangedName="dtUnidadeRowChanged" msprop:Generator_TablePropName="dtUnidade" msprop:Generator_RowDeletingName="dtUnidadeRowDeleting" msprop:Generator_RowChangingName="dtUnidadeRowChanging" msprop:Generator_RowEvHandlerName="dtUnidadeRowChangeEventHandler" msprop:Generator_RowDeletedName="dtUnidadeRowDeleted" msprop:Generator_RowClassName="dtUnidadeRow" msprop:Generator_UserTableName="dtUnidade" msprop:Generator_RowEvArgName="dtUnidadeRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoUnidadeNegocio" msprop:Generator_ColumnVarNameInTable="columnCodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInRow="CodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInTable="CodigoUnidadeNegocioColumn" msprop:Generator_UserColumnName="CodigoUnidadeNegocio" type="xs:int" />
+              <xs:element name="NomeUnidadeNegocio" msprop:Generator_ColumnVarNameInTable="columnNomeUnidadeNegocio" msprop:Generator_ColumnPropNameInRow="NomeUnidadeNegocio" msprop:Generator_ColumnPropNameInTable="NomeUnidadeNegocioColumn" msprop:Generator_UserColumnName="NomeUnidadeNegocio" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoObjetoEstrategia" msprop:Generator_ColumnVarNameInTable="columnCodigoObjetoEstrategia" msprop:Generator_ColumnPropNameInRow="CodigoObjetoEstrategia" msprop:Generator_ColumnPropNameInTable="CodigoObjetoEstrategiaColumn" msprop:Generator_UserColumnName="CodigoObjetoEstrategia" type="xs:int" />
+              <xs:element name="CodigoIndicadorDesafio" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicadorDesafio" msprop:Generator_ColumnPropNameInRow="CodigoIndicadorDesafio" msprop:Generator_ColumnPropNameInTable="CodigoIndicadorDesafioColumn" msprop:Generator_UserColumnName="CodigoIndicadorDesafio" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtTemaObjetivo" msprop:Generator_TableClassName="dtTemaObjetivoDataTable" msprop:Generator_TableVarName="tabledtTemaObjetivo" msprop:Generator_RowChangedName="dtTemaObjetivoRowChanged" msprop:Generator_TablePropName="dtTemaObjetivo" msprop:Generator_RowDeletingName="dtTemaObjetivoRowDeleting" msprop:Generator_RowChangingName="dtTemaObjetivoRowChanging" msprop:Generator_RowEvHandlerName="dtTemaObjetivoRowChangeEventHandler" msprop:Generator_RowDeletedName="dtTemaObjetivoRowDeleted" msprop:Generator_RowClassName="dtTemaObjetivoRow" msprop:Generator_UserTableName="dtTemaObjetivo" msprop:Generator_RowEvArgName="dtTemaObjetivoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DescricaoTema" msprop:Generator_ColumnVarNameInTable="columnDescricaoTema" msprop:Generator_ColumnPropNameInRow="DescricaoTema" msprop:Generator_ColumnPropNameInTable="DescricaoTemaColumn" msprop:Generator_UserColumnName="DescricaoTema" type="xs:string" minOccurs="0" />
+              <xs:element name="DescricaoObjetivo" msprop:Generator_ColumnVarNameInTable="columnDescricaoObjetivo" msprop:Generator_ColumnPropNameInRow="DescricaoObjetivo" msprop:Generator_ColumnPropNameInTable="DescricaoObjetivoColumn" msprop:Generator_UserColumnName="DescricaoObjetivo" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoObjetoEstrategia" msprop:Generator_ColumnVarNameInTable="columnCodigoObjetoEstrategia" msprop:Generator_ColumnPropNameInRow="CodigoObjetoEstrategia" msprop:Generator_ColumnPropNameInTable="CodigoObjetoEstrategiaColumn" msprop:Generator_UserColumnName="CodigoObjetoEstrategia" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtMeta" msprop:Generator_TableClassName="dtMetaDataTable" msprop:Generator_TableVarName="tabledtMeta" msprop:Generator_RowChangedName="dtMetaRowChanged" msprop:Generator_TablePropName="dtMeta" msprop:Generator_RowDeletingName="dtMetaRowDeleting" msprop:Generator_RowChangingName="dtMetaRowChanging" msprop:Generator_RowEvHandlerName="dtMetaRowChangeEventHandler" msprop:Generator_RowDeletedName="dtMetaRowDeleted" msprop:Generator_RowClassName="dtMetaRow" msprop:Generator_UserTableName="dtMeta" msprop:Generator_RowEvArgName="dtMetaRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DescricaoMeta" msprop:Generator_ColumnVarNameInTable="columnDescricaoMeta" msprop:Generator_ColumnPropNameInRow="DescricaoMeta" msprop:Generator_ColumnPropNameInTable="DescricaoMetaColumn" msprop:Generator_UserColumnName="DescricaoMeta" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoObjetoEstrategia" msprop:Generator_ColumnVarNameInTable="columnCodigoObjetoEstrategia" msprop:Generator_ColumnPropNameInRow="CodigoObjetoEstrategia" msprop:Generator_ColumnPropNameInTable="CodigoObjetoEstrategiaColumn" msprop:Generator_UserColumnName="CodigoObjetoEstrategia" type="xs:int" />
+              <xs:element name="CodigoIndicadorDesafio" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicadorDesafio" msprop:Generator_ColumnPropNameInRow="CodigoIndicadorDesafio" msprop:Generator_ColumnPropNameInTable="CodigoIndicadorDesafioColumn" msprop:Generator_UserColumnName="CodigoIndicadorDesafio" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:dtProjeto" />
+      <xs:field xpath="mstns:CodigoProjeto" />
+    </xs:unique>
+    <xs:unique name="dtRiscoQuestao_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:dtRiscoQuestao" />
+      <xs:field xpath="mstns:CodigoRiscoQuestao" />
+    </xs:unique>
+    <xs:unique name="dtTemaObjetivo_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:dtTemaObjetivo" />
+      <xs:field xpath="mstns:CodigoObjetoEstrategia" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="dtProjeto_dtRiscoQuestao" msdata:parent="dtProjeto" msdata:child="dtRiscoQuestao" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="dtRiscoQuestao" msprop:Generator_ChildPropName="GetdtRiscoQuestaoRows" msprop:Generator_UserRelationName="dtProjeto_dtRiscoQuestao" msprop:Generator_RelationVarName="relationdtProjeto_dtRiscoQuestao" msprop:Generator_UserParentTable="dtProjeto" msprop:Generator_ParentPropName="dtProjetoRow" />
+      <msdata:Relationship name="dtRiscoQuestao_dtPlanoAcao" msdata:parent="dtRiscoQuestao" msdata:child="dtPlanoAcao" msdata:parentkey="CodigoRiscoQuestao" msdata:childkey="CodigoRiscoQuestao" msprop:Generator_UserChildTable="dtPlanoAcao" msprop:Generator_ChildPropName="GetdtPlanoAcaoRows" msprop:Generator_UserRelationName="dtRiscoQuestao_dtPlanoAcao" msprop:Generator_ParentPropName="dtRiscoQuestaoRow" msprop:Generator_RelationVarName="relationdtRiscoQuestao_dtPlanoAcao" msprop:Generator_UserParentTable="dtRiscoQuestao" />
+      <msdata:Relationship name="dtRiscoQuestao_dtComentario" msdata:parent="dtRiscoQuestao" msdata:child="dtComentario" msdata:parentkey="CodigoRiscoQuestao" msdata:childkey="CodigoRiscoQuestao" msprop:Generator_UserChildTable="dtComentario" msprop:Generator_ChildPropName="GetdtComentarioRows" msprop:Generator_UserRelationName="dtRiscoQuestao_dtComentario" msprop:Generator_ParentPropName="dtRiscoQuestaoRow" msprop:Generator_RelationVarName="relationdtRiscoQuestao_dtComentario" msprop:Generator_UserParentTable="dtRiscoQuestao" />
+      <msdata:Relationship name="dtTemaObjetivo_dtMeta" msdata:parent="dtTemaObjetivo" msdata:child="dtMeta" msdata:parentkey="CodigoObjetoEstrategia" msdata:childkey="CodigoObjetoEstrategia" msprop:Generator_UserChildTable="dtMeta" msprop:Generator_ChildPropName="GetdtMetaRows" msprop:Generator_UserRelationName="dtTemaObjetivo_dtMeta" msprop:Generator_RelationVarName="relationdtTemaObjetivo_dtMeta" msprop:Generator_UserParentTable="dtTemaObjetivo" msprop:Generator_ParentPropName="dtTemaObjetivoRow" />
+      <msdata:Relationship name="dtMeta_dtUnidade" msdata:parent="dtMeta" msdata:child="dtUnidade" msdata:parentkey="CodigoObjetoEstrategia CodigoIndicadorDesafio" msdata:childkey="CodigoObjetoEstrategia CodigoIndicadorDesafio" msprop:Generator_UserChildTable="dtUnidade" msprop:Generator_ChildPropName="GetdtUnidadeRows" msprop:Generator_UserRelationName="dtMeta_dtUnidade" msprop:Generator_ParentPropName="dtMetaRowParent" msprop:Generator_RelationVarName="relationdtMeta_dtUnidade" msprop:Generator_UserParentTable="dtMeta" />
+      <msdata:Relationship name="dtUnidade_dtProjeto" msdata:parent="dtUnidade" msdata:child="dtProjeto" msdata:parentkey="CodigoUnidadeNegocio CodigoObjetoEstrategia CodigoIndicadorDesafio" msdata:childkey="CodigoUnidadeNegocio CodigoObjetoEstrategia CodigoIndicadorDesafio" msprop:Generator_UserChildTable="dtProjeto" msprop:Generator_ChildPropName="GetdtProjetoRows" msprop:Generator_UserRelationName="dtUnidade_dtProjeto" msprop:Generator_ParentPropName="dtUnidadeRowParent" msprop:Generator_RelationVarName="relationdtUnidade_dtProjeto" msprop:Generator_UserParentTable="dtUnidade" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

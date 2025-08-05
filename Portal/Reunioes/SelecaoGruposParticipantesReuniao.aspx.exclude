@@ -1,0 +1,163 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SelecaoGruposParticipantesReuniao.aspx.cs" Inherits="Reunioes_SelecaoGruposParticipantesReuniao" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script language="javascript" type="text/javascript">
+        function OnGetSelectedFieldValues(values) {
+            callback.PerformCallback(values.join(';'));
+        }
+
+    </script>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table style="width: 100%;">
+            <tr>
+                <td valign="top" style="height: 600px;">
+                    <dxwgv:ASPxGridView ID="gvDados" runat="server" ClientInstanceName="gvDados" Width="100%"
+                        KeyFieldName="CodigoGrupoParticipantes" 
+                        AutoGenerateColumns="False"
+                        DataSourceID="sdsGruposParticipantes">
+                        <ClientSideEvents SelectionChanged="function(s, e) {
+    btnSalvar.SetEnabled(s.GetSelectedRowCount() &gt; 0);
+}" />
+                        <Columns>
+                            <dxwgv:GridViewCommandColumn Caption=" " ShowSelectCheckbox="True" VisibleIndex="0"
+                                Width="30px">
+                            </dxwgv:GridViewCommandColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="CodigoGrupoParticipantes" 
+                                ReadOnly="True" ShowInCustomizationForm="False"
+                                Visible="False" VisibleIndex="3">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn Caption="Grupo" 
+                                FieldName="DescricaoGrupoParticipantes" VisibleIndex="1">
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxwgv:GridViewDataTextColumn>
+                        </Columns>
+                        <SettingsBehavior AllowFocusedRow="True" />
+                        <SettingsPager Mode="ShowAllRecords" Visible="False">
+                        </SettingsPager>
+                        <Settings VerticalScrollableHeight="530" VerticalScrollBarMode="Visible" 
+                            ShowFilterRow="True" />
+                        <SettingsDetail ShowDetailRow="True" />
+                        <StylesEditors>
+                            <Style >
+                                
+                            </Style>
+                        </StylesEditors>
+                        <Templates>
+                            <DetailRow>
+                                <dxwgv:ASPxGridView ID="gvDetalhe" runat="server" AutoGenerateColumns="False" 
+                                    ClientInstanceName="gvDetalhe" DataSourceID="sdsParticipantesGrupo" 
+                                     KeyFieldName="CodigoUsuario" 
+                                    onbeforeperformdataselect="gvDetalhe_BeforePerformDataSelect" 
+                                    oninit="gvDetalhe_Init" Width="100%">
+                                    <Columns>
+                                        <dxwgv:GridViewDataTextColumn FieldName="CodigoUsuario" ReadOnly="True" 
+                                            ShowInCustomizationForm="False" Visible="False" VisibleIndex="3">
+                                        </dxwgv:GridViewDataTextColumn>
+                                        <dxwgv:GridViewDataTextColumn Caption="Nome" FieldName="NomeUsuario" 
+                                            VisibleIndex="1">
+                                            <Settings AutoFilterCondition="Contains" />
+                                        </dxwgv:GridViewDataTextColumn>
+                                        <dxwgv:GridViewDataTextColumn Caption="E-Mail" FieldName="EMail" 
+                                            VisibleIndex="2">
+                                            <Settings AutoFilterCondition="Contains" />
+                                        </dxwgv:GridViewDataTextColumn>
+                                    </Columns>
+                                    <SettingsBehavior AllowFocusedRow="True" />
+                                    <SettingsPager Mode="ShowAllRecords">
+                                    </SettingsPager>
+                                    <Settings ShowFilterRow="True" />
+                                    <StylesEditors>
+                                        <Style >
+                                        </Style>
+                                    </StylesEditors>
+                                </dxwgv:ASPxGridView>
+                            </DetailRow>
+                        </Templates>
+                    </dxwgv:ASPxGridView>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" valign="bottom">
+                    <table>
+                        <tr>
+                            <td>
+                                <dxe:ASPxButton ID="btnSalvar" runat="server" Text="Salvar" AutoPostBack="False"
+                                    Width="50px"  ClientEnabled="False" 
+                                    ClientInstanceName="btnSalvar">
+                                    <ClientSideEvents Click="function(s, e) {
+	gvDados.GetSelectedFieldValues('CodigoGrupoParticipantes', OnGetSelectedFieldValues);
+}" />
+                                </dxe:ASPxButton>
+                            </td>
+                            <td style="padding-left: 10px">
+                                <dxe:ASPxButton ID="btnCancelar" runat="server" Text="Fechar" AutoPostBack="False"
+                                    Width="50px"  
+                                    ClientInstanceName="btnCancelar">
+                                    <ClientSideEvents Click="function(s, e) {
+	window.top.fechaModal();
+}" />
+                                </dxe:ASPxButton>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <asp:SqlDataSource ID="sdsGruposParticipantes" runat="server" InsertCommand=" INSERT INTO ParticipanteEvento
+ (
+        CodigoEvento,
+        CodigoParticipante,
+        IndicaParticipantePresente
+ )
+ SELECT @CodigoEvento,
+        ugpe.CodigoUsuarioParticipante ,
+        'N' AS IndicaParticipantePresente
+   FROM UsuarioGrupoParticipantesEvento AS ugpe
+  WHERE ugpe.CodigoGrupoParticipantes = @CodigoGrupoParticipantes
+    AND NOT EXISTS(SELECT 1
+                     FROM ParticipanteEvento AS pe
+                    WHERE pe.CodigoParticipante = ugpe.CodigoUsuarioParticipante
+                      AND pe.CodigoEvento = @CodigoEvento)" SelectCommand=" SELECT gpe.CodigoGrupoParticipantes, 
+        gpe.DescricaoGrupoParticipantes 
+   FROM GrupoParticipantesEvento AS gpe
+  WHERE gpe.CodigoEntidade = @CodigoEntidade
+  ORDER BY
+        gpe.DescricaoGrupoParticipantes">
+        <InsertParameters>
+            <asp:Parameter Name="CodigoGrupoParticipantes" />
+            <asp:QueryStringParameter Name="CodigoEvento" QueryStringField="ce" />
+        </InsertParameters>
+        <SelectParameters>
+            <asp:SessionParameter Name="CodigoEntidade" SessionField="CodigoEntidade" />
+        </SelectParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsParticipantesGrupo" runat="server" SelectCommand=" SELECT u.NomeUsuario, 
+        u.EMail 
+   FROM UsuarioGrupoParticipantesEvento AS ugpe INNER JOIN
+        Usuario AS u ON u.CodigoUsuario = ugpe.CodigoUsuarioParticipante
+  WHERE ugpe.CodigoGrupoParticipantes = @CodigoGrupoParticipantes
+    AND u.DataExclusao IS NULL
+  ORDER BY
+        u.NomeUsuario">
+        <SelectParameters>
+            <asp:SessionParameter Name="CodigoGrupoParticipantes" 
+                SessionField="CodigoGrupoParticipantes" />
+        </SelectParameters>
+    </asp:SqlDataSource>
+    <dxcb:ASPxCallback ID="callback" runat="server" ClientInstanceName="callback" OnCallback="callback_Callback">
+        <ClientSideEvents CallbackComplete="function(s, e) {
+    window.top.retornoModal = 'S';
+	window.top.fechaModal();
+}" />
+    </dxcb:ASPxCallback>
+    </form>
+</body>
+</html>

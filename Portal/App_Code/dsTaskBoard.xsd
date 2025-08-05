@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TaskBoard" targetNamespace="http://tempuri.org/dsProjeto.xsd" xmlns:mstns="http://tempuri.org/dsProjeto.xsd" xmlns="http://tempuri.org/dsProjeto.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TaskBoard" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="TaskBoard" msprop:Generator_UserDSName="TaskBoard">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ClassificacaoItemBackLog" msprop:Generator_TableClassName="ClassificacaoItemBackLogDataTable" msprop:Generator_TableVarName="tableClassificacaoItemBackLog" msprop:Generator_RowChangedName="ClassificacaoItemBackLogRowChanged" msprop:Generator_TablePropName="ClassificacaoItemBackLog" msprop:Generator_RowDeletingName="ClassificacaoItemBackLogRowDeleting" msprop:Generator_RowChangingName="ClassificacaoItemBackLogRowChanging" msprop:Generator_RowEvHandlerName="ClassificacaoItemBackLogRowChangeEventHandler" msprop:Generator_RowDeletedName="ClassificacaoItemBackLogRowDeleted" msprop:Generator_RowClassName="ClassificacaoItemBackLogRow" msprop:Generator_UserTableName="ClassificacaoItemBackLog" msprop:Generator_RowEvArgName="ClassificacaoItemBackLogRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoTipoClassificacaoItem" msprop:Generator_ColumnVarNameInTable="columnCodigoTipoClassificacaoItem" msprop:Generator_ColumnPropNameInRow="CodigoTipoClassificacaoItem" msprop:Generator_ColumnPropNameInTable="CodigoTipoClassificacaoItemColumn" msprop:Generator_UserColumnName="CodigoTipoClassificacaoItem" type="xs:short" />
+              <xs:element name="DescricaoTipoClassificacaoItem" msprop:Generator_ColumnVarNameInTable="columnDescricaoTipoClassificacaoItem" msprop:Generator_ColumnPropNameInRow="DescricaoTipoClassificacaoItem" msprop:Generator_ColumnPropNameInTable="DescricaoTipoClassificacaoItemColumn" msprop:Generator_UserColumnName="DescricaoTipoClassificacaoItem">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ItemBacklog" msprop:Generator_TableClassName="ItemBacklogDataTable" msprop:Generator_TableVarName="tableItemBacklog" msprop:Generator_RowChangedName="ItemBacklogRowChanged" msprop:Generator_TablePropName="ItemBacklog" msprop:Generator_RowDeletingName="ItemBacklogRowDeleting" msprop:Generator_RowChangingName="ItemBacklogRowChanging" msprop:Generator_RowEvHandlerName="ItemBacklogRowChangeEventHandler" msprop:Generator_RowDeletedName="ItemBacklogRowDeleted" msprop:Generator_RowClassName="ItemBacklogRow" msprop:Generator_UserTableName="ItemBacklog" msprop:Generator_RowEvArgName="ItemBacklogRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoItem" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnCodigoItem" msprop:Generator_ColumnPropNameInRow="CodigoItem" msprop:Generator_ColumnPropNameInTable="CodigoItemColumn" msprop:Generator_UserColumnName="CodigoItem" type="xs:int" />
+              <xs:element name="CodigoTipoStatusItem" msprop:Generator_ColumnVarNameInTable="columnCodigoTipoStatusItem" msprop:Generator_ColumnPropNameInRow="CodigoTipoStatusItem" msprop:Generator_ColumnPropNameInTable="CodigoTipoStatusItemColumn" msprop:Generator_UserColumnName="CodigoTipoStatusItem" type="xs:short" />
+              <xs:element name="CodigoTipoClassificacaoItem" msprop:Generator_ColumnVarNameInTable="columnCodigoTipoClassificacaoItem" msprop:Generator_ColumnPropNameInRow="CodigoTipoClassificacaoItem" msprop:Generator_ColumnPropNameInTable="CodigoTipoClassificacaoItemColumn" msprop:Generator_UserColumnName="CodigoTipoClassificacaoItem" type="xs:short" minOccurs="0" />
+              <xs:element name="TituloItem" msprop:Generator_ColumnVarNameInTable="columnTituloItem" msprop:Generator_ColumnPropNameInRow="TituloItem" msprop:Generator_ColumnPropNameInTable="TituloItemColumn" msprop:Generator_UserColumnName="TituloItem">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="300" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DetalheItem" msprop:Generator_ColumnVarNameInTable="columnDetalheItem" msprop:Generator_ColumnPropNameInRow="DetalheItem" msprop:Generator_ColumnPropNameInTable="DetalheItemColumn" msprop:Generator_UserColumnName="DetalheItem">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Importancia" msprop:Generator_ColumnVarNameInTable="columnImportancia" msprop:Generator_ColumnPropNameInRow="Importancia" msprop:Generator_ColumnPropNameInTable="ImportanciaColumn" msprop:Generator_UserColumnName="Importancia" type="xs:short" minOccurs="0" />
+              <xs:element name="EsforcoPrevisto" msprop:Generator_ColumnVarNameInTable="columnEsforcoPrevisto" msprop:Generator_ColumnPropNameInRow="EsforcoPrevisto" msprop:Generator_ColumnPropNameInTable="EsforcoPrevistoColumn" msprop:Generator_UserColumnName="EsforcoPrevisto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CodigoUsuarioResponsavel" msprop:Generator_ColumnVarNameInTable="columnCodigoUsuarioResponsavel" msprop:Generator_ColumnPropNameInRow="CodigoUsuarioResponsavel" msprop:Generator_ColumnPropNameInTable="CodigoUsuarioResponsavelColumn" msprop:Generator_UserColumnName="CodigoUsuarioResponsavel" type="xs:int" minOccurs="0" />
+              <xs:element name="IndicaItemNaoPlanejado" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaItemNaoPlanejado" msprop:Generator_ColumnVarNameInTable="columnIndicaItemNaoPlanejado" msprop:Generator_ColumnPropNameInTable="IndicaItemNaoPlanejadoColumn" msprop:Generator_UserColumnName="IndicaItemNaoPlanejado" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TipoStatusItemBacklog" msprop:Generator_TableClassName="TipoStatusItemBacklogDataTable" msprop:Generator_TableVarName="tableTipoStatusItemBacklog" msprop:Generator_RowChangedName="TipoStatusItemBacklogRowChanged" msprop:Generator_TablePropName="TipoStatusItemBacklog" msprop:Generator_RowDeletingName="TipoStatusItemBacklogRowDeleting" msprop:Generator_RowChangingName="TipoStatusItemBacklogRowChanging" msprop:Generator_RowEvHandlerName="TipoStatusItemBacklogRowChangeEventHandler" msprop:Generator_RowDeletedName="TipoStatusItemBacklogRowDeleted" msprop:Generator_RowClassName="TipoStatusItemBacklogRow" msprop:Generator_UserTableName="TipoStatusItemBacklog" msprop:Generator_RowEvArgName="TipoStatusItemBacklogRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoTipoStatusItem" msprop:Generator_ColumnVarNameInTable="columnCodigoTipoStatusItem" msprop:Generator_ColumnPropNameInRow="CodigoTipoStatusItem" msprop:Generator_ColumnPropNameInTable="CodigoTipoStatusItemColumn" msprop:Generator_UserColumnName="CodigoTipoStatusItem" type="xs:short" />
+              <xs:element name="TituloStatusItem" msprop:Generator_ColumnVarNameInTable="columnTituloStatusItem" msprop:Generator_ColumnPropNameInRow="TituloStatusItem" msprop:Generator_ColumnPropNameInTable="TituloStatusItemColumn" msprop:Generator_UserColumnName="TituloStatusItem">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaPossuiRecursoAssociado" msprop:Generator_ColumnVarNameInTable="columnIndicaPossuiRecursoAssociado" msprop:Generator_ColumnPropNameInRow="IndicaPossuiRecursoAssociado" msprop:Generator_ColumnPropNameInTable="IndicaPossuiRecursoAssociadoColumn" msprop:Generator_UserColumnName="IndicaPossuiRecursoAssociado" type="xs:boolean" />
+              <xs:element name="SequenciaApresentacaoRaia" msprop:Generator_ColumnVarNameInTable="columnSequenciaApresentacaoRaia" msprop:Generator_ColumnPropNameInRow="SequenciaApresentacaoRaia" msprop:Generator_ColumnPropNameInTable="SequenciaApresentacaoRaiaColumn" msprop:Generator_UserColumnName="SequenciaApresentacaoRaia" type="xs:short" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Usuario" msprop:Generator_TableClassName="UsuarioDataTable" msprop:Generator_TableVarName="tableUsuario" msprop:Generator_RowChangedName="UsuarioRowChanged" msprop:Generator_TablePropName="Usuario" msprop:Generator_RowDeletingName="UsuarioRowDeleting" msprop:Generator_RowChangingName="UsuarioRowChanging" msprop:Generator_RowEvHandlerName="UsuarioRowChangeEventHandler" msprop:Generator_RowDeletedName="UsuarioRowDeleted" msprop:Generator_RowClassName="UsuarioRow" msprop:Generator_UserTableName="Usuario" msprop:Generator_RowEvArgName="UsuarioRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoUsuario" msprop:Generator_ColumnVarNameInTable="columnCodigoUsuario" msprop:Generator_ColumnPropNameInRow="CodigoUsuario" msprop:Generator_ColumnPropNameInTable="CodigoUsuarioColumn" msprop:Generator_UserColumnName="CodigoUsuario" type="xs:int" />
+              <xs:element name="NomeUsuario" msprop:Generator_ColumnVarNameInTable="columnNomeUsuario" msprop:Generator_ColumnPropNameInRow="NomeUsuario" msprop:Generator_ColumnPropNameInTable="NomeUsuarioColumn" msprop:Generator_UserColumnName="NomeUsuario" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ClassificacaoItemBackLog" />
+      <xs:field xpath="mstns:CodigoTipoClassificacaoItem" />
+    </xs:unique>
+    <xs:unique name="ItemBacklog_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ItemBacklog" />
+      <xs:field xpath="mstns:CodigoItem" />
+    </xs:unique>
+    <xs:unique name="TipoStatusItemBacklog_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TipoStatusItemBacklog" />
+      <xs:field xpath="mstns:CodigoTipoStatusItem" />
+    </xs:unique>
+    <xs:unique name="Usuario_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Usuario" />
+      <xs:field xpath="mstns:CodigoUsuario" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Fases_Tarefas" msdata:parent="TipoStatusItemBacklog" msdata:child="ItemBacklog" msdata:parentkey="CodigoTipoStatusItem" msdata:childkey="CodigoTipoStatusItem" msprop:Generator_UserChildTable="ItemBacklog" msprop:Generator_ChildPropName="GetTarefasRows" msprop:Generator_UserRelationName="Fases_Tarefas" msprop:Generator_ParentPropName="TipoStatusItemBacklogRow" msprop:Generator_RelationVarName="relationFases_Tarefas" msprop:Generator_UserParentTable="TipoStatusItemBacklog" />
+      <msdata:Relationship name="Origens_Tarefas" msdata:parent="ClassificacaoItemBackLog" msdata:child="ItemBacklog" msdata:parentkey="CodigoTipoClassificacaoItem" msdata:childkey="CodigoTipoClassificacaoItem" msprop:Generator_UserChildTable="ItemBacklog" msprop:Generator_ChildPropName="GetItemBacklogRows" msprop:Generator_UserRelationName="Origens_Tarefas" msprop:Generator_RelationVarName="relationOrigens_Tarefas" msprop:Generator_UserParentTable="ClassificacaoItemBackLog" msprop:Generator_ParentPropName="TipoTarefaRow" />
+      <msdata:Relationship name="Usuario_ItemBacklog" msdata:parent="Usuario" msdata:child="ItemBacklog" msdata:parentkey="CodigoUsuario" msdata:childkey="CodigoUsuarioResponsavel" msprop:Generator_UserChildTable="ItemBacklog" msprop:Generator_ChildPropName="GetItemBacklogRows" msprop:Generator_UserRelationName="Usuario_ItemBacklog" msprop:Generator_ParentPropName="UsuarioRow" msprop:Generator_RelationVarName="relationUsuario_ItemBacklog" msprop:Generator_UserParentTable="Usuario" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

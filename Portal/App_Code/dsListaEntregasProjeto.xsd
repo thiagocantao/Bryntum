@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsListaEntregasProjeto" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsListaEntregasProjeto" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsListaEntregasProjeto" msprop:Generator_UserDSName="dsListaEntregasProjeto">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tbListaEntregasProjetos" msprop:Generator_TableClassName="tbListaEntregasProjetosDataTable" msprop:Generator_TableVarName="tabletbListaEntregasProjetos" msprop:Generator_TablePropName="tbListaEntregasProjetos" msprop:Generator_RowDeletingName="tbListaEntregasProjetosRowDeleting" msprop:Generator_UserTableName="tbListaEntregasProjetos" msprop:Generator_RowChangingName="tbListaEntregasProjetosRowChanging" msprop:Generator_RowEvHandlerName="tbListaEntregasProjetosRowChangeEventHandler" msprop:Generator_RowDeletedName="tbListaEntregasProjetosRowDeleted" msprop:Generator_RowEvArgName="tbListaEntregasProjetosRowChangeEvent" msprop:Generator_RowChangedName="tbListaEntregasProjetosRowChanged" msprop:Generator_RowClassName="tbListaEntregasProjetosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeTarefa" msprop:Generator_ColumnVarNameInTable="columnNomeTarefa" msprop:Generator_ColumnPropNameInRow="NomeTarefa" msprop:Generator_ColumnPropNameInTable="NomeTarefaColumn" msprop:Generator_UserColumnName="NomeTarefa" type="xs:string" minOccurs="0" />
+              <xs:element name="TerminoLB" msprop:Generator_ColumnVarNameInTable="columnTerminoLB" msprop:Generator_ColumnPropNameInRow="TerminoLB" msprop:Generator_ColumnPropNameInTable="TerminoLBColumn" msprop:Generator_UserColumnName="TerminoLB" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoReal" msprop:Generator_ColumnVarNameInTable="columnTerminoReal" msprop:Generator_ColumnPropNameInRow="TerminoReal" msprop:Generator_ColumnPropNameInTable="TerminoRealColumn" msprop:Generator_UserColumnName="TerminoReal" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Situacao" msprop:Generator_ColumnVarNameInTable="columnSituacao" msprop:Generator_ColumnPropNameInRow="Situacao" msprop:Generator_ColumnPropNameInTable="SituacaoColumn" msprop:Generator_UserColumnName="Situacao" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

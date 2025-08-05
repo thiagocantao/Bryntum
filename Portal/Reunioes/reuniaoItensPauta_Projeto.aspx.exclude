@@ -1,0 +1,321 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="reuniaoItensPauta_Projeto.aspx.cs"
+    Inherits="Reunioes_reuniaoItensPauta_Projeto" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <style type="text/css">
+        .style1
+        {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table width="100%">
+            <tr>
+                <td>
+                    <dxe:ASPxLabel ID="ASPxLabel1" runat="server" 
+                        Text="Riscos/Questoes">
+                    </dxe:ASPxLabel>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <dxwgv:ASPxGridView ID="gvRiscosQuestoes" runat="server" ClientInstanceName="gvRiscosQuestoes"
+                         Width="100%" AutoGenerateColumns="False"
+                        DataSourceID="sdsRiscosQuestoes" KeyFieldName="CodigoRiscoQuestao">
+                        <Columns>
+                            <dxwgv:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" ButtonRenderMode="Image"
+                                Caption=" " Width="30px">
+                            </dxwgv:GridViewCommandColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="RiscoQuestao" ReadOnly="True" VisibleIndex="1"
+                                Caption="Tipo" Width="100px">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="DescricaoRiscoQuestao" VisibleIndex="3"
+                                Caption="Descrição">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="UsuarioResponsavel" VisibleIndex="4" Caption="Responsável">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="ImpactoUrgencia" ReadOnly="True" VisibleIndex="5"
+                                Caption="Impacto/Urgência" Width="100px">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="CodigoTipoAssociacao" ReadOnly="True" VisibleIndex="7"
+                                Visible="False">
+                                <EditFormSettings Visible="False" />
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="IndicaObjetoSelecionado" ReadOnly="True"
+                                VisibleIndex="30" Visible="False">
+                                <EditFormSettings CaptionLocation="Top" />
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataSpinEditColumn Caption="Sequência" FieldName="SequenciaApresentacao"
+                                VisibleIndex="6" Width="100px">
+                                <PropertiesSpinEdit DisplayFormatString="g" MaxValue="999" MinValue="1" NumberType="Integer">
+                                    <SpinButtons ShowIncrementButtons="False">
+                                    </SpinButtons>
+                                    <Style HorizontalAlign="Right">
+                                        
+                                    </Style>
+                                </PropertiesSpinEdit>
+                            </dxwgv:GridViewDataSpinEditColumn>
+                        </Columns>
+                        <SettingsBehavior AllowFocusedRow="True" />
+                        <SettingsPager Mode="ShowAllRecords">
+                        </SettingsPager>
+                        <StylesEditors>
+                            <Style >
+                                
+                            </Style>
+                        </StylesEditors>
+                    </dxwgv:ASPxGridView>
+                    <asp:SqlDataSource ID="sdsRiscosQuestoes" runat="server" ConnectionString="Data Source=cdisdb;Initial Catalog=desenv_portalEstrategia;Persist Security Info=True;User ID=usr_desenvolvimento;Password=12345678"
+                        ProviderName="System.Data.SqlClient" SelectCommand=" SELECT CASE WHEN  rq.IndicaRiscoQuestao = 'R' THEN 'Risco'
+			 ELSE ( SELECT Valor 
+                      FROM ParametroConfiguracaoSistema pc
+					 WHERE pc.Parametro = 'labelQuestao'
+					   AND pc.CodigoEntidade = rq.CodigoEntidade )
+		 END AS RiscoQuestao,
+		 rq.DescricaoRiscoQuestao,
+		 u.NomeUsuario AS UsuarioResponsavel,
+		 CASE WHEN rq.ImpactoUrgencia = 1 THEN 'Baixo'
+		 	  WHEN rq.ImpactoUrgencia = 2 THEN 'Médio'
+			  WHEN rq.ImpactoUrgencia = 3 THEN 'Alto'
+			  ELSE CAST( rq.ImpactoUrgencia AS VARCHAR(5) )
+		 END AS ImpactoUrgencia,
+		 dbo.f_GetCodigoTipoAssociacao('RQ') AS CodigoTipoAssociacao,
+		 CASE WHEN oae.CodigoObjetoAssociado IS NULL THEN 'S' 
+		      ELSE 'N'
+		 END AS IndicaObjetoSelecionado,
+		 oae.SequenciaApresentacao
+	FROM RiscoQuestao rq INNER JOIN
+	     Usuario u ON ( u.CodigoUsuario = rq.CodigoUsuarioResponsavel ) LEFT JOIN
+		 ObjetoAssociadoEvento oae ON (oae.CodigoEvento = @CodigoEvento AND
+									   oae.CodigoObjetoAssociado = rq.CodigoRiscoQuestao AND 
+									   oae.CodigoTipoObjetoAssociado = dbo.f_GetCodigoTipoAssociacao('RQ'))
+   WHERE rq.CodigoProjeto = @CodigoProjeto
+	 AND rq.DataExclusao IS NULL
+	 ORDER BY ISNULL(oae.SequenciaApresentacao, 1000)">
+                        <SelectParameters>
+                            <asp:QueryStringParameter Name="CodigoEvento" QueryStringField="ce" />
+                            <asp:QueryStringParameter DefaultValue="" Name="CodigoProjeto" QueryStringField="cp" />
+                        </SelectParameters>
+                    </asp:SqlDataSource>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <dxe:ASPxLabel ID="ASPxLabel2" runat="server" 
+                        Text="Tarefas Cronograma">
+                    </dxe:ASPxLabel>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <dxwgv:ASPxGridView ID="gvTarefasCronogramas" runat="server" ClientInstanceName="gvTarefasCronogramas"
+                         Width="100%" AutoGenerateColumns="False"
+                        DataSourceID="sdsTarefasCronogramas" KeyFieldName="CodigoTarefa">
+                        <Columns>
+                            <dxwgv:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="30px">
+                            </dxwgv:GridViewCommandColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="CodigoTarefa" VisibleIndex="1" Visible="False">
+                                <EditFormSettings Visible="False" />
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="NomeTarefa" VisibleIndex="2" Caption="Tarefa">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataDateColumn FieldName="Inicio" ReadOnly="True" VisibleIndex="3"
+                                Caption="Início">
+                            </dxwgv:GridViewDataDateColumn>
+                            <dxwgv:GridViewDataDateColumn FieldName="Termino" ReadOnly="True" VisibleIndex="4"
+                                Caption="Término">
+                            </dxwgv:GridViewDataDateColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="Recursos" ReadOnly="True" VisibleIndex="5"
+                                Caption="Recursos">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="CodigoTipoAssociacao" ReadOnly="True" VisibleIndex="6"
+                                Visible="False">
+                                <EditFormSettings Visible="False" />
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="IndicaObjetoSelecionado" ReadOnly="True"
+                                VisibleIndex="7" Visible="False">
+                                <EditFormSettings Visible="False" />
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataSpinEditColumn Caption="Sequência" FieldName="SequenciaApresentacao"
+                                VisibleIndex="6" Width="100px">
+                                <PropertiesSpinEdit DisplayFormatString="g" MaxValue="999" MinValue="1" NumberType="Integer">
+                                    <SpinButtons ShowIncrementButtons="False">
+                                    </SpinButtons>
+                                    <Style HorizontalAlign="Right">
+                                        
+                                    </Style>
+                                </PropertiesSpinEdit>
+                            </dxwgv:GridViewDataSpinEditColumn>
+                        </Columns>
+                        <SettingsBehavior AllowFocusedRow="True" />
+                        <SettingsPager Mode="ShowAllRecords">
+                        </SettingsPager>
+                        <StylesEditors>
+                            <Style >
+                                
+                            </Style>
+                        </StylesEditors>
+                    </dxwgv:ASPxGridView>
+                    <asp:SqlDataSource ID="sdsTarefasCronogramas" runat="server" ConnectionString="<%$ ConnectionStrings:desenv_portalEstrategiaConnectionString2 %>"
+                        SelectCommand=" SELECT tc.CodigoTarefa, 
+				tc.NomeTarefa, 
+				ISNULL(tc.InicioReal, ISNULL(tc.InicioLB, tc.Inicio))  AS Inicio,
+				ISNULL(tc.TerminoReal, ISNULL(tc.TerminoLB, tc.Termino)) AS Termino,
+				[dbo].[f_GetStringAlocacaoRecursoTarefa](  tc.CodigoCronogramaProjeto,  tc.CodigoTarefa ) AS Recursos,
+				dbo.f_GetCodigoTipoAssociacao('TC') AS CodigoTipoAssociacao,
+				CASE WHEN oae.CodigoObjetoAssociado IS NULL THEN 'S' 
+						 ELSE 'N'
+				END AS IndicaObjetoSelecionado,
+                                                                           oae.SequenciaApresentacao
+	 FROM CronogramaProjeto cp INNER JOIN
+				TarefaCronogramaProjeto tc ON ( tc.CodigoCronogramaProjeto = cp.CodigoCronogramaProjeto )LEFT JOIN
+				ObjetoAssociadoEvento oae ON (oae.CodigoEvento = @CodigoEvento AND
+																			oae.CodigoObjetoAssociado = tc.CodigoTarefa AND 
+																			oae.CodigoTipoObjetoAssociado = dbo.f_GetCodigoTipoAssociacao('TC'))
+	WHERE cp.CodigoProjeto = @CodigoProjeto
+		AND tc.DataExclusao IS NULL
+		AND cp.DataExclusao IS NULL
+	 ORDER BY ISNULL(oae.SequenciaApresentacao, 1000)">
+                        <SelectParameters>
+                            <asp:QueryStringParameter Name="CodigoEvento" QueryStringField="ce" />
+                            <asp:QueryStringParameter Name="CodigoProjeto" QueryStringField="cp" />
+                        </SelectParameters>
+                    </asp:SqlDataSource>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <dxe:ASPxLabel ID="ASPxLabel3" runat="server" 
+                        Text="Indicadores">
+                    </dxe:ASPxLabel>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <dxwgv:ASPxGridView ID="gvIndicadores" runat="server" ClientInstanceName="gvIndicadores"
+                         Width="100%" AutoGenerateColumns="False"
+                        DataSourceID="sdsIndicadores" KeyFieldName="CodigoIndicador">
+                        <Columns>
+                            <dxwgv:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="30px">
+                            </dxwgv:GridViewCommandColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="CodigoIndicador" ReadOnly="True" VisibleIndex="1"
+                                Visible="False">
+                                <EditFormSettings Visible="False" />
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="NomeIndicador" VisibleIndex="2" Caption="Indicador">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="DescricaoPeriodicidade_PT" VisibleIndex="3"
+                                Caption="Descrição">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="Responsavel" VisibleIndex="4" Caption="Responsável">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="CodigoTipoAssociacao" ReadOnly="True" VisibleIndex="5"
+                                Visible="False">
+                                <EditFormSettings Visible="False" />
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn FieldName="IndicaObjetoSelecionado" ReadOnly="True"
+                                VisibleIndex="6" Visible="False">
+                                <EditFormSettings Visible="False" />
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataSpinEditColumn Caption="Sequência" FieldName="SequenciaApresentacao"
+                                VisibleIndex="6" Width="100px">
+                                <PropertiesSpinEdit DisplayFormatString="g" MaxValue="999" MinValue="1" NumberType="Integer">
+                                    <SpinButtons ShowIncrementButtons="False">
+                                    </SpinButtons>
+                                    <Style HorizontalAlign="Right">
+                                        
+                                    </Style>
+                                </PropertiesSpinEdit>
+                            </dxwgv:GridViewDataSpinEditColumn>
+                        </Columns>
+                        <SettingsBehavior AllowFocusedRow="True" />
+                        <SettingsPager Mode="ShowAllRecords">
+                        </SettingsPager>
+                        <StylesEditors>
+                            <Style >
+                                
+                            </Style>
+                        </StylesEditors>
+                    </dxwgv:ASPxGridView>
+                    <asp:SqlDataSource ID="sdsIndicadores" runat="server" ConnectionString="Data Source=cdisdb;Initial Catalog=desenv_portalEstrategia;Persist Security Info=True;User ID=usr_desenvolvimento;Password=12345678"
+                        ProviderName="System.Data.SqlClient" SelectCommand=" SELECT i.[CodigoIndicador], 
+				i.[NomeIndicador], 
+				tp.DescricaoPeriodicidade_PT, 
+				u.NomeUsuario as Responsavel, 
+				dbo.f_GetCodigoTipoAssociacao('IN') AS CodigoTipoAssociacao,
+				CASE WHEN oae.CodigoObjetoAssociado IS NULL THEN 'S' 
+						 ELSE 'N'
+				END AS IndicaObjetoSelecionado,
+                                                                           oae.SequenciaApresentacao
+	 FROM [dbo].[IndicadorOperacional] AS [i] INNER JOIN 
+				[dbo].Usuario AS [u] ON (u.[CodigoUsuario] = i.[CodigoUsuarioResponsavel]) INNER JOIN 
+				[dbo].[MetaOperacional] AS [mo] ON (mo.[CodigoIndicador] = i.[CodigoIndicador]) INNER JOIN 
+				[dbo].[TipoPeriodicidade] AS [tp] ON (tp.[CodigoPeriodicidade] = mo.[CodigoPeriodicidade]) INNER JOIN 
+				[dbo].[TipoUnidadeMedida] AS [tum] ON (tum.[CodigoUnidadeMedida] = i.[CodigoUnidadeMedida] )LEFT JOIN
+				[dbo].[ObjetoAssociadoEvento] oae ON (oae.CodigoEvento = @CodigoEvento AND 
+																			oae.CodigoObjetoAssociado = i.CodigoIndicador AND 
+																			oae.CodigoTipoObjetoAssociado = dbo.f_GetCodigoTipoAssociacao('IN'))
+	WHERE mo.CodigoProjeto = @CodigoProjeto
+	 ORDER BY ISNULL(oae.SequenciaApresentacao, 1000)">
+                        <SelectParameters>
+                            <asp:QueryStringParameter Name="CodigoEvento" QueryStringField="ce" />
+                            <asp:QueryStringParameter DefaultValue="" Name="CodigoProjeto" QueryStringField="cp" />
+                        </SelectParameters>
+                    </asp:SqlDataSource>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                <dxe:ASPxLabel ID="ASPxLabel4" runat="server" Text="Sequência de apresentação">
+                                </dxe:ASPxLabel>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <dxe:ASPxCheckBox ID="cbPendencias" runat="server" 
+                                    Text="Pendencias da Reuniao Anterior ">
+                                </dxe:ASPxCheckBox>
+                            </td>
+                            <td>
+                                <dxe:ASPxSpinEdit ID="sePendencias" runat="server" 
+                                    Height="21px" Number="0" NumberType="Integer" Width="100%" RightToLeft="True"
+                                    MaxValue="999" MinValue="1">
+                                    <SpinButtons ShowIncrementButtons="False">
+                                    </SpinButtons>
+                                </dxe:ASPxSpinEdit>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <dxe:ASPxCheckBox ID="cbDadosFinanceiros" runat="server" 
+                                    Text="Dados Financeiros">
+                                </dxe:ASPxCheckBox>
+                            </td>
+                            <td>
+                                <dxe:ASPxSpinEdit ID="seDadosFinanceiros" runat="server" 
+                                    Height="21px" Number="0" NumberType="Integer" Width="100%" RightToLeft="True"
+                                    MaxValue="999" MinValue="1">
+                                    <SpinButtons ShowIncrementButtons="False">
+                                    </SpinButtons>
+                                </dxe:ASPxSpinEdit>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </table>
+    </div>
+    </form>
+</body>
+</html>

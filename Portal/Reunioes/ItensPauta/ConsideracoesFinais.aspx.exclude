@@ -1,0 +1,189 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ConsideracoesFinais.aspx.cs"
+    Inherits="Reunioes_ItensPauta_ConsideracoesFinais" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script src="../../scripts/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="../../scripts/UtilReuniao.js" type="text/javascript"></script>
+    <script type="text/javascript">        
+        var timeoutDelegate = null;
+
+        function memoConsideracoesFinais_OnTextChanged(s, e) {
+            if (timeoutDelegate != null)
+                clearTimeout(timeoutDelegate);
+            timeoutDelegate = setTimeout(function () { callback.PerformCallback('consideracoes_AUTO') }, 3000);
+        }
+
+        function GetQueryString() {
+            var a = window.location.search.substr(1).split('&');
+            if (a == "") return {};
+            var b = {};
+            for (var i = 0; i < a.length; ++i) {
+                var p = a[i].split('=');
+                if (p.length != 2) continue;
+                b[p[0]] = p[1].replace(/\+/g, " ");
+            }
+            return b;
+        }
+    </script>
+    <title></title>
+    <style type="text/css">
+
+.dxeTrackBar, 
+.dxeIRadioButton, 
+.dxeButtonEdit, 
+.dxeTextBox, 
+.dxeRadioButtonList, 
+.dxeCheckBoxList, 
+.dxeMemo, 
+.dxeListBox, 
+.dxeCalendar, 
+.dxeColorTable
+{
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+.dxeTextBox,
+.dxeMemo
+{
+	background-color: white;
+	border: 1px solid #9f9f9f;
+}
+
+.dxeTextBoxSys, 
+.dxeMemoSys 
+{
+    border-collapse:separate!important;
+}
+
+.dxeMemoSys td 
+{ 
+    *padding: 0px; 
+}
+.dxeMemoSys td 
+{
+    padding-right: 7px\0/;
+}
+
+.dxeButtonEditSys .dxeEditAreaSys,
+.dxeButtonEditSys td.dxic,
+.dxeTextBoxSys td.dxic,
+.dxeMemoSys td,
+.dxeEditAreaSys
+{
+	width: 100%;
+}
+
+.dxeMemoSys td 
+{
+    padding: 0px 6px 0px 0px;
+}
+.dxeMemoEditArea
+{
+	background-color: white;
+	font: 12px Tahoma, Geneva, sans-serif;
+	outline: none;
+}
+
+
+.dxeMemoEditAreaSys 
+{
+    *margin: -1px 0px;
+    *padding-right: 4px;
+}
+.dxeMemoEditAreaSys 
+{
+    padding-right: 4px\0/;
+}
+.dxeMemoEditAreaSys 
+{
+    padding: 3px 3px 0px 3px;
+    margin: 0px;
+    border-width: 0px;
+	display: block;
+	resize: none;
+}
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table width="100%">
+            <tr>
+                <td>
+                    <dxe:ASPxMemo runat="server" Height="200px" Width="100%" EnableFocusedStyle="False"
+                        Font-Size="12pt" ID="memoConsideracoesFinais" 
+                        onload="memoConsideracoesFinais_Load">
+                        <ClientSideEvents KeyUp="function(s, e) {
+	memoConsideracoesFinais_OnTextChanged(s,e);
+}"></ClientSideEvents>
+                        <FocusedStyle Font-Size="12pt">
+                        </FocusedStyle>
+                        <Border BorderStyle="Solid" BorderWidth="3px"></Border>
+                    </dxe:ASPxMemo>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <table>
+                        <tr>
+                            <td>
+                                <dxe:ASPxButton ID="btnVisualizarAta" runat="server" Text="Visualizar Ata" 
+                                    AutoPostBack="False" ClientInstanceName="btnVisualizarAta" 
+                                    >
+                                    <ClientSideEvents Click="function(s, e) {
+	if (timeoutDelegate != null){
+		clearTimeout(timeoutDelegate);
+	}
+	callback.PerformCallback('consideracoes');
+}" />
+                                </dxe:ASPxButton>
+                            </td>
+                            <td style="padding-left: 10px">
+                                <dxe:ASPxButton ID="btnEnviarAta" runat="server" Text="Enviar Ata" 
+                                    AutoPostBack="False" ClientInstanceName="btnEnviarAta" 
+                                    >
+                                    <ClientSideEvents Click="function(s, e) {
+	callback.PerformCallback('envioata');
+}" />
+                                </dxe:ASPxButton>
+                            </td>
+                            <td style="padding-left: 10px">
+                                <dxe:ASPxButton ID="btnPublicarAta" runat="server" AutoPostBack="False" 
+                                    ClientInstanceName="btnPublicarAta"  
+                                    Text="Publicar Ata">
+                                    <ClientSideEvents Click="function(s, e) {
+	if(confirm('Ao publicar a ata, nenhuma informação da reunião poderá ser alterada. Deseja prosseguir?'))
+		callback.PerformCallback('publicarata');
+}" />
+                                </dxe:ASPxButton>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <dxcb:ASPxCallback ID="callback" runat="server" ClientInstanceName="callback" 
+        oncallback="callback_Callback">
+        <ClientSideEvents CallbackComplete="function(s, e) {
+	if(e.parameter == 'consideracoes'){
+		var qs = GetQueryString();
+		var codigoEvento = qs['cr'];
+    	var alturaTela = qs['al'];
+		var url = './imprimeAtaDeReuniao.aspx?CE=' + codigoEvento;
+    	var titulo = 'Visualização da Ata';
+		window.top.showModal(url, titulo, 800, alturaTela - 100, '', null)
+	}
+	else if(e.parameter == 'envioata'){
+		window.top.mostraMensagem('Ata enviada com sucesso', 'sucesso', false, false, null);
+	}
+	else if(e.parameter == 'publicarata'){
+		window.top.mostraMensagem('Ata publicada com sucesso', 'sucesso', false, false, null);
+		window.history.back();
+	}
+}" />
+    </dxcb:ASPxCallback>
+    </form>
+</body>
+</html>

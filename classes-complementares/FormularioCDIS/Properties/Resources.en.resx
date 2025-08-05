@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="desde" xml:space="preserve">
+    <value>since</value>
+  </data>
+  <data name="FormulárioBloqueadoParaOUsuário" xml:space="preserve">
+    <value>Form blocked for the user</value>
+  </data>
+  <data name="AtençãoNãoFoiPossívelApresentarOFormulário" xml:space="preserve">
+    <value>Warning: unable to submit the form.</value>
+  </data>
+  <data name="Salvar" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Fechar" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Imprimir" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="Imprimir1" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="ExistemSubformuláriosQueEstãoSendoEditados" xml:space="preserve">
+    <value>There are subforms that are being edited.</value>
+  </data>
+  <data name="ViolaçãoDeChavePrimáriaEntreEmContatoComOA" xml:space="preserve">
+    <value>Primary key violation, contact the system administrator.</value>
+  </data>
+  <data name="NãoÉPossívelProsseguirComAOperação" xml:space="preserve">
+    <value>It is not possible to proceed with the operation!</value>
+  </data>
+  <data name="JáExisteUmProjetoComONomeInformado" xml:space="preserve">
+    <value>There is already a project with the name updated.
+
+</value>
+  </data>
+  <data name="ErroAoExecutarOEventoAntesSalvar" xml:space="preserve">
+    <value>Error while executing AntesSalvar event</value>
+  </data>
+  <data name="ErroAoExecutarOEventoAposSalvar" xml:space="preserve">
+    <value>Error while executing AposSalvar event</value>
+  </data>
+  <data name="PlanoDeAção" xml:space="preserve">
+    <value>Action plan</value>
+  </data>
+  <data name="Documentos" xml:space="preserve">
+    <value>Documents</value>
+  </data>
+  <data name="EmailInválido" xml:space="preserve">
+    <value>Invalid email</value>
+  </data>
+  <data name="HoraInválida" xml:space="preserve">
+    <value>Invalid time!</value>
+  </data>
+  <data name="FormatoInválido" xml:space="preserve">
+    <value>Invalid format!</value>
+  </data>
+  <data name="OFormulárioPossuiCampoDeListaDeOpções" xml:space="preserve">
+    <value>The form has a options list field</value>
+  </data>
+  <data name="queNãoTeveOConteúdoDefinidoDuranteSuaCriaç" xml:space="preserve">
+    <value>that did not have the content set during its creation</value>
+  </data>
+  <data name="NãoSeAplica" xml:space="preserve">
+    <value>Not applicable</value>
+  </data>
+  <data name="OFormulárioPossuiCampoLookup" xml:space="preserve">
+    <value>The form has Lookup field</value>
+  </data>
+  <data name="queNãoFoiEspecificadoDuranteSuaCriação" xml:space="preserve">
+    <value>that was not specified during your creation</value>
+  </data>
+  <data name="OFormulárioPossuiCampoCalculado" xml:space="preserve">
+    <value>The form has calculated field</value>
+  </data>
+  <data name="queNãoFoiEspecificadoDuranteSuaCriação1" xml:space="preserve">
+    <value>that was not specified during your creation</value>
+  </data>
+  <data name="TemQueFazerUmaChamadaNaProcedureParaLerOCa" xml:space="preserve">
+    <value>You have to make a call in Procedure to read the field in another form!</value>
+  </data>
+  <data name="Editar" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Excluir" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Visualizar" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Incluir" xml:space="preserve">
+    <value>Include</value>
+  </data>
+  <data name="Alterar" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Visualizar1" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="CliqueNoBotãoÀDireitaParaSelecionarUmNovoR" xml:space="preserve">
+    <value>Click the button to the right to select a new record</value>
+  </data>
+  <data name="ValorNãoEncontrado" xml:space="preserve">
+    <value>Value not found</value>
+  </data>
+  <data name="OFormulárioPossuiCampoPréDefinido" xml:space="preserve">
+    <value>The form has a predefined field</value>
+  </data>
+  <data name="OFormulárioPossuiCampoLookup1" xml:space="preserve">
+    <value>The form has Lookup field</value>
+  </data>
+  <data name="AsInformaçõesDaEmpresaInformadaNãoForamEnc" xml:space="preserve">
+    <value>The information of the company informed was not found in the database (company table)</value>
+  </data>
+  <data name="NenhumCampoFoiDefinido" xml:space="preserve">
+    <value>No field has been defined</value>
+  </data>
+  <data name="OCampo" xml:space="preserve">
+    <value>The field</value>
+  </data>
+  <data name="nãoEstáCaracterizado" xml:space="preserve">
+    <value>is not characterized</value>
+  </data>
+  <data name="OTamanhoDoCampo" xml:space="preserve">
+    <value>The field size</value>
+  </data>
+  <data name="nãoFoiInformadoCorretamente" xml:space="preserve">
+    <value>was not informed properly</value>
+  </data>
+  <data name="éMenorQueAMáscaraInformada" xml:space="preserve">
+    <value>is less than the mask informed</value>
+  </data>
+  <data name="OFormatoDoCampo" xml:space="preserve">
+    <value>The format of the field</value>
+  </data>
+  <data name="nãoFoiInformadaCorretamente" xml:space="preserve">
+    <value>was not informed properly</value>
+  </data>
+  <data name="AQuantidadeDeLinhasDoCampo" xml:space="preserve">
+    <value>The amount of field lines</value>
+  </data>
+  <data name="OValorMínimoDoCampo" xml:space="preserve">
+    <value>The minimum value of the field</value>
+  </data>
+  <data name="OValorMáximoDoCampo" xml:space="preserve">
+    <value>The maximum value of the field</value>
+  </data>
+  <data name="APrecisãoDoCampo" xml:space="preserve">
+    <value>The precision of the field</value>
+  </data>
+  <data name="AsOpçõesDoCampo" xml:space="preserve">
+    <value>The Field Options</value>
+  </data>
+  <data name="nãoForamInformadasCorretamente" xml:space="preserve">
+    <value>were not informed properly</value>
+  </data>
+  <data name="AsInformaçõesDoCampo" xml:space="preserve">
+    <value>The field information</value>
+  </data>
+  <data name="OSubformulárioDoCampo" xml:space="preserve">
+    <value>The subform field</value>
+  </data>
+  <data name="nãoFoiInformadoCorretamenteOuNãoEstáMaisDi" xml:space="preserve">
+    <value>was not informed properly or is no longer available</value>
+  </data>
+  <data name="nãoEstáCaracterizadoCorretamente" xml:space="preserve">
+    <value>is not characterized correctly</value>
+  </data>
+  <data name="VisualizarODocumento" xml:space="preserve">
+    <value>Preview the document.</value>
+  </data>
+  <data name="AVariávelExisteConteudoCampoAlteradoNãoFoi" xml:space="preserve">
+    <value>The existeConteudoCampoAlterado variable has not been set. This should be done on the screen responsible for rendering the form</value>
+  </data>
+  <data name="precisaSerInformado" xml:space="preserve">
+    <value>need to be informed</value>
+  </data>
+  <data name="AsAlteraçõesNãoForamGravadasÉNecessárioGra" xml:space="preserve">
+    <value>The changes were not recorded. It is necessary to record the data before proceeding with the flow!</value>
+  </data>
+  <data name="Formulário" xml:space="preserve">
+    <value>Form</value>
+  </data>
+  <data name="Impressão" xml:space="preserve">
+    <value>Printing</value>
+  </data>
+  <data name="AsInformaçõesDoFormulárioForamSalvas" xml:space="preserve">
+    <value>The information on the form has been saved.</value>
+  </data>
+  <data name="OPlanoDeAçãoSóPodeSerDefinidoApósAsInforma" xml:space="preserve">
+    <value>The action plan can only be set after the tab information</value>
+  </data>
+  <data name="teremSidoSalvas" xml:space="preserve">
+    <value>have been saved</value>
+  </data>
+  <data name="NãoFoiPossívelEncontrarOComponenteToDoList" xml:space="preserve">
+    <value>Could not find the ToDoList component</value>
+  </data>
+  <data name="SóÉPossívelAnexarDocumentosApósAsInformaçõ" xml:space="preserve">
+    <value>You can only attach documents after the tab information</value>
+  </data>
+  <data name="ExistemCamposObrigatóriosQueNãoForamPreenc" xml:space="preserve">
+    <value>There are mandatory fields have not been completed or are in the incorrect format.</value>
+  </data>
+  <data name="OFormulárioPrecisaSerSalvoAntesDeSerImpres" xml:space="preserve">
+    <value>The form must be saved before being printed!</value>
+  </data>
+  <data name="ConfirmaAExclusãoDoRegistroSelecionado" xml:space="preserve">
+    <value>Confirm the deletion of the selected record?</value>
+  </data>
+  <data name="SeparadorDecimal" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="SeparadorMilhar" xml:space="preserve">
+    <value>,</value>
+  </data>
+</root>

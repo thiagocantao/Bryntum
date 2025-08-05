@@ -1,0 +1,71 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Collections.Specialized;
+using DevExpress.Web;
+
+public partial class Reunioes_reuniaoItensPauta_Projeto : System.Web.UI.Page
+{
+    int codigoProjeto;
+    int codigoEvento;
+    int codigoUsuario;
+    int codigoEntidade;
+    dados cDados;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        codigoProjeto = int.Parse(Request.QueryString["cp"]);
+        codigoEvento = int.Parse(Request.QueryString["ce"]);
+
+        OrderedDictionary param = new OrderedDictionary();
+        param["NomeUsuario"] = string.Format("{0}", Session["NomeUsuario"]);
+        param["RemoteIPUsuario"] = string.Format("{0}", Session["RemoteIPUsuario"]);
+        cDados = CdadosUtil.GetCdados(param);
+        try
+        {
+            if (cDados.getInfoSistema("IDUsuarioLogado") == null)
+                Response.Redirect("~/erros/erroInatividade.aspx");
+        }
+        catch
+        {
+            Response.RedirectLocation = string.Format(
+                "{0}erros/erroInatividade.aspx", cDados.getPathSistema());
+            Response.End();
+        }
+
+        codigoUsuario = Convert.ToInt32(cDados.getInfoSistema("IDUsuarioLogado"));
+        codigoEntidade = Convert.ToInt32(cDados.getInfoSistema("CodigoEntidade"));
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            SelectGridRows(gvRiscosQuestoes);
+            SelectGridRows(gvTarefasCronogramas);
+            SelectGridRows(gvIndicadores); 
+        }
+    }
+
+    private static void SelectGridRows(ASPxGridView grid)
+    {
+        grid.Selection.BeginSelection();
+        grid.Selection.UnselectAll();
+        for (int i = 0; i < grid.VisibleRowCount; i++)
+        {
+            string indicaObjetoSelecionado =
+                grid.GetRowValues(i, "IndicaObjetoSelecionado") as string;
+            if (indicaObjetoSelecionado == "S")
+                grid.Selection.SelectRow(i);
+        }
+        grid.Selection.EndSelection();
+    }
+
+    protected void btnSalvar_Click(object sender, EventArgs e)
+    {
+
+    }
+}

@@ -1,0 +1,110 @@
+@import '../../variables.scss';
+
+@mixin bryntum-toolbar-ui(
+    $toolbar-background-color,
+    $toolbar-color,
+    $toolbar-padding
+) {
+    $separator-start-color : null !default;
+    $separator-end-color   : null !default;
+
+    @if lightness($toolbar-background-color) > lightness($toolbar-color) {
+        // Light background theme
+        $separator-start-color : darken($toolbar-background-color, 10%);
+        $separator-end-color   : darken($toolbar-background-color, 5%)
+    } @else {
+        // dark background theme
+        $separator-start-color : lighten($toolbar-background-color, 20%);
+        $separator-end-color   : lighten($toolbar-background-color, 10%);
+    }
+
+    .b-toolbar {
+        background-color : $toolbar-background-color;
+        color            : $toolbar-color;
+        padding          : $toolbar-padding;
+        // Items should be same height when in toolbar
+        align-items      : stretch;
+
+        // Must not shrink when Panel loses height
+        flex-shrink      : 0;
+
+        // A filler element to push elements along.
+        > .b-toolbar-fill {
+            flex : 1 1 0%;
+        }
+
+        // text display elements such as titles/descriptions should be centered.
+        .b-html {
+            align-items : center;
+        }
+
+        &.b-dock-top,
+        &.b-dock-bottom {
+            flex-flow  : row nowrap;
+            min-height : 4.2em;
+
+            > .b-toolbar-separator {
+                margin-left        : 0.5em;
+                margin-right       : 0.5em;
+                height             : 2.3em;
+                border-style       : solid;
+                border-width       : 0 1px 0 1px;
+                border-left-color  : $separator-start-color;
+                border-right-color : $separator-end-color;
+            }
+        }
+
+        &.b-dock-top {
+            border-bottom : $panel-toolbar-top-border-bottom;
+        }
+
+        &.b-dock-left,
+        &.b-dock-right {
+            flex-flow : column nowrap;
+
+            > .b-toolbar-separator {
+                margin-top          : 0.5em;
+                margin-bottom       : 0.5em;
+                width               : 2.3em;
+                border-style        : solid;
+                border-width        : 1px 0 1px 0;
+                border-top-color    : $separator-start-color;
+                border-bottom-color : $separator-end-color;
+            }
+        }
+    }
+
+    // When displayed in a tabpanel, match its color
+    .b-tabpanel .b-panel .b-toolbar {
+        background-color : $tabpanel-background-color;
+    }
+
+    // When used standalone, use panel background color
+    .b-toolbar.b-outer {
+        background-color : $popup-background-color;
+    }
+}
+
+@include bryntum-toolbar-ui(
+        $panel-toolbar-background-color,
+        $panel-toolbar-color,
+        $panel-toolbar-padding
+);
+
+.b-toolbar {
+    // Toolbar dictates height (for the most part, high widgets can stretch it)
+    > .b-widget {
+        min-height : 0;
+
+        &:not(:last-child) {
+            margin-right : .5em;
+        }
+    }
+
+
+    .b-html {
+        code {
+            margin : 0 .5em;
+        }
+    }
+}

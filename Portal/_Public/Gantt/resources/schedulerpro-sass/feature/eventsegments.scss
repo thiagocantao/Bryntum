@@ -1,0 +1,110 @@
+@import '../variables';
+
+// Remove border & background from the segment container
+.b-sch-style-plain,
+.b-sch-style-border,
+.b-sch-style-colored,
+.b-sch-style-calendar,
+.b-sch-style-hollow,
+.b-sch-style-line,
+.b-sch-style-dashed,
+.b-sch-style-minimal,
+.b-sch-style-rounded {
+    &.b-sch-event-wrap {
+        > .b-sch-event.b-segmented:not(.b-milestone) {
+            &,
+            &.b-sch-event-selected {
+                border-width     : 0;
+                background-color : transparent
+            }
+        }
+    }
+}
+
+.b-sch-event-wrap.b-sch-style-line,
+.b-sch-event-wrap.b-sch-style-dashed {
+    > .b-sch-event.b-segmented {
+        &::before,
+        &::after {
+            content : unset;
+        }
+
+        .b-sch-event {
+            top : 0;
+        }
+    }
+}
+
+.b-sch-style-minimal .b-sch-event .b-sch-event-segments {
+    height : 100%;
+}
+
+@mixin segmented-eventrendering(
+    $entity-name                 : 'event',
+    $prefix                      : 'sch',
+    $entity-bar-background-color : $event-bar-background-color
+) {
+
+    .b-#{$prefix}-#{$entity-name} {
+
+        // segmented event
+        &.b-segmented, &.b-segmented:hover {
+            overflow         : visible;
+            background-image : none;
+            border-width     : 0;
+            background-color : transparent;
+            box-shadow       : none;
+        }
+
+        .b-sch-event-segments {
+            position       : absolute;
+            top            : 0;
+            width          : 100%;
+            height         : calc(50% + 0.5px);
+            border-bottom  : 1px dashed;
+            border-color   : $segment-link-color;
+            pointer-events : none;
+
+            // segment
+            .b-sch-event-segment {
+                pointer-events   : all;
+                position         : absolute;
+                display          : flex;
+                align-items      : center;
+            }
+        }
+    }
+
+    // Non-milestone, the active outline goes on the entity bar
+    .b-#{$prefix}-#{$entity-name}-wrap:not(.b-milestone-wrap) {
+
+        .b-#{$prefix}-#{$entity-name} {
+
+            &.b-#{$prefix}-#{$entity-name}-selected,
+            &:hover,
+            &.b-#{$prefix}-#{$entity-name}-selected:hover {
+                // segmented event
+                &.b-segmented, &.b-segmented:hover {
+                    background-image : none;
+                    border-width     : 0;
+                    background-color : transparent;
+                    box-shadow       : none;
+                }
+            }
+        }
+
+        // No keyboard navigation between segments yet, outline around owner
+        .b-using-keyboard &.b-active .b-sch-event-segment {
+            outline : none;
+        }
+    }
+}
+
+//region Renamer
+
+.b-event-segment-renamer {
+    // Same as for simple event editor
+    z-index : 15;
+}
+
+//endregion

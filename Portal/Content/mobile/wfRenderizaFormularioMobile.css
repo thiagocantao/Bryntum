@@ -1,0 +1,232 @@
+﻿
+
+@import url("../FontAwesome/font-awesome.min.css"); 
+.style1 {
+}
+
+    #pnExterno_pnFormulario_pcFormulario_CC {
+    overflow: visible;
+    white-space: nowrap;
+    }
+
+#pnExterno_pnFormulario.dxpnlControl {
+    
+    overflow:visible !important;
+}
+
+.buttonWithoutImage .dxbButton {
+    background-image: none;
+   
+}
+    .row {
+        margin: 0px !important;
+    }
+    div.dxtc-flex.dxtc-left > .dxtc-stripContainer, div.dxtc-flex.dxtc-right > .dxtc-stripContainer {
+        display: initial;
+    }
+    .dxtcLite.dxtc-left > .dxtc-stripContainer .dxtc-activeTab {
+        background: initial;
+        border: none;
+    }
+
+.dxtcLite > .dxtc-stripContainer .dxtc-tab, .dxtcLite > .dxtc-stripContainer .dxtc-activeTab {
+    white-space: normal !important;
+    background: initial;
+    border: none;
+}
+
+
+.dxtcLite > .dxtc-stripContainer .dxtc-link, .dxtcLite > .dxtc-stripContainer .dxtc-leftIndent, .dxtcLite > .dxtc-stripContainer .dxtc-rightIndent {
+    text-decoration: none;
+    white-space: normal !important;
+}
+
+.dxtc-rightIndent {
+    border: none !important;
+}
+
+.dxtcLite.dxtc-left > .dxtc-stripContainer .dxtc-leftIndent, .dxtcLite.dxtc-left > .dxtc-stripContainer .dxtc-spacer, .dxtcLite.dxtc-left > .dxtc-stripContainer .dxtc-rightIndent {
+    border: none !important;
+}
+
+.dxtcLite.dxtc-left > .dxtc-content {
+    border: none !important;
+}
+
+.cdis-dataedit .dxeButtonEditClearButton {
+    display: none !important;
+}
+
+.cdis-dataedit tr td:last-child, .cdis-combobox tr td:last-child {
+    border: none;
+    background: none;
+}
+
+.cdis-checkbox tr td, .cdis-radiogroup tr td {
+    display: inline-flex;
+    margin-left: 10px;
+}
+
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: initial;
+    margin-left: 0px;
+}
+
+.checkbox label, .radio label {
+    padding-left: 5px;
+}
+
+.ctr-readonly {
+    background: #d7e8f4 !important;
+}
+
+    .ctr-readonly input:read-only, .ctr-readonly textarea:read-only {
+        background: #d7e8f4 !important;
+        color: #000 !important;
+    }
+    div.dxbButtonSys {
+        box-sizing: inherit !important;
+    }
+    .btn-cancelar {
+        height: 36px !important;
+    }
+
+    .classe-anular-padding {
+        padding: 4px !important; 
+    }
+
+    .btn-salvar:hover {
+        background-color: #8a9d3e !important;
+        color: #7d8e38;
+    }
+    .btn-salvar-icone {
+        position: relative;
+    }
+
+        .btn-salvar-icone::after {
+            content: "\f00c"; /* código unicode do ícone */
+            font-family: "FontAwesome";
+            position: absolute;
+            top: 50%;
+            left: 85%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        .btn-salvar {
+            background-color: #7d8e38 !important;
+            color: white !important;
+            position: relative !important;
+            width: 100px !important;
+            height: 50px !important;
+            font-family: "Source Sans Pro" !important;
+            text-transform: uppercase;
+            font-size: 16px !important;
+            border: none;
+            text-transform: uppercase;
+            border-radius: 2px;
+            box-shadow: 1px 1px 1px 0px #aeaeae;
+            margin: 0px 0px 0px 15px !important;
+            padding: 0px 0px 0px 15px !important;
+            text-align: left !important;
+            min-width: 150px;
+            height: 50px;
+            min-height: 50px;
+   
+        }
+        .dxichCellSys {
+            margin-bottom: 5px;
+        }
+        
+        
+    .dxtc-activeTab .dxtc-link{
+        background-color:rgba(253, 128, 27, 0.92) !important;
+    }   
+
+
+/*
+    .cdis-dataedit{
+        width: 216px;
+    }
+    .dxeValidStEditorTable{
+        width: 100%;
+    } 
+    .dxeValidDynEditorTable {
+        width: 100%;
+    }*/
+
+    .form-group span {
+        font-size: 14px;
+        font-weight: bold;
+        white-space: initial !important;
+    }
+    table.dxeMemoSys.form-control {
+        padding: 6px 12px;
+    }
+    ul#pnExterno_pnFormulario_pcFormulario_TC {
+        position: fixed;
+        margin: 0px;
+        padding: 0px;
+        top: 10px;
+        left: 0px;
+        list-style: none;
+        z-index:9999;
+        width: auto;
+        background-color:transparent;
+    }
+
+    ul#pnExterno_pnFormulario_pcFormulario_TC li {
+        width: 120px;
+    }
+
+    ul#pnExterno_pnFormulario_pcFormulario_TC li a {
+        display: block;
+        margin-left: -105px;
+        width: 120px;
+        height: 70px;
+        background-color:#0098e0;
+        background-repeat:no-repeat;
+        background-position:center center;
+        border:1px solid #AFAFAF;
+        padding: 0px;
+        -moz-border-radius:0px 10px 10px 0px;
+        -webkit-border-bottom-right-radius: 10px;
+        -webkit-border-top-right-radius: 10px;
+        -khtml-border-bottom-right-radius: 10px;
+        -khtml-border-top-right-radius: 10px;
+    
+    }
+    ul#pnExterno_pnFormulario_pcFormulario_TC li a{
+        color: #fff;
+        font-size: 12px !important;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        padding-right: 15px !important;
+    }
+
+.table-sub-form .dxgvHeader td {
+    white-space: normal !important;
+    font-family: 'Lato', Calibri, Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+
+    .table-sub-form .dxgvHeader, .table-sub-form .dxgvFooter {
+        background-color: #f1f1f1 !important;
+    }
+
+    .table-sub-form .dxgvDisabled {
+        background-color: #d7e8f4 !important;
+    }
+    .dxgvControl, .dxgvDisabled {
+        background-color: #d7e8f4 !important;
+    }
+    .table-sub-form .dxgvEmptyDataRow > td.dxgv, .dxgvDataRow.dxgvLVR > td.dxgv, .dxgvGroupRow.dxgvLVR > td.dxgv {
+        font-family: 'Lato', Calibri, Arial, sans-serif !important;
+        font-size: 14px !important;
+    }
+    .dxgvTable {
+        background-color: #d7e8f4 !important;
+    }

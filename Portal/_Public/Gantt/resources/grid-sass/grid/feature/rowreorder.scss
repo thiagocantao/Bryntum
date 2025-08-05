@@ -1,0 +1,106 @@
+@use "sass:math";
+@import "../../variables";
+
+// Hidden by default
+.b-row-drop-indicator {
+    display        : none;
+    pointer-events : none;
+}
+
+.b-row-reordering {
+    // A full-width line. It's translated to the row top, and it's top position makes
+    // it position correctly between rows.
+    .b-row-drop-indicator {
+        position         : absolute;
+        display          : block;
+        left             : 0;
+        top              : #{math.div(-$rowreorder-indicator-width, 2)};
+        width            : 100%;
+        height           : $rowreorder-indicator-width;
+        background-color : $rowreorder-indicator-color;
+        z-index          : 2000;
+
+        &.b-drag-invalid {
+            background-color : $rowreorder-indicator-invalid-color;
+        }
+    }
+
+    .b-row-reorder-proxy.b-dragging {
+        transition : margin-top 0.2s, opacity 0.2s;
+        background : transparent;
+        opacity    : 0.5;
+
+        .b-grid-row {
+            width : 100%;
+        }
+
+        & .b-grid-row,
+        & .b-row-dragging-multiple {
+            transition : transform 0.2s, background-color 0.2s;
+            box-shadow : $rowreorder-box-shadow;
+            background : $rowreorder-row-background;
+        }
+
+        & .b-row-dragging-multiple {
+            top     : -0.3em;
+            left    : 0.3em;
+            z-index : -1;
+        }
+
+        &.b-drag-invalid .b-grid-row {
+            border     : $rowreorder-indicator-invalid-border;
+            background : transparentize($rowreorder-indicator-invalid-color, .8);
+        }
+    }
+
+    // Must move above the .b-grid-splitter element during drag
+    .b-grid-body-container {
+        z-index : 4;
+    }
+
+    .b-drag-original {
+        opacity : 0.3;
+    }
+
+    .b-grid-row {
+        &.b-grid-group-collapsed.b-row-reordering-target {
+            background-color : $grid-row-hover-background-color;
+        }
+    }
+
+    .b-grid-body-container .b-grid-subgrid .b-row-reordering-target {
+        box-shadow : 0 1px 0 0 $rowreorder-indicator-color inset, 0 -1px 0 0 $rowreorder-indicator-color inset;
+        z-index    : 9999;
+    }
+}
+
+
+.b-row-reorder-with-grip {
+    .b-grid-subgrid[data-item-index="0"] {
+        .b-grid-cell:first-child {
+            padding-inline-start : 1.4em;
+
+            // Make rownumbercolumn with grip slightly more compact
+            &.b-rownumber-cell {
+                padding-inline : 0.9em 0;
+            }
+
+            &:before {
+                align-self              : stretch;
+                display                 : flex;
+                -webkit-font-smoothing  : antialiased;
+                -moz-osx-font-smoothing : grayscale;
+                font-family             : $icon-font;
+                align-items             : center;
+                content                 : "#{ $fa-var-grip-vertical }";
+                cursor                  : move;
+                padding-inline          : 0.6em;
+                font-size               : 0.8em;
+                position                : absolute;
+                left                    : 0;
+                top                     : 0;
+                height                  : 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,539 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/novaCdis.master" AutoEventWireup="true"
+    CodeFile="ExecucaoReuniao.aspx.cs" Inherits="Reunioes_ExecucaoReuniao" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="AreaTrabalho" runat="Server">
+    <script src="../scripts/jquery-1.9.1.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            if (hfGeral.Contains("AjusteFonte")) {
+                var ajuste = hfGeral.Get("AjusteFonte");
+                //AjustaFonte(ajuste);
+            }
+            $(document).keydown(function (e) {
+                //  end     = 35
+                //  home    = 36
+                //  left    = 37
+                //  up      = 38
+                //  right   = 39
+                //  down    = 40
+                var focusedRowIndex = gvListaItrens.GetFocusedRowIndex();
+
+                switch (e.keyCode) {
+                    case 35:
+                        MoveLastRow();
+                        break;
+                    case 36:
+                        MoveFirstRow();
+                        break;
+                    case 37:
+                    case 38:
+                        MovePrevRow();
+                        break;
+                    case 39:
+                    case 40:
+                        MoveNextRow();
+                        break;
+                }
+            });
+        });
+
+        function GetCurrentDateAndTime() {
+            var today = new Date();
+            var dd = today.getDate();
+            var MM = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            var hh = today.getHours();
+            var mm = today.getMinutes();
+
+            if (dd < 10)
+                dd = '0' + dd;
+            if (MM < 10)
+                MM = '0' + MM;
+            if (hh < 10)
+                hh = '0' + hh;
+            if (mm < 10)
+                mm = '0' + mm;
+
+            today = dd + '/' + MM + '/' + yyyy + ' ' + hh + ':' + mm;
+
+            return today;
+        }
+
+        function DefineInicioTerminoReuniao(acao, dataHora) {
+            if (confirm("Deseja definir a data e hora de " + ((acao == 'iniciar') ? 'início' : 'término') + " da reunião como sendo '" + dataHora + "'?"))
+                callback.PerformCallback(acao + ';' + dataHora);
+        }
+
+        function MoveNextRow() {
+            var focusedRowIndex = gvListaItrens.GetFocusedRowIndex();
+            if (focusedRowIndex < gvListaItrens.cpRowCount - 1)
+                gvListaItrens.SetFocusedRowIndex(focusedRowIndex + 1);
+        }
+
+        function MovePrevRow() {
+            var focusedRowIndex = gvListaItrens.GetFocusedRowIndex();
+            if (focusedRowIndex > 0)
+                gvListaItrens.SetFocusedRowIndex(focusedRowIndex - 1);
+        }
+
+        function MoveFirstRow() {
+            var focusedRowIndex = gvListaItrens.GetFocusedRowIndex();
+            if (focusedRowIndex > 0)
+                gvListaItrens.SetFocusedRowIndex(0);
+        }
+
+        function MoveLastRow() {
+            var focusedRowIndex = gvListaItrens.GetFocusedRowIndex();
+            var indexOfLast = gvListaItrens.cpRowCount - 1;
+            if (focusedRowIndex < indexOfLast)
+                gvListaItrens.SetFocusedRowIndex(indexOfLast);
+        }
+
+        function OnGetRowValues(value) {
+            window.frames["_frmConteudo"].location = value;
+        }
+
+        function AjustaFonte(ajuste) {
+            window.frames[0].window.frames[0].window.AjustaFonte(ajuste);
+        }
+
+    </script>
+    <dxcp:ASPxCallbackPanel ID="callbackPanel" ClientInstanceName="callbackPanel" runat="server"
+        Width="100%" OnCallback="callbackPanel_Callback">
+        <ClientSideEvents EndCallback="function(s, e) {
+	splitter.AdjustControl();
+}" />
+        <PanelCollection>
+            <dxp:PanelContent runat="server" SupportsDisabledAttribute="True">
+                <dx:ASPxSplitter ID="splitter" runat="server" Height="100%" FullscreenMode="True"
+                    Width="100%" ClientInstanceName="splitter">
+                    <Panes>
+                        <dx:SplitterPane AllowResize="True" MaxSize="500px" MinSize="250px" ShowCollapseBackwardButton="True"
+                            ShowCollapseForwardButton="True" Size="400px" ScrollBars="Auto" Name="menu">
+                            <ContentCollection>
+                                <dx:SplitterContentControl runat="server" SupportsDisabledAttribute="True">
+                                    <div id="divNavegacao" style="margin-top: 30px;">
+                                        <dxwgv:ASPxGridView ID="gvListaItrens" ClientInstanceName="gvListaItrens" runat="server"
+                                            AutoGenerateColumns="False" Width="100%" 
+                                            KeyFieldName="SequenciaApresentacao" OnCustomJSProperties="gvListaItrens_CustomJSProperties">
+                                            <ClientSideEvents FocusedRowChanged="function(s, e) {
+	s.GetRowValues(s.GetFocusedRowIndex(), 'colItemPauta', OnGetRowValues);
+	e.processOnServer = false;
+}" />
+                                            <Columns>
+                                                <dxwgv:GridViewDataImageColumn Caption="Tipo" FieldName="colTipoObjeto" ShowInCustomizationForm="True"
+                                                    UnboundExpression="Iif([IniciaisTipoAssociacao] == 'PR' , '~/imagens/projetoMenor.png' , Iif([IniciaisTipoAssociacao] == 'RQ' , '~/imagens/RiscoLegenda.png' , Iif([IniciaisTipoAssociacao] == 'IN' , '~/imagens/IndicadoresMenor.png' , Iif([IniciaisTipoAssociacao] == 'TC' , '~/imagens/botoes/tarefas_BTN.png' , Iif([IniciaisTipoAssociacao] == 'DF' , '~/imagens/FinanceiroLegenda.png' , Iif([IniciaisTipoAssociacao] == 'PRA' , '~/imagens/botoes/tarefasPP.png' , Iif([IniciaisTipoAssociacao] == 'RE', '~/imagens/realizacaoReuniao.PNG', Iif([CodigoTipoObjeto] == -1, '~/imagens/FinanceiroLegenda.png', Iif([CodigoTipoObjeto] == 0, '~/imagens/botoes/tarefasPP.png', ''))) ))))))"
+                                                    UnboundType="String" VisibleIndex="0" Width="25px">
+                                                    <PropertiesImage ImageHeight="20px" ImageWidth="20px"   ToolTipField="DescricaoTipoObjeto2">
+                                                    </PropertiesImage>
+                                                </dxwgv:GridViewDataImageColumn>
+                                                <dxwgv:GridViewDataTextColumn Caption="Nome" FieldName="NomeObjeto" ShowInCustomizationForm="True"
+                                                    VisibleIndex="1">
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataHyperLinkColumn Caption="Nome" FieldName="colItemPauta" ShowInCustomizationForm="True"
+                                                    UnboundExpression="'ExecucaoReuniao_Item.aspx?cr=' + ToStr([CodigoReuniao]) +'&amp;cto=' + ToStr([CodigoTipoObjeto]) + '&amp;co=' + ToStr([CodigoObjeto]) + Iif(IsNull([IniciaisTipoAssociacao]),'','&amp;ini=' + [IniciaisTipoAssociacao])"
+                                                    UnboundType="String" VisibleIndex="2" Visible="False">
+                                                    <PropertiesHyperLinkEdit Target="_frmConteudo" TextField="NomeObjeto">
+                                                    </PropertiesHyperLinkEdit>
+                                                </dxwgv:GridViewDataHyperLinkColumn>
+                                                <dxwgv:GridViewDataTextColumn FieldName="CodigoTipoObjeto" ShowInCustomizationForm="True"
+                                                    VisibleIndex="4" Visible="False">
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataTextColumn FieldName="CodigoObjeto" ShowInCustomizationForm="True"
+                                                    Visible="False" VisibleIndex="3">
+                                                </dxwgv:GridViewDataTextColumn>
+                                            </Columns>
+                                            <SettingsBehavior AllowFocusedRow="True" />
+                                            <SettingsPager Mode="ShowAllRecords">
+                                            </SettingsPager>
+                                            <Settings ShowColumnHeaders="False" VerticalScrollableHeight="400" />
+                                        </dxwgv:ASPxGridView>
+                                    </div>
+                                </dx:SplitterContentControl>
+                            </ContentCollection>
+                        </dx:SplitterPane>
+                        <dx:SplitterPane Name="conteudo">
+                            <ContentCollection>
+                                <dx:SplitterContentControl runat="server" SupportsDisabledAttribute="True">
+                                    <div id="divBotoes" style="height: 25px">
+                                        <%--
+                                        <table width="100%">
+                                            <tr>
+                                                <td align="left" style="width: 33%">
+                                                    <div id="divBotoesAcao">
+                                                        <span class="botoes">
+                                                            <dxe:ASPxImage ID="ImgIniciar" ClientInstanceName="ImgIniciar" 
+                                                            runat="server" Cursor="pointer" Height="20px" ImageUrl="~/imagens/iniciar.png" 
+                                                            Width="20px">
+                                                                <ClientSideEvents Click="function(s, e) {
+	ImgIniciar.SetVisible(false);
+	ImgEncerrar.SetVisible(true);
+	callback.PerformCallback('iniciar');
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </span><span class="botoes" style="padding-left: 10px">
+                                                            <dxe:ASPxImage ID="ImgEncerrar" ClientInstanceName="ImgEncerrar" runat="server" Cursor="pointer"
+                                                                ClientVisible="False" Height="20px" ImageUrl="~/imagens/encerrar.png" Width="20px">
+                                                            </dxe:ASPxImage>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td align="center" style="width: 33%">
+                                                    <div id="divBotoesNavegacao">
+                                                        <span class="botoes">
+                                                            <dxe:ASPxImage ID="ImgPrimeiro" ClientInstanceName="ImgPrimeiro" Width="20px" Height="20px"
+                                                                ImageUrl="~/imagens/barraEdicao/primeiro.png" runat="server" Cursor="pointer">
+                                                                <ClientSideEvents Click="function(s, e) {
+	MoveFirstRow();
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </span><span class="botoes">
+                                                            <dxe:ASPxImage ID="ImgAnterior" ClientInstanceName="ImgAnterior" Width="20px" Height="20px"
+                                                                ImageUrl="~/imagens/barraEdicao/anterior.png" runat="server" Cursor="pointer">
+                                                                <ClientSideEvents Click="function(s, e) {
+	MovePrevRow();
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </span><span class="botoes">
+                                                            <dxe:ASPxImage ID="ImgProxima" ClientInstanceName="ImgProxima" Width="20px" Height="20px"
+                                                                ImageUrl="~/imagens/barraEdicao/Proxima.png" runat="server" Cursor="pointer">
+                                                                <ClientSideEvents Click="function(s, e) {
+	MoveNextRow();
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </span><span class="botoes">
+                                                            <dxe:ASPxImage ID="ImgUltima" ClientInstanceName="ImgUltima" Width="20px" Height="20px"
+                                                                ImageUrl="~/imagens/barraEdicao/Ultima.png" runat="server" Cursor="pointer">
+                                                                <ClientSideEvents Click="function(s, e) {
+	MoveLastRow();
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td align="right" style="width: 33%">
+                                                    <div id="divBotoesVisualizacao" style="margin-left: 80px">
+                                                        <span id="spanZoomIn">
+                                                            <dxe:ASPxImage ID="ImgZoomIn" ClientInstanceName="ImgZoomIn" Width="20px" Height="20px"
+                                                                ImageUrl="~/imagens/zoom_in.png" runat="server" Cursor="pointer">
+                                                                <ClientSideEvents Click="function(s, e) {
+	AjustaFonte(10);
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </span><span id="spanZoomOut">
+                                                            <dxe:ASPxImage ID="ImgZoomOut" ClientInstanceName="ImgZoomOut" Width="20px" Height="20px"
+                                                                ImageUrl="~/imagens/zoom_out.png" runat="server" Cursor="pointer">
+                                                                <ClientSideEvents Click="function(s, e) {
+	AjustaFonte(-10);
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </span><span id="spanFullscreen">
+                                                            <dxe:ASPxImage ID="ImgFullscreen" ClientInstanceName="ImgFullscreen" Width="20px"
+                                                                Height="20px" ImageUrl="~/imagens/fullscreen.png" runat="server" Cursor="pointer">
+                                                                <ClientSideEvents Click="function(s, e) {	
+	var $div = $('#dvBarraTopo');
+	$div.toggle('blind', function() {
+        var urlImage = s.GetImageUrl();
+	    if (urlImage.indexOf('fullscreen.png') == -1){
+		    callbackPanel.PerformCallback(0);
+	    }
+	    else{
+		    callbackPanel.PerformCallback($div.height());
+	    }
+    });
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        --%>
+                                        <dxm:ASPxMenu ID="menu" runat="server" ClientInstanceName="menu" ItemAutoWidth="False"
+                                            Width="100%">
+                                            <ClientSideEvents ItemClick="function(s, e) {
+        switch (e.item.name)
+        {
+			case &quot;iniciar&quot;:
+			case &quot;encerrar&quot;:
+                DefineInicioTerminoReuniao(e.item.name, GetCurrentDateAndTime());
+				break;
+            case &quot;primeiro&quot;:
+                MoveFirstRow();
+                break;
+            case &quot;anterior&quot;:
+                MovePrevRow();
+                break;
+            case &quot;proximo&quot;:
+                MoveNextRow();
+                break;
+            case &quot;ultimo&quot;:
+                MoveLastRow();
+                break;
+            case &quot;zoomout&quot;:
+                AjustaFonte(-5);
+                break;
+            case &quot;zoomin&quot;:
+                AjustaFonte(5);
+                break;
+            case &quot;fullscreen&quot;:
+				var $div = $('#dvBarraTopo');
+				$div.toggle('blind', function() {
+        		var urlImage = e.item.GetImageUrl();
+	    		if (urlImage.indexOf('fullscreen.png') == -1)
+		    		callbackPanel.PerformCallback(0);
+	    		else
+		    		callbackPanel.PerformCallback($div.height());
+    			});
+                break;
+			default:
+				break;
+        }
+}" PopUp="function(s, e) {
+	switch(e.item.name){
+		case &quot;iniciar&quot;:
+			popup.ShowWindow(popup.GetWindowByName('winInicio'));
+			break;
+		case &quot;encerrar&quot;:
+			popup.ShowWindow(popup.GetWindowByName('winTermino'));
+			break;
+	}
+}" />
+                                            <Items>
+                                                <dxm:MenuItem DropDownMode="True" Name="iniciar" Text="" ToolTip="Iniciar Reunião"
+                                                    GroupName="acao">
+                                                    <Items>
+                                                        <dxm:MenuItem>
+                                                        </dxm:MenuItem>
+                                                    </Items>
+                                                    <Image AlternateText="Iniciar" Height="20px" ToolTip="Iniciar" Url="~/imagens/reuniao_iniciar.PNG"
+                                                        Width="20px">
+                                                    </Image>
+                                                    <SubMenuTemplate>
+                                                        <div id="divInicioReuniao" style="  height: 25;
+                                                            width: 90px;">
+                                                            Data de Início</div>
+                                                    </SubMenuTemplate>
+                                                </dxm:MenuItem>
+                                                <dxm:MenuItem ClientVisible="False" DropDownMode="True" Name="encerrar" Text="" ToolTip="Encerrar Reunião"
+                                                    GroupName="acao">
+                                                    <Items>
+                                                        <dxm:MenuItem>
+                                                        </dxm:MenuItem>
+                                                    </Items>
+                                                    <Image AlternateText="Encerrar" Height="20px" Url="~/imagens/reuniao_encerrar.PNG"
+                                                        Width="20px">
+                                                    </Image>
+                                                    <SubMenuTemplate>
+                                                        <div id="divTerminoReuniao" style="  height: 25;
+                                                            width: 90px;">
+                                                            Data de Término</div>
+                                                    </SubMenuTemplate>
+                                                </dxm:MenuItem>
+                                                <dxm:MenuItem Name="primeiro" Text="" ToolTip="Primeiro" BeginGroup="True" GroupName="navegacao">
+                                                    <Image AlternateText="Primeiro" Height="20px" Url="~/imagens/reuniao_primeiro.png"
+                                                        Width="20px">
+                                                    </Image>
+                                                </dxm:MenuItem>
+                                                <dxm:MenuItem Name="anterior" Text="" ToolTip="Anterior" GroupName="navegacao">
+                                                    <Image AlternateText="Próximo" Height="20px" Url="~/imagens/reuniao_anterior.png"
+                                                        Width="20px">
+                                                    </Image>
+                                                </dxm:MenuItem>
+                                                <dxm:MenuItem Name="proximo" Text="" ToolTip="Próximo" GroupName="navegacao">
+                                                    <Image AlternateText="Anterior" Height="20px" Url="~/imagens/reuniao_proximo.png"
+                                                        Width="20px">
+                                                    </Image>
+                                                </dxm:MenuItem>
+                                                <dxm:MenuItem Name="ultimo" Text="" ToolTip="Último" GroupName="navegacao">
+                                                    <Image AlternateText="Último" Height="20px" Url="~/imagens/reuniao_ultimo.png" Width="20px">
+                                                    </Image>
+                                                </dxm:MenuItem>
+                                                <dxm:MenuItem Text="" Name="zoomin" BeginGroup="True" GroupName="visualizacao" 
+                                                    ToolTip="Aumentar fontes" ClientVisible="False">
+                                                    <Image Height="20px" Url="~/imagens/reuniao_fonte_maior.png" Width="20px">
+                                                    </Image>
+                                                </dxm:MenuItem>
+                                                <dxm:MenuItem Text="" Name="zoomout" GroupName="visualizacao" 
+                                                    ToolTip="Diminuir fontes" ClientVisible="False">
+                                                    <Image Height="20px" Url="~/imagens/reuniao_fonte_menor.png" Width="20px">
+                                                    </Image>
+                                                </dxm:MenuItem>
+                                                <dxm:MenuItem Text="" Name="fullscreen" GroupName="visualizacao" BeginGroup="True"
+                                                    ToolTip="Tela cheia">
+                                                    <Image Height="20px" Url="~/imagens/reuniao_fullscreen.png" Width="20px">
+                                                    </Image>
+                                                </dxm:MenuItem>
+                                            </Items>
+                                        </dxm:ASPxMenu>
+                                    </div>
+                                    <div id="divExibicaoDadosItem">
+                                        <div id="divConteudo">
+                                            <iframe width="100%" id="frmConteudo" frameborder="0" height="150" scrolling="yes"
+                                                name="_frmConteudo" runat="server"></iframe>
+                                        </div>
+                                    </div>
+                                </dx:SplitterContentControl>
+                            </ContentCollection>
+                        </dx:SplitterPane>
+                    </Panes>
+                    <ClientSideEvents Init="function(s, e) {
+	s.AdjustControl();
+}" />
+                </dx:ASPxSplitter>
+                <dxcb:ASPxCallback ID="callback" runat="server" ClientInstanceName="callback" OnCallback="callback_Callback">
+                    <ClientSideEvents CallbackComplete="function(s, e) {
+    var acao = e.parameter.split(';')[0];
+	menu.GetItemByName(acao).GetItem(0).SetVisible(false);
+	menu.GetItemByName(acao).SetVisible(false);
+	if(acao == 'iniciar'){
+		menu.GetItemByName('encerrar').SetVisible(true);
+		menu.GetItemByName('encerrar').GetItem(0).SetVisible(true);
+		popup.HideWindow(popup.GetWindowByName('winInicio'));
+	}
+	else
+		popup.HideWindow(popup.GetWindowByName('winTermino'));
+}" />
+                </dxcb:ASPxCallback>
+                <dxhf:ASPxHiddenField ID="hfGeral" runat="server" ClientInstanceName="hfGeral">
+                </dxhf:ASPxHiddenField>
+                <dxhf:ASPxHiddenField ID="hfDadosSessao" runat="server" ClientInstanceName="hfDadosSessao">
+                </dxhf:ASPxHiddenField>
+                <dxpc:ASPxPopupControl ID="popup" runat="server" ClientInstanceName="popup" PopupVerticalAlign="Below"
+                    PopupHorizontalAlign="OutsideRight">
+                    <Windows>
+                        <dxpc:PopupWindow Name="winInicio" PopupElementID="divInicioReuniao" ShowHeader="False">
+                            <ContentCollection>
+                                <dxpc:PopupControlContentControl runat="server" SupportsDisabledAttribute="True">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2">
+                                                <dxe:ASPxCalendar ID="calInicioReuniao" runat="server" ClearButtonText="Limpar" ClientInstanceName="calInicioReuniao"
+                                                    Height="215px" HighlightToday="False" OnLoad="calInicioReuniao_Load" ShowClearButton="False"
+                                                    TodayButtonText="Data atual" ToolTip="Informe a data de início da reunião" Width="200px"
+                                                    DayNameFormat="FirstLetter"  ShowWeekNumbers="False">
+                                                    <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                        ErrorText="?" SetFocusOnError="True">
+                                                        <RequiredField IsRequired="True" />
+                                                    </ValidationSettings>
+                                                </dxe:ASPxCalendar>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <dxe:ASPxTimeEdit ID="timeHoraInicioReuniao" runat="server" ClientInstanceName="timeHoraInicioReuniao"
+                                                    ToolTip="Informe o horário de início da reunião" Width="100%"
+                                                   >
+                                                    <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                        ErrorText="?" SetFocusOnError="True">
+                                                        <RequiredField IsRequired="True" />
+                                                    </ValidationSettings>
+                                                </dxe:ASPxTimeEdit>
+                                            </td>
+                                            <td align="right" style="width: 100px">
+                                                <dxe:ASPxButton ID="botaoIniciarReuniao" runat="server" AutoPostBack="False" ClientInstanceName="botaoIniciarReuniao"
+                                                    Cursor="pointer" Text="Confirmar" ToolTip="Confirmar o início da reunião na data e hora informado"
+                                                    Width="100%" >
+                                                    <ClientSideEvents Click="function(s, e) {
+	var data = calInicioReuniao.GetSelectedDate();
+	var hora = timeHoraInicioReuniao.GetDate();
+	var dd = data.getDate();
+	var MM = data.getMonth() + 1;
+	var yyyy = data.getFullYear();
+	var hh = hora.getHours();
+	var mm = hora.getMinutes();
+
+	if (dd &lt; 10)
+    	dd = '0' + dd;
+	if (MM &lt; 10)
+		MM = '0' + MM;
+	if (hh &lt; 10)
+		hh = '0' + hh;
+	if (mm &lt; 10)
+		mm = '0' + mm;
+
+    data = dd + '/' + MM + '/' + yyyy + ' ' + hh + ':' + mm;
+	DefineInicioTerminoReuniao('iniciar', data);
+
+	window.frames[&quot;_frmConteudo&quot;].window.location.reload(true);
+}" />
+                                                </dxe:ASPxButton>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </dxpc:PopupControlContentControl>
+                            </ContentCollection>
+                        </dxpc:PopupWindow>
+                        <dxpc:PopupWindow CloseAction="OuterMouseClick" Name="winTermino" PopupElementID="divTerminoReuniao"
+                            ShowHeader="False">
+                            <ContentCollection>
+                                <dxpc:PopupControlContentControl runat="server" SupportsDisabledAttribute="True">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2">
+                                                <dxe:ASPxCalendar ID="calTerminoReuniao" runat="server" ClientInstanceName="calTerminoReuniao"
+                                                    HighlightToday="False" OnLoad="calTerminoReuniao_Load" ShowClearButton="False"
+                                                    TodayButtonText="Data atual" ToolTip="Informe a data de término da reunião" DayNameFormat="FirstLetter"
+                                                     ShowWeekNumbers="False">
+                                                </dxe:ASPxCalendar>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <dxe:ASPxTimeEdit ID="timeHoraTerminoReuniao" runat="server" ClientInstanceName="timeHoraTerminoReuniao"
+                                                    ToolTip="Informe o horário de início da reunião" Width="100%"
+                                                   >
+                                                    <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                        ErrorText="?" SetFocusOnError="True">
+                                                        <RequiredField IsRequired="True" />
+                                                    </ValidationSettings>
+                                                </dxe:ASPxTimeEdit>
+                                            </td>
+                                            <td style="width: 100px">
+                                                <dxe:ASPxButton ID="botaoEncerrarReuniao" runat="server" AutoPostBack="False" ClientInstanceName="botaoEncerrarReuniao"
+                                                    Cursor="pointer" Text="Confirmar" ToolTip="Confirmar o início da reunião na data e hora informado"
+                                                    Width="100%" >
+                                                    <ClientSideEvents Click="function(s, e) {
+	var data = calTerminoReuniao.GetSelectedDate();
+	var hora = timeHoraTerminoReuniao.GetDate();
+	var dd = data.getDate();
+	var MM = data.getMonth() + 1;
+	var yyyy = data.getFullYear();
+	var hh = hora.getHours();
+	var mm = hora.getMinutes();
+
+	if (dd &lt; 10)
+    	dd = '0' + dd;
+	if (MM &lt; 10)
+		MM = '0' + MM;
+	if (hh &lt; 10)
+		hh = '0' + hh;
+	if (mm &lt; 10)
+		mm = '0' + mm;
+
+    data = dd + '/' + MM + '/' + yyyy + ' ' + hh + ':' + mm;
+	DefineInicioTerminoReuniao('encerrar', data);
+
+	window.frames[&quot;_frmConteudo&quot;].window.location.reload(true);
+}" />
+                                                </dxe:ASPxButton>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </dxpc:PopupControlContentControl>
+                            </ContentCollection>
+                        </dxpc:PopupWindow>
+                    </Windows>
+                    <ClientSideEvents BeginCallback="function(s, e) {
+	console.log(e.command);
+}" />
+                    <ContentCollection>
+                        <dxpc:PopupControlContentControl runat="server" SupportsDisabledAttribute="True">
+                        </dxpc:PopupControlContentControl>
+                    </ContentCollection>
+                </dxpc:ASPxPopupControl>
+            </dxp:PanelContent>
+        </PanelCollection>
+    </dxcp:ASPxCallbackPanel>
+</asp:Content>

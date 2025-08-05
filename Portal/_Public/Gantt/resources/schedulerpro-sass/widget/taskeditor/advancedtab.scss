@@ -1,0 +1,15 @@
+.b-advanced-tab {
+    justify-content : space-between;
+
+    .b-checkbox > label {
+        white-space: normal;
+    }
+
+    .b-enforced-sch-direction label::after {
+        content: "\f059";
+        font-family: $icon-font;
+        font-weight: $icon-font-weight;
+        position: relative;
+        top: -1em;
+    }
+}

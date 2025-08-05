@@ -1,0 +1,13 @@
+﻿.btn-ok {
+    margin-left: 10px;
+    width: 80px;
+    height: 30px;
+}
+.btn-cancel {
+    width: 80px;
+    height: 30px;
+}
+.content-btn{
+    text-align: center;
+    margin-top: 10px;
+}

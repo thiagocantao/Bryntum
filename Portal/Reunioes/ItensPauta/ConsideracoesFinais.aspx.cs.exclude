@@ -1,0 +1,198 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DevExpress.Web;
+using System.Data;
+using System.IO;
+
+public partial class Reunioes_ItensPauta_ConsideracoesFinais : System.Web.UI.Page
+{
+    dados cDados;
+
+    protected int codigoReuniao;
+    protected int alturaPrincipal;
+    protected int codigoEntidade;
+    protected int codigoUsuarioLogado;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        codigoReuniao = int.Parse(Request.QueryString["cr"]);
+        alturaPrincipal = int.Parse(Request.QueryString["al"]);
+
+        cDados = CdadosUtil.GetCdados(null);
+        codigoUsuarioLogado = Convert.ToInt32(
+            cDados.getInfoSistema("IDUsuarioLogado") ?? -1);
+        codigoEntidade = Convert.ToInt32(
+            cDados.getInfoSistema("CodigoEntidade") ?? -1);
+        cDados.aplicaEstiloVisual(this);
+        DefineAlturaTela();
+    }
+
+    private void DefineAlturaTela()
+    {
+        memoConsideracoesFinais.Height =
+            new Unit(alturaPrincipal - 250, UnitType.Pixel);
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        VerficaBotaoPublicarAtaAtivo();
+        if (!IsCallback)
+            memoConsideracoesFinais.Text = ObtemConsideracoesFinais();
+    }
+
+    private void VerficaBotaoPublicarAtaAtivo()
+    {
+        string comandoSql = string.Format(
+            "SELECT InicioReal, TerminoReal FROM Evento WHERE CodigoEvento = {0}",
+            codigoReuniao);
+
+        DataSet ds = cDados.getDataSet(comandoSql);
+        DataRow dr = ds.Tables[0].Rows[0];
+        btnPublicarAta.ClientEnabled = !(
+            Convert.IsDBNull(dr["InicioReal"]) ||
+            Convert.IsDBNull(dr["TerminoReal"]));
+    }
+
+    private string ObtemConsideracoesFinais()
+    {
+        string comandoSql = string.Format(
+            "SELECT ResumoEvento, InicioReal, TerminoReal FROM Evento WHERE CodigoEvento = {0}",
+            codigoReuniao);
+
+        DataSet ds = cDados.getDataSet(comandoSql);
+
+        return ds.Tables[0].Rows[0]["ResumoEvento"].ToString();
+    }
+
+    protected void memoConsideracoesFinais_Load(object sender, EventArgs e)
+    {
+        ASPxMemo memo = (ASPxMemo)sender;
+        memo.Font.Name = "Verdana";
+        memo.Font.Size = new FontUnit(12, UnitType.Point);
+    }
+
+    protected void callback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        string parameter = e.Parameter;
+        switch (parameter)
+        {
+            case "consideracoes":
+            case "consideracoes_AUTO":
+                SalvaConsideracoesFinais();
+                break;
+            case "envioata":
+                EnviarAta();
+                break;
+            case "publicarata":
+                PublicarAta();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void PublicarAta()
+    {
+        string comandoSql = string.Format(@"
+UPDATE [Evento]
+   SET [DataPublicacaoAta] = GETDATE(),
+       [CodigoUsuarioPublicacao] = {1},
+       [DataUltimaAlteracao]  = GETDATE(),
+	   [CodigoUsuarioUltimaAlteracao]   = {1}
+ WHERE [CodigoEvento] = {0}"
+            , codigoReuniao
+            , codigoUsuarioLogado);
+
+        int registrosAfetados = 0;
+        cDados.execSQL(comandoSql, ref registrosAfetados);
+    }
+
+    private void SalvaConsideracoesFinais()
+    {
+        string consideracoesFinais = memoConsideracoesFinais.Text.Replace("'", "''");
+        string comandoSql = string.Format(@"
+UPDATE [Evento]
+   SET [ResumoEvento] = '{2}'
+      ,[DataUltimaAlteracao] = GETDATE()
+      ,[CodigoUsuarioUltimaAlteracao] = {1}
+ WHERE [CodigoEvento] = {0}"
+            , codigoReuniao
+            , codigoUsuarioLogado
+            , consideracoesFinais);
+        int registrosAfetados = 0;
+        cDados.execSQL(comandoSql, ref registrosAfetados);
+    }
+
+    private void EnviarAta()
+    {
+        string comandoSql = string.Format(@"
+DECLARE @CodigoEvento INT
+    SET @CodigoEvento = {0}
+    
+ SELECT e.DescricaoResumida, 
+        ISNULL(e.InicioReal,e.InicioPrevisto) AS Inicio
+   FROM Evento AS e
+  WHERE e.CodigoEvento = @CodigoEvento
+  
+ SELECT f.EmailParticipante
+   FROM dbo.f_GetParticipantesReuniao(@CodigoEvento) AS f
+  WHERE f.EmailParticipante IS NOT NULL"
+            , codigoReuniao);
+        DataSet ds = cDados.getDataSet(comandoSql);
+        DataTable dtReuniao = ds.Tables[0];
+        DataTable dtParticipantes = ds.Tables[1];
+        rel_ImprimeAtaDeReuniao rel = new rel_ImprimeAtaDeReuniao(codigoReuniao, codigoEntidade, 0, codigoReuniao, "");
+        rel.CreateDocument();
+        string fileName = string.Format("Dados_{0:yyyyMMdd_HHmmss}.pdf", DateTime.Now);
+        fileName = Request.ServerVariables["APPL_PHYSICAL_PATH"] + "ArquivosTemporarios\\" + fileName;
+        rel.ExportToPdf(fileName);
+        string assunto = "Ata da reunião";
+        string destinatarios = string.Join(";", dtParticipantes.AsEnumerable().Select(r => r.Field<string>("EmailParticipante")));
+        string mensagem = string.Format(
+            "Prezado(a), segue em anexo ata da reunião '{0}' realizada em {1:dd/MM/yyyy HH:mm}.",
+            dtReuniao.AsEnumerable().Single().Field<string>("DescricaoResumida"),
+           dtReuniao.AsEnumerable().Single().Field<DateTime>("Inicio"));
+        int retornoStatus = 0;
+        cDados.enviarEmail(assunto, destinatarios, string.Empty, mensagem, fileName, "", ref retornoStatus);
+
+        comandoSql = string.Format(@"
+UPDATE [Evento]
+   SET [DataEnvioAta] = GETDATE(),
+       [DataUltimaAlteracao]  = GETDATE(),
+	   [CodigoUsuarioUltimaAlteracao]   = {1}
+ WHERE [CodigoEvento] = {0}
+
+UPDATE [ParticipanteEvento]
+   SET [DataEnvioAta] = GETDATE()
+ WHERE [CodigoEvento] = {0}"
+            , codigoReuniao
+            , codigoUsuarioLogado);
+
+        int registrosAfetados = 0;
+
+        cDados.execSQL(comandoSql, ref registrosAfetados);
+    }
+
+    public void ExportReport(MemoryStream stream, string fileName, string fileType, bool inline)
+    {
+        Response.Clear();
+        Response.Buffer = false;
+        Response.ContentType = "application/" + fileType;
+        Response.AddHeader("Accept-Header", stream.Length.ToString());
+        Response.AddHeader("Content-Transfer-Encoding", "binary");
+        string contentDisposition = String.Format("{0}; filename={1}.{2}",
+            (inline ? "Inline" : "Attachment"), fileName, fileType);
+        Response.AddHeader("Content-Disposition", contentDisposition);
+        Response.AddHeader("Content-Length", stream.Length.ToString());
+        Response.BinaryWrite(stream.ToArray());
+        Response.Flush();
+        Response.End();
+
+        stream.Close();
+        stream.Dispose();
+    }
+}

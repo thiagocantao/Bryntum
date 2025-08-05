@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsGraficoBolha" targetNamespace="http://tempuri.org/DsGraficoBolha.xsd" xmlns:mstns="http://tempuri.org/DsGraficoBolha.xsd" xmlns="http://tempuri.org/DsGraficoBolha.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection ConnectionStringObject="Data Source=cdisdb;Initial Catalog=desenv_portalEstrategia;Persist Security Info=True;User ID=usr_desenvolvimento;Password=12345678" IsAppSettingsProperty="false" Modifier="Assembly" Name="cdisdb.desenv_portalEstrategia.dbo" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsGraficoBolha" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DsGraficoBolha" msprop:Generator_UserDSName="DsGraficoBolha">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="GraficoBolha" msprop:Generator_TableClassName="GraficoBolhaDataTable" msprop:Generator_TableVarName="tableGraficoBolha" msprop:Generator_TablePropName="GraficoBolha" msprop:Generator_RowDeletingName="GraficoBolhaRowDeleting" msprop:Generator_UserTableName="GraficoBolha" msprop:Generator_RowChangingName="GraficoBolhaRowChanging" msprop:Generator_RowEvHandlerName="GraficoBolhaRowChangeEventHandler" msprop:Generator_RowDeletedName="GraficoBolhaRowDeleted" msprop:Generator_RowEvArgName="GraficoBolhaRowChangeEvent" msprop:Generator_RowChangedName="GraficoBolhaRowChanged" msprop:Generator_RowClassName="GraficoBolhaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DataEmissaoRelatorio" msprop:Generator_ColumnVarNameInTable="columnDataEmissaoRelatorio" msprop:Generator_ColumnPropNameInRow="DataEmissaoRelatorio" msprop:Generator_ColumnPropNameInTable="DataEmissaoRelatorioColumn" msprop:Generator_UserColumnName="DataEmissaoRelatorio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DataInicioPeriodoRelatorio" msprop:Generator_ColumnVarNameInTable="columnDataInicioPeriodoRelatorio" msprop:Generator_ColumnPropNameInRow="DataInicioPeriodoRelatorio" msprop:Generator_ColumnPropNameInTable="DataInicioPeriodoRelatorioColumn" msprop:Generator_UserColumnName="DataInicioPeriodoRelatorio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DataTerminoPeriodoRelatorio" msprop:Generator_ColumnVarNameInTable="columnDataTerminoPeriodoRelatorio" msprop:Generator_ColumnPropNameInRow="DataTerminoPeriodoRelatorio" msprop:Generator_ColumnPropNameInTable="DataTerminoPeriodoRelatorioColumn" msprop:Generator_UserColumnName="DataTerminoPeriodoRelatorio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CodigoObjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoObjeto" msprop:Generator_ColumnPropNameInRow="CodigoObjeto" msprop:Generator_ColumnPropNameInTable="CodigoObjetoColumn" msprop:Generator_UserColumnName="CodigoObjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoTipoAssociacaoObjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoTipoAssociacaoObjeto" msprop:Generator_ColumnPropNameInRow="CodigoTipoAssociacaoObjeto" msprop:Generator_ColumnPropNameInTable="CodigoTipoAssociacaoObjetoColumn" msprop:Generator_UserColumnName="CodigoTipoAssociacaoObjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeObjeto" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="NomeObjeto" msprop:Generator_ColumnVarNameInTable="columnNomeObjeto" msprop:Generator_ColumnPropNameInTable="NomeObjetoColumn" msprop:Generator_UserColumnName="NomeObjeto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1024" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaStatusReportSuperior" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaStatusReportSuperior" msprop:Generator_ColumnVarNameInTable="columnIndicaStatusReportSuperior" msprop:Generator_ColumnPropNameInTable="IndicaStatusReportSuperiorColumn" msprop:Generator_UserColumnName="IndicaStatusReportSuperior" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Legenda" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Legenda" msprop:Generator_ColumnVarNameInTable="columnLegenda" msprop:Generator_ColumnPropNameInTable="LegendaColumn" msprop:Generator_UserColumnName="Legenda" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PercentualFisicoPrevisto" msprop:Generator_ColumnVarNameInTable="columnPercentualFisicoPrevisto" msprop:Generator_ColumnPropNameInRow="PercentualFisicoPrevisto" msprop:Generator_ColumnPropNameInTable="PercentualFisicoPrevistoColumn" msprop:Generator_UserColumnName="PercentualFisicoPrevisto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PercentualFisicoRealizado" msprop:Generator_ColumnVarNameInTable="columnPercentualFisicoRealizado" msprop:Generator_ColumnPropNameInRow="PercentualFisicoRealizado" msprop:Generator_ColumnPropNameInTable="PercentualFisicoRealizadoColumn" msprop:Generator_UserColumnName="PercentualFisicoRealizado" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CorDesempenhoFisico" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CorDesempenhoFisico" msprop:Generator_ColumnVarNameInTable="columnCorDesempenhoFisico" msprop:Generator_ColumnPropNameInTable="CorDesempenhoFisicoColumn" msprop:Generator_UserColumnName="CorDesempenhoFisico" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ValorCustoPrevisto" msprop:Generator_ColumnVarNameInTable="columnValorCustoPrevisto" msprop:Generator_ColumnPropNameInRow="ValorCustoPrevisto" msprop:Generator_ColumnPropNameInTable="ValorCustoPrevistoColumn" msprop:Generator_UserColumnName="ValorCustoPrevisto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorCustoRealizado" msprop:Generator_ColumnVarNameInTable="columnValorCustoRealizado" msprop:Generator_ColumnPropNameInRow="ValorCustoRealizado" msprop:Generator_ColumnPropNameInTable="ValorCustoRealizadoColumn" msprop:Generator_UserColumnName="ValorCustoRealizado" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CorDesempenhoFinanceiro" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CorDesempenhoFinanceiro" msprop:Generator_ColumnVarNameInTable="columnCorDesempenhoFinanceiro" msprop:Generator_ColumnPropNameInTable="CorDesempenhoFinanceiroColumn" msprop:Generator_UserColumnName="CorDesempenhoFinanceiro" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DesvioFisico" msprop:Generator_ColumnVarNameInTable="columnDesvioFisico" msprop:Generator_ColumnPropNameInRow="DesvioFisico" msprop:Generator_ColumnPropNameInTable="DesvioFisicoColumn" msprop:Generator_UserColumnName="DesvioFisico" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DesvioCusto" msprop:Generator_ColumnVarNameInTable="columnDesvioCusto" msprop:Generator_ColumnPropNameInRow="DesvioCusto" msprop:Generator_ColumnPropNameInTable="DesvioCustoColumn" msprop:Generator_UserColumnName="DesvioCusto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorOrcamento" msprop:Generator_ColumnVarNameInTable="columnValorOrcamento" msprop:Generator_ColumnPropNameInRow="ValorOrcamento" msprop:Generator_ColumnPropNameInTable="ValorOrcamentoColumn" msprop:Generator_UserColumnName="ValorOrcamento" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PercentualRelativoAoTodo" msprop:Generator_ColumnVarNameInTable="columnPercentualRelativoAoTodo" msprop:Generator_ColumnPropNameInRow="PercentualRelativoAoTodo" msprop:Generator_ColumnPropNameInTable="PercentualRelativoAoTodoColumn" msprop:Generator_UserColumnName="PercentualRelativoAoTodo" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ComentarioGeral" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="ComentarioGeral" msprop:Generator_ColumnVarNameInTable="columnComentarioGeral" msprop:Generator_ColumnPropNameInTable="ComentarioGeralColumn" msprop:Generator_UserColumnName="ComentarioGeral" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

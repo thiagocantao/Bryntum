@@ -1,0 +1,165 @@
+// TODO: Clean up, declare vars before importing variables.scss
+
+// Embed theme details in content.
+// See DomHelper#themeInfo
+.b-theme-info:before {
+    content : '{"name":"Dark"}';
+}
+
+$gray : #444;
+$blue : #1565c0;
+$orange : #e64a19;
+$red : #d32f2f;
+$checkbox-color : #111;
+$light-gray: #c0c1c2;
+
+$grid-header-icon-color : #777;
+$grid-header-icon-light-color : #555657;
+
+$tree-parent-color : #ccc;
+
+@import '../variables.scss';
+
+//region Grid
+
+$grid-header-background-color : darken($dark-gray, 10);
+$grid-header-text-color : $light-gray;
+$grid-header-border-color : darken($dark-gray, 15);
+$grid-header-hover-background-color : darken($dark-gray, 15);
+$grid-header-resizing-background-color : $grid-header-hover-background-color;
+
+$grid-header-filtered-color : $grid-header-text-color;
+
+$grid-footer-background-color : darken($dark-gray, 10);
+
+$grid-background-color : darken($dark-gray, 5);
+
+$grid-cell-hover-background-color : darken($grid-background-color, 7);
+$grid-cell-row-hover-background-color : darken($grid-background-color, 4);
+
+$grid-row-selected-background-color : darken($grid-background-color, 4);
+$grid-row-selected-cell-background-color : darken($grid-background-color, 7);
+$grid-focus-row-selected-background-color : darken($grid-background-color, 9);
+$grid-focus-row-selected-cell-background-color : darken($grid-background-color, 11);
+
+$grid-cell-color : lighten($light-gray, 5);
+$grid-cell-border-color : $grid-header-border-color;
+$grid-cell-focused-outline-color : $orange;
+
+$grid-row-odd-color : $dark-gray;
+$grid-row-even-color : darken($dark-gray, 5);
+
+$grid-group-header-color : darken($grid-cell-color, 5);
+$grid-group-header-background-color : darken($dark-gray, 9);
+$grid-group-header-line-color : $grid-header-border-color;
+$grid-group-header-icon-color : $grid-header-icon-light-color;
+$grid-group-column-header-icon-color : $grid-header-icon-light-color;
+$grid-groupsummary-background-color : darken($dark-gray, 7);
+
+$grid-region-resize-splitter-color : $grid-header-border-color;
+$grid-region-resize-splitter-narrow-color : darken($grid-header-border-color, 20);
+//endregion
+
+//region Features
+
+$columndragtoolbar-default-color : $blue;
+$columndragtoolbar-icon-color : $blue;
+$columndragtoolbar-secondary-color : $orange;
+
+$quickfind-background-color : #f57f17;
+$quickfind-badge-color : #f57f17;
+$quickfind-header-badge-color : $grid-header-background-color;
+$quickfind-font-weight : inherit;
+
+$sort-color : $grid-header-text-color;
+$sort-index-color : lighten($grid-header-icon-color, 10);
+
+$rowreorder-row-background : $grid-row-odd-color;
+
+//endregion
+
+//region Widgets
+$panel-background-color: #222;
+
+$button-disabled-background-color : $dark-gray;
+$button-disabled-color : darken($dark-gray, 10);
+
+$container-color : $grid-header-text-color;
+
+$checkbox-box-border-color : $grid-header-border-color;
+//$checkbox-box-background-color : lighten($grid-header-border-color, 15%);
+$checkbox-checked-box-background-color : $checkbox-box-border-color;
+$checkbox-checked-box-border-color : $checkbox-box-border-color;
+
+$time-picker-color : $grid-cell-color;
+
+$field-color : $grid-cell-color;
+$field-background-color : darken($dark-gray, 15);
+$field-placeholder-color : darken($grid-cell-color, 30%);
+$field-disabled-trigger-color : darken($field-trigger-color, 15%);
+
+$list-color : $grid-header-text-color;
+$list-background-color : darken($grid-header-background-color, 3);
+$list-item-border-color : darken($grid-header-border-color, 10);
+$list-item-separator-color : $grid-header-border-color;
+$list-highlight-color : $orange;
+
+$mask-background-color : $blue;
+
+$menu-background-color : darken($grid-header-background-color, 5);
+$menu-color : $grid-header-text-color;
+$menu-highlight-color : $orange;
+$menu-item-separator-color : darken($grid-header-border-color, 10);
+$menu-item-border-color : $menu-item-separator-color;
+
+$percent-bar-fill : $blue;
+$percent-bar-low-fill : $red;
+$percent-bar-background : lighten($dark-gray, 3);
+
+$popup-background-color : $menu-background-color;
+$popup-color : $grid-header-text-color;
+
+$panel-toolbar-background-color : $popup-background-color;
+
+$rating-empty-color : $dark-gray;
+$rating-filled-color : #f9a825;
+
+$slider-track-color : gray;
+$slider-thumb-color : $blue;
+$slider-contrast : 0;
+
+$tabpanel-background-color : #222;
+$tabpanel-border-width : 0;
+
+$tabpanel-tab-border-width : 0;
+$tabpanel-tab-active-background-color : #222;
+$tabpanel-tab-hover-background-color : #222;
+$tabpanel-tab-hover-color : #ccc;
+
+$toast-background-color : $menu-background-color;
+$toast-progress-color : $orange;
+
+$tooltip-background-color : $menu-background-color;
+
+$rownumber-background : $grid-header-background-color;
+$rownumber-border-color : $grid-cell-border-color;
+
+$widget-text-bright-color : $grid-text-darkest-color;
+$widget-highlight-color : $orange;
+
+//endregion
+
+// Theme specific styling
+.b-grid-cell a {
+    color : lighten($blue, 25);
+
+    &:visited {
+        color : lighten($blue, 20);
+    }
+}
+
+@import 'shared';
+
+header.demo-header {
+    background-color : #0d47a1;
+}

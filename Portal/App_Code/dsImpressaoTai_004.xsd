@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsImpressaoTai_004" targetNamespace="http://tempuri.org/dsImpressaoTai_004.xsd" xmlns:mstns="http://tempuri.org/dsImpressaoTai_004.xsd" xmlns="http://tempuri.org/dsImpressaoTai_004.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsPropertyName="desenv_portalEstrategiaConnectionString" ConnectionStringObject="Data Source=cdisdb;Initial Catalog=desenv_portalEstrategia;Persist Security Info=True;User ID=usr_desenvolvimento;Password=12345678" IsAppSettingsProperty="false" Modifier="Assembly" Name="desenv_portalEstrategiaConnectionString" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TermoAbertura04TableAdapter" GeneratorDataComponentClassName="TermoAbertura04TableAdapter" Name="TermoAbertura04" UserDataComponentName="TermoAbertura04TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT        ta.CodigoProjeto, ta.NomeIniciativa, ta.CodigoGerenteIniciativa, ta.NomeGerenteIniciativa, ta.CodigoUnidadeNegocio, ta.NomeUnidadeNegocio, ta.ValorEstimado, 
+                         ta.ObjetivoGeral, ta.Justificativa, ta.Escopo, ta.CronogramaBasico, ta.Observacoes, u.NomeUsuario AS NomeSolicitante, u2.NomeUsuario AS NomeGerenteUnidade, 
+                         ta.ValorEstimadoOrcamento, ta.ServicosCompartilhados
+FROM            TermoAbertura04 AS ta INNER JOIN
+                         Projeto AS p ON p.CodigoProjeto = ta.CodigoProjeto INNER JOIN
+                         UnidadeNegocio AS un ON un.CodigoUnidadeNegocio = ta.CodigoUnidadeNegocio INNER JOIN
+                         Usuario AS u ON u.CodigoUsuario = p.CodigoUsuarioInclusao INNER JOIN
+                         Usuario AS u2 ON un.CodigoUsuarioGerente = u2.CodigoUsuario</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoProjeto" DataSetColumn="CodigoProjeto" />
+              <Mapping SourceColumn="NomeIniciativa" DataSetColumn="NomeIniciativa" />
+              <Mapping SourceColumn="CodigoGerenteIniciativa" DataSetColumn="CodigoGerenteIniciativa" />
+              <Mapping SourceColumn="NomeGerenteIniciativa" DataSetColumn="NomeGerenteIniciativa" />
+              <Mapping SourceColumn="CodigoUnidadeNegocio" DataSetColumn="CodigoUnidadeNegocio" />
+              <Mapping SourceColumn="NomeUnidadeNegocio" DataSetColumn="NomeUnidadeNegocio" />
+              <Mapping SourceColumn="ValorEstimado" DataSetColumn="ValorEstimado" />
+              <Mapping SourceColumn="ObjetivoGeral" DataSetColumn="ObjetivoGeral" />
+              <Mapping SourceColumn="Justificativa" DataSetColumn="Justificativa" />
+              <Mapping SourceColumn="Escopo" DataSetColumn="Escopo" />
+              <Mapping SourceColumn="CronogramaBasico" DataSetColumn="CronogramaBasico" />
+              <Mapping SourceColumn="Observacoes" DataSetColumn="Observacoes" />
+              <Mapping SourceColumn="nomeSolicitante" DataSetColumn="nomeSolicitante" />
+              <Mapping SourceColumn="NomeGerenteUnidade" DataSetColumn="NomeGerenteUnidade" />
+              <Mapping SourceColumn="NomeSolicitante" DataSetColumn="NomeSolicitante" />
+              <Mapping SourceColumn="ValorEstimadoOrcamento" DataSetColumn="ValorEstimadoOrcamento" />
+              <Mapping SourceColumn="ServicosCompartilhados" DataSetColumn="ServicosCompartilhados" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillByCodigoProjeto" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByCodigoProjeto" GeneratorSourceName="FillByCodigoProjeto" GetMethodModifier="Public" GetMethodName="GetDataByCodigoProjeto" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByCodigoProjeto" UserSourceName="FillByCodigoProjeto">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        ta.CodigoProjeto, ta.NomeIniciativa, ta.CodigoGerenteIniciativa, ta.NomeGerenteIniciativa, ta.CodigoUnidadeNegocio, ta.NomeUnidadeNegocio, ta.ValorEstimado, 
+                         ta.ObjetivoGeral, ta.Justificativa, ta.Escopo, ta.CronogramaBasico, ta.Observacoes, u.NomeUsuario AS NomeSolicitante, u2.NomeUsuario AS NomeGerenteUnidade, 
+                         ta.ValorEstimadoOrcamento, ta.ServicosCompartilhados
+FROM            TermoAbertura04 AS ta INNER JOIN
+                         Projeto AS p ON p.CodigoProjeto = ta.CodigoProjeto INNER JOIN
+                         UnidadeNegocio AS un ON un.CodigoUnidadeNegocio = ta.CodigoUnidadeNegocio INNER JOIN
+                         Usuario AS u ON u.CodigoUsuario = p.CodigoUsuarioInclusao INNER JOIN
+                         Usuario AS u2 ON un.CodigoUsuarioGerente = u2.CodigoUsuario
+WHERE        (ta.CodigoProjeto = @CodigoProjeto)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoProjeto" ColumnName="CodigoProjeto" DataSourceName="desenv_portalEstrategia.dbo.TermoAbertura04" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="tai04_ParceirosIniciativaTableAdapter" GeneratorDataComponentClassName="tai04_ParceirosIniciativaTableAdapter" Name="tai04_ParceirosIniciativa" UserDataComponentName="tai04_ParceirosIniciativaTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString" DbObjectName="desenv_portalEstrategia.dbo.tai04_ParceirosIniciativa" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <DeleteCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>DELETE FROM [dbo].[tai04_ParceirosIniciativa] WHERE (([CodigoProjeto] = @Original_CodigoProjeto) AND ([SequenciaRegistro] = @Original_SequenciaRegistro))</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int16" Direction="Input" ParameterName="@Original_SequenciaRegistro" Precision="0" ProviderType="SmallInt" Scale="0" Size="0" SourceColumn="SequenciaRegistro" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </DeleteCommand>
+                <InsertCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>INSERT INTO [dbo].[tai04_ParceirosIniciativa] ([CodigoProjeto], [SequenciaRegistro], [CodigoUsuario], [NomeUsuario], [Email], [NumeroTelefone]) VALUES (@CodigoProjeto, @SequenciaRegistro, @CodigoUsuario, @NomeUsuario, @Email, @NumeroTelefone)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int16" Direction="Input" ParameterName="@SequenciaRegistro" Precision="0" ProviderType="SmallInt" Scale="0" Size="0" SourceColumn="SequenciaRegistro" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@CodigoUsuario" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoUsuario" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@NomeUsuario" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NomeUsuario" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Email" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Email" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@NumeroTelefone" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NumeroTelefone" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </InsertCommand>
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT CodigoProjeto, SequenciaRegistro, CodigoUsuario, NomeUsuario, Email, NumeroTelefone FROM dbo.tai04_ParceirosIniciativa</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>UPDATE [dbo].[tai04_ParceirosIniciativa] SET [CodigoProjeto] = @CodigoProjeto, [SequenciaRegistro] = @SequenciaRegistro, [CodigoUsuario] = @CodigoUsuario, [NomeUsuario] = @NomeUsuario, [Email] = @Email, [NumeroTelefone] = @NumeroTelefone WHERE (([CodigoProjeto] = @Original_CodigoProjeto) AND ([SequenciaRegistro] = @Original_SequenciaRegistro))</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int16" Direction="Input" ParameterName="@SequenciaRegistro" Precision="0" ProviderType="SmallInt" Scale="0" Size="0" SourceColumn="SequenciaRegistro" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@CodigoUsuario" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoUsuario" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@NomeUsuario" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NomeUsuario" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Email" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Email" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@NumeroTelefone" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NumeroTelefone" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int16" Direction="Input" ParameterName="@Original_SequenciaRegistro" Precision="0" ProviderType="SmallInt" Scale="0" Size="0" SourceColumn="SequenciaRegistro" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoProjeto" DataSetColumn="CodigoProjeto" />
+              <Mapping SourceColumn="SequenciaRegistro" DataSetColumn="SequenciaRegistro" />
+              <Mapping SourceColumn="CodigoUsuario" DataSetColumn="CodigoUsuario" />
+              <Mapping SourceColumn="NomeUsuario" DataSetColumn="NomeUsuario" />
+              <Mapping SourceColumn="Email" DataSetColumn="Email" />
+              <Mapping SourceColumn="NumeroTelefone" DataSetColumn="NumeroTelefone" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString" DbObjectName="desenv_portalEstrategia.dbo.tai04_ParceirosIniciativa" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByCodigoProjeto" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByCodigoProjeto" GeneratorSourceName="FillByCodigoProjeto" GetMethodModifier="Public" GetMethodName="GetDataByCodigoProjeto" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByCodigoProjeto" UserSourceName="FillByCodigoProjeto">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CodigoProjeto, SequenciaRegistro, CodigoUsuario, NomeUsuario, Email, NumeroTelefone FROM dbo.tai04_ParceirosIniciativa
+Where CodigoProjeto = @CodigoProjeto</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoProjeto" ColumnName="CodigoProjeto" DataSourceName="dbo.tai04_ParceirosIniciativa" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="tai04_ResultadosIniciativaTableAdapter" GeneratorDataComponentClassName="tai04_ResultadosIniciativaTableAdapter" Name="tai04_ResultadosIniciativa" UserDataComponentName="tai04_ResultadosIniciativaTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString" DbObjectName="desenv_portalEstrategia.dbo.tai04_ResultadosIniciativa" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <DeleteCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>DELETE FROM [dbo].[tai04_ResultadosIniciativa] WHERE (([CodigoProjeto] = @Original_CodigoProjeto) AND ([SequenciaRegistro] = @Original_SequenciaRegistro))</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int16" Direction="Input" ParameterName="@Original_SequenciaRegistro" Precision="0" ProviderType="SmallInt" Scale="0" Size="0" SourceColumn="SequenciaRegistro" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </DeleteCommand>
+                <InsertCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>INSERT INTO [dbo].[tai04_ResultadosIniciativa] ([CodigoProjeto], [SequenciaRegistro], [TransformacaoProduto], [CodigoIndicador], [NomeIndicador], [ValorInicialTransformacao], [ValorFinalTransformacao], [DataLimitePrevista], [SetencaResultado], [ValorTrimestre1], [ValorTrimestre2], [ValorTrimestre3], [ValorTrimestre4]) VALUES (@CodigoProjeto, @SequenciaRegistro, @TransformacaoProduto, @CodigoIndicador, @NomeIndicador, @ValorInicialTransformacao, @ValorFinalTransformacao, @DataLimitePrevista, @SetencaResultado, @ValorTrimestre1, @ValorTrimestre2, @ValorTrimestre3, @ValorTrimestre4)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int16" Direction="Input" ParameterName="@SequenciaRegistro" Precision="0" ProviderType="SmallInt" Scale="0" Size="0" SourceColumn="SequenciaRegistro" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@TransformacaoProduto" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="TransformacaoProduto" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@CodigoIndicador" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoIndicador" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@NomeIndicador" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NomeIndicador" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorInicialTransformacao" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorInicialTransformacao" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorFinalTransformacao" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorFinalTransformacao" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@DataLimitePrevista" Precision="0" ProviderType="SmallDateTime" Scale="0" Size="0" SourceColumn="DataLimitePrevista" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@SetencaResultado" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="SetencaResultado" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorTrimestre1" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorTrimestre1" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorTrimestre2" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorTrimestre2" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorTrimestre3" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorTrimestre3" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorTrimestre4" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorTrimestre4" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </InsertCommand>
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT CodigoProjeto, SequenciaRegistro, TransformacaoProduto, CodigoIndicador, NomeIndicador, ValorInicialTransformacao, ValorFinalTransformacao, DataLimitePrevista, SetencaResultado, ValorTrimestre1, ValorTrimestre2, ValorTrimestre3, ValorTrimestre4 FROM dbo.tai04_ResultadosIniciativa</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>UPDATE [dbo].[tai04_ResultadosIniciativa] SET [CodigoProjeto] = @CodigoProjeto, [SequenciaRegistro] = @SequenciaRegistro, [TransformacaoProduto] = @TransformacaoProduto, [CodigoIndicador] = @CodigoIndicador, [NomeIndicador] = @NomeIndicador, [ValorInicialTransformacao] = @ValorInicialTransformacao, [ValorFinalTransformacao] = @ValorFinalTransformacao, [DataLimitePrevista] = @DataLimitePrevista, [SetencaResultado] = @SetencaResultado, [ValorTrimestre1] = @ValorTrimestre1, [ValorTrimestre2] = @ValorTrimestre2, [ValorTrimestre3] = @ValorTrimestre3, [ValorTrimestre4] = @ValorTrimestre4 WHERE (([CodigoProjeto] = @Original_CodigoProjeto) AND ([SequenciaRegistro] = @Original_SequenciaRegistro))</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int16" Direction="Input" ParameterName="@SequenciaRegistro" Precision="0" ProviderType="SmallInt" Scale="0" Size="0" SourceColumn="SequenciaRegistro" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@TransformacaoProduto" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="TransformacaoProduto" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@CodigoIndicador" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoIndicador" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@NomeIndicador" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NomeIndicador" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorInicialTransformacao" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorInicialTransformacao" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorFinalTransformacao" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorFinalTransformacao" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@DataLimitePrevista" Precision="0" ProviderType="SmallDateTime" Scale="0" Size="0" SourceColumn="DataLimitePrevista" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@SetencaResultado" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="SetencaResultado" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorTrimestre1" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorTrimestre1" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorTrimestre2" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorTrimestre2" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorTrimestre3" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorTrimestre3" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@ValorTrimestre4" Precision="25" ProviderType="Decimal" Scale="4" Size="0" SourceColumn="ValorTrimestre4" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int16" Direction="Input" ParameterName="@Original_SequenciaRegistro" Precision="0" ProviderType="SmallInt" Scale="0" Size="0" SourceColumn="SequenciaRegistro" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoProjeto" DataSetColumn="CodigoProjeto" />
+              <Mapping SourceColumn="SequenciaRegistro" DataSetColumn="SequenciaRegistro" />
+              <Mapping SourceColumn="TransformacaoProduto" DataSetColumn="TransformacaoProduto" />
+              <Mapping SourceColumn="CodigoIndicador" DataSetColumn="CodigoIndicador" />
+              <Mapping SourceColumn="NomeIndicador" DataSetColumn="NomeIndicador" />
+              <Mapping SourceColumn="ValorInicialTransformacao" DataSetColumn="ValorInicialTransformacao" />
+              <Mapping SourceColumn="ValorFinalTransformacao" DataSetColumn="ValorFinalTransformacao" />
+              <Mapping SourceColumn="DataLimitePrevista" DataSetColumn="DataLimitePrevista" />
+              <Mapping SourceColumn="SetencaResultado" DataSetColumn="SetencaResultado" />
+              <Mapping SourceColumn="ValorTrimestre1" DataSetColumn="ValorTrimestre1" />
+              <Mapping SourceColumn="ValorTrimestre2" DataSetColumn="ValorTrimestre2" />
+              <Mapping SourceColumn="ValorTrimestre3" DataSetColumn="ValorTrimestre3" />
+              <Mapping SourceColumn="ValorTrimestre4" DataSetColumn="ValorTrimestre4" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString" DbObjectName="desenv_portalEstrategia.dbo.tai04_ResultadosIniciativa" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByCodigoProjeto" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByCodigoProjeto" GeneratorSourceName="FillByCodigoProjeto" GetMethodModifier="Public" GetMethodName="GetDataByCodigoProjeto" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByCodigoProjeto" UserSourceName="FillByCodigoProjeto">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CodigoProjeto, SequenciaRegistro, TransformacaoProduto, CodigoIndicador, NomeIndicador, ValorInicialTransformacao, ValorFinalTransformacao, DataLimitePrevista, SetencaResultado, ValorTrimestre1, ValorTrimestre2, ValorTrimestre3, ValorTrimestre4 FROM dbo.tai04_ResultadosIniciativa
+where CodigoProjeto = @CodigoProjeto</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoProjeto" ColumnName="CodigoProjeto" DataSourceName="dbo.tai04_ResultadosIniciativa" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoProjeto" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoProjeto" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsImpressaoTai_004" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsImpressaoTai_004" msprop:Generator_UserDSName="dsImpressaoTai_004">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TermoAbertura04" msprop:Generator_TableClassName="TermoAbertura04DataTable" msprop:Generator_TableVarName="tableTermoAbertura04" msprop:Generator_TablePropName="TermoAbertura04" msprop:Generator_RowDeletingName="TermoAbertura04RowDeleting" msprop:Generator_UserTableName="TermoAbertura04" msprop:Generator_RowChangingName="TermoAbertura04RowChanging" msprop:Generator_RowEvHandlerName="TermoAbertura04RowChangeEventHandler" msprop:Generator_RowDeletedName="TermoAbertura04RowDeleted" msprop:Generator_RowEvArgName="TermoAbertura04RowChangeEvent" msprop:Generator_RowChangedName="TermoAbertura04RowChanged" msprop:Generator_RowClassName="TermoAbertura04Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="NomeIniciativa" msprop:Generator_ColumnVarNameInTable="columnNomeIniciativa" msprop:Generator_ColumnPropNameInRow="NomeIniciativa" msprop:Generator_ColumnPropNameInTable="NomeIniciativaColumn" msprop:Generator_UserColumnName="NomeIniciativa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoGerenteIniciativa" msprop:Generator_ColumnVarNameInTable="columnCodigoGerenteIniciativa" msprop:Generator_ColumnPropNameInRow="CodigoGerenteIniciativa" msprop:Generator_ColumnPropNameInTable="CodigoGerenteIniciativaColumn" msprop:Generator_UserColumnName="CodigoGerenteIniciativa" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeGerenteIniciativa" msprop:Generator_ColumnVarNameInTable="columnNomeGerenteIniciativa" msprop:Generator_ColumnPropNameInRow="NomeGerenteIniciativa" msprop:Generator_ColumnPropNameInTable="NomeGerenteIniciativaColumn" msprop:Generator_UserColumnName="NomeGerenteIniciativa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoUnidadeNegocio" msprop:Generator_ColumnVarNameInTable="columnCodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInRow="CodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInTable="CodigoUnidadeNegocioColumn" msprop:Generator_UserColumnName="CodigoUnidadeNegocio" type="xs:int" />
+              <xs:element name="NomeUnidadeNegocio" msprop:Generator_ColumnVarNameInTable="columnNomeUnidadeNegocio" msprop:Generator_ColumnPropNameInRow="NomeUnidadeNegocio" msprop:Generator_ColumnPropNameInTable="NomeUnidadeNegocioColumn" msprop:Generator_UserColumnName="NomeUnidadeNegocio">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ValorEstimado" msprop:Generator_ColumnVarNameInTable="columnValorEstimado" msprop:Generator_ColumnPropNameInRow="ValorEstimado" msprop:Generator_ColumnPropNameInTable="ValorEstimadoColumn" msprop:Generator_UserColumnName="ValorEstimado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ObjetivoGeral" msprop:Generator_ColumnVarNameInTable="columnObjetivoGeral" msprop:Generator_ColumnPropNameInRow="ObjetivoGeral" msprop:Generator_ColumnPropNameInTable="ObjetivoGeralColumn" msprop:Generator_UserColumnName="ObjetivoGeral" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Justificativa" msprop:Generator_ColumnVarNameInTable="columnJustificativa" msprop:Generator_ColumnPropNameInRow="Justificativa" msprop:Generator_ColumnPropNameInTable="JustificativaColumn" msprop:Generator_UserColumnName="Justificativa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Escopo" msprop:Generator_ColumnVarNameInTable="columnEscopo" msprop:Generator_ColumnPropNameInRow="Escopo" msprop:Generator_ColumnPropNameInTable="EscopoColumn" msprop:Generator_UserColumnName="Escopo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CronogramaBasico" msprop:Generator_ColumnVarNameInTable="columnCronogramaBasico" msprop:Generator_ColumnPropNameInRow="CronogramaBasico" msprop:Generator_ColumnPropNameInTable="CronogramaBasicoColumn" msprop:Generator_UserColumnName="CronogramaBasico" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Observacoes" msprop:Generator_ColumnVarNameInTable="columnObservacoes" msprop:Generator_ColumnPropNameInRow="Observacoes" msprop:Generator_ColumnPropNameInTable="ObservacoesColumn" msprop:Generator_UserColumnName="Observacoes" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NomeSolicitante" msprop:Generator_ColumnVarNameInTable="columnNomeSolicitante" msprop:Generator_ColumnPropNameInRow="NomeSolicitante" msprop:Generator_ColumnPropNameInTable="NomeSolicitanteColumn" msprop:Generator_UserColumnName="NomeSolicitante" type="xs:string" />
+              <xs:element name="NomeGerenteUnidade" msprop:Generator_ColumnVarNameInTable="columnNomeGerenteUnidade" msprop:Generator_ColumnPropNameInRow="NomeGerenteUnidade" msprop:Generator_ColumnPropNameInTable="NomeGerenteUnidadeColumn" msprop:Generator_UserColumnName="NomeGerenteUnidade">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServicosCompartilhados" msprop:Generator_ColumnVarNameInTable="columnServicosCompartilhados" msprop:Generator_ColumnPropNameInRow="ServicosCompartilhados" msprop:Generator_ColumnPropNameInTable="ServicosCompartilhadosColumn" msprop:Generator_UserColumnName="ServicosCompartilhados" type="xs:string" minOccurs="0" />
+              <xs:element name="ValorEstimadoOrcamento" msprop:Generator_ColumnVarNameInTable="columnValorEstimadoOrcamento" msprop:Generator_ColumnPropNameInRow="ValorEstimadoOrcamento" msprop:Generator_ColumnPropNameInTable="ValorEstimadoOrcamentoColumn" msprop:Generator_UserColumnName="ValorEstimadoOrcamento" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tai04_ParceirosIniciativa" msprop:Generator_TableClassName="tai04_ParceirosIniciativaDataTable" msprop:Generator_TableVarName="tabletai04_ParceirosIniciativa" msprop:Generator_TablePropName="tai04_ParceirosIniciativa" msprop:Generator_RowDeletingName="tai04_ParceirosIniciativaRowDeleting" msprop:Generator_UserTableName="tai04_ParceirosIniciativa" msprop:Generator_RowChangingName="tai04_ParceirosIniciativaRowChanging" msprop:Generator_RowEvHandlerName="tai04_ParceirosIniciativaRowChangeEventHandler" msprop:Generator_RowDeletedName="tai04_ParceirosIniciativaRowDeleted" msprop:Generator_RowEvArgName="tai04_ParceirosIniciativaRowChangeEvent" msprop:Generator_RowChangedName="tai04_ParceirosIniciativaRowChanged" msprop:Generator_RowClassName="tai04_ParceirosIniciativaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="SequenciaRegistro" msprop:Generator_ColumnVarNameInTable="columnSequenciaRegistro" msprop:Generator_ColumnPropNameInRow="SequenciaRegistro" msprop:Generator_ColumnPropNameInTable="SequenciaRegistroColumn" msprop:Generator_UserColumnName="SequenciaRegistro" type="xs:short" />
+              <xs:element name="CodigoUsuario" msprop:Generator_ColumnVarNameInTable="columnCodigoUsuario" msprop:Generator_ColumnPropNameInRow="CodigoUsuario" msprop:Generator_ColumnPropNameInTable="CodigoUsuarioColumn" msprop:Generator_UserColumnName="CodigoUsuario" type="xs:int" />
+              <xs:element name="NomeUsuario" msprop:Generator_ColumnVarNameInTable="columnNomeUsuario" msprop:Generator_ColumnPropNameInRow="NomeUsuario" msprop:Generator_ColumnPropNameInTable="NomeUsuarioColumn" msprop:Generator_UserColumnName="NomeUsuario" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Email" msprop:Generator_ColumnVarNameInTable="columnEmail" msprop:Generator_ColumnPropNameInRow="Email" msprop:Generator_ColumnPropNameInTable="EmailColumn" msprop:Generator_UserColumnName="Email" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="150" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NumeroTelefone" msprop:Generator_ColumnVarNameInTable="columnNumeroTelefone" msprop:Generator_ColumnPropNameInRow="NumeroTelefone" msprop:Generator_ColumnPropNameInTable="NumeroTelefoneColumn" msprop:Generator_UserColumnName="NumeroTelefone" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tai04_ResultadosIniciativa" msprop:Generator_TableClassName="tai04_ResultadosIniciativaDataTable" msprop:Generator_TableVarName="tabletai04_ResultadosIniciativa" msprop:Generator_TablePropName="tai04_ResultadosIniciativa" msprop:Generator_RowDeletingName="tai04_ResultadosIniciativaRowDeleting" msprop:Generator_UserTableName="tai04_ResultadosIniciativa" msprop:Generator_RowChangingName="tai04_ResultadosIniciativaRowChanging" msprop:Generator_RowEvHandlerName="tai04_ResultadosIniciativaRowChangeEventHandler" msprop:Generator_RowDeletedName="tai04_ResultadosIniciativaRowDeleted" msprop:Generator_RowEvArgName="tai04_ResultadosIniciativaRowChangeEvent" msprop:Generator_RowChangedName="tai04_ResultadosIniciativaRowChanged" msprop:Generator_RowClassName="tai04_ResultadosIniciativaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="SequenciaRegistro" msprop:Generator_ColumnVarNameInTable="columnSequenciaRegistro" msprop:Generator_ColumnPropNameInRow="SequenciaRegistro" msprop:Generator_ColumnPropNameInTable="SequenciaRegistroColumn" msprop:Generator_UserColumnName="SequenciaRegistro" type="xs:short" />
+              <xs:element name="TransformacaoProduto" msprop:Generator_ColumnVarNameInTable="columnTransformacaoProduto" msprop:Generator_ColumnPropNameInRow="TransformacaoProduto" msprop:Generator_ColumnPropNameInTable="TransformacaoProdutoColumn" msprop:Generator_UserColumnName="TransformacaoProduto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoIndicador" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicador" msprop:Generator_ColumnPropNameInRow="CodigoIndicador" msprop:Generator_ColumnPropNameInTable="CodigoIndicadorColumn" msprop:Generator_UserColumnName="CodigoIndicador" type="xs:int" />
+              <xs:element name="NomeIndicador" msprop:Generator_ColumnVarNameInTable="columnNomeIndicador" msprop:Generator_ColumnPropNameInRow="NomeIndicador" msprop:Generator_ColumnPropNameInTable="NomeIndicadorColumn" msprop:Generator_UserColumnName="NomeIndicador">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ValorInicialTransformacao" msprop:Generator_ColumnVarNameInTable="columnValorInicialTransformacao" msprop:Generator_ColumnPropNameInRow="ValorInicialTransformacao" msprop:Generator_ColumnPropNameInTable="ValorInicialTransformacaoColumn" msprop:Generator_UserColumnName="ValorInicialTransformacao" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorFinalTransformacao" msprop:Generator_ColumnVarNameInTable="columnValorFinalTransformacao" msprop:Generator_ColumnPropNameInRow="ValorFinalTransformacao" msprop:Generator_ColumnPropNameInTable="ValorFinalTransformacaoColumn" msprop:Generator_UserColumnName="ValorFinalTransformacao" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DataLimitePrevista" msprop:Generator_ColumnVarNameInTable="columnDataLimitePrevista" msprop:Generator_ColumnPropNameInRow="DataLimitePrevista" msprop:Generator_ColumnPropNameInTable="DataLimitePrevistaColumn" msprop:Generator_UserColumnName="DataLimitePrevista" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="SetencaResultado" msprop:Generator_ColumnVarNameInTable="columnSetencaResultado" msprop:Generator_ColumnPropNameInRow="SetencaResultado" msprop:Generator_ColumnPropNameInTable="SetencaResultadoColumn" msprop:Generator_UserColumnName="SetencaResultado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ValorTrimestre1" msprop:Generator_ColumnVarNameInTable="columnValorTrimestre1" msprop:Generator_ColumnPropNameInRow="ValorTrimestre1" msprop:Generator_ColumnPropNameInTable="ValorTrimestre1Column" msprop:Generator_UserColumnName="ValorTrimestre1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorTrimestre2" msprop:Generator_ColumnVarNameInTable="columnValorTrimestre2" msprop:Generator_ColumnPropNameInRow="ValorTrimestre2" msprop:Generator_ColumnPropNameInTable="ValorTrimestre2Column" msprop:Generator_UserColumnName="ValorTrimestre2" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorTrimestre3" msprop:Generator_ColumnVarNameInTable="columnValorTrimestre3" msprop:Generator_ColumnPropNameInRow="ValorTrimestre3" msprop:Generator_ColumnPropNameInTable="ValorTrimestre3Column" msprop:Generator_UserColumnName="ValorTrimestre3" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorTrimestre4" msprop:Generator_ColumnVarNameInTable="columnValorTrimestre4" msprop:Generator_ColumnPropNameInRow="ValorTrimestre4" msprop:Generator_ColumnPropNameInTable="ValorTrimestre4Column" msprop:Generator_UserColumnName="ValorTrimestre4" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TermoAbertura04" />
+      <xs:field xpath="mstns:CodigoProjeto" />
+    </xs:unique>
+    <xs:unique name="tai04_ParceirosIniciativa_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tai04_ParceirosIniciativa" />
+      <xs:field xpath="mstns:CodigoProjeto" />
+      <xs:field xpath="mstns:SequenciaRegistro" />
+    </xs:unique>
+    <xs:unique name="tai04_ResultadosIniciativa_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tai04_ResultadosIniciativa" />
+      <xs:field xpath="mstns:CodigoProjeto" />
+      <xs:field xpath="mstns:SequenciaRegistro" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="TermoAbertura04_tai04_ParceirosIniciativa" msdata:parent="TermoAbertura04" msdata:child="tai04_ParceirosIniciativa" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="tai04_ParceirosIniciativa" msprop:Generator_ChildPropName="Gettai04_ParceirosIniciativaRows" msprop:Generator_UserParentTable="TermoAbertura04" msprop:Generator_UserRelationName="TermoAbertura04_tai04_ParceirosIniciativa" msprop:Generator_RelationVarName="relationTermoAbertura04_tai04_ParceirosIniciativa" msprop:Generator_ParentPropName="TermoAbertura04Row" />
+      <msdata:Relationship name="TermoAbertura04_tai04_ResultadosIniciativa" msdata:parent="TermoAbertura04" msdata:child="tai04_ResultadosIniciativa" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="tai04_ResultadosIniciativa" msprop:Generator_ChildPropName="Gettai04_ResultadosIniciativaRows" msprop:Generator_UserParentTable="TermoAbertura04" msprop:Generator_UserRelationName="TermoAbertura04_tai04_ResultadosIniciativa" msprop:Generator_RelationVarName="relationTermoAbertura04_tai04_ResultadosIniciativa" msprop:Generator_ParentPropName="TermoAbertura04Row" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

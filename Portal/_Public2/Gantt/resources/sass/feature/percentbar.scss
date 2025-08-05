@@ -1,0 +1,166 @@
+@import '../variables.scss';
+@import '../../scheduler-sass/view/eventrendering.scss';
+
+.b-gantt-task-percent {
+    background-color          : $gantt-task-percent-background-color;
+    height                    : 100%;
+    max-width                 : 100%;
+    position                  : relative;
+    box-sizing                : content-box;
+    transition                : background-color 0.2s, width 0.2s;
+    text-align                : right;
+    border-top-left-radius    : $gantt-task-border-radius;
+    border-bottom-left-radius : $gantt-task-border-radius;
+    // if outside page uses line-height on BODY tag it will displace the % text
+    line-height: initial;
+
+    .b-gantt-task.b-task-finished & {
+        border-radius : $gantt-task-border-radius;
+    }
+
+    .b-gantt-task.b-task-selected &,
+    .b-gantt-task:hover & {
+        background-color : $gantt-task-percent-hover-background-color;
+    }
+
+    .b-gantt-task-parent & {
+        background-color : $gantt-task-parent-percent-background-color;
+    }
+
+    .b-gantt-task-parent .b-gantt-task.b-task-selected &,
+    .b-gantt-task-parent .b-gantt-task:hover & {
+        background-color : $gantt-task-parent-percent-hover-background-color;
+    }
+
+    // No transitino on width when resizing
+    .b-gantt-task-percent-resizing & {
+        transition : background-color 0.2s;
+    }
+
+    .b-gantt-task-percent-handle {
+        display            : none;
+        position           : absolute;
+        bottom             : 0;
+        width              : 0;
+        height             : 0;
+        right              : 0;
+        cursor             : ew-resize !important;
+        margin-right       : -5px;
+        z-index            : 1000;
+        overflow           : hidden;
+        border-color       : #fff;
+        border-right-color : transparent;
+        border-left-color  : transparent;
+        border-width       : 0px 5px 6px 5px;
+        border-style       : solid;
+    }
+}
+
+.b-gantt.b-percentbar {
+    .b-gantt-task-parent {
+        .b-gantt-task.b-task-started {
+            &::before {
+                border-top-color  : $gantt-task-parent-percent-background-color;
+                border-left-color : $gantt-task-parent-percent-background-color;
+            }
+
+            &.b-task-selected::before,
+            &:hover::before {
+                border-top-color  : $gantt-task-parent-percent-hover-background-color;
+                border-left-color : $gantt-task-parent-percent-hover-background-color;
+            }
+        }
+
+        .b-gantt-task.b-task-finished {
+            &::after {
+                border-top-color   : $gantt-task-parent-percent-background-color;
+                border-right-color : $gantt-task-parent-percent-background-color;
+            }
+
+            &.b-task-selected::after,
+            &:hover::after {
+                border-top-color   : $gantt-task-parent-percent-hover-background-color;
+                border-right-color : $gantt-task-parent-percent-hover-background-color;
+            }
+        }
+    }
+}
+
+// Display the percent bar sizing handle on hover, but not on a parent task.
+// Their progress is the total progress of child tasks.
+.b-gantt-task-hover:not(.b-gantt-task-parent) .b-gantt-task {
+    .b-gantt-task-percent .b-gantt-task-percent-handle {
+        display : block;
+    }
+}
+
+// Display xx%
+.b-percentbar:not(.b-gantt-resizing-task-percent):not(.b-resizing-event):not(.b-dragging-event) .b-gantt-task:hover .b-gantt-task-percent::after,
+.b-gantt-resizing-task-percent .b-gantt-task-percent-resizing .b-gantt-task .b-gantt-task-percent::after,
+.b-percentbar.b-resizing-event .b-sch-event-resizing .b-gantt-task-percent::after,
+.b-percentbar .b-dragproxy .b-gantt-task-percent::after {
+    content   : attr(data-percent) '%';
+    font-size : .7em;
+    margin    : 0 .3em;
+    // Want to use relative to not affect right alignment, using absolute will not look good when width shrinks
+    position  : relative;
+    top       : calc(50% - 1em);
+    transform : translateY(-50%);
+    //animation-name     : fly-in;
+    //animation-duration : .3s;
+}
+
+// highlight percentbar when hovering resize handle and not resizing something else
+.b-gantt:not(.b-gantt-resizing-task-percent):not(.b-resizing-event):not(.b-dragging-event) .b-over-percent-resize-handle,
+.b-gantt-task-percent-resizing {
+    & .b-gantt-task-percent {
+        cursor : ew-resize !important;
+        //background-color : rgba(255, 255, 255, .6);
+
+        // Resizing handle only appears when mouse is over or when actively resizing
+        .b-gantt-task-percent-handle {
+            display : block
+        }
+    }
+}
+
+.b-gantt-resizing-task-percent {
+    user-select : none;
+    cursor      : ew-resize !important;
+}
+
+//@keyframes highlight-percent {
+//    0% {
+//        background-color : rgba(255, 255, 255, 0.5);
+//    }
+//
+//    50% {
+//        background-color : rgba(255, 255, 255, 0.7);
+//    }
+//
+//    100% {
+//        background-color : rgba(255, 255, 255, 0.5);
+//    }
+//}
+
+//@keyframes fly-in {
+//    from {
+//        right : 2em;
+//        color : transparentize($grid-text-brightest-color, 1);
+//    }
+//
+//    to {
+//        right : .5em;
+//        color : $grid-text-brightest-color;
+//    }
+//}
+
+////.b-gantt-task-percent:hover,
+//.b-percent-resize-done {
+//    animation-duration : .4s;
+//    animation-name     : highlight-percent;
+//}
+
+.b-readonly .b-gantt-task-percent-handle {
+    display:none !important;
+}

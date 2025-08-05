@@ -1,0 +1,107 @@
+@import '../variables';
+
+.b-sch-event-resizable-true, .b-sch-event-resizable-start, .b-sch-event-resizable-end {
+    --handle-size : 0.5em;
+    @media (pointer : coarse) {
+        --handle-size : 1em;
+    }
+
+    &::before, &::after {
+        --handle-width       : 9px; // Using px since gradient is in px
+        --handle-height      : 50%;
+        --handle-inset       : 3px; // Ditto
+        --handle-align-inset : 25%;
+        --gradient-dir       : to right;
+        --handle-opacity     : 0.7;
+
+        @media (pointer : coarse) {
+            --handle-width : 1.7em;
+            --handle-inset : 0.7em;
+        }
+        --clip-path          : inset(0 0 0 var(--handle-inset));
+
+        position             : absolute;
+        clip-path            : var(--clip-path);
+        left                 : 0;
+        top                  : var(--handle-align-inset);
+        width                : var(--handle-width);
+        height               : var(--handle-height);
+        opacity              : var(--handle-opacity);
+
+        // Gripper image of fine parallel lines
+        background           : linear-gradient(var(--gradient-dir), #fff 1px, transparent 1px);
+        background-size      : 2px;
+        background-position  : var(--handle-inset);
+    }
+
+    &::after {
+        --clip-path : inset(0 var(--handle-inset) 0 0);
+        left        : auto;
+        right       : 0;
+    }
+
+    .b-sch-vertical & {
+        &::before, &::after {
+            --handle-width  : 50%;
+            --handle-height : 0.7em;
+            --gradient-dir  : to bottom;
+            background-size : 100% 2px;
+            --clip-path     : inset(var(--handle-inset) 0 0 0);
+
+            @media (pointer : coarse) {
+                --handle-height : 1.7em;
+            }
+
+            top             : 0;
+            left            : var(--handle-align-inset);
+        }
+
+        &::after {
+            --clip-path : inset(0 0 var(--handle-inset) 0);
+            top         : auto;
+            bottom      : 0;
+        }
+    }
+}
+
+.b-eventresize:not(.b-readonly):not(.b-creating-dependency) {
+    --handle-cursor : ew-resize;
+
+    &.b-sch-vertical {
+        --handle-cursor : ns-resize;
+    }
+
+    .b-sch-event-wrap.b-sch-event-hover:not(.b-sch-style-line) > .b-sch-event:not(.b-segmented),
+    .b-sch-event-wrap:not(.b-sch-style-line) .b-sch-event-resizing {
+        &.b-sch-event-resizable-start:before,
+        &.b-sch-event-resizable-end:after,
+            // true = start + end
+        &.b-sch-event-resizable-true:before,
+        &.b-sch-event-resizable-true:after {
+            content : '';
+        }
+    }
+
+    .b-sch-event.b-resize-handle {
+        cursor : var(--handle-cursor);
+    }
+
+    &.b-resizing-event,
+    & .b-sch-event-resizing {
+        @include user-select-none();
+        cursor : var(--handle-cursor) !important;
+    }
+}
+
+// Shared
+.b-sch-event-wrap.b-sch-event-wrap-resizing {
+    z-index : $interacting-event-zindex;
+}
+
+.b-schedulerbase.b-resizing-event {
+    .b-sch-timeaxis-cell,
+    .b-sch-event-wrap {
+        /* prevent drag create */
+        pointer-events : none;
+    }
+}

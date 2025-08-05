@@ -1,0 +1,1238 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ListaReunioes.aspx.cs" Inherits="Reunioes_ListaReunioes" %>
+<%@ Register assembly="DevExpress.XtraReports.v19.1.Web.WebForms, Version=19.1.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.XtraReports.Web" tagprefix="dx" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <style type="text/css">
+        .Colunas
+        {
+            
+            
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        
+        .verdana8
+        {
+            
+            
+        }
+        .dxeBase
+        {
+            font: 8px Tahoma, Geneva, sans-serif;
+        }
+    </style>
+    <script type="text/javascript" language="javascript" src="../scripts/jquery.ultima.js"></script>
+    <script language="javascript" type="text/javascript">
+        var indicaTextoApresentacaoAlterado = false;
+        var opcoesTiposItensPauta = new Array();
+
+        function ExibeBotoesItensPauta() {
+            ConfiguraOpcoesTiposItensPauta();
+            qs = GetQueryString();
+            opcoes = opcoesTiposItensPauta[qs['ini']].join(',');
+            $(opcoes).css('display', '');
+        }
+
+        function ConfiguraOpcoesTiposItensPauta() {
+            opcoesTiposItensPauta["PR"] = new Array("#spanRQ", "#spanIN", "#spanTC", "#spanDF", "#spanPRA");
+            opcoesTiposItensPauta["EN"] = new Array("#spanPR", "#spanIN", "#spanDF", "#spanPRA");
+            opcoesTiposItensPauta["UN"] = new Array("#spanPR", "#spanIN", "#spanDF", "#spanPRA");
+        }
+
+        function AbreSelecaoItensPauta(iniciaisTipoItensPauta) {
+            var qs = GetQueryString();
+            var codigoEvento = gvDados.GetRowKey(gvDados.GetFocusedRowIndex());
+            var codigoObjeto = qs['co'];
+            var iniciaisTipoObjeto = qs['ini'];
+            var url = window.top.pcModal.cp_Path + "Reunioes/SelecaoItensPautaReuniao.aspx?ce=" + codigoEvento + "&co=" + codigoObjeto + "&ini=" + iniciaisTipoObjeto + "&itip=" + iniciaisTipoItensPauta;
+            var header = "Seleção de Itens da Pauta";
+            var modal = window.top.showModal(url, header, 800, 660, AtualizarGridItensPauta, null);
+        }
+
+        function AbreSelecaoParticipantesReuniao() {
+            var codigoEvento = gvDados.GetRowKey(gvDados.GetFocusedRowIndex());
+            var url = window.top.pcModal.cp_Path + "Reunioes/SelecaoParticipantesReuniao.aspx?ce=" + codigoEvento;
+            var header = "Seleção de Participantes da Reunião";
+            var modal = window.top.showModal(url, header, 800, 660, AtualizarGridParticipantes, null);
+        }
+
+        function AbreSelecaoGruposParticipantesReuniao() {
+            var codigoEvento = gvDados.GetRowKey(gvDados.GetFocusedRowIndex());
+            var url = window.top.pcModal.cp_Path + "Reunioes/SelecaoGruposParticipantesReuniao.aspx?ce=" + codigoEvento;
+            var header = "Seleção de Grupos de Participantes da Reunião";
+            var modal = window.top.showModal(url, header, 800, 660, AtualizarGridParticipantes, null);
+        }
+
+        function GetQueryString() {
+            var a = window.location.search.substr(1).split('&');
+            if (a == "") return {};
+            var b = {};
+            for (var i = 0; i < a.length; ++i) {
+                var p = a[i].split('=');
+                if (p.length != 2) continue;
+                b[p[0]] = p[1].replace(/\+/g, " ");
+                //b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+            }
+            return b;
+        }
+
+        function AtualizarGridItensPauta(retorno) {
+            if (retorno != null && retorno != undefined && retorno != "") {
+                gvItensPauta.Refresh();
+                var indice = retorno.indexOf("_");
+                var iniciais = retorno.substring(0, indice);
+                if (iniciais == "PRA")
+                    ControlaHabilitacaoAspxClientImage(imgItensPautaPRA, false);
+                else if (iniciais == "DF")
+                    ControlaHabilitacaoAspxClientImage(imgItensPautaDF, false);
+            }
+        }
+
+        function ControlaHabilitacaoAspxClientImage(aspxClientImage, habilitar) {
+            var caminhoImagem = aspxClientImage.GetImageUrl();
+            var elem = aspxClientImage.GetMainElement();
+            var len = caminhoImagem.length;
+            if (habilitar == true) {
+                if (!aspxClientImage.GetEnabled()) {
+                    aspxClientImage.SetEnabled(true);
+                    caminhoImagem = caminhoImagem.substring(0, len - 7) + caminhoImagem.substring(len - 4);
+                    aspxClientImage.SetImageUrl(caminhoImagem);
+                    elem.style.cursor = 'pointer';
+                }
+            }
+            else {
+                if (aspxClientImage.GetEnabled()) {
+                    aspxClientImage.SetEnabled(false);
+                    indice = len - 4;
+                    caminhoImagem = caminhoImagem.substring(0, indice) + "Des" + caminhoImagem.substring(indice);
+                    aspxClientImage.SetImageUrl(caminhoImagem);
+                    elem.style.cursor = 'default';
+                }
+            }
+        }
+
+        function AtualizarGridParticipantes(retorno) {
+            if (retorno == 'S')
+                gvParticipantes.Refresh();
+        }
+
+        function enviarDadosReuniao(valores) {
+            //var url = window.top.pcModal.cp_Path + "Reunioes/novaReunioes.aspx?CE=" + valores[0] + "&CT=" + valores[1] + "&CO=" + valores[2];
+            //window.open(url, '_blank');
+            //, 'toolbar=0, location=no, fullscreen=1, scrolling=auto'
+            var codigoEvento = valores[0];
+            var dataPublicacaoAta = valores[3];
+            if (dataPublicacaoAta == null || dataPublicacaoAta == undefined || dataPublicacaoAta == '')
+                window.top.location = window.top.pcModal.cp_Path + "Reunioes/ExecucaoReuniao_Dashboard.aspx?cr=" + codigoEvento;
+            //window.top.location = window.top.pcModal.cp_Path + "Reunioes/ExecucaoReuniao.aspx?cod=" + codigoEvento;
+            else {
+                var url = '../../Reunioes/imprimeAtaDeReuniao.aspx?CE=' + codigoEvento;
+                var titulo = 'Visualização da Ata';
+                window.top.showModal(url, titulo, 800, 600, '', null)
+            }
+        }
+
+        function OnBeginCallback(s, e) {
+            if (e.command == "DELETEROW") {
+                keys = s.GetRowKey(s.GetFocusedRowIndex()).split("|");
+                if (keys[2] == -1)
+                    ControlaHabilitacaoAspxClientImage(imgItensPautaDF, true);
+                else if (keys[2] == 0)
+                    ControlaHabilitacaoAspxClientImage(imgItensPautaPRA, true);
+            }
+        }
+
+        //        function OnDateChanged(s, e) {
+        //            var dataInicio = s.GetValue();
+        //            var dataTermino = deTermino.GetValue();
+        //            if (dataInicio > dataTermino) {
+        //                deTermino.SetValue(dataInicio);
+        //                teHoraTermino.SetValue(dataInicio);
+        //            }
+        //        }
+
+        function OnValidation(s, e) {
+            var dataInicio = deInicio.GetValue();
+            var dataTermino = deTermino.GetValue();
+
+            if (dataInicio == null || dataTermino == null) return;
+
+            dataInicio.setHours(teHoraInicio.GetValue().getHours());
+            dataInicio.setMinutes(teHoraInicio.GetValue().getMinutes());
+
+            dataTermino.setHours(teHoraTermino.GetValue().getHours());
+            dataTermino.setMinutes(teHoraTermino.GetValue().getMinutes());
+
+            if (dataInicio > dataTermino) {
+                e.isValid = false;
+                e.errorText = "A data/hora de início da reunião não pode ser maior do que a data/hora de término!";
+            }
+        }
+
+        //        function InicializaPageControl(inicioReal) {
+        //            if (inicioReal != null) {
+        //                pageControl.GetTab(3).SetVisible(false);
+        //            }
+        //        }
+
+    </script>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div style="margin: auto; width: 98%;">
+        <dxwgv:ASPxGridView ID="gvDados" runat="server" Width="100%" ClientInstanceName="gvDados"
+             AutoGenerateColumns="False" DataSourceID="sdsReunioes"
+            KeyFieldName="CodigoEvento" OnCustomButtonInitialize="gvDados_CustomButtonInitialize"
+            OnHeaderFilterFillItems="gvDados_HeaderFilterFillItems" OnCellEditorInitialize="gvDados_CellEditorInitialize"
+            OnRowInserting="gvDados_RowInserting" OnRowUpdating="gvDados_RowUpdating" EnableRowsCache="False"
+            OnHtmlRowPrepared="gvDados_HtmlRowPrepared" OnAfterPerformCallback="gvDados_AfterPerformCallback">
+            <ClientSideEvents CustomButtonClick="function(s, e) {
+	switch(e.buttonID){
+		case &quot;btnPlanejarReuniao&quot;:
+			e.processOnServer = false;
+			//popup.Show();
+			s.StartEditRow(e.visibleIndex);
+			break;
+		case &quot;btnRealizarReuniao&quot;:
+			s.PerformCallback('');
+			s.GetRowValues(e.visibleIndex, 'CodigoEvento;CodigoTipoAssociacao;CodigoObjetoAssociado;DataPublicacaoAta', enviarDadosReuniao);
+			break;
+		case &quot;btnFehcarAta&quot;:
+
+			break;
+		case &quot;btnExcluir&quot;:
+			e.processOnServer = false;
+			if(confirm(&quot;Deseja excluir o registro?&quot;))
+				s.DeleteRow(e.visibleIndex);
+ 			break;
+	}
+}" />
+            <Columns>
+                <dxwgv:GridViewCommandColumn ButtonRenderMode="Image" VisibleIndex="0" Width="100px">
+                    <CustomButtons>
+                        <dxwgv:GridViewCommandColumnCustomButton ID="btnPlanejarReuniao" Text="Planejar Reunião">
+                            <Image AlternateText="Planejar Reunião" Height="20px" ToolTip="Planejar Reunião"
+                                Url="~/imagens/planejamentoReuniao.PNG" Width="20px">
+                            </Image>
+                        </dxwgv:GridViewCommandColumnCustomButton>
+                        <dxwgv:GridViewCommandColumnCustomButton ID="btnRealizarReuniao" Text="Realizar Reunião">
+                            <Image AlternateText="Realizar Reunião" Height="20px" ToolTip="Realizar Reunião"
+                                Url="~/imagens/realizacaoReuniao.PNG" Width="20px">
+                            </Image>
+                        </dxwgv:GridViewCommandColumnCustomButton>
+                        <dxwgv:GridViewCommandColumnCustomButton ID="btnFehcarAta" Text="Fechar Ata" Visibility="Invisible">
+                            <Image AlternateText="Fechar Ata" Height="20px" ToolTip="Fechar Ata" Url="~/imagens/Ata.PNG"
+                                Width="20px">
+                            </Image>
+                        </dxwgv:GridViewCommandColumnCustomButton>
+                        <dxwgv:GridViewCommandColumnCustomButton ID="btnExcluir" Text="Excluir">
+                            <Image AlternateText="Excluir" Height="20px" ToolTip="Excluir" Url="~/imagens/botoes/excluirReg02.PNG"
+                                Width="20px">
+                            </Image>
+                        </dxwgv:GridViewCommandColumnCustomButton>
+                    </CustomButtons>
+                    <HeaderTemplate>
+                        <div style="margin: auto;">
+                            <span style="padding-right: 10px;">
+                                <%if (podeAdministrar)
+                                  {  %>
+                                <dxe:ASPxImage ID="imgNovoRegistro" runat="server" ClientInstanceName="imgNovoRegistro"
+                                    Cursor="pointer" Height="20px" ImageUrl="~/imagens/botoes/incluirReg02.png" ToolTip="Novo Registro"
+                                    Width="20px">
+                                    <ClientSideEvents Click="function(s, e) {
+	gvDados.AddNewRow();
+}" />
+                                </dxe:ASPxImage>
+                                <%}
+                                  else
+                                  {  %>
+                                <dxe:ASPxImage ID="imgNovoRegistroDesabilitado" runat="server" ClientInstanceName="imgNovoRegistro"
+                                    Cursor="default" Height="20px" ImageUrl="~/imagens/botoes/incluirRegDes.png"
+                                    ToolTip="Novo Registro" Width="20px">
+                                </dxe:ASPxImage>
+                                <%} %>
+                            </span><span style="padding-right: 10px;">
+                                <dxe:ASPxImage ID="imgExportacao" runat="server" ClientInstanceName="imgExportacao"
+                                    Cursor="pointer" Height="20px" ImageUrl="~/imagens/menuExportacao/iconoExcel.png"
+                                    ToolTip="Exportar" Width="20px">
+                                    <ClientSideEvents Click="function(s, e) {
+	callback.PerformCallback(&quot;export&quot;);
+}" />
+                                </dxe:ASPxImage>
+                            </span>
+                        </div>
+                    </HeaderTemplate>
+                </dxwgv:GridViewCommandColumn>
+                <dxwgv:GridViewDataTextColumn VisibleIndex="1" FieldName="CodigoEvento" ShowInCustomizationForm="False"
+                    Visible="False">
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataTextColumn Caption="Assunto" VisibleIndex="2" FieldName="DescricaoResumida">
+                    <PropertiesTextEdit Width="100%" MaxLength="100">
+                        <ValidationSettings Display="Dynamic">
+                            <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                        </ValidationSettings>
+                    </PropertiesTextEdit>
+                    <Settings AllowHeaderFilter="False" AutoFilterCondition="Contains" />
+                    <EditFormSettings Caption="Assunto:" CaptionLocation="Top" ColumnSpan="6" Visible="True"
+                        VisibleIndex="0" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataComboBoxColumn FieldName="CodigoTipoEvento" Visible="False" VisibleIndex="3">
+                    <PropertiesComboBox IncrementalFilteringMode="Contains" TextField="DescricaoTipoEvento"
+                        ValueField="CodigoTipoEvento" ValueType="System.Int32" Width="100%" DataSourceID="sdsTipoEvento">
+                        <ValidationSettings Display="Dynamic">
+                            <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                        </ValidationSettings>
+                    </PropertiesComboBox>
+                    <EditFormSettings Caption="Tipo:" CaptionLocation="Top" ColumnSpan="3" Visible="True"
+                        VisibleIndex="1" />
+                </dxwgv:GridViewDataComboBoxColumn>
+                <dxwgv:GridViewDataTextColumn Caption="Tipo" VisibleIndex="4" FieldName="DescricaoTipoEvento">
+                    <Settings AutoFilterCondition="Contains" />
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataComboBoxColumn FieldName="CodigoUsuario" ShowInCustomizationForm="False"
+                    Visible="False" VisibleIndex="5">
+                    <PropertiesComboBox IncrementalFilteringMode="Contains" TextField="NomeUsuario" ValueField="CodigoUsuario"
+                        ValueType="System.Int32" Width="100%" DataSourceID="sdsResponsavel" DropDownWidth="450px"
+                        TextFormatString="{0}">
+                        <Columns>
+                            <dxe:ListBoxColumn Caption="Nome" FieldName="NomeUsuario" />
+                            <dxe:ListBoxColumn Caption="E-Mail" FieldName="EMail" />
+                        </Columns>
+                        <ValidationSettings Display="Dynamic">
+                            <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                        </ValidationSettings>
+                    </PropertiesComboBox>
+                    <EditFormSettings Caption="Moderador:" CaptionLocation="Top" ColumnSpan="3" Visible="True"
+                        VisibleIndex="2" />
+                </dxwgv:GridViewDataComboBoxColumn>
+                <dxwgv:GridViewDataTextColumn Caption="Moderador" VisibleIndex="6" FieldName="NomeUsuario">
+                    <Settings AutoFilterCondition="Contains" />
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataTextColumn FieldName="EMail" ShowInCustomizationForm="False" Visible="False"
+                    VisibleIndex="7">
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataDateColumn FieldName="Inicio" VisibleIndex="8" Caption="Início"
+                    Width="125px">
+                    <PropertiesDateEdit DisplayFormatString="{0:g}" Width="100%" ClientInstanceName="deInicio">
+                        <ValidationSettings Display="Dynamic" ValidationGroup="periodo_reuniao" ValidateOnLeave="False">
+                            <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                        </ValidationSettings>
+                    </PropertiesDateEdit>
+                    <Settings AllowAutoFilter="False" />
+                    <EditFormSettings Caption="Início:" CaptionLocation="Top" ColumnSpan="2" Visible="True"
+                        VisibleIndex="4" />
+                </dxwgv:GridViewDataDateColumn>
+                <dxwgv:GridViewDataTimeEditColumn FieldName="HoraInicio" ShowInCustomizationForm="False"
+                    Visible="False" VisibleIndex="9">
+                    <PropertiesTimeEdit DisplayFormatString="" Width="100%" ClientInstanceName="teHoraInicio">
+                        <SpinButtons ShowIncrementButtons="False">
+                        </SpinButtons>
+                        <ValidationSettings ValidationGroup="periodo_reuniao" ValidateOnLeave="False">
+                        </ValidationSettings>
+                        <Style VerticalAlign="Bottom">
+                            
+                        </Style>
+                    </PropertiesTimeEdit>
+                    <EditFormSettings Caption=" " CaptionLocation="Top" ColumnSpan="1" Visible="True"
+                        VisibleIndex="5" />
+                </dxwgv:GridViewDataTimeEditColumn>
+                <dxwgv:GridViewDataDateColumn FieldName="Termino" VisibleIndex="10" Caption="Término"
+                    Width="125px">
+                    <PropertiesDateEdit DisplayFormatString="{0:g}" Width="100%" ClientInstanceName="deTermino">
+                        <ClientSideEvents Validation="OnValidation" />
+                        <ValidationSettings Display="Dynamic" ValidationGroup="periodo_reuniao" ValidateOnLeave="False">
+                            <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                        </ValidationSettings>
+                    </PropertiesDateEdit>
+                    <Settings AllowAutoFilter="False" />
+                    <EditFormSettings Caption="Término:" CaptionLocation="Top" ColumnSpan="2" Visible="True"
+                        VisibleIndex="6" />
+                </dxwgv:GridViewDataDateColumn>
+                <dxwgv:GridViewDataTimeEditColumn FieldName="HoraTermino" ShowInCustomizationForm="False"
+                    Visible="False" VisibleIndex="11">
+                    <PropertiesTimeEdit DisplayFormatString="" Width="100%" ClientInstanceName="teHoraTermino">
+                        <SpinButtons ShowIncrementButtons="False">
+                        </SpinButtons>
+                        <ValidationSettings ValidationGroup="periodo_reuniao" ValidateOnLeave="False">
+                        </ValidationSettings>
+                        <Style VerticalAlign="Bottom">
+                            
+                        </Style>
+                    </PropertiesTimeEdit>
+                    <EditFormSettings Caption=" " CaptionLocation="Top" ColumnSpan="1" Visible="True"
+                        VisibleIndex="7" />
+                </dxwgv:GridViewDataTimeEditColumn>
+                <dxwgv:GridViewDataTextColumn Caption="Status" FieldName="StatusEvento" VisibleIndex="12"
+                    Width="100px">
+                    <Settings AllowAutoFilter="False" />
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataTextColumn FieldName="InicioReal" ShowInCustomizationForm="False"
+                    Visible="False" VisibleIndex="19">
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataTextColumn FieldName="TerminoReal" ShowInCustomizationForm="False"
+                    Visible="False" VisibleIndex="20">
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataTextColumn FieldName="DataPublicacaoAta" ShowInCustomizationForm="False"
+                    Visible="False" VisibleIndex="18">
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataMemoColumn FieldName="Pauta" ShowInCustomizationForm="False" Visible="False"
+                    VisibleIndex="17">
+                    <PropertiesMemoEdit Width="100%" Rows="20">
+                    </PropertiesMemoEdit>
+                    <EditFormSettings Caption="Resumo da Pauta:" CaptionLocation="Top" ColumnSpan="12"
+                        Visible="True" VisibleIndex="8" />
+                </dxwgv:GridViewDataMemoColumn>
+                <dxwgv:GridViewDataTextColumn FieldName="LocalEvento" ShowInCustomizationForm="False"
+                    Visible="False" VisibleIndex="16" Caption="Local">
+                    <PropertiesTextEdit MaxLength="50" Width="100%">
+                    </PropertiesTextEdit>
+                    <EditFormSettings Caption="Local:" CaptionLocation="Top" ColumnSpan="6" Visible="True"
+                        VisibleIndex="3" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataTextColumn FieldName="CodigoTipoAssociacao" Name="CodigoTipoAssociacao"
+                    ShowInCustomizationForm="False" Visible="False" VisibleIndex="15">
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataTextColumn FieldName="CodigoObjetoAssociado" Name="CodigoObjetoAssociado"
+                    ShowInCustomizationForm="False" Visible="False" VisibleIndex="14">
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+                <dxwgv:GridViewDataTextColumn FieldName="IndicaAtrasada" ShowInCustomizationForm="False"
+                    Visible="False" VisibleIndex="13">
+                    <EditFormSettings Visible="False" />
+                </dxwgv:GridViewDataTextColumn>
+            </Columns>
+            <SettingsBehavior AllowFocusedRow="True" ConfirmDelete="True" />
+            <SettingsPager Mode="ShowAllRecords">
+            </SettingsPager>
+            <SettingsEditing Mode="PopupEditForm" EditFormColumnCount="12" />
+            <Settings ShowFilterRow="True" ShowGroupPanel="True" ShowHeaderFilterBlankItems="False"
+                ShowHeaderFilterButton="True" VerticalScrollBarMode="Visible" ShowFooter="True" />
+            <SettingsText GroupPanel="Arraste aqui as colunas que deseja agrupar" ConfirmDelete="Deseja excluir o registro?"
+                PopupEditFormCaption="Planejamento" />
+            <SettingsPopup>
+                <EditForm HorizontalAlign="WindowCenter" Modal="True" Width="850px" VerticalAlign="WindowCenter" />
+            </SettingsPopup>
+            <StylesEditors>
+                <Style >
+                    
+                </Style>
+                <ReadOnly BackColor="LightGray" Font-Bold="False" >
+                </ReadOnly>
+            </StylesEditors>
+            <Templates>
+                <FooterRow>
+                    <table>
+                        <tr>
+                            <td style="width: 16px; background-color: red">
+                            </td>
+                            <td>
+                                &nbsp;<dxe:ASPxLabel ID="ASPxLabel1" runat="server" 
+                                    Text="Reuniões passadas não finalizadas.">
+                                </dxe:ASPxLabel>
+                            </td>
+                        </tr>
+                    </table>
+                </FooterRow>
+                <EditForm>
+                    <dxtc:ASPxPageControl ID="pageControl" runat="server" ActiveTabIndex="0" Width="100%"
+                         ClientInstanceName="pageControl" EnableCallBacks="True"
+                        OnInit="pageControl_Init">
+                        <TabPages>
+                            <dxtc:TabPage Name="tabReuniao" Text="Reunião">
+                                <ContentCollection>
+                                    <dxw:ContentControl runat="server" SupportsDisabledAttribute="True">
+                                        <table width="100%">
+                                            <tr>
+                                                <td>
+                                                    <table width="100%">
+                                                        <tr>
+                                                            <td class="Colunas" style="width: 50%;">
+                                                                Assunto:
+                                                            </td>
+                                                            <td class="Colunas" style="width: 25%;">
+                                                                Tipo:
+                                                            </td>
+                                                            <td class="Colunas" style="width: 25%;">
+                                                                Moderador:
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="Colunas">
+                                                                <dxwgv:ASPxGridViewTemplateReplacement ID="TemplateReplacementDescricaoResumida"
+                                                                    ReplacementType="EditFormCellEditor" ColumnID="DescricaoResumida" runat="server" />
+                                                            </td>
+                                                            <td class="Colunas">
+                                                                <dxwgv:ASPxGridViewTemplateReplacement ID="TemplateReplacementTipo" ReplacementType="EditFormCellEditor"
+                                                                    ColumnID="CodigoTipoEvento" runat="server" />
+                                                            </td>
+                                                            <td class="Colunas">
+                                                                <dxwgv:ASPxGridViewTemplateReplacement ID="TemplateReplacementModerador" ReplacementType="EditFormCellEditor"
+                                                                    ColumnID="CodigoUsuario" runat="server" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table width="100%">
+                                                        <tr>
+                                                            <td class="Colunas" style="width: 50%;">
+                                                                Local:
+                                                            </td>
+                                                            <td class="Colunas" style="width: 15%;">
+                                                                Início:
+                                                            </td>
+                                                            <td class="Colunas" style="width: 10%;">
+                                                            </td>
+                                                            <td class="Colunas" style="width: 15%;">
+                                                                Término:
+                                                            </td>
+                                                            <td class="Colunas" style="width: 10%;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="Colunas">
+                                                                <dxwgv:ASPxGridViewTemplateReplacement ID="TemplateReplacementLocalEvento" ReplacementType="EditFormCellEditor"
+                                                                    ColumnID="LocalEvento" runat="server" />
+                                                            </td>
+                                                            <td class="Colunas">
+                                                                <dxwgv:ASPxGridViewTemplateReplacement ID="TemplateReplacementInicio" ReplacementType="EditFormCellEditor"
+                                                                    ColumnID="Inicio" runat="server" />
+                                                            </td>
+                                                            <td class="Colunas">
+                                                                <dxwgv:ASPxGridViewTemplateReplacement ID="TemplateReplacementHoraInicio" ReplacementType="EditFormCellEditor"
+                                                                    ColumnID="HoraInicio" runat="server" />
+                                                            </td>
+                                                            <td class="Colunas">
+                                                                <dxwgv:ASPxGridViewTemplateReplacement ID="TemplateReplacementTermino" ReplacementType="EditFormCellEditor"
+                                                                    ColumnID="Termino" runat="server" />
+                                                            </td>
+                                                            <td class="Colunas">
+                                                                <dxwgv:ASPxGridViewTemplateReplacement ID="TemplateReplacementHoraTermino" ReplacementType="EditFormCellEditor"
+                                                                    ColumnID="HoraTermino" runat="server" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table width="100%">
+                                                        <tr>
+                                                            <td class="Colunas" style="width: 100%;">
+                                                                Resumo da Pauta:
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="Colunas">
+                                                                <dxwgv:ASPxGridViewTemplateReplacement ID="TemplateReplacementPauta" ReplacementType="EditFormCellEditor"
+                                                                    ColumnID="Pauta" runat="server" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">
+                                                    <table>
+                                                        <tr>
+                                                            <td class="Colunas">
+                                                                <dxe:ASPxButton ID="ASPxButton1" runat="server" AutoPostBack="False"
+                                                                    Text="Salvar" Width="50px">
+                                                                    <ClientSideEvents Click="function(s, e) {
+	gvDados.UpdateEdit();
+}" />
+                                                                </dxe:ASPxButton>
+                                                            </td>
+                                                            <td class="Colunas">
+                                                                <dxe:ASPxButton ID="ASPxButton2" runat="server" AutoPostBack="False"
+                                                                    Text="Fechar" Width="50px">
+                                                                    <ClientSideEvents Click="function(s, e) {
+	gvDados.CancelEdit();
+}" />
+                                                                </dxe:ASPxButton>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </dxw:ContentControl>
+                                </ContentCollection>
+                            </dxtc:TabPage>
+                            <dxtc:TabPage Name="tabItensPauta" Text="Itens da Pauta">
+                                <ContentCollection>
+                                    <dxw:ContentControl runat="server" SupportsDisabledAttribute="True">
+                                        <div id="divBotoes" style="margin-top: 8px; margin-bottom: 16px;">
+                                            <span id="spanPR" style="padding-right: 5px; padding-left: 5px; display: none;">
+                                                <dxe:ASPxImage ID="imgItensPautaPR" runat="server" ClientInstanceName="imgItensPautaPR"
+                                                    ToolTip="Projetos" Cursor="pointer" Height="16px" ImageUrl="~/imagens/projetoMenor.png"
+                                                    Width="16px" OnInit="OnInitBotoes"  >
+                                                    <ClientSideEvents Click="function(s, e){AbreSelecaoItensPauta('PR');}" Init="function(s, e){ExibeBotoesItensPauta();}" />
+                                                </dxe:ASPxImage>
+                                            </span><span id="spanRQ" style="padding-right: 5px; padding-left: 5px; display: none;">
+                                                <dxe:ASPxImage ID="imgItensPautaRQ" runat="server" ClientInstanceName="imgItensPautaRQ"
+                                                    ToolTip="Riscos/ Questões" Cursor="pointer" Height="16px" ImageUrl="~/imagens/RiscoLegenda.png"
+                                                    Width="16px" OnInit="OnInitBotoes"  >
+                                                    <ClientSideEvents Click="function(s, e){AbreSelecaoItensPauta('RQ');}" />
+                                                </dxe:ASPxImage>
+                                            </span><span id="spanIN" style="padding-right: 5px; padding-left: 5px; display: none;">
+                                                <dxe:ASPxImage ID="imgItensPautaIN" runat="server" ClientInstanceName="imgItensPautaIN"
+                                                    Cursor="pointer" Height="16px" ImageUrl="~/imagens/IndicadoresMenor.png" ToolTip="Indicadores"
+                                                    Width="16px" OnInit="OnInitBotoes"  >
+                                                    <ClientSideEvents Click="function(s, e){AbreSelecaoItensPauta('IN');}" />
+                                                </dxe:ASPxImage>
+                                            </span><span id="spanTC" style="padding-right: 5px; padding-left: 5px; display: none;">
+                                                <dxe:ASPxImage ID="imgItensPautaTC" runat="server" ClientInstanceName="imgItensPautaTC"
+                                                    Cursor="pointer" Height="16px" ImageUrl="~/imagens/botoes/tarefas_BTN.png" ToolTip="Tarefas de Cronograma"
+                                                    Width="16px" OnInit="OnInitBotoes"  >
+                                                    <ClientSideEvents Click="function(s, e){AbreSelecaoItensPauta('TC');}" />
+                                                </dxe:ASPxImage>
+                                            </span><span id="spanDF" style="padding-right: 5px; padding-left: 5px; display: none;">
+                                                <dxe:ASPxImage ID="imgItensPautaDF" runat="server" ClientInstanceName="imgItensPautaDF"
+                                                    Cursor="pointer" Height="16px" ImageUrl="~/imagens/FinanceiroLegenda.png" ToolTip="Dados Financeiros"
+                                                    Width="16px" OnInit="OnInitBotoes"  >
+                                                    <ClientSideEvents Click="function(s, e){AbreSelecaoItensPauta('DF');}" />
+                                                </dxe:ASPxImage>
+                                            </span><span id="spanPRA" style="padding-right: 5px; padding-left: 5px; display: none;">
+                                                <dxe:ASPxImage ID="imgItensPautaPRA" runat="server" ClientInstanceName="imgItensPautaPRA"
+                                                    Cursor="pointer" Height="16px" ImageUrl="~/imagens/botoes/tarefasPP.png" ToolTip="Pendências da Reunião Anterior"
+                                                    Width="16px" OnInit="OnInitBotoes"  >
+                                                    <ClientSideEvents Click="function(s, e){AbreSelecaoItensPauta('PRA');}" />
+                                                </dxe:ASPxImage>
+                                            </span>
+                                        </div>
+                                        <dxwgv:ASPxGridView ID="gvItensPauta" runat="server" ClientInstanceName="gvItensPauta"
+                                            AutoGenerateColumns="False" DataSourceID="sdsItensPauta"
+                                            KeyFieldName="CodigoEvento;CodigoObjetoAssociado;CodigoTipoObjetoAssociado"
+                                            OnBeforePerformDataSelect="gvItensPauta_BeforePerformDataSelect" Width="100%"
+                                            OnCellEditorInitialize="gvItensPauta_CellEditorInitialize" OnInit="gvItensPauta_Init"
+                                            OnCommandButtonInitialize="gvItensPauta_CommandButtonInitialize">
+                                            <ClientSideEvents BeginCallback="function(s, e) {
+	OnBeginCallback(s, e);
+}" />
+                                            <Columns>
+                                                <dxwgv:GridViewCommandColumn ButtonRenderMode="Image" Caption=" " ShowInCustomizationForm="True" ShowEditButton="true" ShowDeleteButton="true"
+                                                    VisibleIndex="0" Width="60px">
+                                                </dxwgv:GridViewCommandColumn>
+                                                <dxwgv:GridViewDataTextColumn FieldName="CodigoEvento" ReadOnly="True" ShowInCustomizationForm="True"
+                                                    Visible="False" VisibleIndex="1">
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataCheckColumn Caption=" " FieldName="IndicaMostraCusto" ShowInCustomizationForm="True"
+                                                    ToolTip="Exibir Dados de Custo" VisibleIndex="3" Width="40px">
+                                                    <PropertiesCheckEdit AllowGrayedByClick="False" ValueChecked="S" ValueType="System.String"
+                                                        ValueUnchecked="N">
+                                                    </PropertiesCheckEdit>
+                                                    <HeaderStyle>
+                                                        <BackgroundImage HorizontalPosition="center" ImageUrl="~/imagens/ItensPauta_custo.PNG"
+                                                            Repeat="NoRepeat" VerticalPosition="center" />
+                                                    </HeaderStyle>
+                                                </dxwgv:GridViewDataCheckColumn>
+                                                <dxwgv:GridViewDataCheckColumn Caption="  " FieldName="IndicaMostraReceita" ShowInCustomizationForm="True"
+                                                    ToolTip="Exibir Dados de Receita" VisibleIndex="4" Width="40px">
+                                                    <PropertiesCheckEdit AllowGrayedByClick="False" ValueChecked="S" ValueType="System.String"
+                                                        ValueUnchecked="N">
+                                                    </PropertiesCheckEdit>
+                                                    <HeaderStyle>
+                                                        <BackgroundImage HorizontalPosition="center" ImageUrl="~/imagens/ItensPauta_receita.PNG"
+                                                            Repeat="NoRepeat" VerticalPosition="center" />
+                                                    </HeaderStyle>
+                                                </dxwgv:GridViewDataCheckColumn>
+                                                <dxwgv:GridViewDataTextColumn FieldName="CodigoObjetoAssociado" ReadOnly="True" ShowInCustomizationForm="True"
+                                                    Visible="False" VisibleIndex="5">
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataTextColumn FieldName="CodigoTipoObjetoAssociado" ReadOnly="True"
+                                                    ShowInCustomizationForm="True" Visible="False" VisibleIndex="6">
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataTextColumn FieldName="CodigoObjetoReuniao" ShowInCustomizationForm="True"
+                                                    Visible="False" VisibleIndex="7">
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataSpinEditColumn Caption="Sequência" FieldName="SequenciaApresentacao"
+                                                    ShowInCustomizationForm="True" VisibleIndex="2" Width="70px">
+                                                    <PropertiesSpinEdit DisplayFormatString="g" MaxLength="4" MaxValue="9999" MinValue="1"
+                                                        NumberType="Integer">
+                                                    </PropertiesSpinEdit>
+                                                </dxwgv:GridViewDataSpinEditColumn>
+                                                <dxwgv:GridViewDataTextColumn Caption="Item da Pauta" FieldName="DescricaoTipoObjetoAssociado"
+                                                    ShowInCustomizationForm="True" VisibleIndex="8">
+                                                    <EditItemTemplate>
+                                                        <span class="verdana8">
+                                                            <%# Eval("DescricaoTipoObjetoAssociado")%></span>
+                                                    </EditItemTemplate>
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataTextColumn Caption="Descrição" FieldName="DescricaoObjetoAssociado"
+                                                    ShowInCustomizationForm="True" VisibleIndex="9">
+                                                    <EditItemTemplate>
+                                                        <span class="verdana8">
+                                                            <%# Eval("DescricaoObjetoAssociado")%></span>
+                                                    </EditItemTemplate>
+                                                </dxwgv:GridViewDataTextColumn>
+                                            </Columns>
+                                            <SettingsBehavior AllowFocusedRow="True" />
+                                            <SettingsPager Mode="ShowAllRecords">
+                                            </SettingsPager>
+                                            <SettingsEditing Mode="Inline" />
+                                            <Settings VerticalScrollableHeight="350" VerticalScrollBarMode="Visible" />
+                                        </dxwgv:ASPxGridView>
+                                    </dxw:ContentControl>
+                                </ContentCollection>
+                            </dxtc:TabPage>
+                            <dxtc:TabPage Name="tabParticipantes" Text="Participantes">
+                                <ContentCollection>
+                                    <dxw:ContentControl runat="server" SupportsDisabledAttribute="True">
+                                        <div id="divBotoesParticipantes" style="margin-top: 8px; margin-bottom: 16px;">
+                                            <span style="padding-right: 5px; padding-left: 5px;">
+                                                <dxe:ASPxImage ID="imgParticipantesInternos" runat="server" ClientInstanceName="imgParticipantesInternos"
+                                                    Cursor="pointer" Height="16px" ImageUrl="~/imagens/participante.png" ToolTip="Participantes Internos"
+                                                    Width="16px" OnInit="OnInitBotoes">
+                                                    <ClientSideEvents Click="function(s, e){AbreSelecaoParticipantesReuniao();}" />
+                                                </dxe:ASPxImage>
+                                            </span><span style="padding-right: 5px; padding-left: 5px;">
+                                                <dxe:ASPxImage ID="imgParticipantesExternos" runat="server" ClientInstanceName="imgParticipantesExternos"
+                                                    Cursor="pointer" Height="16px" ImageUrl="~/imagens/participanteExterno.png" ToolTip="Novo Participante Externo"
+                                                    Width="16px" OnInit="OnInitBotoes">
+                                                    <ClientSideEvents Click="function(s, e){gvParticipantes.AddNewRow();}" />
+                                                </dxe:ASPxImage>
+                                            </span><span style="padding-right: 5px; padding-left: 5px;">
+                                                <dxe:ASPxImage ID="imgGruposParticipantes" runat="server" ClientInstanceName="imgGruposParticipantes"
+                                                    Cursor="pointer" Height="16px" ImageUrl="~/imagens/grupoParticipantes.png" ToolTip="Grupos de Participantes"
+                                                    Width="16px" OnInit="OnInitBotoes">
+                                                    <ClientSideEvents Click="function(s, e){AbreSelecaoGruposParticipantesReuniao();}" />
+                                                </dxe:ASPxImage>
+                                            </span>
+                                        </div>
+                                        <dxwgv:ASPxGridView ID="gvParticipantes" runat="server" AutoGenerateColumns="False"
+                                            ClientInstanceName="gvParticipantes"  KeyFieldName="CodigoUsuario;IndicaParticipanteExterno"
+                                            OnBeforePerformDataSelect="gvItensPauta_BeforePerformDataSelect" OnInit="gvParticipantes_Init"
+                                            Width="100%" DataSourceID="sdsParticipantes" OnCommandButtonInitialize="gvParticipantes_CommandButtonInitialize">
+                                            <Columns>
+                                                <dxwgv:GridViewCommandColumn ButtonRenderMode="Image" Caption=" " ShowInCustomizationForm="True"
+                                                    VisibleIndex="0" Width="60px" ShowEditButton="true" ShowDeleteButton="true">
+                                                </dxwgv:GridViewCommandColumn>
+                                                <dxwgv:GridViewDataTextColumn ShowInCustomizationForm="False" VisibleIndex="1" FieldName="CodigoUsuario"
+                                                    ReadOnly="True" Visible="False">
+                                                    <EditFormSettings Visible="False" />
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataTextColumn Caption="Nome" ShowInCustomizationForm="True" VisibleIndex="2"
+                                                    FieldName="NomeUsuario">
+                                                    <PropertiesTextEdit MaxLength="60">
+                                                    </PropertiesTextEdit>
+                                                    <EditFormSettings CaptionLocation="Top" ColumnSpan="2" Visible="True" VisibleIndex="0" />
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataTextColumn Caption="E-Mail" ShowInCustomizationForm="True" VisibleIndex="3"
+                                                    FieldName="EMail">
+                                                    <PropertiesTextEdit MaxLength="150">
+                                                    </PropertiesTextEdit>
+                                                    <EditFormSettings CaptionLocation="Top" ColumnSpan="2" Visible="True" VisibleIndex="2" />
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataCheckColumn Caption="Externo?" FieldName="IndicaParticipanteExterno"
+                                                    ShowInCustomizationForm="True" VisibleIndex="4" Width="60px" ReadOnly="True">
+                                                    <PropertiesCheckEdit ValueChecked="S" ValueType="System.String" ValueUnchecked="N">
+                                                    </PropertiesCheckEdit>
+                                                    <EditFormSettings Visible="False" />
+                                                </dxwgv:GridViewDataCheckColumn>
+                                                <dxwgv:GridViewDataTextColumn Caption="Instituição" FieldName="NomeInstituicaoConvidado"
+                                                    ShowInCustomizationForm="True" Visible="False" VisibleIndex="5">
+                                                    <PropertiesTextEdit MaxLength="60">
+                                                    </PropertiesTextEdit>
+                                                    <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="1" />
+                                                </dxwgv:GridViewDataTextColumn>
+                                                <dxwgv:GridViewDataTextColumn Caption="Telefone" FieldName="TelefoneConvidado" ShowInCustomizationForm="True"
+                                                    Visible="False" VisibleIndex="6">
+                                                    <PropertiesTextEdit MaxLength="25">
+                                                    </PropertiesTextEdit>
+                                                    <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="3" />
+                                                </dxwgv:GridViewDataTextColumn>
+                                            </Columns>
+                                            <SettingsBehavior AllowFocusedRow="True" />
+                                            <SettingsPager Mode="ShowAllRecords">
+                                            </SettingsPager>
+                                            <SettingsEditing EditFormColumnCount="3" Mode="PopupEditForm" />
+                                            <Settings VerticalScrollableHeight="350" VerticalScrollBarMode="Visible" />
+                                            <SettingsText PopupEditFormCaption="Detelhes Participante Externo" />
+                                            <SettingsPopup>
+                                                <EditForm HorizontalAlign="WindowCenter" Modal="True" VerticalAlign="WindowCenter"
+                                                    Width="600px" />
+                                            </SettingsPopup>
+                                            <StylesEditors>
+                                                <Style >
+                                                    
+                                                </Style>
+                                            </StylesEditors>
+                                        </dxwgv:ASPxGridView>
+                                    </dxw:ContentControl>
+                                </ContentCollection>
+                            </dxtc:TabPage>
+                            <dxtc:TabPage Name="tabPauta" Text="Pauta">
+                                <ContentCollection>
+                                    <dxw:ContentControl runat="server" SupportsDisabledAttribute="True">
+                                        <table width="100%">
+                                            <tr>
+                                                <td>
+                                                    <dxnb:ASPxNavBar ID="navBar" runat="server" AutoCollapse="True" ClientInstanceName="navBar"
+                                                        EnableCallBacks="True"  Width="100%">
+                                                        <ClientSideEvents ExpandedChanged="function(s, e) {
+	if(e.group.index == 1 &amp;&amp; e.group.GetExpanded() &amp;&amp; indicaTextoApresentacaoAlterado){
+		reportViewer.Refresh();
+		indicaTextoApresentacaoAlterado = false;
+	}
+}" />
+                                                        <Groups>
+                                                            <dxnb:NavBarGroup Expanded="False" Text="Texto de apresentação">
+                                                                <ContentTemplate>
+                                                                    <dxe:ASPxMemo ID="memoTextoApresentacao" runat="server" ClientInstanceName="memoTextoApresentacao"
+                                                                        Height="308px" OnInit="memoTextoApresentacao_Init" Width="100%">
+                                                                        <ClientSideEvents ValueChanged="function(s, e) {
+	indicaTextoApresentacaoAlterado = true;
+}" />
+                                                                    </dxe:ASPxMemo>
+                                                                </ContentTemplate>
+                                                            </dxnb:NavBarGroup>
+                                                            <dxnb:NavBarGroup Text="Pre-visualização">
+                                                                <ContentTemplate>
+                                                                    <dx:ReportViewer ID="reportViewer" runat="server" AutoSize="False" ClientInstanceName="reportViewer"
+                                                                         Height="308px" OnLoad="reportViewer_Load"
+                                                                        PageByPage="False" Width="100%">
+                                                                        <Paddings Padding="0px" />
+                                                                        <Border BorderStyle="None" />
+                                                                    </dx:ReportViewer>
+                                                                </ContentTemplate>
+                                                            </dxnb:NavBarGroup>
+                                                        </Groups>
+                                                        <Paddings Padding="0px" />
+                                                    </dxnb:ASPxNavBar>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" style="height: 30px;" valign="bottom">
+                                                    <dxe:ASPxButton ID="btnEnviarPauta" runat="server" Text="Enviar Pauta" ClientInstanceName="btnEnviarPauta"
+                                                        AutoPostBack="False">
+                                                        <ClientSideEvents Click="function(s, e) {
+	loadingPanel.Show();
+	callback.PerformCallback('enviar');
+}" />
+                                                    </dxe:ASPxButton>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </dxw:ContentControl>
+                                </ContentCollection>
+                            </dxtc:TabPage>
+                        </TabPages>
+                    </dxtc:ASPxPageControl>
+                </EditForm>
+            </Templates>
+        </dxwgv:ASPxGridView>
+    </div>
+    <asp:SqlDataSource ID="sdsReunioes" runat="server" DeleteCommand="DELETE FROM AnexoItemPautaReuniao WHERE CodigoEvento = @CodigoEvento
+
+DELETE FROM ComentarioParticipanteEvento WHERE CodigoEvento = @CodigoEvento
+
+DELETE FROM ConvidadoExternoEvento WHERE CodigoEvento = @CodigoEvento
+
+DELETE FROM EventoObjetivoEstrategico WHERE CodigoEvento = @CodigoEvento
+
+DELETE FROM EventoProjeto WHERE CodigoEvento = @CodigoEvento
+
+DELETE FROM ObjetoAssociadoEvento WHERE CodigoEvento = @CodigoEvento
+
+DELETE FROM ParticipanteEvento WHERE CodigoEvento = @CodigoEvento
+
+DELETE FROM [Evento] WHERE CodigoEvento = @CodigoEvento" SelectCommand=" SELECT e.CodigoEvento,
+e.CodigoTipoAssociacao,
+e.CodigoObjetoAssociado,
+        u.CodigoUsuario, 
+        e.DescricaoResumida,  
+        u.NomeUsuario,
+        u.EMail,
+        ISNULL(e.InicioReal,  e.InicioPrevisto) AS Inicio,
+        ISNULL(e.TerminoReal, e.TerminoPrevisto) AS Termino,
+        ISNULL(e.InicioReal,  e.InicioPrevisto) AS HoraInicio,
+        ISNULL(e.TerminoReal, e.TerminoPrevisto) AS HoraTermino,
+        e.InicioPrevisto,
+        e.TerminoPrevisto,
+        e.InicioReal,				 
+        e.TerminoReal,
+        e.DataPublicacaoAta,  
+        e.CodigoTipoEvento,
+        te.DescricaoTipoEvento,
+        e.Pauta,
+        e.LocalEvento,
+        CASE WHEN e.InicioReal IS NULL THEN 'Programada'
+             WHEN e.InicioReal IS NOT NULL AND e.TerminoReal IS NULL THEN 'Em Andamento'
+             WHEN e.InicioReal IS NOT NULL AND e.TerminoReal IS NOT NULL  AND e.DataPublicacaoAta IS NULL THEN 'Encerrada'
+             WHEN e.InicioReal IS NOT NULL AND e.TerminoReal IS NOT NULL  AND e.DataPublicacaoAta IS NOT NULL THEN 'Publicada'
+        END AS StatusEvento,
+        CASE WHEN EXISTS (SELECT 1 FROM ObjetoAssociadoEvento AS oae WHERE oae.CodigoEvento = e.CodigoEvento and oae.CodigoTipoObjetoAssociado = -1) THEN 'S' ELSE 'N' END AS PautaIncluiDadosFinanceiros,
+        CASE WHEN EXISTS (SELECT 1 FROM ObjetoAssociadoEvento AS oae WHERE oae.CodigoEvento = e.CodigoEvento and oae.CodigoTipoObjetoAssociado = 0) THEN 'S' ELSE 'N' END AS PautaIncluiPendenciasReuniaoAnterior,
+                            CASE WHEN Convert(Varchar,TerminoPrevisto,112) &lt; Convert(Varchar,GetDate(),112) AND TerminoReal IS NULL THEN 'S' ELSE 'N' END AS IndicaAtrasada 
+   FROM Evento  e INNER JOIN
+        Usuario u ON ( u.CodigoUsuario = e.CodigoResponsavelEvento ) INNER JOIN
+        TipoEvento te ON ( te.CodigoTipoEvento = e.CodigoTipoEvento AND
+                           te.CodigoEntidade = e.CodigoEntidade)
+  WHERE e.CodigoObjetoAssociado = @CodigoObjeto
+    AND e.CodigoTipoAssociacao = dbo.f_GetCodigoTipoAssociacao(@IniciaisTipoObjeto)
+  ORDER BY
+        e.DescricaoResumida" InsertCommand="INSERT INTO [Evento]
+           ([DescricaoResumida]
+           ,[CodigoResponsavelEvento]
+           ,[InicioPrevisto]
+           ,[TerminoPrevisto]
+           ,[CodigoTipoAssociacao]
+           ,[CodigoObjetoAssociado]
+           ,[LocalEvento]
+           ,[Pauta]
+           ,[CodigoEntidade]
+           ,[CodigoTipoEvento]
+           ,[DataInclusao]
+           ,[CodigoUsuarioInclusao])
+     VALUES
+           (@DescricaoResumida
+           ,@CodigoUsuario
+           ,@Inicio
+           ,@Termino
+           ,dbo.f_GetCodigoTipoAssociacao(@IniciaisTipoObjeto)
+           ,@CodigoObjeto
+           ,@LocalEvento
+           ,@Pauta
+           ,@CodigoEntidade
+           ,@CodigoTipoEvento
+           ,GETDATE()
+           ,@CodigoUsuarioLogado);
+
+SET @CodigoNovoEvento = SCOPE_IDENTITY();
+
+INSERT INTO [ParticipanteEvento]
+           ([CodigoEvento]
+           ,[CodigoParticipante]
+           ,[IndicaParticipantePresente])
+     VALUES
+           (@CodigoNovoEvento
+           ,@CodigoUsuario
+           ,'N')
+
+" UpdateCommand="SELECT @CodigoResponsavelEvento = [CodigoResponsavelEvento] 
+  FROM [Evento] 
+ WHERE [CodigoEvento] = @CodigoEvento
+ 
+IF(@CodigoResponsavelEvento &lt;&gt; @CodigoUsuario)
+BEGIN
+    DELETE 
+      FROM [ParticipanteEvento] 
+     WHERE [CodigoEvento] = @CodigoEvento 
+       AND [CodigoParticipante] = @CodigoResponsavelEvento
+       
+    IF(NOT EXISTS(SELECT 1
+                    FROM [ParticipanteEvento] 
+                   WHERE [CodigoEvento] = @CodigoEvento 
+                     AND [CodigoParticipante] = @CodigoUsuario))
+    BEGIN
+        INSERT INTO [ParticipanteEvento]
+                   ([CodigoEvento]
+                   ,[CodigoParticipante]
+                   ,[IndicaParticipantePresente])
+             VALUES
+                   (@CodigoEvento
+                   ,@CodigoUsuario
+                   ,'N')
+    END
+END
+
+UPDATE [Evento]
+   SET [DescricaoResumida] = @DescricaoResumida
+      ,[CodigoResponsavelEvento] = @CodigoUsuario
+      ,[InicioPrevisto] = @Inicio
+      ,[TerminoPrevisto] = @Termino
+      ,[LocalEvento] = @LocalEvento
+      ,[Pauta] = @Pauta
+      ,[CodigoTipoEvento] = @CodigoTipoEvento
+      ,[CodigoUsuarioUltimaAlteracao] = @CodigoUsuarioLogado
+      ,[DataUltimaAlteracao] = GETDATE()
+ WHERE [CodigoEvento] = @CodigoEvento" OnInserted="sdsReunioes_Inserted">
+        <DeleteParameters>
+            <asp:Parameter Name="CodigoEvento" />
+        </DeleteParameters>
+        <InsertParameters>
+            <asp:Parameter Name="DescricaoResumida" />
+            <asp:Parameter Name="CodigoUsuario" />
+            <asp:Parameter Name="Inicio" />
+            <asp:Parameter Name="Termino" />
+            <asp:QueryStringParameter DefaultValue="" Name="IniciaisTipoObjeto" QueryStringField="ini" />
+            <asp:QueryStringParameter DefaultValue="" Name="CodigoObjeto" QueryStringField="co" />
+            <asp:Parameter Name="LocalEvento" />
+            <asp:Parameter Name="Pauta" />
+            <asp:SessionParameter Name="CodigoEntidade" SessionField="ce" />
+            <asp:Parameter Name="CodigoTipoEvento" />
+            <asp:SessionParameter Name="CodigoUsuarioLogado" SessionField="CodigoUsuarioLogado" />
+            <asp:Parameter Direction="Output" Name="CodigoNovoEvento" Type="Int32" />
+        </InsertParameters>
+        <SelectParameters>
+            <asp:QueryStringParameter Name="CodigoObjeto" QueryStringField="co" />
+            <asp:QueryStringParameter DefaultValue="" Name="IniciaisTipoObjeto" QueryStringField="ini" />
+        </SelectParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="DescricaoResumida" />
+            <asp:Parameter Name="CodigoUsuario" />
+            <asp:Parameter Name="Inicio" />
+            <asp:Parameter Name="Termino" />
+            <asp:Parameter Name="LocalEvento" />
+            <asp:Parameter Name="Pauta" />
+            <asp:Parameter Name="CodigoTipoEvento" />
+            <asp:Parameter Name="CodigoEvento" />
+            <asp:SessionParameter Name="CodigoUsuarioLogado" SessionField="CodigoUsuarioLogado" />
+            <asp:Parameter Name="CodigoResponsavelEvento" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsResponsavel" runat="server" SelectCommand=" SELECT u.[CodigoUsuario], 
+        u.[NomeUsuario], 
+        u.[EMail]
+   FROM [Usuario] AS u INNER JOIN
+        f_GetPossiveisResponsaveisReuniao(@CodigoModuloSistema, @IniciaisTipoObjeto, @CodigoObjetoAssociado, @CodigoEntidade) AS f ON f.[CodigoUsuario] = u.[CodigoUsuario] 
+  ORDER BY 
+        u.[NomeUsuario]">
+        <SelectParameters>
+            <asp:SessionParameter Name="CodigoEntidade" SessionField="ce" />
+            <asp:QueryStringParameter Name="CodigoModuloSistema" QueryStringField="MOD" />
+            <asp:QueryStringParameter Name="IniciaisTipoObjeto" QueryStringField="ini" />
+            <asp:QueryStringParameter Name="CodigoObjetoAssociado" QueryStringField="co" />
+        </SelectParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsTipoEvento" runat="server" SelectCommand="SELECT [CodigoTipoEvento]
+      ,[DescricaoTipoEvento]
+  FROM [TipoEvento]
+ WHERE [CodigoEntidade] = @CodigoEntidade
+   AND [CodigoModuloSistema] = @CodigoModuloSistema">
+        <SelectParameters>
+            <asp:SessionParameter Name="CodigoEntidade" SessionField="ce" />
+            <asp:QueryStringParameter Name="CodigoModuloSistema" QueryStringField="MOD" />
+        </SelectParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsItensPauta" runat="server" DeleteCommand=" UPDATE [ObjetoAssociadoEvento] 
+    SET [SequenciaApresentacao] = [SequenciaApresentacao] - 1 
+  WHERE [CodigoEvento] = @CodigoEvento_Old 
+    AND [SequenciaApresentacao] &gt; @SequenciaApresentacao_Old
+
+ DELETE 
+   FROM [ObjetoAssociadoEvento] 
+  WHERE [CodigoEvento] = @CodigoEvento_Old 
+    AND [CodigoObjetoAssociado] = @CodigoObjetoAssociado_Old 
+    AND [CodigoTipoObjetoAssociado] = @CodigoTipoObjetoAssociado_Old" InsertCommand="INSERT INTO [ObjetoAssociadoEvento] ([CodigoEvento], [CodigoObjetoAssociado], [CodigoTipoObjetoAssociado], [DataDeliberacao], [Deliberacao], [CodigoObjetoReuniao], [SequenciaApresentacao], [IndicaMostraCusto], [IndicaMostraReceita], [IndicaItemTratado]) VALUES (@CodigoEvento, @CodigoObjetoAssociado, @CodigoTipoObjetoAssociado, @DataDeliberacao, @Deliberacao, @CodigoObjetoReuniao, @SequenciaApresentacao, @IndicaMostraCusto, @IndicaMostraReceita, @IndicaItemTratado)"
+        SelectCommand="SELECT oae.CodigoEvento, 
+        oae.SequenciaApresentacao, 
+        oae.CodigoObjetoAssociado,
+        oae.CodigoObjetoReuniao,
+        oae.CodigoTipoObjetoAssociado,
+        CASE 
+             WHEN oae.CodigoTipoObjetoAssociado = -1 
+                THEN 'Dados Financeiros'
+             WHEN oae.CodigoTipoObjetoAssociado =  0 
+                THEN 'Pendências da Reunião Anterior'
+             WHEN dbo.f_GetIniciaisTipoAssociacao(oae.CodigoTipoObjetoAssociado) = 'RQ' 
+                THEN ISNULL( (SELECT CASE WHEN rq.IndicaRiscoQuestao = 'R' THEN 'Risco'
+                                          ELSE ( SELECT p.Valor
+                                                 FROM ParametroConfiguracaoSistema   p
+                                                 WHERE p.Parametro = 'labelQuestao'
+                                                 AND p.CodigoEntidade = rq.CodigoEntidade
+                                               )
+                                     END
+                              FROM RiscoQuestao rq
+                              WHERE rq.CodigoRiscoQuestao = oae.CodigoObjetoAssociado), '')
+             WHEN dbo.f_GetIniciaisTipoAssociacao(oae.CodigoTipoObjetoAssociado) = 'TC' 
+                THEN 'Tarefa do Cronograma'
+             WHEN dbo.f_GetIniciaisTipoAssociacao(oae.CodigoTipoObjetoAssociado) = 'IN' 
+                THEN 'Indicador'
+             WHEN dbo.f_GetIniciaisTipoAssociacao(oae.CodigoTipoObjetoAssociado) = 'PR' 
+                THEN 'Projeto'
+        END AS DescricaoTipoObjetoAssociado,
+        
+        CASE 
+             WHEN CodigoTipoObjetoAssociado = -1 
+                THEN ''
+             WHEN CodigoTipoObjetoAssociado =  0 
+                THEN ''
+             WHEN dbo.f_GetIniciaisTipoAssociacao(CodigoTipoObjetoAssociado) = 'RQ' 
+                THEN ISNULL((SELECT DescricaoRiscoQuestao 
+                             FROM RiscoQuestao 
+                             WHERE CodigoRiscoQuestao = CodigoObjetoAssociado), '')
+             WHEN dbo.f_GetIniciaisTipoAssociacao(CodigoTipoObjetoAssociado) = 'TC' 
+                THEN ISNULL((SELECT NomeTarefa 
+                             FROM TarefaCronogramaProjeto  tcp INNER JOIN
+                                  CronogramaProjeto tc ON ( tc.CodigoCronogramaProjeto = tcp.CodigoCronogramaProjeto )
+                             WHERE tcp.CodigoTarefa = oae.CodigoObjetoAssociado 
+                             AND tc.CodigoProjeto = oae.CodigoObjetoReuniao ), '')
+             WHEN dbo.f_GetIniciaisTipoAssociacao(CodigoTipoObjetoAssociado) = 'IN' 
+                THEN  ISNULL((SELECT ino.NomeIndicador
+                             FROM IndicadorOperacional ino
+                             WHERE ino.CodigoIndicador = oae.CodigoObjetoAssociado ), '')
+             WHEN dbo.f_GetIniciaisTipoAssociacao(CodigoTipoObjetoAssociado) = 'PR' 
+                THEN  ISNULL((SELECT p.NomeProjeto
+                             FROM Projeto p
+                             WHERE p.CodigoProjeto = oae.CodigoObjetoAssociado ), '')
+        END AS DescricaoObjetoAssociado,
+        ISNULL(IndicaMostraCusto, 'N') AS IndicaMostraCusto,
+        ISNULL(IndicaMostraReceita, 'N') AS IndicaMostraReceita
+        
+   FROM [ObjetoAssociadoEvento] AS oae
+  WHERE oae.CodigoEvento = @CodigoEvento
+  ORDER BY
+        oae.SequenciaApresentacao" UpdateCommand="IF (@SequenciaApresentacao &gt; @SequenciaApresentacao_Old)
+BEGIN
+    UPDATE [ObjetoAssociadoEvento] 
+       SET [SequenciaApresentacao] = [SequenciaApresentacao] - 1 
+     WHERE [CodigoEvento] = @CodigoEvento 
+       AND [SequenciaApresentacao] &gt; @SequenciaApresentacao_Old
+       AND [SequenciaApresentacao] &lt;= @SequenciaApresentacao
+END
+ELSE IF(@SequenciaApresentacao &lt; @SequenciaApresentacao_Old)
+BEGIN
+    UPDATE [ObjetoAssociadoEvento] 
+       SET [SequenciaApresentacao] = [SequenciaApresentacao] + 1 
+     WHERE [CodigoEvento] = @CodigoEvento 
+       AND [SequenciaApresentacao] &lt; @SequenciaApresentacao_Old
+       AND [SequenciaApresentacao] &gt;= @SequenciaApresentacao
+END
+
+ UPDATE [ObjetoAssociadoEvento] 
+    SET [SequenciaApresentacao] = @SequenciaApresentacao,
+        [IndicaMostraCusto] = @IndicaMostraCusto,
+        [IndicaMostraReceita] = @IndicaMostraReceita
+  WHERE [CodigoEvento] = @CodigoEvento 
+    AND [CodigoObjetoAssociado] = @CodigoObjetoAssociado 
+    AND [CodigoTipoObjetoAssociado] = @CodigoTipoObjetoAssociado" ConflictDetection="CompareAllValues"
+        OldValuesParameterFormatString="{0}_Old">
+        <DeleteParameters>
+            <asp:Parameter Name="CodigoEvento_Old" />
+            <asp:Parameter Name="SequenciaApresentacao_Old" />
+            <asp:Parameter Name="CodigoObjetoAssociado_Old" />
+            <asp:Parameter Name="CodigoTipoObjetoAssociado_Old" />
+        </DeleteParameters>
+        <InsertParameters>
+            <asp:Parameter Name="CodigoEvento" Type="Int32" />
+            <asp:Parameter Name="CodigoObjetoAssociado" Type="Int32" />
+            <asp:Parameter Name="CodigoTipoObjetoAssociado" Type="Int32" />
+            <asp:Parameter Name="DataDeliberacao" Type="DateTime" />
+            <asp:Parameter Name="Deliberacao" Type="String" />
+            <asp:Parameter Name="CodigoObjetoReuniao" Type="Int32" />
+            <asp:Parameter Name="SequenciaApresentacao" Type="Int32" />
+            <asp:Parameter Name="IndicaMostraCusto" Type="String" />
+            <asp:Parameter Name="IndicaMostraReceita" Type="String" />
+            <asp:Parameter Name="IndicaItemTratado" Type="String" />
+        </InsertParameters>
+        <SelectParameters>
+            <asp:SessionParameter Name="CodigoEvento" SessionField="CodigoEvento" />
+        </SelectParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="SequenciaApresentacao" />
+            <asp:Parameter Name="CodigoEvento" />
+            <asp:Parameter Name="CodigoObjetoAssociado" />
+            <asp:Parameter Name="CodigoTipoObjetoAssociado" />
+            <asp:Parameter Name="SequenciaApresentacao_Old" />
+            <asp:Parameter Name="IndicaMostraCusto" />
+            <asp:Parameter Name="IndicaMostraReceita" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsParticipantes" runat="server" SelectCommand=" SELECT u.CodigoUsuario, 
+        pe.CodigoEvento, 
+        u.NomeUsuario, 
+        u.EMail, 
+        'N' as IndicaParticipanteExterno,
+        NULL AS NomeInstituicaoConvidado,
+        NULL AS TelefoneConvidado
+   FROM ParticipanteEvento pe INNER JOIN
+        Usuario u ON ( u.CodigoUsuario = pe.CodigoParticipante )
+  WHERE pe.CodigoEvento = @CodigoEvento
+UNION
+ SELECT ce.CodigoConvidadoEvento, 
+        ce.CodigoEvento, 
+        ce.NomeConvidado, 
+        ce.EmailConvidado, 
+        'S',
+        ce.NomeInstituicaoConvidado,
+        ce.TelefoneConvidado
+   FROM ConvidadoExternoEvento ce
+  WHERE ce.CodigoEvento = @CodigoEvento
+  ORDER BY 3" InsertCommand="INSERT INTO [ConvidadoExternoEvento]
+           ([CodigoEvento]
+           ,[NomeConvidado]
+           ,[NomeInstituicaoConvidado]
+           ,[EmailConvidado]
+           ,[TelefoneConvidado])
+     VALUES
+           (@CodigoEvento
+           ,@NomeUsuario
+           ,@NomeInstituicaoConvidado
+           ,@EMail
+           ,@TelefoneConvidado)" UpdateCommand="UPDATE [ConvidadoExternoEvento]
+   SET [NomeConvidado] = @NomeUsuario
+      ,[NomeInstituicaoConvidado] = @NomeInstituicaoConvidado
+      ,[EmailConvidado] = @EMail
+      ,[TelefoneConvidado] = @TelefoneConvidado
+ WHERE [CodigoEvento] = @CodigoEvento
+   AND [CodigoConvidadoEvento] = @CodigoUsuario" DeleteCommand="IF (@IndicaParticipanteExterno = 'S')
+BEGIN
+    DELETE FROM [ConvidadoExternoEvento] WHERE CodigoConvidadoEvento = @CodigoUsuario
+END
+ELSE
+BEGIN
+    DELETE FROM [ParticipanteEvento] WHERE CodigoEvento = @CodigoEvento AND CodigoParticipante = @CodigoUsuario
+END">
+        <DeleteParameters>
+            <asp:Parameter Name="CodigoUsuario" />
+            <asp:SessionParameter Name="CodigoEvento" SessionField="CodigoEvento" />
+            <asp:Parameter Name="IndicaParticipanteExterno" />
+        </DeleteParameters>
+        <InsertParameters>
+            <asp:SessionParameter Name="CodigoEvento" SessionField="CodigoEvento" />
+            <asp:Parameter Name="NomeUsuario" />
+            <asp:Parameter Name="NomeInstituicaoConvidado" />
+            <asp:Parameter Name="EMail" />
+            <asp:Parameter Name="TelefoneConvidado" />
+        </InsertParameters>
+        <SelectParameters>
+            <asp:SessionParameter Name="CodigoEvento" SessionField="CodigoEvento" />
+        </SelectParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="NomeUsuario" />
+            <asp:Parameter Name="NomeInstituicaoConvidado" />
+            <asp:Parameter Name="EMail" />
+            <asp:Parameter Name="TelefoneConvidado" />
+            <asp:SessionParameter Name="CodigoEvento" SessionField="CodigoEvento" />
+            <asp:Parameter Name="CodigoUsuario" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
+    <dxwgv:ASPxGridViewExporter ID="exporter" runat="server" ExportEmptyDetailGrid="True"
+        FileName="DadosReunioes" GridViewID="gvDados" Landscape="True" LeftMargin="50"
+        PaperKind="A4" RightMargin="50" onrenderbrick="exporter_RenderBrick">
+    </dxwgv:ASPxGridViewExporter>
+    <dxcb:ASPxCallback ID="callback" runat="server" ClientInstanceName="callback" OnCallback="callback_Callback">
+        <ClientSideEvents CallbackComplete="function(s, e) {
+	if(e.parameter == &quot;export&quot;)
+		window.location = &quot;../_Processos/Visualizacao/ExportacaoDados.aspx?exportType=xls&amp;bInline=False&quot;;
+	else if(e.parameter == &quot;enviar&quot;)
+		window.top.mostraMensagem(e.result, 'sucesso', false, false, null);
+
+	if(loadingPanel.GetVisible())
+		loadingPanel.Hide();	
+}" CallbackError="function(s, e) {
+	if(loadingPanel.GetVisible())
+		loadingPanel.Hide();
+}" />
+    </dxcb:ASPxCallback>
+    <dxlp:ASPxLoadingPanel ID="loadingPanel" runat="server" ClientInstanceName="loadingPanel"
+        HorizontalAlign="Center" Modal="True" Text="Carregando&amp;hellip;" VerticalAlign="Middle">
+    </dxlp:ASPxLoadingPanel>
+    </form>
+</body>
+</html>

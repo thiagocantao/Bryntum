@@ -1,0 +1,35 @@
+.b-resourcecombo {
+    .b-resource-icon {
+        display     : none;
+        margin-left : 0.5em;
+    }
+
+    &.b-show-event-color {
+        .b-resource-icon {
+            display : block;
+        }
+    }
+}
+
+// Resource picker list in EventEditor
+.b-resourcecombo-picker {
+    .b-icon {
+        display      : none;
+        margin-right : 0.5em;
+    }
+
+    &.b-show-event-color {
+        .b-icon {
+            display : block;
+        }
+    }
+}
+
+.b-theme-material {
+    .b-resourcecombo {
+        .b-resource-icon {
+            margin-left  : 0;
+            margin-right : 0.5em;
+        }
+    }
+}

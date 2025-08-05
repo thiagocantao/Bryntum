@@ -1,0 +1,44 @@
+html, body, form {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.demoContainer,
+.demoFrame
+{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    transition: width 100ms ease-in;
+}
+.demoContainer
+{
+    display: block;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.demoFrame
+{
+    border: 0;
+    overflow: hidden;
+}
+
+.demoContainer.TabletLandscape {
+    width: 1200px;
+    height: 800px;
+}
+.demoContainer.TabletPortrait {
+    width: 800px;
+    height: 1200px;
+}
+.demoContainer.MobileLandscape {
+    width: 768px;
+    height: 576px;
+}
+.demoContainer.MobilePortrait {
+    width: 576px;
+    height: 768px;
+}

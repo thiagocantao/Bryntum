@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsRelGestaoEstrategica" targetNamespace="http://tempuri.org/dsRelGestaoEstrategica.xsd" xmlns:mstns="http://tempuri.org/dsRelGestaoEstrategica.xsd" xmlns="http://tempuri.org/dsRelGestaoEstrategica.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection ConnectionStringObject="Data Source=cdisdb;Initial Catalog=desenv_portalEstrategia;User ID=usr_desenvolvimento;Password=12345678" IsAppSettingsProperty="false" Modifier="Assembly" Name="cdisdb.desenv_portalEstrategia.dbo" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsRelGestaoEstrategica" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsRelGestaoEstrategica" msprop:Generator_UserDSName="dsRelGestaoEstrategica">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FatorChave" msprop:Generator_TableClassName="FatorChaveDataTable" msprop:Generator_TableVarName="tableFatorChave" msprop:Generator_TablePropName="FatorChave" msprop:Generator_RowDeletingName="FatorChaveRowDeleting" msprop:Generator_UserTableName="FatorChave" msprop:Generator_RowChangingName="FatorChaveRowChanging" msprop:Generator_RowEvHandlerName="FatorChaveRowChangeEventHandler" msprop:Generator_RowDeletedName="FatorChaveRowDeleted" msprop:Generator_RowEvArgName="FatorChaveRowChangeEvent" msprop:Generator_RowChangedName="FatorChaveRowChanged" msprop:Generator_RowClassName="FatorChaveRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoFatorChave" msprop:Generator_ColumnVarNameInTable="columnCodigoFatorChave" msprop:Generator_ColumnPropNameInRow="CodigoFatorChave" msprop:Generator_ColumnPropNameInTable="CodigoFatorChaveColumn" msprop:Generator_UserColumnName="CodigoFatorChave" type="xs:int" />
+              <xs:element name="NomeFatorChave" msprop:Generator_ColumnVarNameInTable="columnNomeFatorChave" msprop:Generator_ColumnPropNameInRow="NomeFatorChave" msprop:Generator_ColumnPropNameInTable="NomeFatorChaveColumn" msprop:Generator_UserColumnName="NomeFatorChave" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="UltimaAnaliseTendencia" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="UltimaAnaliseTendencia" msprop:Generator_ColumnVarNameInTable="columnUltimaAnaliseTendencia" msprop:Generator_ColumnPropNameInTable="UltimaAnaliseTendenciaColumn" msprop:Generator_UserColumnName="UltimaAnaliseTendencia" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="UltimaAnaliseAgenda" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="UltimaAnaliseAgenda" msprop:Generator_ColumnVarNameInTable="columnUltimaAnaliseAgenda" msprop:Generator_ColumnPropNameInTable="UltimaAnaliseAgendaColumn" msprop:Generator_UserColumnName="UltimaAnaliseAgenda" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StatusCorFatorChave" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="StatusCorFatorChave" msprop:Generator_ColumnVarNameInTable="columnStatusCorFatorChave" msprop:Generator_ColumnPropNameInTable="StatusCorFatorChaveColumn" msprop:Generator_UserColumnName="StatusCorFatorChave" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StatusDescricaoFatorChave" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="StatusDescricaoFatorChave" msprop:Generator_ColumnVarNameInTable="columnStatusDescricaoFatorChave" msprop:Generator_ColumnPropNameInTable="StatusDescricaoFatorChaveColumn" msprop:Generator_UserColumnName="StatusDescricaoFatorChave" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CorFonteFatorChave" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CorFonteFatorChave" msprop:Generator_ColumnVarNameInTable="columnCorFonteFatorChave" msprop:Generator_ColumnPropNameInTable="CorFonteFatorChaveColumn" msprop:Generator_UserColumnName="CorFonteFatorChave" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoIndicadorMacroMeta" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicadorMacroMeta" msprop:Generator_ColumnPropNameInRow="CodigoIndicadorMacroMeta" msprop:Generator_ColumnPropNameInTable="CodigoIndicadorMacroMetaColumn" msprop:Generator_UserColumnName="CodigoIndicadorMacroMeta" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeIndicadorMacroMeta" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="NomeIndicadorMacroMeta" msprop:Generator_ColumnVarNameInTable="columnNomeIndicadorMacroMeta" msprop:Generator_ColumnPropNameInTable="NomeIndicadorMacroMetaColumn" msprop:Generator_UserColumnName="NomeIndicadorMacroMeta" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Fonte" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Fonte" msprop:Generator_ColumnVarNameInTable="columnFonte" msprop:Generator_ColumnPropNameInTable="FonteColumn" msprop:Generator_UserColumnName="Fonte" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CasasDecimais" msprop:Generator_ColumnVarNameInTable="columnCasasDecimais" msprop:Generator_ColumnPropNameInRow="CasasDecimais" msprop:Generator_ColumnPropNameInTable="CasasDecimaisColumn" msprop:Generator_UserColumnName="CasasDecimais" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="UnidadeMedida" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="UnidadeMedida" msprop:Generator_ColumnVarNameInTable="columnUnidadeMedida" msprop:Generator_ColumnPropNameInTable="UnidadeMedidaColumn" msprop:Generator_UserColumnName="UnidadeMedida" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MacroMeta" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="MacroMeta" msprop:Generator_ColumnVarNameInTable="columnMacroMeta" msprop:Generator_ColumnPropNameInTable="MacroMetaColumn" msprop:Generator_UserColumnName="MacroMeta" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioMacroMeta" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="ComentarioMacroMeta" msprop:Generator_ColumnVarNameInTable="columnComentarioMacroMeta" msprop:Generator_ColumnPropNameInTable="ComentarioMacroMetaColumn" msprop:Generator_UserColumnName="ComentarioMacroMeta" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DescricaoMacroMeta" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="DescricaoMacroMeta" msprop:Generator_ColumnVarNameInTable="columnDescricaoMacroMeta" msprop:Generator_ColumnPropNameInTable="DescricaoMacroMetaColumn" msprop:Generator_UserColumnName="DescricaoMacroMeta" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoUnidadeNegocio" msprop:Generator_ColumnVarNameInTable="columnCodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInRow="CodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInTable="CodigoUnidadeNegocioColumn" msprop:Generator_UserColumnName="CodigoUnidadeNegocio" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Projeto" msprop:Generator_TableClassName="ProjetoDataTable" msprop:Generator_TableVarName="tableProjeto" msprop:Generator_TablePropName="Projeto" msprop:Generator_RowDeletingName="ProjetoRowDeleting" msprop:Generator_UserTableName="Projeto" msprop:Generator_RowChangingName="ProjetoRowChanging" msprop:Generator_RowEvHandlerName="ProjetoRowChangeEventHandler" msprop:Generator_RowDeletedName="ProjetoRowDeleted" msprop:Generator_RowEvArgName="ProjetoRowChangeEvent" msprop:Generator_RowChangedName="ProjetoRowChanged" msprop:Generator_RowClassName="ProjetoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoFatorChave" msprop:Generator_ColumnVarNameInTable="columnCodigoFatorChave" msprop:Generator_ColumnPropNameInRow="CodigoFatorChave" msprop:Generator_ColumnPropNameInTable="CodigoFatorChaveColumn" msprop:Generator_UserColumnName="CodigoFatorChave" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeProjeto" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="NomeProjeto" msprop:Generator_ColumnVarNameInTable="columnNomeProjeto" msprop:Generator_ColumnPropNameInTable="NomeProjetoColumn" msprop:Generator_UserColumnName="NomeProjeto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaProjetoCarteiraPrioritaria" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaProjetoCarteiraPrioritaria" msprop:Generator_ColumnVarNameInTable="columnIndicaProjetoCarteiraPrioritaria" msprop:Generator_ColumnPropNameInTable="IndicaProjetoCarteiraPrioritariaColumn" msprop:Generator_UserColumnName="IndicaProjetoCarteiraPrioritaria" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NomeResponsavel" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="NomeResponsavel" msprop:Generator_ColumnVarNameInTable="columnNomeResponsavel" msprop:Generator_ColumnPropNameInTable="NomeResponsavelColumn" msprop:Generator_UserColumnName="NomeResponsavel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CorDesempenho" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CorDesempenho" msprop:Generator_ColumnVarNameInTable="columnCorDesempenho" msprop:Generator_ColumnPropNameInTable="CorDesempenhoColumn" msprop:Generator_UserColumnName="CorDesempenho" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PercentualConcluido" msprop:Generator_ColumnVarNameInTable="columnPercentualConcluido" msprop:Generator_ColumnPropNameInRow="PercentualConcluido" msprop:Generator_ColumnPropNameInTable="PercentualConcluidoColumn" msprop:Generator_UserColumnName="PercentualConcluido" type="xs:int" minOccurs="0" />
+              <xs:element name="PercentualPrevisto" msprop:Generator_ColumnVarNameInTable="columnPercentualPrevisto" msprop:Generator_ColumnPropNameInRow="PercentualPrevisto" msprop:Generator_ColumnPropNameInTable="PercentualPrevistoColumn" msprop:Generator_UserColumnName="PercentualPrevisto" type="xs:int" minOccurs="0" />
+              <xs:element name="PodeAcessarProjeto" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="PodeAcessarProjeto" msprop:Generator_ColumnVarNameInTable="columnPodeAcessarProjeto" msprop:Generator_ColumnPropNameInTable="PodeAcessarProjetoColumn" msprop:Generator_UserColumnName="PodeAcessarProjeto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AcaoTransformadora" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="AcaoTransformadora" msprop:Generator_ColumnVarNameInTable="columnAcaoTransformadora" msprop:Generator_ColumnPropNameInTable="AcaoTransformadoraColumn" msprop:Generator_UserColumnName="AcaoTransformadora" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoObjetivoEstrategico" msprop:Generator_ColumnVarNameInTable="columnCodigoObjetivoEstrategico" msprop:Generator_ColumnPropNameInRow="CodigoObjetivoEstrategico" msprop:Generator_ColumnPropNameInTable="CodigoObjetivoEstrategicoColumn" msprop:Generator_UserColumnName="CodigoObjetivoEstrategico" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeObjetivoEstrategico" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="NomeObjetivoEstrategico" msprop:Generator_ColumnVarNameInTable="columnNomeObjetivoEstrategico" msprop:Generator_ColumnPropNameInTable="NomeObjetivoEstrategicoColumn" msprop:Generator_UserColumnName="NomeObjetivoEstrategico" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ObjetivoProjeto" msprop:Generator_ColumnVarNameInTable="columnObjetivoProjeto" msprop:Generator_ColumnPropNameInRow="ObjetivoProjeto" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInTable="ObjetivoProjetoColumn" msprop:Generator_UserColumnName="ObjetivoProjeto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Indicador" msprop:Generator_TableClassName="IndicadorDataTable" msprop:Generator_TableVarName="tableIndicador" msprop:Generator_TablePropName="Indicador" msprop:Generator_RowDeletingName="IndicadorRowDeleting" msprop:Generator_UserTableName="Indicador" msprop:Generator_RowChangingName="IndicadorRowChanging" msprop:Generator_RowEvHandlerName="IndicadorRowChangeEventHandler" msprop:Generator_RowDeletedName="IndicadorRowDeleted" msprop:Generator_RowEvArgName="IndicadorRowChangeEvent" msprop:Generator_RowChangedName="IndicadorRowChanged" msprop:Generator_RowClassName="IndicadorRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoFatorChave" msprop:Generator_ColumnVarNameInTable="columnCodigoFatorChave" msprop:Generator_ColumnPropNameInRow="CodigoFatorChave" msprop:Generator_ColumnPropNameInTable="CodigoFatorChaveColumn" msprop:Generator_UserColumnName="CodigoFatorChave" type="xs:int" minOccurs="0" />
+              <xs:element name="Mes" msprop:Generator_ColumnVarNameInTable="columnMes" msprop:Generator_ColumnPropNameInRow="Mes" msprop:Generator_ColumnPropNameInTable="MesColumn" msprop:Generator_UserColumnName="Mes" type="xs:int" minOccurs="0" />
+              <xs:element name="Ano" msprop:Generator_ColumnVarNameInTable="columnAno" msprop:Generator_ColumnPropNameInRow="Ano" msprop:Generator_ColumnPropNameInTable="AnoColumn" msprop:Generator_UserColumnName="Ano" type="xs:int" minOccurs="0" />
+              <xs:element name="CorIndicador" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CorIndicador" msprop:Generator_ColumnVarNameInTable="columnCorIndicador" msprop:Generator_ColumnPropNameInTable="CorIndicadorColumn" msprop:Generator_UserColumnName="CorIndicador" type="xs:string" minOccurs="0" />
+              <xs:element name="ValorMeta" msprop:Generator_ColumnVarNameInTable="columnValorMeta" msprop:Generator_ColumnPropNameInRow="ValorMeta" msprop:Generator_ColumnPropNameInTable="ValorMetaColumn" msprop:Generator_UserColumnName="ValorMeta" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorRealizado" msprop:Generator_ColumnVarNameInTable="columnValorRealizado" msprop:Generator_ColumnPropNameInRow="ValorRealizado" msprop:Generator_ColumnPropNameInTable="ValorRealizadoColumn" msprop:Generator_UserColumnName="ValorRealizado" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Periodo" msprop:Generator_ColumnVarNameInTable="columnPeriodo" msprop:Generator_ColumnPropNameInRow="Periodo" msprop:Generator_ColumnPropNameInTable="PeriodoColumn" msprop:Generator_UserColumnName="Periodo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="FatorChaveKey" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:FatorChave" />
+      <xs:field xpath="mstns:CodigoFatorChave" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FatorChave_Projeto" msdata:parent="FatorChave" msdata:child="Projeto" msdata:parentkey="CodigoFatorChave" msdata:childkey="CodigoFatorChave" msprop:Generator_UserChildTable="Projeto" msprop:Generator_ChildPropName="GetProjetoRows" msprop:Generator_ParentPropName="FatorChaveRow" msprop:Generator_UserRelationName="FatorChave_Projeto" msprop:Generator_RelationVarName="relationFatorChave_Projeto" msprop:Generator_UserParentTable="FatorChave" />
+      <msdata:Relationship name="FatorChave_Indicador" msdata:parent="FatorChave" msdata:child="Indicador" msdata:parentkey="CodigoFatorChave" msdata:childkey="CodigoFatorChave" msprop:Generator_UserChildTable="Indicador" msprop:Generator_ChildPropName="GetIndicadorRows" msprop:Generator_ParentPropName="FatorChaveRow" msprop:Generator_UserRelationName="FatorChave_Indicador" msprop:Generator_RelationVarName="relationFatorChave_Indicador" msprop:Generator_UserParentTable="FatorChave" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

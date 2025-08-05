@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsGanttProjetos" targetNamespace="http://tempuri.org/DsGanttProjetos.xsd" xmlns:mstns="http://tempuri.org/DsGanttProjetos.xsd" xmlns="http://tempuri.org/DsGanttProjetos.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection ConnectionStringObject="Data Source=cdisdb;Initial Catalog=desenv_portalEstrategia;Persist Security Info=True;User ID=usr_desenvolvimento;Password=12345678" IsAppSettingsProperty="false" Modifier="Assembly" Name="cdisdb.desenv_portalEstrategia.dbo" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsGanttProjetos" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DsGanttProjetos" msprop:Generator_UserDSName="DsGanttProjetos">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="GanttProjetos" msprop:Generator_TableClassName="GanttProjetosDataTable" msprop:Generator_TableVarName="tableGanttProjetos" msprop:Generator_TablePropName="GanttProjetos" msprop:Generator_RowDeletingName="GanttProjetosRowDeleting" msprop:Generator_RowChangingName="GanttProjetosRowChanging" msprop:Generator_RowEvHandlerName="GanttProjetosRowChangeEventHandler" msprop:Generator_RowDeletedName="GanttProjetosRowDeleted" msprop:Generator_UserTableName="GanttProjetos" msprop:Generator_RowChangedName="GanttProjetosRowChanged" msprop:Generator_RowEvArgName="GanttProjetosRowChangeEvent" msprop:Generator_RowClassName="GanttProjetosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" msprop:Generator_UserColumnName="Codigo" type="xs:int" minOccurs="0" />
+              <xs:element name="Descricao" msprop:Generator_ColumnVarNameInTable="columnDescricao" msprop:Generator_ColumnPropNameInRow="Descricao" msprop:Generator_ColumnPropNameInTable="DescricaoColumn" msprop:Generator_UserColumnName="Descricao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="InicioPrevisto" msprop:Generator_ColumnVarNameInTable="columnInicioPrevisto" msprop:Generator_ColumnPropNameInRow="InicioPrevisto" msprop:Generator_ColumnPropNameInTable="InicioPrevistoColumn" msprop:Generator_UserColumnName="InicioPrevisto" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoPrevisto" msprop:Generator_ColumnVarNameInTable="columnTerminoPrevisto" msprop:Generator_ColumnPropNameInRow="TerminoPrevisto" msprop:Generator_ColumnPropNameInTable="TerminoPrevistoColumn" msprop:Generator_UserColumnName="TerminoPrevisto" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="InicioConcluido" msprop:Generator_ColumnVarNameInTable="columnInicioConcluido" msprop:Generator_ColumnPropNameInRow="InicioConcluido" msprop:Generator_ColumnPropNameInTable="InicioConcluidoColumn" msprop:Generator_UserColumnName="InicioConcluido" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoConcluido" msprop:Generator_ColumnVarNameInTable="columnTerminoConcluido" msprop:Generator_ColumnPropNameInRow="TerminoConcluido" msprop:Generator_ColumnPropNameInTable="TerminoConcluidoColumn" msprop:Generator_UserColumnName="TerminoConcluido" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Cor" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Cor" msprop:Generator_ColumnVarNameInTable="columnCor" msprop:Generator_ColumnPropNameInTable="CorColumn" msprop:Generator_UserColumnName="Cor" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Concluido" msprop:Generator_ColumnVarNameInTable="columnConcluido" msprop:Generator_ColumnPropNameInRow="Concluido" msprop:Generator_ColumnPropNameInTable="ConcluidoColumn" msprop:Generator_UserColumnName="Concluido" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CodigoPai" msprop:Generator_ColumnVarNameInTable="columnCodigoPai" msprop:Generator_ColumnPropNameInRow="CodigoPai" msprop:Generator_ColumnPropNameInTable="CodigoPaiColumn" msprop:Generator_UserColumnName="CodigoPai" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoUnidade" msprop:Generator_ColumnVarNameInTable="columnCodigoUnidade" msprop:Generator_ColumnPropNameInRow="CodigoUnidade" msprop:Generator_ColumnPropNameInTable="CodigoUnidadeColumn" msprop:Generator_UserColumnName="CodigoUnidade" type="xs:int" minOccurs="0" />
+              <xs:element name="NumeroPagina" msprop:Generator_ColumnVarNameInTable="columnNumeroPagina" msprop:Generator_ColumnPropNameInRow="NumeroPagina" msprop:Generator_ColumnPropNameInTable="NumeroPaginaColumn" msprop:Generator_UserColumnName="NumeroPagina" type="xs:int" minOccurs="0" />
+              <xs:element name="InicioUnidade" msprop:Generator_ColumnVarNameInTable="columnInicioUnidade" msprop:Generator_ColumnPropNameInRow="InicioUnidade" msprop:Generator_ColumnPropNameInTable="InicioUnidadeColumn" msprop:Generator_UserColumnName="InicioUnidade" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoUnidade" msprop:Generator_ColumnVarNameInTable="columnTerminoUnidade" msprop:Generator_ColumnPropNameInRow="TerminoUnidade" msprop:Generator_ColumnPropNameInTable="TerminoUnidadeColumn" msprop:Generator_UserColumnName="TerminoUnidade" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Pagina" msprop:Generator_TableClassName="PaginaDataTable" msprop:Generator_TableVarName="tablePagina" msprop:Generator_TablePropName="Pagina" msprop:Generator_RowDeletingName="PaginaRowDeleting" msprop:Generator_RowChangingName="PaginaRowChanging" msprop:Generator_RowEvHandlerName="PaginaRowChangeEventHandler" msprop:Generator_RowDeletedName="PaginaRowDeleted" msprop:Generator_UserTableName="Pagina" msprop:Generator_RowChangedName="PaginaRowChanged" msprop:Generator_RowEvArgName="PaginaRowChangeEvent" msprop:Generator_RowClassName="PaginaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NumeroPagina" msprop:Generator_ColumnVarNameInTable="columnNumeroPagina" msprop:Generator_ColumnPropNameInRow="NumeroPagina" msprop:Generator_ColumnPropNameInTable="NumeroPaginaColumn" msprop:Generator_UserColumnName="NumeroPagina" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Pagina_GanttProjetos" msdata:parent="Pagina" msdata:child="GanttProjetos" msdata:parentkey="NumeroPagina" msdata:childkey="NumeroPagina" msprop:Generator_UserChildTable="GanttProjetos" msprop:Generator_ChildPropName="GetGanttProjetosRows" msprop:Generator_UserRelationName="Pagina_GanttProjetos" msprop:Generator_RelationVarName="relationPagina_GanttProjetos" msprop:Generator_UserParentTable="Pagina" msprop:Generator_ParentPropName="PaginaRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

@@ -1,0 +1,12 @@
+﻿body {
+}
+
+.gsfFeedback {
+    border-color: #d9ad76;
+    font-size: 10;
+    margin-bottom: 2;
+}
+
+table.tabelaBotoes > tbody > tr > td {
+    padding: 0 5px;
+}

@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DevExpress.Web;
+
+public partial class Reunioes_SelecaoGruposParticipantesReuniao : System.Web.UI.Page
+{
+    #region Fields
+
+    dados cDados;
+    int codigoUsuario;
+    int codigoEntidade;
+    int codigoEvento;
+
+    #endregion
+
+    #region Properties
+
+    string _ConnectionString;
+    protected string ConnectionString
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(_ConnectionString))
+                _ConnectionString = cDados.classeDados.getStringConexao();
+            return _ConnectionString;
+        }
+    }
+
+    #endregion
+
+    #region Event Handlers
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        cDados = CdadosUtil.GetCdados(null);
+        try
+        {
+            if (cDados.getInfoSistema("IDUsuarioLogado") == null)
+                Response.Redirect("~/erros/erroInatividade.aspx");
+        }
+        catch
+        {
+            Response.RedirectLocation = cDados.getPathSistema() + "erros/erroInatividade.aspx";
+            Response.End();
+        }
+
+        codigoEvento = int.Parse(Request.QueryString["ce"]);
+        codigoUsuario = Convert.ToInt32(cDados.getInfoSistema("IDUsuarioLogado"));
+        codigoEntidade = Convert.ToInt32(cDados.getInfoSistema("CodigoEntidade"));
+        Session["CodigoEntidade"] = codigoEntidade;
+        sdsGruposParticipantes.ConnectionString = ConnectionString;
+        sdsParticipantesGrupo.ConnectionString = ConnectionString;
+        cDados.aplicaEstiloVisual(this);
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+    }
+
+    protected void callback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(e.Parameter))
+            return;
+        string[] codigos = e.Parameter.Split(';');
+        foreach (string CodigoGrupo in codigos)
+        {
+            sdsGruposParticipantes.InsertParameters["CodigoGrupoParticipantes"].DefaultValue = CodigoGrupo;
+            sdsGruposParticipantes.Insert();
+        }
+    }
+
+    protected void gvDetalhe_BeforePerformDataSelect(object sender, EventArgs e)
+    {
+        Session["CodigoGrupoParticipantes"] = (sender as ASPxGridView).GetMasterRowKeyValue();
+    }
+
+    protected void gvDetalhe_Init(object sender, EventArgs e)
+    {
+        ASPxGridView grid = (ASPxGridView)sender;
+        cDados.aplicaEstiloVisual(grid);
+    }
+
+    #endregion
+}

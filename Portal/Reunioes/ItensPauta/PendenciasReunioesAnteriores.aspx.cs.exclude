@@ -1,0 +1,82 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using DevExpress.Web;
+
+public partial class Reunioes_ItensPauta_PendenciasReunioesAnteriores : System.Web.UI.Page
+{
+    dados cDados;
+
+    protected int codigoReuniao;
+    protected int alturaPrincipal;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        codigoReuniao = int.Parse(Request.QueryString["cr"]);
+        alturaPrincipal = int.Parse(Request.QueryString["al"]);
+
+        cDados = CdadosUtil.GetCdados(null);
+        cDados.aplicaEstiloVisual(this);
+        DefineStringConexao();
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        gvPlanosPendentes.Settings.VerticalScrollableHeight = alturaPrincipal - 260;
+    }
+
+    private void DefineStringConexao()
+    {
+        string connectionString = cDados.classeDados.getStringConexao();
+        dsPlanosPendentes.ConnectionString = connectionString;
+        dsUsuarioReponsavel.ConnectionString = connectionString;
+        dsStatusTarefa.ConnectionString = connectionString;
+    }
+
+    protected void gvPlanosPendentes_CellEditorInitialize(object sender, DevExpress.Web.ASPxGridViewEditorEventArgs e)
+    {
+        ASPxGridView grid = (ASPxGridView)sender;
+        string fieldName = e.Column.FieldName;
+        if (fieldName.Equals("codigoUsuarioResponsavel"))
+        {
+            ASPxComboBox combo = (ASPxComboBox)e.Editor;
+            combo.ItemRequestedByValue += combo_ItemRequestedByValue;
+            combo.ItemsRequestedByFilterCondition += combo_ItemsRequestedByFilterCondition;
+        }
+    }
+
+    void combo_ItemsRequestedByFilterCondition(object source, ListEditItemsRequestedByFilterConditionEventArgs e)
+    {
+        ASPxComboBox comboBox = (ASPxComboBox)source;
+        SqlDataSource dataSource = dsUsuarioReponsavel;
+         
+        string comandoSQL = cDados.getSQLComboUsuarios(int.Parse(cDados.getInfoSistema("CodigoEntidade").ToString()), e.Filter, "");
+
+        cDados.populaComboVirtual(dataSource, comandoSQL, comboBox, e.BeginIndex, e.EndIndex);
+    }
+
+    void combo_ItemRequestedByValue(object source, ListEditItemRequestedByValueEventArgs e)
+    {
+        if (string.IsNullOrEmpty(dsUsuarioReponsavel.ConnectionString))
+            dsUsuarioReponsavel.ConnectionString = cDados.classeDados.getStringConexao();
+        if (e.Value != null)
+        {
+            long value;
+            if (!Int64.TryParse(e.Value.ToString(), out value))
+                return;
+            ASPxComboBox comboBox = (ASPxComboBox)source;
+            SqlDataSource dataSource = dsUsuarioReponsavel;
+
+            dataSource.SelectCommand = cDados.getSQLComboUsuariosPorID(int.Parse(cDados.getInfoSistema("CodigoEntidade").ToString()));
+
+            dataSource.SelectParameters.Clear();
+            dataSource.SelectParameters.Add("ID", TypeCode.Int64, e.Value.ToString());
+
+            comboBox.DataBind();
+        }
+    }
+}

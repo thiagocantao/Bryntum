@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsRelProjetosEstrategicos" targetNamespace="http://tempuri.org/dsRelProjetosEstrategicos.xsd" xmlns:mstns="http://tempuri.org/dsRelProjetosEstrategicos.xsd" xmlns="http://tempuri.org/dsRelProjetosEstrategicos.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="desenv_portalEstrategiaConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="desenv_portalEstrategiaConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.desenv_portalEstrategiaConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsRelProjetosEstrategicos" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsRelProjetosEstrategicos" msprop:Generator_UserDSName="dsRelProjetosEstrategicos">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="f_cni_GetProjetosMapaEstrategico" msprop:Generator_TableClassName="f_cni_GetProjetosMapaEstrategicoDataTable" msprop:Generator_TableVarName="tablef_cni_GetProjetosMapaEstrategico" msprop:Generator_TablePropName="f_cni_GetProjetosMapaEstrategico" msprop:Generator_RowDeletingName="f_cni_GetProjetosMapaEstrategicoRowDeleting" msprop:Generator_UserTableName="f_cni_GetProjetosMapaEstrategico" msprop:Generator_RowChangingName="f_cni_GetProjetosMapaEstrategicoRowChanging" msprop:Generator_RowEvHandlerName="f_cni_GetProjetosMapaEstrategicoRowChangeEventHandler" msprop:Generator_RowDeletedName="f_cni_GetProjetosMapaEstrategicoRowDeleted" msprop:Generator_RowEvArgName="f_cni_GetProjetosMapaEstrategicoRowChangeEvent" msprop:Generator_RowChangedName="f_cni_GetProjetosMapaEstrategicoRowChanged" msprop:Generator_RowClassName="f_cni_GetProjetosMapaEstrategicoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeProjeto" msprop:Generator_ColumnVarNameInTable="columnNomeProjeto" msprop:Generator_ColumnPropNameInRow="NomeProjeto" msprop:Generator_ColumnPropNameInTable="NomeProjetoColumn" msprop:Generator_UserColumnName="NomeProjeto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaProjetoCarteiraPrioritaria" msprop:Generator_ColumnVarNameInTable="columnIndicaProjetoCarteiraPrioritaria" msprop:Generator_ColumnPropNameInRow="IndicaProjetoCarteiraPrioritaria" msprop:Generator_ColumnPropNameInTable="IndicaProjetoCarteiraPrioritariaColumn" msprop:Generator_UserColumnName="IndicaProjetoCarteiraPrioritaria" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NomeResponsavel" msprop:Generator_ColumnVarNameInTable="columnNomeResponsavel" msprop:Generator_ColumnPropNameInRow="NomeResponsavel" msprop:Generator_ColumnPropNameInTable="NomeResponsavelColumn" msprop:Generator_UserColumnName="NomeResponsavel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CorDesempenho" msprop:Generator_ColumnVarNameInTable="columnCorDesempenho" msprop:Generator_ColumnPropNameInRow="CorDesempenho" msprop:Generator_ColumnPropNameInTable="CorDesempenhoColumn" msprop:Generator_UserColumnName="CorDesempenho" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PercentualConcluido" msprop:Generator_ColumnVarNameInTable="columnPercentualConcluido" msprop:Generator_ColumnPropNameInRow="PercentualConcluido" msprop:Generator_ColumnPropNameInTable="PercentualConcluidoColumn" msprop:Generator_UserColumnName="PercentualConcluido" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PercentualPrevisto" msprop:Generator_ColumnVarNameInTable="columnPercentualPrevisto" msprop:Generator_ColumnPropNameInRow="PercentualPrevisto" msprop:Generator_ColumnPropNameInTable="PercentualPrevistoColumn" msprop:Generator_UserColumnName="PercentualPrevisto" type="xs:int" minOccurs="0" />
+              <xs:element name="ObjetivoProjeto" msprop:Generator_ColumnVarNameInTable="columnObjetivoProjeto" msprop:Generator_ColumnPropNameInRow="ObjetivoProjeto" msprop:Generator_ColumnPropNameInTable="ObjetivoProjetoColumn" msprop:Generator_UserColumnName="ObjetivoProjeto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AnaliseCritica" msprop:Generator_ColumnVarNameInTable="columnAnaliseCritica" msprop:Generator_ColumnPropNameInRow="AnaliseCritica" msprop:Generator_ColumnPropNameInTable="AnaliseCriticaColumn" msprop:Generator_UserColumnName="AnaliseCritica" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="f_GetCronogramaProjeto" msprop:Generator_TableClassName="f_GetCronogramaProjetoDataTable" msprop:Generator_TableVarName="tablef_GetCronogramaProjeto" msprop:Generator_TablePropName="f_GetCronogramaProjeto" msprop:Generator_RowDeletingName="f_GetCronogramaProjetoRowDeleting" msprop:Generator_UserTableName="f_GetCronogramaProjeto" msprop:Generator_RowChangingName="f_GetCronogramaProjetoRowChanging" msprop:Generator_RowEvHandlerName="f_GetCronogramaProjetoRowChangeEventHandler" msprop:Generator_RowDeletedName="f_GetCronogramaProjetoRowDeleted" msprop:Generator_RowEvArgName="f_GetCronogramaProjetoRowChangeEvent" msprop:Generator_RowChangedName="f_GetCronogramaProjetoRowChanged" msprop:Generator_RowClassName="f_GetCronogramaProjetoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeTarefa" msprop:Generator_ColumnVarNameInTable="columnNomeTarefa" msprop:Generator_ColumnPropNameInRow="NomeTarefa" msprop:Generator_ColumnPropNameInTable="NomeTarefaColumn" msprop:Generator_UserColumnName="NomeTarefa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Termino" msprop:Generator_ColumnVarNameInTable="columnTermino" msprop:Generator_ColumnPropNameInRow="Termino" msprop:Generator_ColumnPropNameInTable="TerminoColumn" msprop:Generator_UserColumnName="Termino" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoReal" msprop:Generator_ColumnVarNameInTable="columnTerminoReal" msprop:Generator_ColumnPropNameInRow="TerminoReal" msprop:Generator_ColumnPropNameInTable="TerminoRealColumn" msprop:Generator_UserColumnName="TerminoReal" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoPrevisto" msprop:Generator_ColumnVarNameInTable="columnTerminoPrevisto" msprop:Generator_ColumnPropNameInRow="TerminoPrevisto" msprop:Generator_ColumnPropNameInTable="TerminoPrevistoColumn" msprop:Generator_UserColumnName="TerminoPrevisto" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Desvio" msprop:Generator_ColumnVarNameInTable="columnDesvio" msprop:Generator_ColumnPropNameInRow="Desvio" msprop:Generator_ColumnPropNameInTable="DesvioColumn" msprop:Generator_UserColumnName="Desvio" type="xs:int" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="f_cni_GetProjetosMapaEstrategico_f_GetCronogramaProjeto" msdata:parent="f_cni_GetProjetosMapaEstrategico" msdata:child="f_GetCronogramaProjeto" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="f_GetCronogramaProjeto" msprop:Generator_ChildPropName="Getf_GetCronogramaProjetoRows" msprop:Generator_UserParentTable="f_cni_GetProjetosMapaEstrategico" msprop:Generator_UserRelationName="f_cni_GetProjetosMapaEstrategico_f_GetCronogramaProjeto" msprop:Generator_RelationVarName="relationf_cni_GetProjetosMapaEstrategico_f_GetCronogramaProjeto" msprop:Generator_ParentPropName="f_cni_GetProjetosMapaEstrategicoRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

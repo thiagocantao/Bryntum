@@ -1,0 +1,59 @@
+@import '../variables';
+
+.b-eventeditor.b-popup {
+    // The EventEditor may be rendered statically, so it may be sized by flexbox
+    // Ensure it does not exceed 100% of available width.
+    width     : min(100%, calc(16em + var(--date-time-length)));
+    min-width : min(100%, calc(16em + var(--date-time-length)));
+    flex      : unset;
+
+    &.b-collapsed {
+        .b-panel-collapse-revealer {
+            display : none;
+        }
+    }
+
+    .b-eventeditor-content.b-popup-content {
+        .b-field > {
+            label {
+                flex : 0 0 $eventedit-label-width;
+            }
+        }
+
+        [data-ref="startDateField"], [data-ref="endDateField"] {
+            flex : 1 0 calc(55.5% + var(--date-width-difference) - #{$autocontainer-gap} / 2);
+        }
+
+        [data-ref="startTimeField"], [data-ref="endTimeField"] {
+            flex : 1 0 calc(44.5% - var(--date-width-difference) - #{$autocontainer-gap} / 2);
+        }
+    }
+
+    .b-bottom-toolbar {
+        background : transparent;
+
+        > .b-toolbar-content {
+
+            @if $eventedit-label-filler-width != null {
+                @media (min-width : 390px) {
+                    // Use b-popup-content padding left from above
+                    padding-inline-start : calc(1em + #{$eventedit-label-filler-width});
+                }
+            }
+
+            > button {
+                flex              : 1;
+                margin-inline-end : .5em;
+                min-width         : 0;
+
+                &:last-child {
+                    margin-inline-end : 0;
+                }
+            }
+        }
+    }
+}
+
+.b-popup[class*="editor"] .b-bottom-toolbar .b-toolbar-content {
+    padding-top : 0;
+}

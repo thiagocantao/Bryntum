@@ -1,0 +1,95 @@
+@import "../variables";
+
+.b-sch-event-wrap, .b-gantt-task-wrap {
+    .b-sch-label {
+        font-size      : 12px;
+        text-align     : center;
+        white-space    : nowrap;
+        margin         : .2em 0;
+        color          : $event-labels-color;
+        font-weight    : $event-font-weight;
+        // prevent text being selected during drag drop in Gantt
+        @include user-select-none();
+
+        // .b-gantt-task-wrap has pointer-events: none for some reason
+        pointer-events : all;
+    }
+
+    &.b-sch-event-selected .b-sch-label {
+        color : $selected-event-labels-color;
+    }
+
+    .b-sch-label-before {
+        position   : absolute;
+        margin     : 0;
+    }
+
+    .b-sch-label-after {
+        position   : absolute;
+        margin     : 0;
+    }
+
+    // When there are baselines, align before/after labels to top
+    &.b-has-baselines {
+        .b-baselines & {
+            .b-sch-label-before, .b-sch-label-after {
+                top         : 0;
+                line-height : 85%;
+            }
+        }
+    }
+}
+
+.b-sch-event-wrap {
+    .b-sch-label-top {
+        grid-column : 3;
+        grid-row    : 1;
+    }
+
+    // Before and after proceed in the inline writing direction.
+    .b-sch-label-before, .b-sch-label-after {
+        grid-row   : 1;
+        margin-top : 6px;
+    }
+
+    .b-sch-label-before {
+        grid-column         : 1;
+        transform           : translate3d(calc(-100% * var(--rtl-negate)), 0, 0);
+        margin-inline-start : -#{$event-label-spacing};
+    }
+
+    .b-sch-label-after {
+        grid-column         : 5;
+        margin-inline-start : $event-label-spacing;
+    }
+
+    .b-sch-label-bottom {
+        grid-column : 3;
+        grid-row    : 3;
+    }
+
+    &.b-milestone-wrap {
+        .b-sch-label-before, .b-sch-label-after {
+            margin-inline : 0;
+        }
+    }
+
+    .b-labels-topbottom &.b-milestone-wrap {
+        .b-milestone {
+            width : 100%;
+        }
+    }
+}
+
+// The measuring element for labels
+.b-measure-label {
+    height     : 1em;
+    position   : fixed;
+    top        : -10000px;
+    left       : -10000px; // RTL OK
+    visibility : hidden;
+
+    label {
+        padding-inline-start : $event-label-spacing;
+    }
+}

@@ -1,0 +1,425 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ExecucaoReuniao_Item.aspx.cs"
+    Inherits="Reunioes_ExecucaoReuniao_Item" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script src="../scripts/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="../scripts/jquery.globalize/globalize.js" type="text/javascript"></script>
+    <script src="../scripts/jquery.globalize/cultures/globalize.culture.pt-BR.js" type="text/javascript"></script>
+    <script src="../scripts/dx.chartjs.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        //$(document).dblclick(function () {
+        //            var $frame = $(window.frames[0].window.document).html();
+        //            var html = $frame.html();
+        //            $(window.frames["_frmConteudo"]).find("label[id!='cpTitulo_lbTituloItem'], .dxgv, .dxnb-ghtext, textarea, iframe").each(function () {
+        //                var anterior = $(this).css("font-size");
+        //                anterior = anterior.replace("px", "");
+        //                var novo = parseInt(anterior) + 10;
+        //                $(this).css("font-size", +novo + "px");
+        //            });
+
+        /* $("#chartContainer").dxChart({
+        dataSource: [
+        { day: "Monday", oranges: 3 },
+        { day: "Tuesday", oranges: 2 },
+        { day: "Wednesday", oranges: 3 },
+        { day: "Thursday", oranges: 4 },
+        { day: "Friday", oranges: 6 },
+        { day: "Saturday", oranges: 11 },
+        { day: "Sunday", oranges: 4}],
+
+        series: {
+        argumentField: "day",
+        valueField: "oranges",
+        name: "My oranges",
+        type: "bar",
+        color: '#ffa500'
+        }
+        });*/
+        //$(window.frames[0].window.document).contents().find("body").find("label[id!='cpTitulo_lbTituloItem'], .dxgv, .dxnb-ghtext, .dxeBase, textarea, iframe").css("font-size")
+        //var teste = $(window.frames[0].window.document).contents().find("body").contents().find("#divExibicaoGrafico").dxChart('instance'); // $(window.frames[0].window.document).contents().find("body").contents().find("#divExibicaoGrafico");
+        //var op = teste.option();
+
+        //});
+
+        var timeoutDelegate = null;
+
+        function memoDeliberacoes_OnTextChanged(s, e) {
+            if (timeoutDelegate != null)
+                clearTimeout(timeoutDelegate);
+            timeoutDelegate = setTimeout(function () { callback.PerformCallback('deliberacoes')}, 3000);
+        }
+    </script>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <div style="height: 25px; display: none;" visible="True">
+            <dxe:ASPxLabel ID="lblNomeObjeto" runat="server" Font-Bold="True"
+                Font-Size="14pt" Text="ASPxLabel">
+            </dxe:ASPxLabel>
+        </div>
+        <dxtc:ASPxPageControl ID="pageControl" runat="server" ActiveTabIndex="0" Width="100%"
+            EnableCallBacks="True" 
+            Font-Size="12pt">
+            <TabPages>
+                <dxtc:TabPage Text="Detalhes" Name="tabDetalhes">
+                    <ActiveTabStyle Font-Bold="True" Font-Size="14pt">
+                    </ActiveTabStyle>
+                    <TabStyle Font-Bold="False" Font-Size="14pt">
+                    </TabStyle>
+                    <ContentCollection>
+                        <dxw:ContentControl runat="server" SupportsDisabledAttribute="True">
+                            <iframe width="100%" id="frmDetalhes" frameborder="0" scrolling="yes" name="_frmDetalhes"
+                                runat="server"></iframe>
+                        </dxw:ContentControl>
+                    </ContentCollection>
+                </dxtc:TabPage>
+                <dxtc:TabPage Text="Deliberações">
+                    <ContentCollection>
+                        <dxw:ContentControl runat="server" SupportsDisabledAttribute="True">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-top: 10px;
+                                padding-right: 10px; padding-left: 10px;">
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxMemo ID="memoDeliberacoes" runat="server" Height="200px" Width="100%" 
+                                            EnableFocusedStyle="False" Font-Size="12pt" 
+                                            OnLoad="memoDeliberacoes_Load">
+                                            <ClientSideEvents KeyUp="function(s, e) {
+	memoDeliberacoes_OnTextChanged(s,e);
+}" />
+                                            <FocusedStyle Font-Size="12pt">
+                                            </FocusedStyle>
+                                            <Border BorderStyle="Solid" BorderWidth="3px" />
+                                        </dxe:ASPxMemo>
+                                    </td>
+                                </tr>
+                                <%--<tr>
+                                    <td align="right" style="height: 30px; padding-top: 10px; padding-bottom: 10px;">
+                                        <dxe:ASPxButton ID="btnSalvar" runat="server" Text="Salvar" AutoPostBack="False">
+                                            <ClientSideEvents Click="function(s, e) {
+	callback.PerformCallback('deliberacoes');
+}" />
+                                        </dxe:ASPxButton>
+                                    </td>
+                                </tr>--%>
+                            </table>
+                        </dxw:ContentControl>
+                    </ContentCollection>
+                </dxtc:TabPage>
+                <dxtc:TabPage Text="Plano de Ação">
+                    <ContentCollection>
+                        <dxw:ContentControl runat="server" SupportsDisabledAttribute="True">
+                            <dxwgv:ASPxGridView ID="gvPlanoAcao" runat="server" AutoGenerateColumns="False" DataSourceID="dsPlanoAcao"
+                                Font-Size="12pt" OnCellEditorInitialize="gvPlanoAcao_CellEditorInitialize"
+                                Width="100%" KeyFieldName="CodigoTarefa" ClientInstanceName="gvPlanoAcao">
+                                <Columns>
+                                    <dxwgv:GridViewCommandColumn ButtonRenderMode="Image" ShowInCustomizationForm="True" VisibleIndex="0" ShowEditButton="true" ShowDeleteButton="true"
+                                        Width="60px">
+                                        <HeaderTemplate>
+                                            <dxe:ASPxImage ID="ASPxImage1" runat="server" Height="20px" ImageUrl="~/imagens/botoes/incluirReg02.png"
+                                                ToolTip="Novo" Width="20px">
+                                                <ClientSideEvents Click="function(s, e) {
+	gvPlanoAcao.AddNewRow();
+}" />
+                                            </dxe:ASPxImage>
+                                        </HeaderTemplate>
+                                    </dxwgv:GridViewCommandColumn>
+                                    <dxwgv:GridViewDataTextColumn Caption="Tarefa" FieldName="DescricaoTarefa" Name="DescricaoTarefa"
+                                        ShowInCustomizationForm="True" VisibleIndex="1">
+                                        <PropertiesTextEdit>
+                                            <ValidationSettings Display="Dynamic">
+                                                <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                                            </ValidationSettings>
+                                        </PropertiesTextEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="3" Visible="True" VisibleIndex="0" />
+                                    </dxwgv:GridViewDataTextColumn>
+                                    <dxwgv:GridViewDataComboBoxColumn Caption="Prioridade" FieldName="Prioridade" Name="Prioridade"
+                                        ShowInCustomizationForm="True" VisibleIndex="3" Width="80px">
+                                        <PropertiesComboBox>
+                                            <Items>
+                                                <dxe:ListEditItem Text="Baixa" Value="B" />
+                                                <dxe:ListEditItem Text="Média" Value="M" />
+                                                <dxe:ListEditItem Text="Alta" Value="A" />
+                                            </Items>
+                                            <ValidationSettings Display="Dynamic">
+                                                <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                                            </ValidationSettings>
+                                        </PropertiesComboBox>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="1" />
+                                    </dxwgv:GridViewDataComboBoxColumn>
+                                    <dxwgv:GridViewDataComboBoxColumn Caption="Responsável" FieldName="CodigoUsuarioResponsavelTarefa"
+                                        Name="CodigoUsuarioResponsavelTarefa" ShowInCustomizationForm="True" VisibleIndex="2">
+                                        <PropertiesComboBox DataSourceID="dsUsuarioReponsavel" IncrementalFilteringMode="Contains"
+                                            TextField="NomeUsuario" ValueField="CodigoUsuario" ValueType="System.Int32">
+                                            <ValidationSettings Display="Dynamic">
+                                                <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                                            </ValidationSettings>
+                                        </PropertiesComboBox>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="3" Visible="True" VisibleIndex="2" />
+                                    </dxwgv:GridViewDataComboBoxColumn>
+                                    <dxwgv:GridViewDataComboBoxColumn Caption="Status" FieldName="CodigoStatusTarefa"
+                                        Name="CodigoStatusTarefa" ShowInCustomizationForm="True" VisibleIndex="4" Width="120px">
+                                        <PropertiesComboBox DataSourceID="dsStatusTarefa" TextField="DescricaoStatusTarefa"
+                                            ValueField="CodigoStatusTarefa" ValueType="System.Int32">
+                                            <ValidationSettings Display="Dynamic">
+                                                <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                                            </ValidationSettings>
+                                        </PropertiesComboBox>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="3" />
+                                    </dxwgv:GridViewDataComboBoxColumn>
+                                    <dxwgv:GridViewDataDateColumn Caption="Início previsto" FieldName="InicioPrevisto"
+                                        Name="InicioPrevisto" ShowInCustomizationForm="True" VisibleIndex="5" Width="80px">
+                                        <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy">
+                                            <ValidationSettings Display="Dynamic">
+                                                <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                                            </ValidationSettings>
+                                        </PropertiesDateEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="4" />
+                                    </dxwgv:GridViewDataDateColumn>
+                                    <dxwgv:GridViewDataDateColumn Caption="Término previsto" FieldName="TerminoPrevisto"
+                                        Name="TerminoPrevisto" ShowInCustomizationForm="True" VisibleIndex="6" Width="80px">
+                                        <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy">
+                                            <ValidationSettings Display="Dynamic">
+                                                <RequiredField ErrorText="Campo Obrigatório" IsRequired="True" />
+                                            </ValidationSettings>
+                                        </PropertiesDateEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="5" />
+                                    </dxwgv:GridViewDataDateColumn>
+                                    <dxwgv:GridViewDataDateColumn Caption="Início real" FieldName="InicioReal" Name="InicioReal"
+                                        ShowInCustomizationForm="True" VisibleIndex="7" Width="80px">
+                                        <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy">
+                                        </PropertiesDateEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="8" />
+                                    </dxwgv:GridViewDataDateColumn>
+                                    <dxwgv:GridViewDataDateColumn Caption="Término real" FieldName="TerminoReal" Name="TerminoReal"
+                                        ShowInCustomizationForm="True" VisibleIndex="8" Width="80px">
+                                        <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy">
+                                        </PropertiesDateEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="9" />
+                                    </dxwgv:GridViewDataDateColumn>
+                                    <dxwgv:GridViewDataSpinEditColumn Caption="Esforço Previsto (hr)" FieldName="EsforcoPrevisto"
+                                        ShowInCustomizationForm="True" Visible="False" VisibleIndex="9">
+                                        <PropertiesSpinEdit DisplayFormatString="g">
+                                            <SpinButtons ShowIncrementButtons="False">
+                                            </SpinButtons>
+                                            <ValidationSettings Display="Dynamic">
+                                                <RequiredField ErrorText="Campo Obrigatório" />
+                                            </ValidationSettings>
+                                        </PropertiesSpinEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="6" />
+                                    </dxwgv:GridViewDataSpinEditColumn>
+                                    <dxwgv:GridViewDataSpinEditColumn Caption="Esforço Real (hr)" FieldName="EsforcoReal"
+                                        ShowInCustomizationForm="True" Visible="False" VisibleIndex="10">
+                                        <PropertiesSpinEdit DisplayFormatString="g">
+                                            <SpinButtons ShowIncrementButtons="False">
+                                            </SpinButtons>
+                                        </PropertiesSpinEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="10" />
+                                    </dxwgv:GridViewDataSpinEditColumn>
+                                    <dxwgv:GridViewDataSpinEditColumn Caption="Custo Previsto (R$)" FieldName="CustoPrevisto"
+                                        ShowInCustomizationForm="True" Visible="False" VisibleIndex="11">
+                                        <PropertiesSpinEdit DisplayFormatString="c" NumberFormat="Currency">
+                                            <SpinButtons ShowIncrementButtons="False">
+                                            </SpinButtons>
+                                            <ValidationSettings Display="Dynamic">
+                                                <RequiredField ErrorText="Campo Obrigatório" />
+                                            </ValidationSettings>
+                                        </PropertiesSpinEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="7" />
+                                    </dxwgv:GridViewDataSpinEditColumn>
+                                    <dxwgv:GridViewDataSpinEditColumn Caption="Custo Real (R$)" FieldName="CustoReal"
+                                        ShowInCustomizationForm="True" Visible="False" VisibleIndex="12">
+                                        <PropertiesSpinEdit DisplayFormatString="c" NumberFormat="Currency">
+                                            <SpinButtons ShowIncrementButtons="False">
+                                            </SpinButtons>
+                                        </PropertiesSpinEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="1" Visible="True" VisibleIndex="11" />
+                                    </dxwgv:GridViewDataSpinEditColumn>
+                                    <dxwgv:GridViewDataMemoColumn Caption="Anotações" FieldName="Anotacoes" ShowInCustomizationForm="True"
+                                        Visible="False" VisibleIndex="14">
+                                        <PropertiesMemoEdit Rows="10">
+                                        </PropertiesMemoEdit>
+                                        <EditFormSettings CaptionLocation="Top" ColumnSpan="4" Visible="True" VisibleIndex="12" />
+                                    </dxwgv:GridViewDataMemoColumn>
+                                </Columns>
+                                <SettingsBehavior ConfirmDelete="True" />
+                                <SettingsPager Mode="ShowAllRecords">
+                                </SettingsPager>
+                                <SettingsEditing EditFormColumnCount="4" Mode="PopupEditForm" />
+                                <Settings VerticalScrollBarMode="Visible" />
+                                <SettingsText ConfirmDelete="Deseja excluir o registro?" />
+                                <SettingsPopup>
+                                    <EditForm HorizontalAlign="WindowCenter" Modal="True" VerticalAlign="WindowCenter"
+                                        Width="750px" />
+                                </SettingsPopup>
+                            </dxwgv:ASPxGridView>
+                            <asp:SqlDataSource ID="dsPlanoAcao" runat="server" DeleteCommand=" UPDATE [TarefaToDoList] 
+    SET [DataExclusao] = GETDATE(), 
+        [CodigoUsuarioExclusao] = @CodigoUsuarioLogado
+  WHERE [CodigoTarefa] = @CodigoTarefa" InsertCommand="IF NOT EXISTS(SELECT 1 FROM ToDoList AS tdl WHERE tdl.CodigoObjetoAssociado = @CodigoObjetoAssociado AND CodigoTipoAssociacao = @CodigoTipoAssociacao)
+                    BEGIN
+                        INSERT INTO ToDoList(DataInclusao, CodigoUsuarioInclusao, CodigoUsuarioResponsavelToDoList, CodigoEntidade, CodigoObjetoAssociado, CodigoTipoAssociacao)
+                                VALUES(GETDATE(), @CodigoUsuarioLogado, @CodigoUsuarioLogado, @CodigoEntidade, @CodigoObjetoAssociado , @CodigoTipoAssociacao)
+                        SELECT @CodigoToDoList = SCOPE_IDENTITY()
+                    END
+                        ELSE
+                            SELECT TOP 1 @CodigoToDoList = CodigoToDoList 
+                              FROM ToDoList AS tdl 
+                             WHERE tdl.CodigoObjetoAssociado = @CodigoObjetoAssociado 
+                               AND CodigoTipoAssociacao = @CodigoTipoAssociacao
+                                AND CodigoEntidade = @CodigoEntidade       
+                    
+                    SET @PercentualConcluido = 0
+                    
+                    INSERT INTO [TarefaToDoList] ([CodigoToDoList], [DescricaoTarefa], [InicioPrevisto], [TerminoPrevisto], [InicioReal], [TerminoReal], [CodigoUsuarioResponsavelTarefa], [PercentualConcluido], [Anotacoes], [Prioridade], [CodigoStatusTarefa], [EsforcoPrevisto], [EsforcoReal], [CustoPrevisto], [CustoReal], [DataExclusao], [CodigoUsuarioExclusao], [CodigoProjeto], [CodigoEvento]) VALUES (@CodigoToDoList, @DescricaoTarefa, @InicioPrevisto, @TerminoPrevisto, @InicioReal, @TerminoReal, @CodigoUsuarioResponsavelTarefa, @PercentualConcluido, @Anotacoes, @Prioridade, @CodigoStatusTarefa, @EsforcoPrevisto, @EsforcoReal, @CustoPrevisto, @CustoReal, @DataExclusao, @CodigoUsuarioExclusao, @CodigoProjeto, @CodigoEvento)"
+                                SelectCommand="SELECT [CodigoTarefa]
+      ,[DescricaoTarefa]
+      ,[InicioPrevisto]
+      ,[TerminoPrevisto]
+      ,[InicioReal]
+      ,[TerminoReal]
+      ,[CodigoUsuarioResponsavelTarefa]
+      ,[Anotacoes]
+      ,[Prioridade]
+      ,[CodigoStatusTarefa]
+      ,[EsforcoPrevisto]
+      ,[EsforcoReal]
+      ,[CustoPrevisto]
+      ,[CustoReal]
+  FROM [TarefaToDoList] AS tt INNER JOIN
+       [ToDoList] AS t ON tt.CodigoToDoList = t.CodigoToDoList
+ WHERE t.[DataExclusao] IS NULL
+   AND tt.[DataExclusao] IS NULL
+   AND t.CodigoTipoAssociacao = @CodigoTipoAssociacao
+   AND t.CodigoObjetoAssociado = @CodigoObjetoAssociado
+   AND t.CodigoEntidade = @CodigoEntidade
+   AND tt.CodigoEvento = @CodigoReuniao
+ ORDER BY 
+       ISNULL( tt.InicioReal, tt.InicioPrevisto );" UpdateCommand=" UPDATE [TarefaToDoList] 
+    SET [DescricaoTarefa] = @DescricaoTarefa, 
+        [InicioPrevisto] = @InicioPrevisto, 
+        [TerminoPrevisto] = @TerminoPrevisto, 
+        [InicioReal] = @InicioReal, 
+        [TerminoReal] = @TerminoReal, 
+        [CodigoUsuarioResponsavelTarefa] = @CodigoUsuarioResponsavelTarefa, 
+        [Anotacoes] = @Anotacoes, 
+        [Prioridade] = @Prioridade, 
+        [CodigoStatusTarefa] = @CodigoStatusTarefa, 
+        [EsforcoPrevisto] = @EsforcoPrevisto, 
+        [EsforcoReal] = @EsforcoReal, 
+        [CustoPrevisto] = @CustoPrevisto, 
+        [CustoReal] = @CustoReal
+  WHERE [CodigoTarefa] = @CodigoTarefa">
+                                <DeleteParameters>
+                                    <asp:Parameter Name="CodigoTarefa" Type="Int64" />
+                                    <asp:SessionParameter Name="CodigoUsuarioLogado" SessionField="cul" />
+                                </DeleteParameters>
+                                <InsertParameters>
+                                    <asp:Parameter Name="CodigoToDoList" Type="Int32" />
+                                    <asp:Parameter Name="DescricaoTarefa" Type="String" />
+                                    <asp:Parameter Name="InicioPrevisto" Type="DateTime" />
+                                    <asp:Parameter Name="TerminoPrevisto" Type="DateTime" />
+                                    <asp:Parameter Name="InicioReal" Type="DateTime" />
+                                    <asp:Parameter Name="TerminoReal" Type="DateTime" />
+                                    <asp:Parameter Name="CodigoUsuarioResponsavelTarefa" Type="Int32" />
+                                    <asp:Parameter Name="PercentualConcluido" Type="Int16" />
+                                    <asp:Parameter Name="Anotacoes" Type="String" />
+                                    <asp:Parameter Name="Prioridade" Type="String" />
+                                    <asp:Parameter Name="CodigoStatusTarefa" Type="Byte" />
+                                    <asp:Parameter Name="EsforcoPrevisto" Type="Decimal" />
+                                    <asp:Parameter Name="EsforcoReal" Type="Decimal" />
+                                    <asp:Parameter Name="CustoPrevisto" Type="Decimal" />
+                                    <asp:Parameter Name="CustoReal" Type="Decimal" />
+                                    <asp:Parameter Name="DataExclusao" Type="DateTime" />
+                                    <asp:Parameter Name="CodigoUsuarioExclusao" Type="Int32" />
+                                    <asp:Parameter Name="CodigoProjeto" Type="Int32" />
+                                    <asp:QueryStringParameter Name="CodigoEvento" QueryStringField="cr" Type="Int32" />
+                                    <asp:QueryStringParameter Name="CodigoObjetoAssociado" QueryStringField="co" />
+                                    <asp:QueryStringParameter Name="CodigoTipoAssociacao" QueryStringField="cto" />
+                                    <asp:SessionParameter Name="CodigoUsuarioLogado" SessionField="cul" />
+                                    <asp:SessionParameter Name="CodigoEntidade" SessionField="ce" />
+                                </InsertParameters>
+                                <SelectParameters>
+                                    <asp:QueryStringParameter Name="CodigoTipoAssociacao" QueryStringField="cto" />
+                                    <asp:QueryStringParameter Name="CodigoObjetoAssociado" QueryStringField="co" />
+                                    <asp:QueryStringParameter Name="CodigoReuniao" QueryStringField="cr" />
+                                    <asp:SessionParameter Name="CodigoEntidade" SessionField="ce" />
+                                </SelectParameters>
+                                <UpdateParameters>
+                                    <asp:Parameter Name="DescricaoTarefa" />
+                                    <asp:Parameter Name="InicioPrevisto" />
+                                    <asp:Parameter Name="TerminoPrevisto" />
+                                    <asp:Parameter Name="InicioReal" />
+                                    <asp:Parameter Name="TerminoReal" />
+                                    <asp:Parameter Name="CodigoUsuarioResponsavelTarefa" />
+                                    <asp:Parameter Name="Anotacoes" />
+                                    <asp:Parameter Name="Prioridade" />
+                                    <asp:Parameter Name="CodigoStatusTarefa" />
+                                    <asp:Parameter Name="EsforcoPrevisto" />
+                                    <asp:Parameter Name="EsforcoReal" />
+                                    <asp:Parameter Name="CustoPrevisto" />
+                                    <asp:Parameter Name="CustoReal" />
+                                    <asp:Parameter Name="CodigoTarefa" />
+                                </UpdateParameters>
+                            </asp:SqlDataSource>
+                            <asp:SqlDataSource ID="dsUsuarioReponsavel" runat="server" SelectCommand=" SELECT u.CodigoUsuario, 
+        u.NomeUsuario 
+   FROM Usuario AS u 
+  WHERE u.DataExclusao IS NULL
+  ORDER BY 
+        u.NomeUsuario ASC"></asp:SqlDataSource>
+                            <asp:SqlDataSource ID="dsStatusTarefa" runat="server" SelectCommand=" SELECT s.CodigoStatusTarefa, 
+        s.DescricaoStatusTarefa 
+   FROM StatusTarefa AS s 
+  ORDER BY 
+        S.DescricaoStatusTarefa ASC"></asp:SqlDataSource>
+                        </dxw:ContentControl>
+                    </ContentCollection>
+                </dxtc:TabPage>
+                <dxtc:TabPage Text="Anexos">
+                    <ContentCollection>
+                        <dxw:ContentControl runat="server" SupportsDisabledAttribute="True">
+                            <iframe width="100%" id="frmAnexo" frameborder="0" height="<%=alturaPrincipal - 175 %>"
+                                scrolling="yes" name="_frmAnexo" src="../espacoTrabalho/frameEspacoTrabalho_BibliotecaInterno.aspx?TA=<%=iniciaisTipoAssociacao%>&Alt=<%=alturaPrincipal - 300%>&ID=<%=codigoObjeto%>">
+                            </iframe>
+                        </dxw:ContentControl>
+                    </ContentCollection>
+                </dxtc:TabPage>
+            </TabPages>
+            <TabStyle Font-Size="12pt">
+            </TabStyle>
+            <ContentStyle>
+                <Paddings Padding="0px" />
+            </ContentStyle>
+        </dxtc:ASPxPageControl>
+    </div>
+    <dxcb:ASPxCallback runat="server" ID="callback" ClientInstanceName="callback" OnCallback="callback_Callback">
+        <ClientSideEvents CallbackComplete="function(s, e) {
+	if(e.parameter == 'deliberacoes')
+	{
+		
+	}
+}" />
+    </dxcb:ASPxCallback>
+    <asp:SqlDataSource ID="dsDadosObjeto" runat="server" SelectCommand=" SELECT f.NomeObjeto,
+        f.DescricaoTipoObjeto,
+        oae.Deliberacao,
+        oae.DataDeliberacao
+   FROM f_GetItensPautaReuniao(@CodigoEvento) AS f LEFT JOIN
+        ObjetoAssociadoEvento AS oae ON oae.CodigoObjetoAssociado = f.CodigoObjeto AND
+                                        oae.CodigoTipoObjetoAssociado = f.CodigoTipoObjeto AND
+                                        oae.CodigoEvento = @CodigoEvento 
+  WHERE f.CodigoObjeto = @CodigoObjeto
+    AND f.CodigoTipoObjeto = @CodigoTipoObjeto">
+        <SelectParameters>
+            <asp:QueryStringParameter Name="CodigoEvento" QueryStringField="cr" />
+            <asp:QueryStringParameter Name="CodigoObjeto" QueryStringField="co" />
+            <asp:QueryStringParameter Name="CodigoTipoObjeto" QueryStringField="cto" />
+        </SelectParameters>
+    </asp:SqlDataSource>
+    </form>
+</body>
+</html>

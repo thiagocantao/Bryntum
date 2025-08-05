@@ -1,0 +1,43 @@
+.b-stickyevents.b-sch-horizontal {
+    .b-sch-event-wrap:not(.b-disable-sticky,.b-milestone-wrap),
+    .b-sch-resourcetimerange {
+        overflow : visible;
+
+        // Use native stickiness
+        .b-sch-event-content {
+            position : sticky;
+            left     : $event-bar-content-left-margin;
+        }
+
+        // Native stickiness requires overflow to be visible all the way up to the scroller
+        .b-sch-event {
+            overflow : visible;
+        }
+    }
+
+    // Because we start pushing the content as soon as the outer bar's start
+    // goes out of view, the content cannot be centered when using sticky events.
+    .b-sch-resourcetimerange {
+        justify-content : flex-start;
+        overflow        : visible;
+
+        > div {
+            overflow : visible;
+            width    : 100%;
+        }
+    }
+}
+
+.b-rtl.b-stickyevents.b-sch-horizontal {
+    .b-sch-event-wrap:not(.b-disable-sticky,.b-milestone-wrap),
+    .b-sch-resourcetimerange {
+        .b-sch-event-content {
+            right : $event-bar-content-left-margin;
+        }
+    }
+}
+
+// FF stickyness is unreliable with contain
+.b-firefox.b-stickyevents.b-sch-horizontal .b-sch-foreground-canvas {
+    contain : none
+}

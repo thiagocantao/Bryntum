@@ -1,0 +1,1914 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="novaReunioes.aspx.cs" Inherits="Reunioes_novaReunioes" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>.:Reunião 2.1.1:.</title>
+    <link rel="Stylesheet" href="../estilos/jquery.ui.ultima.css" type="text/css" />
+    <script type="text/javascript" language="javascript" src="../scripts/jquery.ultima.js"></script>
+    <script type="text/javascript" language="javascript" src="../scripts/jquery.ui.ultima.js"></script>
+    <script type="text/javascript" language="javascript" src="../scripts/jquery.timer.js"></script>
+    <script type="text/javascript" language="javascript" src="../scripts/novaReunioes.js"></script>
+    <script type="text/javascript" src="../scripts/FusionCharts.js?v=1" language="javascript"></script>
+    <link type="text/css" href="../estilos/novaReunioes.css" rel="Stylesheet" />
+    <style type="text/css">
+        .style5
+        {
+            height: 27px;
+        }
+        .style6
+        {
+        }
+        .style7
+        {
+            height: 31px;
+        }
+        .style8
+        {
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ScriptManager ID="atualizaGeral" runat="server">
+        </asp:ScriptManager>
+        <div id="divBarraTitulo" style="float: left; overflow: hidden; height: 55px;">
+            <dxcp:ASPxCallbackPanel ID="cpTitulo" runat="server" ClientInstanceName="cpTitulo">
+                <PanelCollection>
+                    <dxp:PanelContent runat="server">
+                        <div class="fundoTitulo">
+                            &nbsp;<dxe:ASPxLabel ID="lbTituloTipo" runat="server" ClientInstanceName="lbTituloTipo"
+                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#339966">
+                            </dxe:ASPxLabel>
+                            <dxe:ASPxLabel ID="lbTituloItem" runat="server" Font-Bold="True" Font-Names="Calibri"
+                                Font-Size="25pt" ForeColor="#006600" ClientInstanceName="lbTituloItem">
+                            </dxe:ASPxLabel>
+                        </div>
+                    </dxp:PanelContent>
+                </PanelCollection>
+            </dxcp:ASPxCallbackPanel>
+        </div>
+        <div id="divBarraMenu" style="float: right; width: 450px; top: 19px; position: relative;text-align:right">
+            <dxcp:ASPxCallbackPanel ID="cpMenu" runat="server" ClientInstanceName="cpMenu" OnCallback="cpMenu_Callback">
+                <ClientSideEvents EndCallback="function(s, e) {
+	retornoMenu();
+}" />
+                <PanelCollection>
+                    <dxp:PanelContent runat="server">
+                        <dxm:ASPxMenu ID="menuPrincipal" runat="server" ClientInstanceName="menuPrincipal"
+                            EnableHotTrack="False" EnableTheming="True" EnableViewState="False" Height="36px"
+                            HorizontalAlign="Center" ItemAutoWidth="False" ShowPopOutImages="False" ShowSubMenuShadow="False"
+                            Theme="Aqua" Width="200px" CssClass="tamanhoFontePadrao componenteMenuPrincipal">
+                            <ClientSideEvents ItemClick="function(s, e) {
+	cliqueMenu(s, e);
+}" ItemMouseOver="function(s, e) {
+	overMenu(s, e);
+}" />
+                            <Items>
+                                <dxm:MenuItem Name="menuItens" Text="" ToolTip="Itens da reunião">
+                                    <Image AlternateText="Itens da reunião" Height="25px" Url="~/imagens/Reuniao/topicos.png"
+                                        Width="25px">
+                                    </Image>
+                                    <ItemStyle Cursor="pointer" />
+                                    <SubMenuTemplate>
+                                        <dxcp:ASPxCallbackPanel ID="cpTodosItens" runat="server" ClientInstanceName="cpTodosItens"
+                                            OnCallback="cpTodosItens_Callback">
+                                            <ClientSideEvents EndCallback="function(s, e) {
+	aplicarMudancas();
+}" />
+                                            <PanelCollection>
+                                                <dxp:PanelContent runat="server">
+                                                    <dxwgv:ASPxGridView ID="gvTodosItens" runat="server" AutoGenerateColumns="False"
+                                                        ClientInstanceName="gvTodosItens" EnableCallBacks="False" EnableTheming="True"
+                                                        OnHtmlDataCellPrepared="gvTodosItens_HtmlDataCellPrepared" OnHtmlRowPrepared="gvTodosItens_HtmlRowPrepared"
+                                                        Theme="Aqua" Width="600px">
+                                                        <Columns>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Nome" FieldName="NomeObjeto" Name="NomeObjeto"
+                                                                ShowInCustomizationForm="True" VisibleIndex="2">
+                                                                <CellStyle Cursor="pointer" Font-Overline="False" Font-Underline="False" HorizontalAlign="Left"
+                                                                    Wrap="False">
+                                                                </CellStyle>
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Tipo" FieldName="DescricaoTipoObjeto" Name="DescricaoTipoObjeto"
+                                                                ShowInCustomizationForm="True" VisibleIndex="1">
+                                                                <HeaderStyle HorizontalAlign="Right" />
+                                                                <CellStyle Cursor="pointer" Font-Overline="False" Font-Underline="False" HorizontalAlign="Right"
+                                                                    Wrap="False">
+                                                                </CellStyle>
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Tratado" FieldName="IndicaItemTratado" Name="IndicaItemTratado"
+                                                                ShowInCustomizationForm="True" VisibleIndex="0" Width="30px">
+                                                                <EditCellStyle CssClass="classe_gvTodosItens_IndicaItemTratado">
+                                                                </EditCellStyle>
+                                                                <FilterCellStyle CssClass="classe_gvTodosItens_IndicaItemTratado">
+                                                                </FilterCellStyle>
+                                                                <EditFormCaptionStyle CssClass="classe_gvTodosItens_IndicaItemTratado">
+                                                                </EditFormCaptionStyle>
+                                                                <DataItemTemplate>
+                                                                    <dxe:ASPxImage ID="imagemTratado" runat="server" ClientInstanceName="imagemTratado"
+                                                                        Height="15px" ImageUrl='<%# imagemTratado(Eval("IndicaItemTratado").ToString()) %>'
+                                                                        Width="15px">
+                                                                    </dxe:ASPxImage>
+                                                                </DataItemTemplate>
+                                                                <HeaderStyle CssClass="classe_gvTodosItens_IndicaItemTratado" />
+                                                                <CellStyle Cursor="pointer" HorizontalAlign="Center" CssClass="classe_gvTodosItens_IndicaItemTratado">
+                                                                </CellStyle>
+                                                                <FooterCellStyle CssClass="classe_gvTodosItens_IndicaItemTratado">
+                                                                </FooterCellStyle>
+                                                                <GroupFooterCellStyle CssClass="classe_gvTodosItens_IndicaItemTratado">
+                                                                </GroupFooterCellStyle>
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                        </Columns>
+                                                        <SettingsBehavior ProcessSelectionChangedOnServer="True" />
+                                                        <SettingsPager Mode="ShowAllRecords">
+                                                        </SettingsPager>
+                                                    </dxwgv:ASPxGridView>
+                                                </dxp:PanelContent>
+                                            </PanelCollection>
+                                        </dxcp:ASPxCallbackPanel>
+                                    </SubMenuTemplate>
+                                </dxm:MenuItem>
+                                <dxm:MenuItem Name="menuParticipantes" Text="" ToolTip="Participantes">
+                                    <Image AlternateText="Participantes" Height="25px" Url="~/imagens/Reuniao/participantes.png"
+                                        Width="25px">
+                                    </Image>
+                                    <ItemStyle Cursor="pointer" />
+                                    <SubMenuTemplate>
+                                        <dxcp:ASPxCallbackPanel ID="cpParticipantes" runat="server" ClientInstanceName="cpParticipantes"
+                                            OnCallback="cpParticipantes_Callback">
+                                            <ClientSideEvents EndCallback="function(s, e) {
+	aplicarMudancas();
+}" />
+                                            <PanelCollection>
+                                                <dxp:PanelContent runat="server">
+                                                    <dxwgv:ASPxGridView ID="gvParticipantes" runat="server" AutoGenerateColumns="False"
+                                                        ClientInstanceName="gvParticipantes" EnableTheming="True" OnHtmlDataCellPrepared="gvParticipantes_HtmlDataCellPrepared"
+                                                        OnHtmlRowPrepared="gvParticipantes_HtmlRowPrepared" Theme="Aqua" OnCustomColumnDisplayText="gvParticipantes_CustomColumnDisplayText">
+                                                        <Columns>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Participante" FieldName="NomeParticipante"
+                                                                Name="NomeParticipante" ShowInCustomizationForm="True" VisibleIndex="1">
+                                                                <CellStyle HorizontalAlign="Left" Wrap="False">
+                                                                </CellStyle>
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Presente" FieldName="IndicaParticipantePresente"
+                                                                Name="IndicaParticipantePresente" ShowInCustomizationForm="True" VisibleIndex="0"
+                                                                Width="50px">
+                                                                <EditCellStyle CssClass="classe_gvParticipantes_IndicaParticipantePresente">
+                                                                </EditCellStyle>
+                                                                <FilterCellStyle CssClass="classe_gvParticipantes_IndicaParticipantePresente">
+                                                                </FilterCellStyle>
+                                                                <EditFormCaptionStyle CssClass="classe_gvParticipantes_IndicaParticipantePresente">
+                                                                </EditFormCaptionStyle>
+                                                                <DataItemTemplate>
+                                                                    <dxe:ASPxImage ID="ASPxImage1" runat="server" Height="15px" ImageUrl='<%# imagemTratado(Eval("IndicaParticipantePresente").ToString()) %>'
+                                                                        Width="15px">
+                                                                    </dxe:ASPxImage>
+                                                                </DataItemTemplate>
+                                                                <HeaderStyle CssClass="classe_gvParticipantes_IndicaParticipantePresente" />
+                                                                <CellStyle Cursor="pointer" HorizontalAlign="Center" CssClass="classe_gvParticipantes_IndicaParticipantePresente">
+                                                                </CellStyle>
+                                                                <FooterCellStyle CssClass="classe_gvParticipantes_IndicaParticipantePresente">
+                                                                </FooterCellStyle>
+                                                                <GroupFooterCellStyle CssClass="classe_gvParticipantes_IndicaParticipantePresente">
+                                                                </GroupFooterCellStyle>
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                        </Columns>
+                                                        <SettingsPager Mode="ShowAllRecords">
+                                                        </SettingsPager>
+                                                    </dxwgv:ASPxGridView>
+                                                    <dxe:ASPxButton ID="botaoMarcarParticipantes" runat="server" OnClick="botaoMarcarParticipantes_Click"
+                                                        Text="Marcar todos" Theme="Aqua" ClientInstanceName="botaoMarcarParticipantes">
+                                                        <ClientSideEvents Click="function(s, e) {
+	cpParticipantes.PerformCallback('');
+}" />
+                                                    </dxe:ASPxButton>
+                                                </dxp:PanelContent>
+                                            </PanelCollection>
+                                        </dxcp:ASPxCallbackPanel>
+                                    </SubMenuTemplate>
+                                </dxm:MenuItem>
+                                <dxm:MenuItem Name="visao" Text="" ToolTip="Visão geral">
+                                    <Image AlternateText="Alterar visualização" Height="25px" Url="~/imagens/Reuniao/visaoGeral.png"
+                                        Width="25px">
+                                    </Image>
+                                    <ItemStyle Cursor="pointer" />
+                                    <SubMenuItemStyle HorizontalAlign="Left">
+                                    </SubMenuItemStyle>
+                                </dxm:MenuItem>
+                                <dxm:MenuItem Name="aumentarFonte" Text="" ToolTip="Aumentar a fonte do sistema">
+                                    <Items>
+                                        <dxm:MenuItem Name="fonteMonitor" Text="Apresenta&#231;&#227;o Monitor" ToolTip="Tamanhos de texto para visualiza&#231;&#227;o em monitor.">
+                                            <ItemStyle Cursor="pointer"></ItemStyle>
+                                        </dxm:MenuItem>
+                                        <dxm:MenuItem Name="fonteTv" Text="Apresenta&#231;&#227;o TV" ToolTip="Tamanhos de textos para apresenta&#231;&#227;o em TV&#39;s">
+                                            <ItemStyle Cursor="pointer"></ItemStyle>
+                                        </dxm:MenuItem>
+                                        <dxm:MenuItem Text="Apresenta&#231;&#227;o Projetor" ToolTip="Tamanhos de texto para apresenta&#231;&#227;o em um projetor"
+                                            Name="fonteProjetor">
+                                        </dxm:MenuItem>
+                                    </Items>
+                                    <Image AlternateText="Visão geral" Height="25px" Url="~/imagens/Reuniao/monitor.png"
+                                        Width="25px">
+                                    </Image>
+                                    <ItemStyle Cursor="pointer" />
+                                    <SubMenuItemStyle HorizontalAlign="Left">
+                                    </SubMenuItemStyle>
+                                </dxm:MenuItem>
+                                <dxm:MenuItem DropDownMode="True" Name="iniciar" Text="" ToolTip="Iniciar/Terminar Reunião">
+                                    <Items>
+                                        <dxm:MenuItem Name="dataInicio" Text="Data de início">
+                                            <ItemStyle Cursor="pointer" />
+                                            <SubMenuTemplate>
+                                                <table width="260">
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <dxe:ASPxCalendar ID="caleInicioReuniao" runat="server" ClearButtonText="Limpar"
+                                                                ClientInstanceName="caleInicioReuniao" Height="215px" ShowClearButton="False"
+                                                                Theme="Aqua" TodayButtonText="Data atual" ToolTip="Informe a data de início da reunião"
+                                                                Width="200px" HighlightToday="False" OnLoad="caleInicioReuniao_Load">
+                                                                <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                    ErrorText="?" SetFocusOnError="True">
+                                                                    <RequiredField IsRequired="True" />
+                                                                </ValidationSettings>
+                                                            </dxe:ASPxCalendar>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <dxe:ASPxTimeEdit ID="timeHoraInicioReuniao" runat="server" AutoPostBack="True" ClientInstanceName="timeHoraInicioReuniao"
+                                                                Theme="Aqua" ToolTip="Informe o horário de início da reunião" OnLoad="timeHoraInicioReuniao_Load">
+                                                                <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                    ErrorText="?" SetFocusOnError="True">
+                                                                    <RequiredField IsRequired="True" />
+                                                                </ValidationSettings>
+                                                            </dxe:ASPxTimeEdit>
+                                                        </td>
+                                                        <td>
+                                                            <dxe:ASPxButton ID="botaoIniciarReuniao" runat="server" ClientInstanceName="botaoIniciarReuniao"
+                                                                Cursor="pointer" OnClick="botaoIniciarReuniao_Click" Text="Confirmar" Theme="Aqua"
+                                                                ToolTip="Confirmar o início da reunião na data e hora informado" AutoPostBack="False">
+                                                                <ClientSideEvents Click="function(s, e) {
+	gravarDataInicio(caleInicioReuniao.GetValue(), timeHoraInicioReuniao.GetValue(), 'dataInicio');
+}" />
+                                                            </dxe:ASPxButton>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </SubMenuTemplate>
+                                        </dxm:MenuItem>
+                                        <dxm:MenuItem Name="dataTermino" Text="Data de término">
+                                            <ItemStyle Cursor="pointer" />
+                                            <SubMenuTemplate>
+                                                <table width="260">
+                                                    <tr>
+                                                        <td class="style3" colspan="2">
+                                                            <dxe:ASPxCalendar ID="caleTerminoReuniao" runat="server" ClientInstanceName="caleTerminoReuniao"
+                                                                ShowClearButton="False" Theme="Aqua" ToolTip="Informe a data de término da reunião"
+                                                                HighlightToday="False" TodayButtonText="Data atual" OnLoad="caleTerminoReuniao_Load">
+                                                            </dxe:ASPxCalendar>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <dxe:ASPxTimeEdit ID="timeTerminoReuniao" runat="server" ClientInstanceName="timeTerminoReuniao"
+                                                                Theme="Aqua" ToolTip="Informe o horário do término da reunião" OnLoad="timeTerminoReuniao_Load">
+                                                            </dxe:ASPxTimeEdit>
+                                                        </td>
+                                                        <td>
+                                                            <dxe:ASPxButton ID="botaoTerminoReuniao" runat="server" ClientInstanceName="botaoTerminoReuniao"
+                                                                Cursor="pointer" OnClick="botaoTerminoReuniao_Click" Text="Confirmar" Theme="Aqua"
+                                                                ToolTip="Confirmar a o término da reunião na data e horário informados" AutoPostBack="False">
+                                                                <ClientSideEvents Click="function(s, e) {
+	gravarDataInicio(caleTerminoReuniao.GetValue(), timeTerminoReuniao.GetValue(), 'dataFim');
+}" />
+                                                            </dxe:ASPxButton>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </SubMenuTemplate>
+                                        </dxm:MenuItem>
+                                    </Items>
+                                    <Image AlternateText="Controle reunião" Height="25px" Url="~/imagens/Reuniao/play.png"
+                                        Width="25px">
+                                    </Image>
+                                    <ItemStyle Cursor="pointer" />
+                                </dxm:MenuItem>
+                                <dxm:MenuItem Name="anterior" Text="" ToolTip="Item anterior">
+                                    <Image AlternateText="Próximo item" Height="25px" Url="~/imagens/Reuniao/anterior.png"
+                                        Width="25px">
+                                    </Image>
+                                    <ItemStyle Cursor="pointer" />
+                                </dxm:MenuItem>
+                                <dxm:MenuItem Name="proximo" Text="" ToolTip="Próximo item">
+                                    <Image AlternateText="Item anterior" Height="25px" Url="~/imagens/Reuniao/proxima.png"
+                                        Width="25px">
+                                    </Image>
+                                    <ItemStyle Cursor="pointer" />
+                                </dxm:MenuItem>
+                            </Items>
+                        </dxm:ASPxMenu>
+                    </dxp:PanelContent>
+                </PanelCollection>
+            </dxcp:ASPxCallbackPanel>
+        </div>
+        &nbsp;</div>
+    <div style="clear: both">
+    </div>
+    <dxcp:ASPxCallbackPanel ID="cpQuadrosPincipais" runat="server" ClientInstanceName="cpQuadrosPincipais">
+        <PanelCollection>
+            <dxp:PanelContent runat="server">
+                <dxnb:ASPxNavBar ID="quadrosPrincipais" runat="server" ClientInstanceName="quadrosPrincipais"
+                    EnableClientSideAPI="True" EnableTheming="True" Theme="Aqua" Width="100%" EnableAnimation="True">
+                    <ClientSideEvents ExpandedChanging="function(s, e) {
+	cliqueQuadros(s, e);
+}" EndCallback="function(s, e) {
+	retornoQuadros();
+}" />
+                    <Groups>
+                        <dxnb:NavBarGroup ExpandButtonPosition="Right" Name="dadosItem" ShowExpandButton="True"
+                            Text="Dados do item" ToolTip="Dados detalhados do item atual" Expanded="False">
+                            <HeaderImage Height="15px" Url="~/imagens/Reuniao/objetos.png" Width="15px">
+                            </HeaderImage>
+                            <ContentTemplate>
+                                <dxcp:ASPxCallbackPanel ID="cpDadosItem" runat="server" ClientInstanceName="cpDadosItem"
+                                    OnLoad="cpDadosItem_Load" Theme="Aqua" Width="100%" OnCallback="cpDadosItem_Callback">
+                                    <ClientSideEvents EndCallback="function(s, e) {
+	aplicarMudancas();
+}" />
+                                    <PanelCollection>
+                                        <dxp:PanelContent runat="server">
+                                            <div id="divTipoItem_100" runat="server">
+                                                <table id="tabela7" style="width: 100%;">
+                                                    <tr>
+                                                        <td class="fundoDatas" style="width:50%">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior35" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#003300" Text="Orçamento até Dez/2013: ">
+                                                            </dxe:ASPxLabel>
+                                                            <dxe:ASPxLabel ID="lbDadosObjetoAOrcamento" runat="server" ClientInstanceName="lbDadosObjetoAOrcamento"
+                                                                Font-Bold="True" Font-Size="16pt" ForeColor="White" Theme="Aqua">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                        <td align="center" class="fundoDatas" style="width:25%">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior36" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#003300" Text=" Início: ">
+                                                            </dxe:ASPxLabel>
+                                                            <dxe:ASPxLabel ID="lbDadosObjetoAInicio" runat="server" ClientInstanceName="lbDadosObjetoAInicio"
+                                                                Font-Bold="True" Font-Size="16pt" ForeColor="White" Theme="Aqua">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                        <td align="center" class="fundoDatas"  style="width:25%">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior37" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#003300" Text="Término previsto: ">
+                                                            </dxe:ASPxLabel>
+                                                            <dxe:ASPxLabel ID="lbDadosObjetoATermino" runat="server" ClientInstanceName="lbDadosObjetoATermino"
+                                                                Font-Bold="True" Font-Size="16pt" ForeColor="White" Theme="Aqua">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="style8" colspan="3">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior43" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Descrição:">
+                                                                <ClientSideEvents Init="function(s, e) {
+	graficoProjetoItem(lbDadosObjetoFisicoValor.GetText());
+}" />
+                                                            </dxe:ASPxLabel>
+                                                            <dxe:ASPxMemo ID="memoDadosObjetoA" runat="server" ClientInstanceName="memoDadosObjetoA"
+                                                                Height="100px" ReadOnly="True" Theme="Aqua" Width="100%">
+                                                            </dxe:ASPxMemo>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="quadrosTdDestaque">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior39" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Físico">
+                                                                <ClientSideEvents Init="function(s, e) {
+	graficoProjetoItem(lbDadosObjetoFisicoValor.GetText());
+}" />
+                                                            </dxe:ASPxLabel>
+                                                            <br />
+                                                            <div id="Projeto_Grafico_Fisico">
+                                                            </div>
+                                                            <dxe:ASPxLabel ID="lbDadosObjetoFisicoValor" runat="server" ClientInstanceName="lbDadosObjetoFisicoValor"
+                                                                Font-Bold="True" ClientVisible="false" Text='<%# chamarGrafico("Projeto_Grafico_Fisico") %>'>
+                                                            </dxe:ASPxLabel>
+                                                            <br />
+                                                            <dxe:ASPxLabel ID="lbDadosObjetoAFisicoDesvio" runat="server" ClientInstanceName="lbDadosObjetoAFisicoDesvio"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Desvio">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                        <td align="center" class="quadrosTdDestaque" colspan="2">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior40" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Despesa">
+                                                                <ClientSideEvents Init="function(s, e) {
+	graficoProjetoItem(lbDadosObjetoDespesaValor.GetText());
+}" />
+                                                            </dxe:ASPxLabel>
+                                                            <br />
+                                                            <div id="Projeto_Grafico_Despesa">
+                                                            </div>
+                                                            <dxe:ASPxLabel ID="lbDadosObjetoDespesaValor" runat="server" ClientInstanceName="lbDadosObjetoDespesaValor"
+                                                                Font-Bold="True" ClientVisible="false" Text='<%# chamarGrafico("Projeto_Grafico_Despesa") %>'>
+                                                            </dxe:ASPxLabel>
+                                                            <br />
+                                                            <dxe:ASPxLabel ID="lbDadosObjetoADespesaDesvio" runat="server" ClientInstanceName="lbDadosObjetoADespesaDesvio"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Desvio">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="quadrosTdDestaque" colspan="1">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior41" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Receita">
+                                                                <ClientSideEvents Init="function(s, e) {
+	graficoProjetoItem(lbDadosObjetoReceitaValor.GetText());
+}" />
+                                                            </dxe:ASPxLabel>
+                                                            <br />
+                                                            <div id="Projeto_Grafico_Receita">
+                                                            </div>
+                                                            <dxe:ASPxLabel ID="lbDadosObjetoReceitaValor" runat="server" ClientInstanceName="lbDadosObjetoReceitaValor"
+                                                                Font-Bold="True" ClientVisible="false" Text='<%# chamarGrafico("Projeto_Grafico_Receita") %>'>
+                                                            </dxe:ASPxLabel>
+                                                            <br />
+                                                            <dxe:ASPxLabel ID="lbDadosObjetoAReceitaDesvio" runat="server" ClientInstanceName="lbDadosObjetoAReceitaDesvio"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Desvio">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            &nbsp;
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" style="padding-top: 20px">
+                                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" id="tblLegendas">
+                                                                <tr>
+                                                                    <th colspan="2">
+                                                                        <div style="-moz-border-radius-topleft: 50px 25px; -moz-border-radius-topright: 50px 25px;
+                                                                            width: 100%; background-color: #006666;">
+                                                                            <dxe:ASPxLabel ID="ASPxLabel6" runat="server" Font-Bold="True" Font-Names="Calibri"
+                                                                                Font-Size="16pt" ForeColor="#ffffff" Text="Legenda">
+                                                                            </dxe:ASPxLabel>
+                                                                        </div>
+                                                                    </th>
+                                                                </tr>
+                                                                <tr id="trLegendas_Projeto_Grafico_Fisico" style="display: none;">
+                                                                    <td style="padding-left:20px">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior38" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="14pt" ForeColor="#006666" Text="Físico: ">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dx:ASPxDataView ID="dvDadosObjetoALegendaFisico" runat="server" AllowPaging="False"
+                                                                            ClientInstanceName="dvDadosObjetoALegendaFisico"  Layout="Flow"
+                                                                             Theme="Aqua" Width="100%">
+                                                                            <ItemTemplate>
+                                                                                <%# corStatusItem(Eval("CorFaixaFisico").ToString(), true) %>
+                                                                                <dxe:ASPxLabel ID="ASPxLabel46" runat="server" Font-Bold="True" Font-Names="Calibri"
+                                                                                    Font-Size="10pt" ForeColor="#000066" Text='<%# Eval("DescricaoFaixaFisico").ToString() %>'>
+                                                                                </dxe:ASPxLabel>
+                                                                            </ItemTemplate>
+                                                                            <SettingsTableLayout ColumnCount="4" RowsPerPage="1"/>
+                                                                            <Paddings Padding="0px" />
+                                                                            <ContentStyle>
+                                                                                <Paddings Padding="0px" />
+                                                                                <Border BorderStyle="None" />
+                                                                            </ContentStyle>
+                                                                            <ItemStyle Height="12px">
+                                                                                <Paddings Padding="10px" />
+                                                                            </ItemStyle>
+                                                                            <Border BorderStyle="None" />
+                                                                        </dx:ASPxDataView>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="trLegendas_Projeto_Grafico_Despesa" style="display: none;">
+                                                                    <td style="padding-left:20px">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior42" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="14pt" ForeColor="#006666" Text="Despesa: ">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dx:ASPxDataView ID="dvDadosObjetoALegendaDespesa" runat="server" AllowPaging="False"
+                                                                            ClientInstanceName="dvDadosObjetoALegendaDespesa"  Layout="Flow"
+                                                                             Theme="Aqua" Width="100%">
+                                                                            <ItemTemplate>
+                                                                                <%# corStatusItem(Eval("CorFaixaFinanceiro").ToString(), true) %>
+                                                                                <dxe:ASPxLabel ID="ASPxLabel47" runat="server" Font-Bold="True" Font-Names="Calibri"
+                                                                                    Font-Size="10pt" ForeColor="#000066" Text='<%# Eval("DescricaoFaixaFinanceiro").ToString() %>'>
+                                                                                </dxe:ASPxLabel>
+                                                                            </ItemTemplate>
+                                                                            <Paddings Padding="0px" />
+                                                                            <SettingsTableLayout ColumnCount="4" RowsPerPage="1"/>
+                                                                            <ContentStyle>
+                                                                                <Paddings Padding="0px" />
+                                                                                <Border BorderStyle="None" />
+                                                                            </ContentStyle>
+                                                                            <ItemStyle Height="12px">
+                                                                                <Paddings Padding="10px" />
+                                                                            </ItemStyle>
+                                                                            <Border BorderStyle="None" />
+                                                                        </dx:ASPxDataView>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="trLegendas_Projeto_Grafico_Receita" style="display: none;">
+                                                                    <td style="padding-left:20px">
+                                                                        <dxe:ASPxLabel ID="ASPxLabel5" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="14pt" ForeColor="#006666" Text="Receita: ">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dx:ASPxDataView ID="dvDadosObjetoALegendaReceita" runat="server" AllowPaging="False"
+                                                                            ClientInstanceName="dvDadosObjetoALegendaReceita"  Layout="Flow"
+                                                                             Theme="Aqua" Width="100%">
+                                                                            <ItemTemplate>
+                                                                                <%# corStatusItem(Eval("CorFaixaReceita").ToString(), true) %>
+                                                                                <dxe:ASPxLabel ID="ASPxLabel47" runat="server" Font-Bold="True" Font-Names="Calibri"
+                                                                                    Font-Size="10pt" ForeColor="#000066" Text='<%# Eval("DescricaoFaixaReceita").ToString() %>'>
+                                                                                </dxe:ASPxLabel>
+                                                                            </ItemTemplate>
+                                                                            <Paddings Padding="0px" />
+                                                                            <SettingsTableLayout ColumnCount="4" RowsPerPage="1"/>
+                                                                            <ContentStyle>
+                                                                                <Paddings Padding="0px" />
+                                                                                <Border BorderStyle="None" />
+                                                                            </ContentStyle>
+                                                                            <ItemStyle Height="12px">
+                                                                                <Paddings Padding="10px" />
+                                                                            </ItemStyle>
+                                                                            <Border BorderStyle="None" />
+                                                                        </dx:ASPxDataView>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div id="divTipoItem_99" runat="server">
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <dxe:ASPxLabel ID="lbDadosEventoTipoNome0" runat="server" ClientInstanceName="lbDadosEventoTipoNome0"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Reunião: ">
+                                                            </dxe:ASPxLabel>
+                                                            <dxe:ASPxLabel ID="lbDadosEventoNome" runat="server" ClientInstanceName="lbDadosEventoNome"
+                                                                Font-Bold="True" Font-Size="16pt" ForeColor="#003300" Theme="Aqua">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="style6" style="width:50%">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior30" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Início: ">
+                                                            </dxe:ASPxLabel>
+                                                            <dxe:ASPxLabel ID="lbDadosEventoInicio" runat="server" ClientInstanceName="lbDadosEventoInicio"
+                                                                Font-Bold="True" Font-Size="16pt" ForeColor="#003300" Theme="Aqua">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                        <td style="width:50%">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior32" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Término: ">
+                                                            </dxe:ASPxLabel>
+                                                            <dxe:ASPxLabel ID="lbDadosEventoTermino" runat="server" ClientInstanceName="lbDadosEventoTermino"
+                                                                Font-Bold="True" Font-Size="16pt" ForeColor="#003300" Theme="Aqua">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="style7" colspan="2">
+                                                            <dxe:ASPxLabel ID="lbDadosEventoTipoNome" runat="server" ClientInstanceName="lbDadosEventoTipoNome"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Projeto: ">
+                                                            </dxe:ASPxLabel>
+                                                            <dxe:ASPxLabel ID="lbDadosEventoNomeTipo" runat="server" ClientInstanceName="lbDadosEventoNomeTipo"
+                                                                Font-Bold="True" Font-Size="16pt" ForeColor="#003300" Theme="Aqua">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="Style5" style="padding: 5px; border-width: 2px; border-style: solid;
+                                                            border-color: #669999; margin-right: 5px;text-align:center;" valign="top">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior33" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Itens">
+                                                            </dxe:ASPxLabel>
+                                                            <dxwgv:ASPxGridView ID="gvItensReuniao" runat="server" AutoGenerateColumns="False"
+                                                                ClientInstanceName="gvItensReuniao" EnableTheming="True" Theme="Aqua" Width="100%">
+                                                                <Columns>
+                                                                    <dxwgv:GridViewDataTextColumn Caption="Tipo" FieldName="DescricaoTipoObjeto" Name="DescricaoTipoObjeto"
+                                                                        ShowInCustomizationForm="True" VisibleIndex="0" Width="200px">
+                                                                        <HeaderStyle HorizontalAlign="Center" />
+                                                                        <CellStyle HorizontalAlign="Right">
+                                                                        </CellStyle>
+                                                                    </dxwgv:GridViewDataTextColumn>
+                                                                    <dxwgv:GridViewDataTextColumn Caption="Nome" FieldName="NomeObjeto" Name="NomeObjeto"
+                                                                        ShowInCustomizationForm="True" VisibleIndex="1">
+                                                                        <PropertiesTextEdit DisplayFormatInEditMode="True" DisplayFormatString="0">
+                                                                        </PropertiesTextEdit>
+                                                                        <HeaderStyle HorizontalAlign="Center" />
+                                                                        <CellStyle HorizontalAlign="Left">
+                                                                        </CellStyle>
+                                                                    </dxwgv:GridViewDataTextColumn>
+                                                                </Columns>
+                                                                <SettingsBehavior AllowGroup="False" />
+                                                                <SettingsPager Visible="False">
+                                                                </SettingsPager>
+                                                                <Settings ShowGroupButtons="False" ShowHeaderFilterBlankItems="False" ShowStatusBar="Hidden" />
+                                                            </dxwgv:ASPxGridView>
+                                                        </td>
+                                                        <td align="center" style="padding: 5px; border-width: 2px; border-style: solid; border-color: #669999;
+                                                            margin-left: 5px;" valign="top">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior34" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Participantes">
+                                                            </dxe:ASPxLabel>
+                                                            <dxwgv:ASPxGridView ID="gvParticipantesReuniao" runat="server" AutoGenerateColumns="False"
+                                                                ClientInstanceName="gvParticipantesReuniao" EnableTheming="True" Theme="Aqua"
+                                                                Width="100%" OnCustomColumnDisplayText="gvParticipantes_CustomColumnDisplayText"
+                                                                OnHtmlDataCellPrepared="gvParticipantes_HtmlDataCellPrepared">
+                                                                <Columns>
+                                                                    <dxwgv:GridViewDataTextColumn Caption="Nome" FieldName="NomeParticipante" Name="NomeParticipante"
+                                                                        ShowInCustomizationForm="True" VisibleIndex="0">
+                                                                        <HeaderStyle HorizontalAlign="Center" />
+                                                                        <CellStyle HorizontalAlign="Left">
+                                                                        </CellStyle>
+                                                                    </dxwgv:GridViewDataTextColumn>
+                                                                    <dxwgv:GridViewDataTextColumn Caption="Tipo" FieldName="TipoParticipante" Name="TipoParticipante"
+                                                                        ShowInCustomizationForm="True" VisibleIndex="1" Width="150px" Visible="False">
+                                                                        <PropertiesTextEdit DisplayFormatInEditMode="True" DisplayFormatString="0">
+                                                                        </PropertiesTextEdit>
+                                                                        <HeaderStyle HorizontalAlign="Center" />
+                                                                        <CellStyle HorizontalAlign="Left">
+                                                                        </CellStyle>
+                                                                    </dxwgv:GridViewDataTextColumn>
+                                                                </Columns>
+                                                                <SettingsBehavior AllowGroup="False" />
+                                                                <SettingsPager Visible="False">
+                                                                </SettingsPager>
+                                                                <Settings ShowGroupButtons="False" ShowHeaderFilterBlankItems="False" ShowStatusBar="Hidden" />
+                                                            </dxwgv:ASPxGridView>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div id="divTipoItem11" runat="server" class="quadrosDadosItens">
+                                                <table cellspacing="8" style="width: 100%;" class="tabelaItem11">
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div style="float: left">
+                                                                <div id="divDadosItemEfeito" runat="server" title="Situação atual risco" class="botaoStatusItem">
+                                                                </div>
+                                                                <dxe:ASPxLabel ID="lbDadosItemNome" runat="server" ClientInstanceName="lbDadosItemNome"
+                                                                    Font-Bold="True" Font-Size="16pt" ForeColor="#003300" Theme="Aqua" ToolTip="Nome">
+                                                                </dxe:ASPxLabel>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" style="width:25%" valign="middle">
+                                                            <div class="fundoQuadrosTitulos">
+                                                                <dxe:ASPxLabel ID="lbDadosItemResponsavel" runat="server" ClientInstanceName="lbDadosItemResponsavel"
+                                                                    Font-Bold="True" Font-Italic="True" Font-Size="12pt" ToolTip="Responsável" Wrap="False">
+                                                                </dxe:ASPxLabel>
+                                                            </div>
+                                                        </td>
+                                                        <td align="center" style="width:25%">
+                                                            <div class="fundoQuadrosTitulos">
+                                                                <dxe:ASPxLabel ID="lbDadosItemProbabilidade" runat="server" ClientInstanceName="lbDadosItemProbabilidade"
+                                                                    Font-Bold="True" Font-Italic="True" Font-Size="12pt" ToolTip="Probabilidade"
+                                                                    Wrap="False">
+                                                                </dxe:ASPxLabel>
+                                                            </div>
+                                                        </td>
+                                                        <td align="center" style="width:25%">
+                                                            <div class="fundoQuadrosTitulos">
+                                                                <dxe:ASPxLabel ID="lbDadosItemImpacto" runat="server" ClientInstanceName="lbDadosItemImpacto"
+                                                                    Font-Bold="True" Font-Italic="True" Font-Size="12pt" ToolTip="Impacto" Wrap="False">
+                                                                </dxe:ASPxLabel>
+                                                            </div>
+                                                        </td>
+                                                        <td align="center" style="width:25%">
+                                                            <div class="fundoQuadrosTitulos">
+                                                                <dxe:ASPxLabel ID="lbDadosItemLimite" runat="server" ClientInstanceName="lbDadosItemLimite"
+                                                                    Font-Bold="True" Font-Italic="True" Font-Size="12pt" ToolTip="Limite" Wrap="False">
+                                                                </dxe:ASPxLabel>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <dxe:ASPxMemo ID="memoDadosItemDescricao" runat="server" ClientInstanceName="memoDadosItemDescricao"
+                                                                Theme="Aqua" ToolTip="Descrição" Width="100%" Font-Size="14pt" ReadOnly="True">
+                                                            </dxe:ASPxMemo>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <dxe:ASPxLabel ID="lbDadosItemData" runat="server" ClientInstanceName="lbDadosItemData"
+                                                                Font-Bold="True" Font-Italic="True" Font-Size="10pt" ForeColor="#003300" Theme="Aqua"
+                                                                ToolTip="Último comentário">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div id="divTipoItem5" runat="server" class="quadrosDadosItens">
+                                                <table id="tabela1" cellpadding="5" cellspacing="5" style="width: 100%;">
+                                                    <tr>
+                                                        <td colspan="3" style="width: 67%">
+                                                            <div id="divDadosTarefaEfeito" runat="server" class="botaoStatusItem" title="Situação atual risco">
+                                                            </div>
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaNome" runat="server" ClientInstanceName="lbDadosTarefaNome"
+                                                                Font-Bold="True" Font-Size="16pt" ForeColor="#003300" Theme="Aqua">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" style="width: 67%">
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="style5" style="border: 2px solid #669999;width:33%"  valign="top">
+                                                            <table id="tabela2" cellspacing="5" style="width: 100%;">
+                                                                <tr>
+                                                                    <td align="center">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior15" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Início">
+                                                                        </dxe:ASPxLabel>
+                                                                        <div class="objetoCalendario">
+                                                                            <div id="divDadosTarefaInicioAno" class="objetoCalendarioAno" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaInicioAno" runat="server" Font-Bold="True" Font-Size="13pt"
+                                                                                    ForeColor="White" ClientInstanceName="lbDadosTarefaInicioAno" Font-Names="Calibri">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                            <div id="divDadosTarefaInicioMes" class="objetoCalendarioMes" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaInicioMes" runat="server" Font-Bold="True" Font-Names="Arial Black"
+                                                                                    Font-Size="18pt" ForeColor="Black" ClientInstanceName="lbDadosTarefaInicioMes">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                            <div id="divDadosTarefaInicioDia" class="objetoCalendarioDia" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaInicioDia" runat="server" Font-Bold="True" Font-Names="Arial Black"
+                                                                                    Font-Size="20pt" ForeColor="Black" ClientInstanceName="lbDadosTarefaInicioDia">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td align="center" style="border-right-style: solid; border-right-width: 2px; border-right-color: #006666">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior16" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Término">
+                                                                        </dxe:ASPxLabel>
+                                                                        <div class="objetoCalendario">
+                                                                            <div id="divDadosTarefaTerminoAno" class="objetoCalendarioAno" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaTerminoAno" runat="server" Font-Bold="True" Font-Size="13pt"
+                                                                                    ForeColor="White" ClientInstanceName="lbDadosTarefaTerminoAno" Font-Names="Calibri">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                            <div id="divDadosTarefaTerminoMes" class="objetoCalendarioMes" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaTerminoMes" runat="server" Font-Bold="True" Font-Names="Arial Black"
+                                                                                    Font-Size="18pt" ForeColor="Black" ClientInstanceName="lbDadosTarefaTerminoMes">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                            <div id="divDadosTarefaTerminoDia" class="objetoCalendarioDia" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaTerminoDia" runat="server" Font-Bold="True" Font-Names="Arial Black"
+                                                                                    Font-Size="20pt" ForeColor="Black" ClientInstanceName="lbDadosTarefaTerminoDia">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td align="center" style="border-left-style: solid; border-left-width: 2px; border-left-color: #006666">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior17" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Início Real">
+                                                                        </dxe:ASPxLabel>
+                                                                        <div class="objetoCalendario">
+                                                                            <div id="divDadosTarefaIRealAno" class="objetoCalendarioAno" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaIRealAno" runat="server" Font-Bold="True" Font-Size="13pt"
+                                                                                    ForeColor="White" ClientInstanceName="lbDadosTarefaIRealAno" Font-Names="Calibri">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                            <div id="divDadosTarefaIRealMes" class="objetoCalendarioMes" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaIRealMes" runat="server" Font-Bold="True" Font-Names="Arial Black"
+                                                                                    Font-Size="18pt" ForeColor="Black" ClientInstanceName="lbDadosTarefaIRealMes">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                            <div id="divDadosTarefaIRealDia" class="objetoCalendarioDia" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaIRealDia" runat="server" Font-Bold="True" Font-Names="Arial Black"
+                                                                                    Font-Size="20pt" ForeColor="Black" ClientInstanceName="lbDadosTarefaIRealDia">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                            <div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior18" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Término Real">
+                                                                        </dxe:ASPxLabel>
+                                                                        <div class="objetoCalendario">
+                                                                            <div id="divDadosTarefaTRealAno" class="objetoCalendarioAno" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaTRealAno" runat="server" Font-Bold="True" Font-Size="13pt"
+                                                                                    ForeColor="White" ClientInstanceName="lbDadosTarefaTRealAno" Font-Names="Calibri">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                            <div id="divDadosTarefaTRealMes" class="objetoCalendarioMes" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaTRealMes" runat="server" Font-Bold="True" Font-Names="Arial Black"
+                                                                                    Font-Size="18pt" ForeColor="Black" ClientInstanceName="lbDadosTarefaTRealMes">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                            <div id="divDadosTarefaTRealDia" class="objetoCalendarioDia" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaTRealDia" runat="server" Font-Bold="True" Font-Names="Arial Black"
+                                                                                    Font-Size="20pt" ForeColor="Black" ClientInstanceName="lbDadosTarefaTRealDia">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" valign="top">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaInicioLB" runat="server" ClientInstanceName="lbDadosTarefaInicioLB"
+                                                                            Font-Bold="False" Font-Names="Calibri" Font-Overline="False"
+                                                                            ForeColor="#006666" Text="Linha de Base">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td align="center" style="border-right-style: solid; border-right-width: 2px; border-right-color: #006666"
+                                                                        valign="top">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaTerminoLB" runat="server" ClientInstanceName="lbDadosTarefaTerminoLB"
+                                                                            Font-Bold="False" Font-Names="Calibri" Font-Overline="False"
+                                                                            ForeColor="#006666" Text="Linha de Base">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td align="center" style="border-left-style: solid; border-left-width: 2px; border-left-color: #006666">
+                                                                        &nbsp;
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        &nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" colspan="2" style="width:50%">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior13" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="% Previsto">
+                                                                        </dxe:ASPxLabel>
+                                                                        <div class="objetoPorcentagem" id="divDadosTarefaPrevisaoCapa" runat="server">
+                                                                            <div id="divDadosTarefaPrevisao" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaPrevisao" runat="server" Font-Bold="True" Font-Size="16pt"
+                                                                                    ForeColor="#003300" ClientInstanceName="lbDadosTarefaPrevisao">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td align="center" colspan="2" style="width:50%">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior14" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="% Concluído">
+                                                                        </dxe:ASPxLabel>
+                                                                        <div class="objetoPorcentagem" id="divDadosTarefaConcluidoCapa" runat="server">
+                                                                            <div id="divDadosTarefaConcluido" runat="server">
+                                                                                <dxe:ASPxLabel ID="lbDadosTarefaConcluido" runat="server" Font-Bold="True" Font-Size="16pt"
+                                                                                    ForeColor="#003300" ClientInstanceName="lbDadosTarefaConcluido">
+                                                                                </dxe:ASPxLabel>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" colspan="2" valign="top" style="width:50%">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaPrevisaoLB" runat="server" ClientInstanceName="lbDadosTarefaPrevisaoLB"
+                                                                            Font-Bold="False" Font-Names="Calibri" Font-Overline="False"
+                                                                            ForeColor="#006666" Text="Linha de Base">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td align="center" colspan="2" valign="top" style="width:50%">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaConcluidoLB" runat="server" ClientInstanceName="lbDadosTarefaConcluidoLB"
+                                                                            Font-Bold="False" Font-Names="Calibri" Font-Overline="False"
+                                                                            ForeColor="#006666" Text="Linha de Base">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td align="center" class="style5" style="border-width: 2px; border-style: solid;width:23%;border-color: #669999;" valign="top" >
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior19" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Trabalhos">
+                                                            </dxe:ASPxLabel>
+                                                            <table id="tabela5" style="width: 100%;">
+                                                                <tr>
+                                                                    <td align="left" style="width: 140px;">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior21" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="False" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666" Text="Trabalho:">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td align="left">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaTrabalhosT" runat="server" ClientInstanceName="lbDadosTarefaTrabalhosT"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="left">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior22" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="False" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666" Text="Trabalho LB:">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td align="left">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaTrabalhosLb" runat="server" ClientInstanceName="lbDadosTarefaTrabalhosLb"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="left" class="style5">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior23" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="False" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666" Text="Trabalho Real:">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td align="left" class="style5">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaTrabalhosR" runat="server" ClientInstanceName="lbDadosTarefaTrabalhosR"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="left">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaSuperior24" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                            Font-Bold="False" Font-Names="Calibri" Font-Overline="False" Font-Size="12pt"
+                                                                            ForeColor="#006666" Text="Variação Trabalho:">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                    <td align="left">
+                                                                        <dxe:ASPxLabel ID="lbDadosTarefaTrabalhosVt" runat="server" ClientInstanceName="lbDadosTarefaTrabalhosVt"
+                                                                            Font-Bold="True" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666">
+                                                                        </dxe:ASPxLabel>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <div id="divDadosTarefaCustos" runat="server">
+                                                                <dxe:ASPxLabel ID="lbDadosTarefaSuperior20" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                    Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Custos">
+                                                                </dxe:ASPxLabel>
+                                                                <table id="tabela6" style="width: 100%;">
+                                                                    <tr>
+                                                                        <td align="left" style="width:140px">
+                                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior25" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                                Font-Bold="False" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666" Text="Custo:">
+                                                                            </dxe:ASPxLabel>
+                                                                        </td>
+                                                                        <td align="left">
+                                                                            <dxe:ASPxLabel ID="lbDadosTarefaCustosC" runat="server" ClientInstanceName="lbDadosTarefaCustosC"
+                                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666">
+                                                                            </dxe:ASPxLabel>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="left">
+                                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior26" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                                Font-Bold="False" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666" Text="Custo LB:">
+                                                                            </dxe:ASPxLabel>
+                                                                        </td>
+                                                                        <td align="left">
+                                                                            <dxe:ASPxLabel ID="lbDadosTarefaCustosLb" runat="server" ClientInstanceName="lbDadosTarefaCustosLb"
+                                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666">
+                                                                            </dxe:ASPxLabel>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="left">
+                                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior27" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                                Font-Bold="False" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666" Text="Custo Real:">
+                                                                            </dxe:ASPxLabel>
+                                                                        </td>
+                                                                        <td align="left">
+                                                                            <dxe:ASPxLabel ID="lbDadosTarefaCustosR" runat="server" ClientInstanceName="lbDadosTarefaCustosR"
+                                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666">
+                                                                            </dxe:ASPxLabel>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="left">
+                                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior28" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                                Font-Bold="False" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666" Text="Variação Custo:">
+                                                                            </dxe:ASPxLabel>
+                                                                        </td>
+                                                                        <td align="left">
+                                                                            <dxe:ASPxLabel ID="lbDadosTarefaCustosVc" runat="server" ClientInstanceName="lbDadosTarefaCustosVc"
+                                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="12pt" ForeColor="#006666">
+                                                                            </dxe:ASPxLabel>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                        <td align="center" class="style5" style="border: 2px solid #669999;width:44%" valign="top"
+                                                            >
+                                                            <dxe:ASPxLabel ID="lbDadosTarefaSuperior6" runat="server" ClientInstanceName="lbDadosTarefaSuperior"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Recursos">
+                                                            </dxe:ASPxLabel>
+                                                            <dxwgv:ASPxGridView ID="gvTarefaRecursos" runat="server" AutoGenerateColumns="False"
+                                                                ClientInstanceName="gvTarefaRecursos" EnableTheming="True" Theme="Aqua" Width="100%">
+                                                                <Columns>
+                                                                    <dxwgv:GridViewDataTextColumn FieldName="NomeRecursoCorporativo" Name="NomeRecursoCorporativo"
+                                                                        ShowInCustomizationForm="True" VisibleIndex="0">
+                                                                        <CellStyle HorizontalAlign="Left">
+                                                                        </CellStyle>
+                                                                    </dxwgv:GridViewDataTextColumn>
+                                                                    <dxwgv:GridViewDataTextColumn Caption="Trabalho LB" FieldName="TrabalhoLB" Name="TrabalhoLB"
+                                                                        ShowInCustomizationForm="True" VisibleIndex="1" Width="80px">
+                                                                        <PropertiesTextEdit DisplayFormatInEditMode="True" DisplayFormatString="0">
+                                                                        </PropertiesTextEdit>
+                                                                        <HeaderStyle HorizontalAlign="Center" />
+                                                                        <CellStyle HorizontalAlign="Right">
+                                                                        </CellStyle>
+                                                                    </dxwgv:GridViewDataTextColumn>
+                                                                    <dxwgv:GridViewDataTextColumn Caption="Custo LB" FieldName="CustoLB" Name="CustoLB"
+                                                                        ShowInCustomizationForm="True" VisibleIndex="2" Width="80px">
+                                                                        <PropertiesTextEdit DisplayFormatInEditMode="True" DisplayFormatString="n2">
+                                                                        </PropertiesTextEdit>
+                                                                        <HeaderStyle HorizontalAlign="Center" />
+                                                                        <CellStyle HorizontalAlign="Right">
+                                                                        </CellStyle>
+                                                                    </dxwgv:GridViewDataTextColumn>
+                                                                </Columns>
+                                                                <SettingsBehavior AllowGroup="False" />
+                                                                <SettingsPager Visible="False">
+                                                                </SettingsPager>
+                                                                <Settings GridLines="Horizontal" ShowGroupButtons="False" ShowHeaderFilterBlankItems="False"
+                                                                    ShowStatusBar="Hidden" />
+                                                            </dxwgv:ASPxGridView>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center">
+                                                            &nbsp;
+                                                        </td>
+                                                        <td>
+                                                            &nbsp;
+                                                        </td>
+                                                        <td>
+                                                            &nbsp;
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div id="divTipoItem8" runat="server">
+                                                <table id="tabela3" style="width: 100%;">
+                                                    <tr>
+                                                        <td>
+                                                            <dxe:ASPxLabel ID="lbDadosIndicadorNome" runat="server" ClientInstanceName="lbDadosIndicadorNome"
+                                                                Font-Bold="True" Font-Size="16pt" ForeColor="#003300" Text="Nome indicador" Theme="Aqua">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <dxe:ASPxLabel ID="lbDadosIndicadorResponsavel" runat="server" ClientInstanceName="lbDadosIndicadorResponsavel"
+                                                                Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text="Responsável: Josemberg">
+                                                            </dxe:ASPxLabel>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <dx:ASPxDataView ID="dvDadosIndicadorMeta" runat="server" ClientInstanceName="dvDadosIndicadorMeta"
+                                                                 Theme="Aqua" Width="100%">
+                                                                <ClientSideEvents EndCallback="function(s, e) {
+	graficoMetaIndicadoresItem();
+}" Init="function(s, e) {
+	graficoMetaIndicadoresItem();
+}" />
+                                                                <ItemTemplate>
+                                                                    <table id="tabela4" style="width: 100%;" width="100%">
+                                                                        <tr>
+                                                                            <td align="center" colspan="2">
+                                                                                <dxe:ASPxLabel runat="server" Font-Bold="True" Font-Names="Calibri" Font-Size="16pt"
+                                                                                    ForeColor="#006666" Text='<%# valoresMetasIndicadores(Eval("CodigoMetaOperacional").ToString(), Eval("Ano").ToString(), "nome") %>'
+                                                                                    ID="ASPxLabel44">
+                                                                                </dxe:ASPxLabel>
+                                                                                <br />
+                                                                                <dxe:ASPxLabel ID="ASPxLabel4" runat="server" Font-Bold="True" Font-Names="Calibri"
+                                                                                    Font-Size="12pt" ForeColor="#000066" Text='<%# valoresMetasIndicadores(Eval("CodigoMetaOperacional").ToString(), Eval("Ano").ToString(), "nomePeriocidade") %>'>
+                                                                                </dxe:ASPxLabel>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td align="right" style="width:78%">
+                                                                                <dxe:ASPxLabel ID="codigoDadosIndicadoresMetaAtual" runat="server" ClientInstanceName="codigoDadosIndicadoresMetaAtual"
+                                                                                    ClientVisible="False" Text='<%# chamarGrafico(Eval("CodigoIndicador").ToString() + "_" + Eval("CodigoMetaOperacional").ToString() + "__DadosIndicadores") %>'>
+                                                                                </dxe:ASPxLabel>
+                                                                                <div id="divDadosIndicadorGrafico" style="text-align:right">
+                                                                                </div>
+                                                                            </td>
+                                                                            <td align="center" valign="bottom">
+                                                                                <div style="text-align:left">
+                                                                                    <dxe:ASPxImage ID="ASPxImage2" runat="server" ClientInstanceName="ASPxImage2" Height="50px"
+                                                                                        ImageUrl='<%# valoresMetasIndicadores(Eval("CodigoMetaOperacional").ToString(), Eval("Ano").ToString(), "polaridadeEndereco") %>'
+                                                                                        title='<%# valoresMetasIndicadores(Eval("CodigoMetaOperacional").ToString(), Eval("Ano").ToString(), "polaridadeTitulo") %>'
+                                                                                        Width="50px">
+                                                                                    </dxe:ASPxImage>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                <div class="fundoDescricaoItem">
+                                                                                    <dxe:ASPxLabel ID="lbDadosIndicarDescricao" runat="server" ClientInstanceName="lbDadosIndicarDescricao"
+                                                                                        Font-Bold="True" Font-Names="Calibri" Font-Size="16pt" ForeColor="#006666" Text='<%# string.Format("Análise crítica realizada {0:d} {1:t} {2}", Eval("DataAnaliseCritica").ToString()!=""?"dia " + Eval("DataAnaliseCritica"):"", Eval("DataAnaliseCritica").ToString()!=""?"às " + Eval("DataAnaliseCritica"):"", Eval("NomeUsuarioAnaliseCritica").ToString()!=""?"por " + Eval("NomeUsuarioAnaliseCritica").ToString():"") %>'
+                                                                                        CssClass="descricaoMetaItemIndicadores">
+                                                                                    </dxe:ASPxLabel>
+                                                                                    <dxe:ASPxMemo ID="ASPxMemo1" runat="server" Height="100px" Text='<%# Eval("AnalisePerformance").ToString() %>'
+                                                                                        Theme="Aqua" Width="100%" ReadOnly="True">
+                                                                                    </dxe:ASPxMemo>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </ItemTemplate>
+                                                                <SettingsTableLayout ColumnCount="1" RowsPerPage="1"/>
+                                                            </dx:ASPxDataView>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div id="divTipoItem0" runat="server">
+                                                <br />
+                                                <dxe:ASPxLabel ID="lbDadosPendenciasNome" runat="server" ClientInstanceName="lbDadosPendenciasNome"
+                                                    Font-Bold="True" Font-Size="16pt" ForeColor="#003300" Text="Pendências" Theme="Aqua">
+                                                </dxe:ASPxLabel>
+                                                <br />
+                                                <div runat="server" class="tabelaPlanosPendentes">
+                                                    <dxwgv:ASPxGridView ID="gvPlanosPendentes" runat="server" AutoGenerateColumns="False"
+                                                        ClientInstanceName="gvPlanosPendentes" OnCustomColumnDisplayText="gvPlanos_CustomColumnDisplayText"
+                                                        Style="margin-top: 1px" Theme="Aqua" Width="100%" OnCustomCallback="gvPlanosPendentes_CustomCallback">
+                                                        <ClientSideEvents CustomButtonClick="function(s, e) {
+	botaoCustomizadoGvPlanosPendentes(s, e);
+}" EndCallback="function(s, e) {
+	retornoCallbackObjetos();
+}" />
+                                                        <Columns>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Tarefa" FieldName="descricaoTarefa" Name="DescricaoTarefa"
+                                                                ShowInCustomizationForm="True" VisibleIndex="2">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Prioridade" FieldName="Prioridade" Name="Prioridade"
+                                                                ShowInCustomizationForm="True" VisibleIndex="4" Width="80px">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Responsável" FieldName="nomeUsuarioResponsavel"
+                                                                Name="NomeUsuario" ShowInCustomizationForm="True" VisibleIndex="3">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Status" FieldName="CodigoStatusTarefa" Name="CodigoStatusTarefa"
+                                                                ShowInCustomizationForm="True" VisibleIndex="5" Width="120px">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Início previsto" FieldName="inicioPrevisto"
+                                                                Name="InicioPrevisto" ShowInCustomizationForm="True" VisibleIndex="6" Width="80px">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Término previsto" FieldName="terminoPrevisto"
+                                                                Name="TerminoPrevisto" ShowInCustomizationForm="True" VisibleIndex="7" Width="80px">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Início real" FieldName="inicioReal" Name="InicioReal"
+                                                                ShowInCustomizationForm="True" VisibleIndex="8" Width="80px">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Término real" FieldName="terminoReal" Name="TerminoReal"
+                                                                ShowInCustomizationForm="True" VisibleIndex="9" Width="80px">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Data da reunião" FieldName="dataReuniaoRegistroPendencia"
+                                                                Name="dataReuniaoRegistroPendencia" ShowInCustomizationForm="True" VisibleIndex="1"
+                                                                Width="80px">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                            <dxwgv:GridViewCommandColumn ButtonRenderMode="Image" Caption="." Name="comandos" ShowInCustomizationForm="True"
+                                                                VisibleIndex="0" Width="30px">
+                                                                <CustomButtons>
+                                                                    <dxwgv:GridViewCommandColumnCustomButton ID="botaoEditarPendente">
+                                                                        <Image AlternateText="Editar plano" Height="15px" ToolTip="Editar plano de ação pendente"
+                                                                            Url="~/imagens/Reuniao/editar.gif" Width="15px">
+                                                                        </Image>
+                                                                    </dxwgv:GridViewCommandColumnCustomButton>
+                                                                    <dxwgv:GridViewCommandColumnCustomButton ID="botaoExcluirPendente">
+                                                                        <Image AlternateText="Excluir plano" Height="15px" ToolTip="Excluir plano de ação pendente"
+                                                                            Url="~/imagens/Reuniao/excluir.gif" Width="15px">
+                                                                        </Image>
+                                                                    </dxwgv:GridViewCommandColumnCustomButton>
+                                                                </CustomButtons>
+                                                                <HeaderStyle CssClass="classe_gvPlanosPendentes_comandos" />
+                                                                <CellStyle HorizontalAlign="Center" CssClass="classe_gvPlanosPendentes_comandos">
+                                                                </CellStyle>
+                                                                <FooterCellStyle CssClass="classe_gvPlanosPendentes_comandos">
+                                                                </FooterCellStyle>
+                                                            </dxwgv:GridViewCommandColumn>
+                                                            <dxwgv:GridViewDataTextColumn Caption="Código " FieldName="codigoTarefa" Name="codigoTarefa"
+                                                                ShowInCustomizationForm="True" Visible="False" VisibleIndex="11">
+                                                            </dxwgv:GridViewDataTextColumn>
+                                                        </Columns>
+                                                        <SettingsPager Mode="ShowAllRecords" NumericButtonCount="12" PageSize="12">
+                                                        </SettingsPager>
+                                                        <Settings ShowFooter="True" />
+                                                        <SettingsPopup>
+                                                            <EditForm HorizontalAlign="WindowCenter" Modal="True" VerticalAlign="WindowCenter" />
+                                                            <CustomizationWindow HorizontalAlign="WindowCenter" VerticalAlign="WindowCenter" />
+                                                        </SettingsPopup>
+                                                    </dxwgv:ASPxGridView>
+                                                </div>
+                                                <dxpc:ASPxPopupControl ID="pcEditarPlanosPendentes" runat="server" ClientInstanceName="pcEditarPlanosPendentes"
+                                                    CloseAction="CloseButton" EnableClientSideAPI="True" HeaderText="Plano de ação"
+                                                    Modal="True" OnWindowCallback="pcEditarPlanosPendentes_WindowCallback" PopupHorizontalAlign="WindowCenter"
+                                                    PopupVerticalAlign="WindowCenter" Theme="Aqua" Width="760px">
+                                                    <ClientSideEvents CloseUp="function(s, e) {
+	gvPlanosPendentes.PerformCallback('atualizarDados');
+}" EndCallback="function(s, e) {
+	retornoCallbackObjetos();
+}" />
+                                                    <ContentCollection>
+                                                        <dxpc:PopupControlContentControl runat="server">
+                                                            <table style="width: 100%;">
+                                                                <tr>
+                                                                    <td class="style2" colspan="3">
+                                                                        <dxe:ASPxLabel ID="lbPlanosDescricao" runat="server" AssociatedControlID="tbPlanosDescricao"
+                                                                            ClientInstanceName="lbPlanosDescricao" Text="Descrição da tarefa:" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxTextBox ID="tbPlanosDescricao" runat="server" ClientInstanceName="tbPlanosDescricao"
+                                                                            Theme="Aqua" ToolTip="Insira uma breve descrição da tarefa do plano de ação"
+                                                                            Width="510px">
+                                                                            <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                                ErrorText="?" SetFocusOnError="True" ValidateOnLeave="False">
+                                                                                <RequiredField IsRequired="True" />
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxTextBox>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dxe:ASPxLabel ID="lbPlanosPrioridade" runat="server" AssociatedControlID="cbPrioridade"
+                                                                            Style="text-align: left" Text="Prioridade:" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxComboBox ID="cbPrioridade" runat="server" ClientInstanceName="cbPrioridade"
+                                                                            EnableTheming="True" IncrementalFilteringMode="Contains" Theme="Aqua" ToolTip="Escolha a prioridade do plano de ação">
+                                                                            <Items>
+                                                                                <dxe:ListEditItem Text="Baixo" Value="B" />
+                                                                                <dxe:ListEditItem Text="Média" Value="M" />
+                                                                                <dxe:ListEditItem Text="Alta" Value="A" />
+                                                                            </Items>
+                                                                            <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                                ErrorText="?" SetFocusOnError="True">
+                                                                                <RequiredField IsRequired="True" />
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxComboBox>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="style2" colspan="3">
+                                                                        <dxe:ASPxLabel ID="lbResponsavel" runat="server" AssociatedControlID="cbResponsavel"
+                                                                            ClientInstanceName="lbResponsavel" Text="Responsável:" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxComboBox ID="cbResponsavel" runat="server" ClientInstanceName="cbResponsavel"
+                                                                            EnableCallbackMode="True" IncrementalFilteringMode="Contains" Theme="Aqua" ToolTip="Escolha um responsável pelo o plano de ação"
+                                                                            Width="510px">
+                                                                            <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                                ErrorText="?" SetFocusOnError="True">
+                                                                                <RequiredField IsRequired="True" />
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxComboBox>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dxe:ASPxLabel ID="lbStatus" runat="server" AssociatedControlID="cbStatus" ClientInstanceName="lbStatus"
+                                                                            Text="Status:" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxComboBox ID="cbStatus" runat="server" ClientInstanceName="cbStatus" EnableTheming="True"
+                                                                            IncrementalFilteringMode="Contains" Theme="Aqua" ToolTip="Informe a situação atual do plano de ação">
+                                                                            <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                                ErrorText="?" SetFocusOnError="True">
+                                                                                <RequiredField IsRequired="True" />
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxComboBox>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="style2">
+                                                                        <dxe:ASPxLabel ID="lbInicioPrevisto" runat="server" AssociatedControlID="deInicioPrevisto"
+                                                                            ClientInstanceName="lbInicioPrevisto" Text="Início previsto:" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxDateEdit ID="deInicioPrevisto" runat="server" ClientInstanceName="deInicioPrevisto"
+                                                                            Theme="Aqua" ToolTip="Informe a data prevista para o ínicio do plano de ação">
+                                                                            <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                                ErrorText="?" SetFocusOnError="True">
+                                                                                <RequiredField IsRequired="True" />
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxDateEdit>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dxe:ASPxLabel ID="lbTerminoPrevisto" runat="server" AssociatedControlID="deTerminoPrevisto"
+                                                                            ClientInstanceName="lbTerminoPrevisto" Text="Término previsto:" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxDateEdit ID="deTerminoPrevisto" runat="server" ClientInstanceName="deTerminoPrevisto"
+                                                                            Theme="Aqua" ToolTip="Informe a data prevista para o término do plano de ação">
+                                                                            <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                                ErrorText="?" SetFocusOnError="True">
+                                                                                <RequiredField IsRequired="True" />
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxDateEdit>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dxe:ASPxLabel ID="lbEsforcoPrevisto" runat="server" AssociatedControlID="teEsforcoPrevisto"
+                                                                            ClientInstanceName="lbEsforcoPrevisto" Text="Esforço previsto (hr):">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxTextBox ID="teEsforcoPrevisto" runat="server" ClientInstanceName="teEsforcoPrevisto"
+                                                                            DisplayFormatString="00\:00" MaxLength="5" Theme="Aqua" ToolTip="Informe a quantidade de horas previstas para o plano de ação"
+                                                                            Width="170px">
+                                                                            <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                                ErrorText="?" SetFocusOnError="True">
+                                                                                <RequiredField IsRequired="True" />
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxTextBox>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dxe:ASPxLabel ID="lbCustoPrevisto" runat="server" AssociatedControlID="tbCustoPrevisto"
+                                                                            ClientInstanceName="lbCustoPrevisto" Text="Custo previsto (R$):" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxTextBox ID="tbCustoPrevisto" runat="server" ClientInstanceName="tbCustoPrevisto"
+                                                                            DisplayFormatString="n2" Theme="Aqua" ToolTip=" Informe o gasto previsto para o plano de ação"
+                                                                            Width="170px">
+                                                                            <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                                ErrorText="?" SetFocusOnError="True">
+                                                                                <RequiredField IsRequired="True" />
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxTextBox>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="style2">
+                                                                        <dxe:ASPxLabel ID="lbInicioReal" runat="server" AssociatedControlID="deInicioReal"
+                                                                            ClientInstanceName="lbInicioReal" Text="Início real:" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxDateEdit ID="deInicioReal" runat="server" ClientInstanceName="deInicioReal"
+                                                                            Theme="Aqua" ToolTip="Informe a data em que realmente iniciou o plano de ação">
+                                                                        </dxe:ASPxDateEdit>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dxe:ASPxLabel ID="lbTerminoReal" runat="server" AssociatedControlID="deTerminoReal"
+                                                                            ClientInstanceName="lbTerminoReal" Text="Término real:" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxDateEdit ID="deTerminoReal" runat="server" ClientInstanceName="deTerminoReal"
+                                                                            Theme="Aqua" ToolTip="Informe a data em que realmente foi finalizado o plano de ação">
+                                                                        </dxe:ASPxDateEdit>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dxe:ASPxLabel ID="lbEsforcoReal" runat="server" AssociatedControlID="teEsforcoReal"
+                                                                            ClientInstanceName="lbEsforcoReal" Text="Esforço real (hr):" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxTextBox ID="teEsforcoReal" runat="server" ClientInstanceName="teEsforcoReal"
+                                                                            DisplayFormatString="00\:00" MaxLength="4" Theme="Aqua" ToolTip="Informe a quantidade de horas gastas para a realização do plano de ação"
+                                                                            Width="170px">
+                                                                            <ValidationSettings ErrorDisplayMode="Text" ErrorText="?">
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxTextBox>
+                                                                    </td>
+                                                                    <td>
+                                                                        <dxe:ASPxLabel ID="lbCustoReal" runat="server" AssociatedControlID="tbCustoReal"
+                                                                            ClientInstanceName="lbCustoReal" Text="Custo real (R$):" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxTextBox ID="tbCustoReal" runat="server" ClientInstanceName="tbCustoReal"
+                                                                            DisplayFormatString="n2" Theme="Aqua" ToolTip="Informe o custo que realmente foi gasto com o plano de ação"
+                                                                            Width="170px">
+                                                                            <ValidationSettings ErrorDisplayMode="Text" ErrorText="?">
+                                                                            </ValidationSettings>
+                                                                        </dxe:ASPxTextBox>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="style2" colspan="4">
+                                                                        <dxe:ASPxLabel ID="lbAnotacoes" runat="server" AssociatedControlID="memoAnotacoes"
+                                                                            ClientInstanceName="lbAnotacoes" Text="Anotações:" Theme="Aqua">
+                                                                        </dxe:ASPxLabel>
+                                                                        <dxe:ASPxMemo ID="memoAnotacoes" runat="server" ClientInstanceName="memoAnotacoes"
+                                                                            Height="100px" Theme="Aqua" ToolTip="Anotações gerais do plano de ação" Width="710px">
+                                                                        </dxe:ASPxMemo>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="right" class="style2" colspan="4">
+                                                                        <dxe:ASPxButton ID="botaoEnviarPlanos" runat="server" AutoPostBack="False" ClientInstanceName="botaoEnviarPlanos"
+                                                                            Cursor="pointer" Text="Confirmar" Theme="Aqua" ToolTip="Confirmar a inclusão do plano de ação no item atual">
+                                                                            <ClientSideEvents Click="function(s, e) {
+	gvPlanosPendentes.PerformCallback('SalvarDados');
+	pcEditarPlanosPendentes.Hide();
+}" />
+                                                                        </dxe:ASPxButton>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </dxpc:PopupControlContentControl>
+                                                    </ContentCollection>
+                                                </dxpc:ASPxPopupControl>
+                                                <br />
+                                            </div>
+                                        </dxp:PanelContent>
+                                    </PanelCollection>
+                                </dxcp:ASPxCallbackPanel>
+                            </ContentTemplate>
+                        </dxnb:NavBarGroup>
+                        <dxnb:NavBarGroup ExpandButtonPosition="Right" Name="dadosDeliberacoes" ShowExpandButton="True"
+                            Text="Deliberações" ToolTip="Deliberações do item atual" Expanded="False">
+                            <HeaderImage Height="15px" Url="~/imagens/Reuniao/deliberacoes.png" Width="15px">
+                            </HeaderImage>
+                            <ContentTemplate>
+                                <dxcp:ASPxCallbackPanel ID="cpDeliberacaoAtual" runat="server" ClientInstanceName="cpDeliberacaoAtual"
+                                    OnCallback="cpDeliberacaoAtual_Callback">
+                                    <ClientSideEvents EndCallback="function(s, e) {
+	aplicarMudancas();
+}" />
+                                    <PanelCollection>
+                                        <dxp:PanelContent runat="server">
+                                            <dxe:ASPxMemo ID="quadroDeliberacoes" runat="server" HorizontalAlign="Left" NullText="Coloque aqui as deliberações do item atual"
+                                                Rows="20" Theme="Aqua" Width="100%" ClientInstanceName="quadroDeliberacoes" CssClass="deliberacaoAtual"
+                                                ClientIDMode="Static">
+                                                <ClientSideEvents KeyUp="function(s, e) {
+	gravarDeliberacao(s.GetText());
+}" />
+                                            </dxe:ASPxMemo>
+                                        </dxp:PanelContent>
+                                    </PanelCollection>
+                                </dxcp:ASPxCallbackPanel>
+                            </ContentTemplate>
+                        </dxnb:NavBarGroup>
+                        <dxnb:NavBarGroup ExpandButtonPosition="Right" Name="dadosPlanos" ShowExpandButton="True"
+                            Text="Plano de ação" ToolTip="Planos de ações do item atual" Expanded="False">
+                            <HeaderImage Height="15px" Url="~/imagens/Reuniao/planos.png" Width="15px">
+                            </HeaderImage>
+                            <ContentTemplate>
+                                <dxcp:ASPxCallbackPanel ID="cpPlanosItens" runat="server" ClientInstanceName="cpPlanosItens"
+                                    OnCallback="cpPlanosItens_Callback">
+                                    <ClientSideEvents EndCallback="function(s, e) {
+	aplicarMudancas();
+}" />
+                                    <PanelCollection>
+                                        <dxp:PanelContent runat="server">
+                                            <dxwgv:ASPxGridView ID="gvPlanos" runat="server" AutoGenerateColumns="False" ClientInstanceName="gvPlanos"
+                                                OnCustomColumnDisplayText="gvPlanos_CustomColumnDisplayText" OnHtmlRowPrepared="gvPlanos_HtmlRowPrepared"
+                                                Style="margin-top: 1px" Theme="Aqua" Width="100%" OnCustomButtonInitialize="gvPlanos_CustomButtonInitialize">
+                                                <ClientSideEvents CustomButtonClick="function(s, e) {
+	botaoCustomizadoGvPlanos(s, e);
+}" />
+                                                <Columns>
+                                                    <dxwgv:GridViewDataTextColumn Caption="Tarefa" FieldName="DescricaoTarefa" Name="DescricaoTarefa"
+                                                        ShowInCustomizationForm="True" VisibleIndex="1">
+                                                    </dxwgv:GridViewDataTextColumn>
+                                                    <dxwgv:GridViewDataTextColumn Caption="Prioridade" FieldName="Prioridade" Name="Prioridade"
+                                                        ShowInCustomizationForm="True" VisibleIndex="3" Width="80px">
+                                                    </dxwgv:GridViewDataTextColumn>
+                                                    <dxwgv:GridViewDataTextColumn Caption="Responsável" FieldName="NomeUsuario" Name="NomeUsuario"
+                                                        ShowInCustomizationForm="True" VisibleIndex="2">
+                                                    </dxwgv:GridViewDataTextColumn>
+                                                    <dxwgv:GridViewDataTextColumn Caption="Status" FieldName="CodigoStatusTarefa" Name="CodigoStatusTarefa"
+                                                        ShowInCustomizationForm="True" VisibleIndex="4" Width="120px">
+                                                    </dxwgv:GridViewDataTextColumn>
+                                                    <dxwgv:GridViewDataTextColumn Caption="Início previsto" FieldName="InicioPrevisto"
+                                                        Name="InicioPrevisto" ShowInCustomizationForm="True" VisibleIndex="5" Width="80px">
+                                                    </dxwgv:GridViewDataTextColumn>
+                                                    <dxwgv:GridViewDataTextColumn Caption="Término previsto" FieldName="TerminoPrevisto"
+                                                        Name="TerminoPrevisto" ShowInCustomizationForm="True" VisibleIndex="6" Width="80px">
+                                                    </dxwgv:GridViewDataTextColumn>
+                                                    <dxwgv:GridViewDataTextColumn Caption="Início real" FieldName="InicioReal" Name="InicioReal"
+                                                        ShowInCustomizationForm="True" VisibleIndex="7" Width="80px">
+                                                    </dxwgv:GridViewDataTextColumn>
+                                                    <dxwgv:GridViewDataTextColumn Caption="Término real" FieldName="TerminoReal" Name="TerminoReal"
+                                                        ShowInCustomizationForm="True" VisibleIndex="8" Width="80px">
+                                                    </dxwgv:GridViewDataTextColumn>
+                                                    <dxwgv:GridViewCommandColumn ButtonRenderMode="Image" Caption="." Name="colEditar" ShowInCustomizationForm="True"
+                                                        VisibleIndex="0" Width="50px">
+                                                        <CustomButtons>
+                                                            <dxwgv:GridViewCommandColumnCustomButton ID="botaoEditar">
+                                                                <Image AlternateText="Editar plano de ação" Height="15px" ToolTip="Editar plano de ação"
+                                                                    Url="~/imagens/Reuniao/editar.gif" Width="15px">
+                                                                </Image>
+                                                            </dxwgv:GridViewCommandColumnCustomButton>
+                                                            <dxwgv:GridViewCommandColumnCustomButton ID="botaoExcluir">
+                                                                <Image AlternateText="Exluir plano de ação" Height="15px" ToolTip="Excluir plano de ação"
+                                                                    Url="~/imagens/Reuniao/excluir.gif" Width="15px">
+                                                                </Image>
+                                                            </dxwgv:GridViewCommandColumnCustomButton>
+                                                        </CustomButtons>
+                                                        <HeaderStyle HorizontalAlign="Center" CssClass="classe_gvPlanos_colEditar" />
+                                                        <CellStyle CssClass="classe_gvPlanos_colEditar">
+                                                        </CellStyle>
+                                                        <FooterCellStyle HorizontalAlign="Center" CssClass="classe_gvPlanos_colEditar">
+                                                        </FooterCellStyle>
+                                                        <GroupFooterCellStyle CssClass="classe_gvPlanos_colEditar">
+                                                        </GroupFooterCellStyle>
+                                                        <HeaderTemplate>
+                                                            <dxe:ASPxImage ID="botaoAdicionarPlanos" runat="server" AlternateText="Adicionar plano de ação"
+                                                                ClientInstanceName="botaoAdicionarPlanos" Cursor="pointer" Height="15px" ImageUrl="~/imagens/Reuniao/adicionar.gif"
+                                                                Theme="Aqua" ToolTip="Adicionar plano de ação" Width="15px">
+                                                                <ClientSideEvents Click="function(s, e) {
+	pcEditarPlanos.Show();
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </HeaderTemplate>
+                                                        <FooterTemplate>
+                                                            <dxe:ASPxImage ID="botaoHistoricoPlanos" runat="server" AlternateText="Visualizar/Ocultar histórico de planos de ação."
+                                                                ClientInstanceName="botaoHistoricoPlanos" Cursor="pointer" Height="15px" ImageUrl="~/imagens/Reuniao/visualizar.gif"
+                                                                Theme="Aqua" ToolTip="Visualizar/Ocultar histórico de planos de ação." Width="15px">
+                                                                <ClientSideEvents Click="function(s, e) {
+	botaoMostarHistoricoPlanos(s, e);
+}" />
+                                                            </dxe:ASPxImage>
+                                                        </FooterTemplate>
+                                                    </dxwgv:GridViewCommandColumn>
+                                                </Columns>
+                                                <SettingsPager Mode="ShowAllRecords" NumericButtonCount="12" PageSize="12">
+                                                </SettingsPager>
+                                                <Settings ShowFooter="True" />
+                                            </dxwgv:ASPxGridView>
+                                            <dxpc:ASPxPopupControl ID="pcEditarPlanos" runat="server" ClientInstanceName="pcEditarPlanos"
+                                                CloseAction="CloseButton" HeaderText="Plano de ação" Modal="True" OnWindowCallback="pcEditarPlanos_WindowCallback"
+                                                PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Theme="Aqua"
+                                                Width="760px" EnableClientSideAPI="True">
+                                                <ClientSideEvents CloseUp="function(s, e) {
+	cpPlanosItens.PerformCallback('atualizarDados');
+}" />
+                                                <ContentCollection>
+                                                    <dxpc:PopupControlContentControl runat="server">
+                                                        <table style="width: 100%;">
+                                                            <tr>
+                                                                <td class="style2" colspan="3">
+                                                                    <dxe:ASPxLabel ID="lbPlanosDescricao" runat="server" AssociatedControlID="tbPlanosDescricao"
+                                                                        ClientInstanceName="lbPlanosDescricao" Text="Descrição da tarefa:" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxTextBox ID="tbPlanosDescricao" runat="server" ClientInstanceName="tbPlanosDescricao"
+                                                                        Theme="Aqua" ToolTip="Insira uma breve descrição da tarefa do plano de ação"
+                                                                        Width="510px">
+                                                                        <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                            ErrorText="?" SetFocusOnError="True" ValidateOnLeave="False">
+                                                                            <RequiredField IsRequired="True" />
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxTextBox>
+                                                                </td>
+                                                                <td>
+                                                                    <dxe:ASPxLabel ID="lbPlanosPrioridade" runat="server" AssociatedControlID="cbPrioridade"
+                                                                        Style="text-align: left" Text="Prioridade:" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxComboBox ID="cbPrioridade" runat="server" ClientInstanceName="cbPrioridade"
+                                                                        EnableTheming="True" IncrementalFilteringMode="Contains" Theme="Aqua" ToolTip="Escolha a prioridade do plano de ação">
+                                                                        <Items>
+                                                                            <dxe:ListEditItem Text="Baixo" Value="B" />
+                                                                            <dxe:ListEditItem Text="Média" Value="M" />
+                                                                            <dxe:ListEditItem Text="Alta" Value="A" />
+                                                                        </Items>
+                                                                        <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                            ErrorText="?" SetFocusOnError="True">
+                                                                            <RequiredField IsRequired="True" />
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxComboBox>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="style2" colspan="3">
+                                                                    <dxe:ASPxLabel ID="lbResponsavel" runat="server" AssociatedControlID="cbResponsavel"
+                                                                        ClientInstanceName="lbResponsavel" Text="Responsável:" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxComboBox ID="cbResponsavel" runat="server" ClientInstanceName="cbResponsavel"
+                                                                        EnableCallbackMode="True" IncrementalFilteringMode="Contains" Theme="Aqua" ToolTip="Escolha um responsável pelo o plano de ação"
+                                                                        Width="510px">
+                                                                        <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                            ErrorText="?" SetFocusOnError="True">
+                                                                            <RequiredField IsRequired="True" />
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxComboBox>
+                                                                </td>
+                                                                <td>
+                                                                    <dxe:ASPxLabel ID="lbStatus" runat="server" AssociatedControlID="cbStatus" ClientInstanceName="lbStatus"
+                                                                        Text="Status:" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxComboBox ID="cbStatus" runat="server" ClientInstanceName="cbStatus" EnableTheming="True"
+                                                                        IncrementalFilteringMode="Contains" Theme="Aqua" ToolTip="Informe a situação atual do plano de ação">
+                                                                        <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                            ErrorText="?" SetFocusOnError="True">
+                                                                            <RequiredField IsRequired="True" />
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxComboBox>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="style2">
+                                                                    <dxe:ASPxLabel ID="lbInicioPrevisto" runat="server" AssociatedControlID="deInicioPrevisto"
+                                                                        ClientInstanceName="lbInicioPrevisto" Text="Início previsto:" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxDateEdit ID="deInicioPrevisto" runat="server" ClientInstanceName="deInicioPrevisto"
+                                                                        Theme="Aqua" ToolTip="Informe a data prevista para o ínicio do plano de ação">
+                                                                        <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                            ErrorText="?" SetFocusOnError="True">
+                                                                            <RequiredField IsRequired="True" />
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxDateEdit>
+                                                                </td>
+                                                                <td>
+                                                                    <dxe:ASPxLabel ID="lbTerminoPrevisto" runat="server" AssociatedControlID="deTerminoPrevisto"
+                                                                        ClientInstanceName="lbTerminoPrevisto" Text="Término previsto:" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxDateEdit ID="deTerminoPrevisto" runat="server" ClientInstanceName="deTerminoPrevisto"
+                                                                        Theme="Aqua" ToolTip="Informe a data prevista para o término do plano de ação">
+                                                                        <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                            ErrorText="?" SetFocusOnError="True">
+                                                                            <RequiredField IsRequired="True" />
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxDateEdit>
+                                                                </td>
+                                                                <td>
+                                                                    <dxe:ASPxLabel ID="lbEsforcoPrevisto" runat="server" AssociatedControlID="teEsforcoPrevisto"
+                                                                        ClientInstanceName="lbEsforcoPrevisto" Text="Esforço previsto (hr):">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxTextBox ID="teEsforcoPrevisto" runat="server" ClientInstanceName="teEsforcoPrevisto"
+                                                                        DisplayFormatString="00\:00" MaxLength="5" Theme="Aqua" ToolTip="Informe a quantidade de horas previstas para o plano de ação"
+                                                                        Width="170px">
+                                                                        <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                            ErrorText="?" SetFocusOnError="True">
+                                                                            <RequiredField IsRequired="True" />
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxTextBox>
+                                                                </td>
+                                                                <td>
+                                                                    <dxe:ASPxLabel ID="lbCustoPrevisto" runat="server" AssociatedControlID="tbCustoPrevisto"
+                                                                        ClientInstanceName="lbCustoPrevisto" Text="Custo previsto (R$):" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxTextBox ID="tbCustoPrevisto" runat="server" ClientInstanceName="tbCustoPrevisto"
+                                                                        DisplayFormatString="n2" Theme="Aqua" ToolTip=" Informe o gasto previsto para o plano de ação"
+                                                                        Width="170px">
+                                                                        <ValidationSettings CausesValidation="True" Display="Dynamic" ErrorDisplayMode="Text"
+                                                                            ErrorText="?" SetFocusOnError="True">
+                                                                            <RequiredField IsRequired="True" />
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxTextBox>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="style2">
+                                                                    <dxe:ASPxLabel ID="lbInicioReal" runat="server" AssociatedControlID="deInicioReal"
+                                                                        ClientInstanceName="lbInicioReal" Text="Início real:" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxDateEdit ID="deInicioReal" runat="server" ClientInstanceName="deInicioReal"
+                                                                        Theme="Aqua" ToolTip="Informe a data em que realmente iniciou o plano de ação">
+                                                                    </dxe:ASPxDateEdit>
+                                                                </td>
+                                                                <td>
+                                                                    <dxe:ASPxLabel ID="lbTerminoReal" runat="server" AssociatedControlID="deTerminoReal"
+                                                                        ClientInstanceName="lbTerminoReal" Text="Término real:" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxDateEdit ID="deTerminoReal" runat="server" ClientInstanceName="deTerminoReal"
+                                                                        Theme="Aqua" ToolTip="Informe a data em que realmente foi finalizado o plano de ação">
+                                                                    </dxe:ASPxDateEdit>
+                                                                </td>
+                                                                <td>
+                                                                    <dxe:ASPxLabel ID="lbEsforcoReal" runat="server" AssociatedControlID="teEsforcoReal"
+                                                                        ClientInstanceName="lbEsforcoReal" Text="Esforço real (hr):" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxTextBox ID="teEsforcoReal" runat="server" ClientInstanceName="teEsforcoReal"
+                                                                        DisplayFormatString="00\:00" MaxLength="4" Theme="Aqua" ToolTip="Informe a quantidade de horas gastas para a realização do plano de ação"
+                                                                        Width="170px">
+                                                                        <ValidationSettings ErrorDisplayMode="Text" ErrorText="?">
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxTextBox>
+                                                                </td>
+                                                                <td>
+                                                                    <dxe:ASPxLabel ID="lbCustoReal" runat="server" AssociatedControlID="tbCustoReal"
+                                                                        ClientInstanceName="lbCustoReal" Text="Custo real (R$):" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxTextBox ID="tbCustoReal" runat="server" ClientInstanceName="tbCustoReal"
+                                                                        DisplayFormatString="n2" Theme="Aqua" ToolTip="Informe o custo que realmente foi gasto com o plano de ação"
+                                                                        Width="170px">
+                                                                        <ValidationSettings ErrorDisplayMode="Text" ErrorText="?">
+                                                                        </ValidationSettings>
+                                                                    </dxe:ASPxTextBox>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="style2" colspan="4">
+                                                                    <dxe:ASPxLabel ID="lbAnotacoes" runat="server" AssociatedControlID="memoAnotacoes"
+                                                                        ClientInstanceName="lbAnotacoes" Text="Anotações:" Theme="Aqua">
+                                                                    </dxe:ASPxLabel>
+                                                                    <dxe:ASPxMemo ID="memoAnotacoes" runat="server" ClientInstanceName="memoAnotacoes"
+                                                                        Height="100px" Theme="Aqua" ToolTip="Anotações gerais do plano de ação" Width="710px">
+                                                                    </dxe:ASPxMemo>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="right" class="style2" colspan="4">
+                                                                    <dxe:ASPxButton ID="botaoEnviarPlanos" runat="server" AutoPostBack="False" ClientInstanceName="botaoEnviarPlanos"
+                                                                        Cursor="pointer" Text="Confirmar" Theme="Aqua" ToolTip="Confirmar a inclusão do plano de ação no item atual">
+                                                                        <ClientSideEvents Click="function(s, e) {
+	
+	cpPlanosItens.PerformCallback('SalvarDados');
+	pcEditarPlanos.Hide();
+}" />
+                                                                    </dxe:ASPxButton>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </dxpc:PopupControlContentControl>
+                                                </ContentCollection>
+                                            </dxpc:ASPxPopupControl>
+                                        </dxp:PanelContent>
+                                    </PanelCollection>
+                                </dxcp:ASPxCallbackPanel>
+                            </ContentTemplate>
+                        </dxnb:NavBarGroup>
+                        <dxnb:NavBarGroup Expanded="False" Name="dadosAnexos" Text="Anexos" ToolTip="Anexos enviados para o item atual">
+                            <HeaderImage Height="15px" Url="~/imagens/Reuniao/anexar.png" Width="15px">
+                            </HeaderImage>
+                            <ContentTemplate>
+                                <dxcp:ASPxCallbackPanel ID="cpAnexosItens" runat="server" ClientInstanceName="cpAnexosItens"
+                                    OnCallback="cpAnexosItens_Callback" Theme="Aqua">
+                                    <ClientSideEvents EndCallback="function(s, e) {
+	aplicarMudancas();
+}" />
+                                    <PanelCollection>
+                                        <dxp:PanelContent runat="server">
+                                            <dx:ASPxDataView ID="dataAnexos" runat="server" AlwaysShowPager="True" ClientInstanceName="dataAnexos"
+                                                 EnableCallbackCompression="False" EnableCallBacks="False" ItemSpacing="0px"
+                                                OnItemCommand="dataAnexos_ItemCommand" Theme="Aqua" Width="100%">
+                                                <ItemTemplate>
+                                                    <table style="width: 250px;" width="100">
+                                                        <tr>
+                                                            <td style="height:50px;width:50px" rowspan="3">
+                                                                <dxe:ASPxButton ID="ASPxButton1" runat="server" Height="32px" HorizontalAlign="Center"
+                                                                    ImageSpacing="0px" Theme="Aqua" Width="32px">
+                                                                    <Image Height="62px" Url="~/imagens/Reuniao/download2.png" Width="62px">
+                                                                    </Image>
+                                                                </dxe:ASPxButton>
+                                                            </td>
+                                                            <td class="style4">
+                                                                <dxe:ASPxLabel ID="ASPxLabel1" runat="server" Font-Bold="True" Text='<%# Eval("Nome") %>'>
+                                                                </dxe:ASPxLabel>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <dxe:ASPxLabel ID="ASPxLabel2" runat="server" Text='<%# "por " + Eval("NomeUsuario") %>'>
+                                                                </dxe:ASPxLabel>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <dxe:ASPxLabel ID="ASPxLabel3" runat="server" Text='<%# "às " + Eval("DataInclusao").ToString().Substring(11,5) %>'>
+                                                                </dxe:ASPxLabel>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </ItemTemplate>
+                                                <SettingsTableLayout  ColumnCount="4"/>
+                                                <PagerSettings NumericButtonCount="11">
+                                                </PagerSettings>
+                                                <ItemStyle Height="60px" Width="160px">
+                                                    <Paddings Padding="0px" />
+                                                </ItemStyle>
+                                            </dx:ASPxDataView>
+                                            <asp:UpdatePanel ID="upAnexos" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
+                                                    <dxe:ASPxButton ID="botaoAdicionarAnexos" runat="server" Cursor="pointer" EnableTheming="True"
+                                                        Text="Adicionar anexos" Theme="Aqua" Wrap="False" ClientInstanceName="botaoAdicionarAnexos">
+                                                        <ClientSideEvents Click="function(s, e) {
+	pcEditarAnexos.Show();
+}" />
+                                                    </dxe:ASPxButton>
+                                                    <dxpc:ASPxPopupControl ID="pcEditarAnexos" runat="server" ClientInstanceName="pcEditarAnexos"
+                                                        CloseAction="CloseButton" EnableClientSideAPI="True" HeaderText="Anexos" Modal="True"
+                                                        PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Theme="Aqua">
+                                                        <ClientSideEvents CloseUp="function(s, e) {
+	pcEditarAnexos.Hide();
+	cpAnexosItens.PerformCallback('');
+}" />
+                                                        <ContentCollection>
+                                                            <dxpc:PopupControlContentControl runat="server">
+                                                                <dxuc:ASPxUploadControl ID="uploadAnexos" runat="server" ClientInstanceName="uploadAnexos"
+                                                                    FileUploadMode="OnPageLoad" OnFileUploadComplete="uploadAnexos_FileUploadComplete"
+                                                                    ShowProgressPanel="True" Theme="Aqua" Width="280px">
+                                                                    <ValidationSettings AllowedFileExtensions=".jpg, .jpeg, .png, .gif, .pdf, .doc, .xls, .zip, .txt, .exls, .wma, .mp3, .pps, .mp4, .mpeg, .avi"
+                                                                        GeneralErrorText="Não foi possível realizar o envio" MaxFileSize="4194304" MaxFileSizeErrorText="O arquivo é maior que o limite máximo de  {0} bytes"
+                                                                        NotAllowedFileExtensionErrorText="Extensão de arquivo não aceita">
+                                                                    </ValidationSettings>
+                                                                    <BrowseButton Text="Procurar...">
+                                                                    </BrowseButton>
+                                                                    <CancelButton Text="Cancelar">
+                                                                    </CancelButton>
+                                                                    <ClearFileSelectionImage AlternateText="Limpar arquivo" ToolTip="Limpar arquivo selecionado">
+                                                                    </ClearFileSelectionImage>
+                                                                </dxuc:ASPxUploadControl>
+                                                                <br />
+                                                                <dxe:ASPxLabel ID="labelAnexos0" runat="server" ClientInstanceName="labelAnexos"
+                                                                    Text="Título do arquivo:">
+                                                                </dxe:ASPxLabel>
+                                                                <dxe:ASPxTextBox ID="inputAnexos" runat="server" AutoPostBack="True" ClientInstanceName="inputAnexos"
+                                                                    EnableClientSideAPI="True" OnTextChanged="inputAnexos_TextChanged" Theme="Aqua"
+                                                                    ViewStateMode="Enabled" Width="280px">
+                                                                </dxe:ASPxTextBox>
+                                                                <dxe:ASPxButton ID="botaoEnviarAnexos" runat="server" AutoPostBack="False" ClientInstanceName="botaoEnviarAnexos"
+                                                                    Cursor="pointer" EnableTheming="True" Text="Enviar" Theme="Aqua" Wrap="False">
+                                                                    <ClientSideEvents Click="function(s, e) {
+	enviarAnexo(s, e);
+}" />
+                                                                </dxe:ASPxButton>
+                                                            </dxpc:PopupControlContentControl>
+                                                        </ContentCollection>
+                                                    </dxpc:ASPxPopupControl>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                        </dxp:PanelContent>
+                                    </PanelCollection>
+                                </dxcp:ASPxCallbackPanel>
+                            </ContentTemplate>
+                        </dxnb:NavBarGroup>
+                        <dxnb:NavBarGroup Expanded="False" Name="dadosComentarios" Text="Comentários" ToolTip="Comentários enviados para o item atual">
+                            <HeaderImage Height="15px" Url="~/imagens/Reuniao/comentarios.png" Width="15px">
+                            </HeaderImage>
+                            <ContentTemplate>
+                                <asp:UpdatePanel ID="upComentarios" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                        <dxcp:ASPxCallbackPanel ID="cpComentariosItens" runat="server" ClientInstanceName="cpComentariosItens"
+                                            Theme="Aqua" OnCallback="cpComentariosItens_Callback">
+                                            <ClientSideEvents EndCallback="function(s, e) {
+	aplicarMudancas();
+}" />
+                                            <PanelCollection>
+                                                <dxp:PanelContent ID="PanelContent1" runat="server">
+                                                    <dxhe:ASPxHtmlEditor ID="htmlComentarios" runat="server" ActiveView="Preview" ClientInstanceName="htmlComentarios"
+                                                        EnableTheming="True" OnLoad="htmlComentarios_Load" Theme="Aqua" Width="100%">
+                                                        <Settings AllowDesignView="False" AllowHtmlView="False" />
+                                                    </dxhe:ASPxHtmlEditor>
+                                                    <dxe:ASPxButton ID="botaoAdicionarComentario" runat="server" ClientInstanceName="botaoAdicionarComentario"
+                                                        EnableTheming="True" Text="Adicionar comentário" Theme="Aqua" Wrap="False">
+                                                        <ClientSideEvents Click="function(s, e) {
+	pcEditarComentarios.Show();
+}" />
+                                                    </dxe:ASPxButton>
+                                                    <dxpc:ASPxPopupControl ID="pcEditarComentarios" runat="server" ClientInstanceName="pcEditarComentarios"
+                                                        CloseAction="CloseButton" EnableClientSideAPI="True" HeaderText="Adicionar comentário"
+                                                        Modal="True" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter"
+                                                        Theme="Aqua">
+                                                        <ClientSideEvents CloseUp="function(s, e) {
+	cpComentariosItens.PerformCallback('atualizarDados');
+}" />
+                                                        <ContentCollection>
+                                                            <dxpc:PopupControlContentControl runat="server" >
+                                                                <dxe:ASPxMemo ID="memoComentarios" runat="server" ClientInstanceName="memoComentarios"
+                                                                    Height="100px" Theme="Aqua" Width="500px">
+                                                                </dxe:ASPxMemo>
+                                                                <dxe:ASPxButton ID="botaoEnviarComentario" runat="server" AutoPostBack="False" ClientInstanceName="botaoEnviarComentario"
+                                                                    Cursor="pointer" EnableTheming="True" OnClick="botaoEnviarComentario_Click" Text="Enviar"
+                                                                    Theme="Aqua" Wrap="False">
+                                                                    <ClientSideEvents Click="function(s, e) {
+	pcEditarComentarios.Hide();
+	
+}" />
+                                                                </dxe:ASPxButton>
+                                                            </dxpc:PopupControlContentControl>
+                                                        </ContentCollection>
+                                                    </dxpc:ASPxPopupControl>
+                                                </dxp:PanelContent>
+                                            </PanelCollection>
+                                        </dxcp:ASPxCallbackPanel>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                            </ContentTemplate>
+                        </dxnb:NavBarGroup>
+                    </Groups>
+                </dxnb:ASPxNavBar>
+            </dxp:PanelContent>
+        </PanelCollection>
+    </dxcp:ASPxCallbackPanel>
+    <asp:UpdatePanel ID="upAvisoUsuario" runat="server">
+        <ContentTemplate>
+            <dxpc:ASPxPopupControl ID="pcAvisoUsuario" runat="server" ClientInstanceName="pcAvisoUsuario"
+                CloseAction="None" EnableTheming="True" HeaderText="Aviso!" Height="150px" Modal="True"
+                PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ShowCloseButton="False"
+                Theme="Aqua" Width="500px">
+                <ContentCollection>
+                    <dxpc:PopupControlContentControl runat="server">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td align="center">
+                                    <dxe:ASPxLabel ID="lbAvisoUsuarioTv" runat="server" ClientInstanceName="lbAvisoUsuarioTv">
+                                    </dxe:ASPxLabel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height:10px;text-align:center">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <dxe:ASPxButton ID="botaoAvisoUsuarioFechar" runat="server" ClientInstanceName="botaoAvisoUsuarioFechar"
+                                        Cursor="pointer" OnClick="botaoAvisoUsuarioFechar_Click" Text="Entendido" Theme="Aqua">
+                                    </dxe:ASPxButton>
+                                </td>
+                            </tr>
+                        </table>
+                    </dxpc:PopupControlContentControl>
+                </ContentCollection>
+            </dxpc:ASPxPopupControl>
+            <dxcb:ASPxCallback ID="callItens" runat="server" ClientInstanceName="callItens" OnCallback="callItens_Callback">
+                <ClientSideEvents EndCallback="function(s, e) {
+	atualizarSistemaQuadros();
+}" />
+            </dxcb:ASPxCallback>
+            <dxhf:ASPxHiddenField ID="hfValores" runat="server" ClientInstanceName="hfValores">
+            </dxhf:ASPxHiddenField>
+            <br />
+        </ContentTemplate>
+    </asp:UpdatePanel>
+    <div id="mensagemErro">
+    </div>
+    </form>
+</body>
+</html>

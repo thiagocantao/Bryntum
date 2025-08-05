@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7C62F31E-765E-43C6-9D5B-02A38DB60144}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cdis.Brisk.Infra.Data.Repository</RootNamespace>
+    <AssemblyName>Cdis.Brisk.Infra.Data.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Cronograma\CronogramaBalanceamentoRepository.cs" />
+    <Compile Include="Repositories\Cronograma\CronogramaDependenciaRepository.cs" />
+    <Compile Include="Repositories\Cronograma\CronogramaProjetoMetaRepository.cs" />
+    <Compile Include="Repositories\Cronograma\CronogramaProjetoRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\Function\FCronoGetVersoesLbProjetoRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\Function\FGetCarteirasEntidadeRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\Function\FGetCronogramaGanttProjetoRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\Function\FGetCronogramaObjetivoEstrategicoRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\Function\FGetCronogramaPARepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\Function\FGetStatusPrevisaoFluxoCaixaRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\Function\FGetUnidadesUsuarioRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\Function\FOrcGetEtapasPrevisaoOrcamentariaRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\StoredProcedure\PEapBuscaCodigoEapRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\StoredProcedure\PEnviaEmailPortalRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\StoredProcedure\PGetOrcamentacaoProjetoRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\StoredProcedure\PGravaRegistroPrevisaoOrcamentariaProjetoRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\StoredProcedure\RelatorioMinisterio\PSescoopRelMinisterio5200Repository.cs" />
+    <Compile Include="Repositories\DataBaseObject\StoredProcedure\RelatorioMinisterio\PSescoopRelMinisterio5400Repository.cs" />
+    <Compile Include="Repositories\DataBaseObject\StoredProcedure\RelatorioMinisterio\PSescoopRelMinisterioReceitaRepository.cs" />
+    <Compile Include="Repositories\DataBaseObject\StoredProcedure\RelatorioMinisterio\PSescoopRelMinisterioDespesaRepository.cs" />
+    <Compile Include="Repositories\Estrategia\IndicadorRepository.cs" />
+    <Compile Include="Repositories\Estrategia\ObjetoEstrategiaRepository.cs" />
+    <Compile Include="Repositories\Parametro\ModuloSistemaRepository.cs" />
+    <Compile Include="Repositories\Parametro\ParametroConfiguracaoSistemaRepository.cs" />
+    <Compile Include="Repositories\Projeto\MemoriaCalculoRepository.cs" />
+    <Compile Include="Repositories\Projeto\ProjetoRepository.cs" />
+    <Compile Include="Repositories\Projeto\ProjetoUnidadeRepository.cs" />
+    <Compile Include="Repositories\Relatorio\PlanoTabalho\RelatorioPlanoTrabalhoRepository.cs" />
+    <Compile Include="Repositories\Relatorio\PlanoTabalho\ResultSets\EntregaAtividadeResultSet.cs" />
+    <Compile Include="Repositories\UnidadeNegocio\UnidadeNegocioRepository.cs" />
+    <Compile Include="Repositories\Usuario\LogAcessoUsuarioRepository.cs" />
+    <Compile Include="Repositories\Usuario\UsuarioEsqueceuSenhaAtualizacaoRepository.cs" />
+    <Compile Include="Repositories\Usuario\UsuarioEsqueceuSenhaRepository.cs" />
+    <Compile Include="Repositories\Usuario\UsuarioRepository.cs" />
+    <Compile Include="Repositories\Relatorio\PlanoTabalho\ResultSets\EntregaResultSet.cs" />
+    <Compile Include="Repositories\Relatorio\PlanoTabalho\ResultSets\ProdutoResultSet.cs" />
+    <Compile Include="Repositories\Relatorio\PlanoTabalho\ResultSets\ProjetoClassificacaoResultSet.cs" />
+    <Compile Include="Repositories\Relatorio\PlanoTabalho\ResultSets\ProjetoGeralPlanoTrabalhoResultSet.cs" />
+    <Compile Include="Repositories\Relatorio\PlanoTabalho\ResultSets\ProjetoPublicoAlvoResultSet.cs" />
+    <Compile Include="Repositories\Relatorio\PlanoTabalho\ResultSets\ResultadoEsperadoResultSet.cs" />
+    <Compile Include="Repositories\_Common\TextoPadraoSistemaRepository.cs" />
+    <Compile Include="UnitOfWorkRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cdis.Brisk.Domain\Cdis.Brisk.Domain.csproj">
+      <Project>{3147f046-ae2d-4893-a262-6b63cf8e06a7}</Project>
+      <Name>Cdis.Brisk.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Core.Interface\Cdis.Brisk.Infra.Core.Interface.csproj">
+      <Project>{752EE204-9781-4F48-9B54-4814E54822DD}</Project>
+      <Name>Cdis.Brisk.Infra.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Core\Cdis.Brisk.Infra.Core.csproj">
+      <Project>{9a5304b0-f4a2-4dad-adca-6e5fa5b48dd5}</Project>
+      <Name>Cdis.Brisk.Infra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Data\Cdis.Brisk.Infra.Data.csproj">
+      <Project>{44b4057f-92e1-48a8-9d5f-642437c29e1a}</Project>
+      <Name>Cdis.Brisk.Infra.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

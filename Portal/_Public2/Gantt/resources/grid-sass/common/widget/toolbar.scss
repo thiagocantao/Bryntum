@@ -1,0 +1,23 @@
+@import '../../variables.scss';
+
+.b-panel {
+    .b-toolbar {
+        background-color : $panel-toolbar-background-color;
+        color            : $panel-toolbar-color;
+        padding          : top($panel-toolbar-padding) right($panel-toolbar-padding) 0 left($panel-toolbar-padding);
+
+        // Create the bottom margin by putting padding on child widgets.
+        // This is for when the toolbar wraps to create space between rows.
+        > .b-widget {
+            margin-bottom : bottom($panel-toolbar-padding) ;
+        }
+    }
+    &.b-content-element {
+        flex-flow : row nowrap;
+    }
+}
+
+// When displayed in a tabpanel, match its color
+.b-tabpanel .b-panel .b-toolbar {
+    background-color : $tabpanel-background-color;
+}

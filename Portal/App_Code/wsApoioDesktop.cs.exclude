@@ -1,0 +1,43 @@
+﻿using System.Web.Services;
+
+
+/// <summary>
+/// Summary description for wsApoioDesktop
+/// </summary>
+[WebService(Namespace = "http://www.cdis.com.br/")]
+[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+public class wsApoioDesktop : System.Web.Services.WebService
+{
+
+    private string PathDB = System.Configuration.ConfigurationManager.AppSettings["pathDB"].ToString();
+    private string IDProduto = System.Configuration.ConfigurationManager.AppSettings["IDProduto"].ToString();
+    private string tipoBancoDados = System.Configuration.ConfigurationManager.AppSettings["tipoBancoDados"].ToString();
+    private string bancodb = string.Empty;
+    private string Ownerdb = string.Empty;
+
+    dados cDados;
+
+    public wsApoioDesktop()
+    {
+        cDados = CdadosUtil.GetCdados(null);
+        bancodb = cDados.getDbName();
+        Ownerdb = cDados.getDbOwner();
+
+        //Uncomment the following line if using designed components 
+        //InitializeComponent(); 
+    }
+
+    [WebMethod]
+    public int ObtemCodigoHash(string str)
+    {
+        return cDados.ObtemCodigoHash(str);
+    }
+
+    [WebMethod]
+    public string HelloWorld()
+    {
+        return "Hello Geter";
+    }
+
+}
+

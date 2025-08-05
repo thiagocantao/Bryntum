@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+***********************************************************************************************
+website.publishproj
+
+WARNING: DO NOT MODIFY this file, it is used for the web publish process.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+***********************************************************************************************
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9582bb23-17ae-4e00-a222-3cce2e9927fc}</ProjectGuid>
+    <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
+    <SourceWebVirtualPath>/Portal</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <SourceWebProject>
+    </SourceWebProject>
+    <SourceWebMetabasePath>
+    </SourceWebMetabasePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- for VS2010 we need to use 10.5 but for VS2012+ we should use VisualStudioVersion -->
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)' =='' and '$(VisualStudioVersion)' == 10.0 ">10.5</WebPublishTargetsVersion>
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)'=='' ">$(VisualStudioVersion)</WebPublishTargetsVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(WebPublishTargetsVersion)</VSToolsPath>
+    <_WebPublishTargetsPath Condition=" '$(_WebPublishTargetsPath)'=='' ">$(VSToolsPath)</_WebPublishTargetsPath>
+    <AssemblyFileVersion Condition="'$(AssemblyFileVersion)' == ''">1.0.0.0</AssemblyFileVersion>
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>$(AssemblyFileVersion)</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>$(AssemblyVersion)</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\classes-complementares\controles\CDIS.Web.Controles.csproj">
+      <Project>{05DA3F23-DB8E-4211-ADB8-C49558635A19}</Project>
+      <Name>CDIS.Web.Controles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\classes-complementares\Cripto\Cripto.csproj">
+      <Project>{13891225-170E-4E6A-85C7-9CF819C469D9}</Project>
+      <Name>Cripto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\classes-complementares\Dados\Dados.csproj">
+      <Project>{EFF5D10B-0F3D-4043-A305-1FBD1A4135E7}</Project>
+      <Name>Dados</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\classes-complementares\FormularioCDISMobile\FormularioCDISMobile.csproj">
+      <Project>{EAB90403-9DD8-446E-AD34-7D68FEFB062D}</Project>
+      <Name>FormularioCDISMobile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\classes-complementares\FormularioCDIS\FormularioCDIS.csproj">
+      <Project>{01713822-F3A3-44AB-ACC3-6B4BADDA0339}</Project>
+      <Name>FormularioCDIS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\classes-complementares\PlanoDeAcaoCDIS\PlanoDeAcaoCDIS.csproj">
+      <Project>{6A86D482-BCA1-4A88-B525-536C300F839B}</Project>
+      <Name>PlanoDeAcaoCDIS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\classes-complementares\WorkFlowCDISMobile\WorkFlowCDISMobile.csproj">
+      <Project>{157BE0D5-8687-4C1A-BDE1-724D00805CC4}</Project>
+      <Name>WorkFlowCDISMobile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\classes-complementares\WorkFlowCDIS\WorkFlowCDIS.csproj">
+      <Project>{5EEA28E4-0290-4C71-8CF9-BFEE701CC59C}</Project>
+      <Name>WorkFlowCDIS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Cdis.Brisk.Application\Cdis.Brisk.Application.csproj">
+      <Project>{17A15EDF-103E-4E97-80B9-D874734AB96B}</Project>
+      <Name>Cdis.Brisk.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Cdis.Brisk.DataTransfer\Cdis.Brisk.DataTransfer.csproj">
+      <Project>{BCFD7169-D740-455E-ADB1-23B33697AC35}</Project>
+      <Name>Cdis.Brisk.DataTransfer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Cdis.Brisk.Domain\Cdis.Brisk.Domain.csproj">
+      <Project>{3147F046-AE2D-4893-A262-6B63CF8E06A7}</Project>
+      <Name>Cdis.Brisk.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Cdis.Brisk.Infra.Core.Interface\Cdis.Brisk.Infra.Core.Interface.csproj">
+      <Project>{752EE204-9781-4F48-9B54-4814E54822DD}</Project>
+      <Name>Cdis.Brisk.Infra.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Cdis.Brisk.Infra.Core.Pdf\Cdis.Brisk.Infra.Core.Pdf.csproj">
+      <Project>{C3E4C834-9468-45A2-8983-655F8FFAF2CE}</Project>
+      <Name>Cdis.Brisk.Infra.Core.Pdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Cdis.Brisk.Infra.Core\Cdis.Brisk.Infra.Core.csproj">
+      <Project>{9A5304B0-F4A2-4DAD-ADCA-6E5FA5B48DD5}</Project>
+      <Name>Cdis.Brisk.Infra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Cdis.Brisk.Infra.Data.Repository\Cdis.Brisk.Infra.Data.Repository.csproj">
+      <Project>{7C62F31E-765E-43C6-9D5B-02A38DB60144}</Project>
+      <Name>Cdis.Brisk.Infra.Data.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Cdis.Brisk.Infra.Data\Cdis.Brisk.Infra.Data.csproj">
+      <Project>{44B4057F-92E1-48A8-9D5F-642437C29E1A}</Project>
+      <Name>Cdis.Brisk.Infra.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Cdis.Brisk.Service\Cdis.Brisk.Service.csproj">
+      <Project>{2D37DBC3-A765-4C29-8082-1AA457231A7F}</Project>
+      <Name>Cdis.Brisk.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(_WebPublishTargetsPath)\Web\Microsoft.WebSite.Publishing.targets" />
+</Project>

@@ -1,0 +1,1655 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Data;
+using DevExpress.Web;
+using System.Windows.Forms;
+using System.IO;
+using System.Net;
+using DevExpress.Utils.OAuth.Provider;
+using DevExpress.Web.ASPxHtmlEditor;
+using DevExpress.XtraRichEdit.Model;
+
+public partial class Reunioes_novaReunioes : System.Web.UI.Page
+{
+    #region valores
+    string retornoMensagem = string.Empty;
+    protected dados cDados;
+    protected dadosReunioes cReunioes;
+    protected dadosConversores cConversores;
+    //paineis principais
+    //paineis quadros principais
+    private ASPxCallbackPanel panelDadosItem;
+    private ASPxCallbackPanel panelDeliberacaoAtual;
+    private ASPxCallbackPanel panelPlanosItens;
+    private ASPxCallbackPanel panelComentarios;
+    private ASPxCallbackPanel panelAnexos;
+    //popups
+    private ASPxPopupControl popEditarPlanos;
+    private ASPxPopupControl popEditarAnexos;
+    private ASPxPopupControl popEditarComentarios;
+    private ASPxPopupControl popEditarPlanosPendentes;
+    //updates
+    private UpdatePanel updateComentarios;
+    private UpdatePanel updateAnexos;
+    //objetos principais
+    private ASPxNavBar navQuadrosPrincipais;
+
+    #endregion
+
+    #region atualizadores
+    protected void atualizaItens()
+    {
+        ASPxCallbackPanel panelTodosItens = (ASPxCallbackPanel)menuPrincipal.Items[0].FindControl("cpTodosItens");
+        if (panelTodosItens != null)
+        {
+            ASPxGridView tabela = (ASPxGridView)panelTodosItens.FindControl("gvTodosItens");
+            tabela.DataSource = cReunioes.valoresReuniao<DataTable>("dtItens");
+            tabela.DataBind();
+            hfValores.Set("codigoItemAtual", cReunioes.valoresReuniao<string>("codigoItemAtual"));
+            hfValores.Set("tipoItemAtual", cReunioes.valoresReuniao<string>("tipoItemAtual"));
+        }
+    }
+    protected void atualizarParticipantes(DataTable dtPa = null)
+    {
+        DataTable dtParticipantes = new DataTable();
+        if (dtPa == null)
+            dtParticipantes = cReunioes.valoresReuniao<DataTable>("dtParticipantes");
+        else
+            dtParticipantes = dtPa;
+        ASPxCallbackPanel panel = (ASPxCallbackPanel)menuPrincipal.Items[1].FindControl("cpParticipantes");
+        if (panel != null)
+        {
+            ASPxGridView listaParticipantes = (ASPxGridView)panel.FindControl("gvParticipantes");
+            listaParticipantes.DataSource = dtParticipantes;
+            listaParticipantes.DataBind();
+        }
+    }
+    protected void atualizarAnexos()
+    {
+        ASPxDataView dataAnexos = (ASPxDataView)panelAnexos.FindControl("dataAnexos");
+        DataTable dtAnexos = cReunioes.valoresReuniao<DataTable>("dtAnexos");
+        DataRow[] rows = dtAnexos.Select(string.Format("CodigoObjetoItemPauta = {0}", cReunioes.valoresReuniao<string>("codigoItemAtual")));
+        if (rows.Count() > 0)
+            dtAnexos = rows.CopyToDataTable();
+        else
+            dtAnexos = new DataTable();
+        if (dtAnexos != null && dtAnexos.Rows.Count > 0)
+            dtAnexos.DefaultView.Sort = "DataInclusao DESC";
+        dataAnexos.DataSource = dtAnexos;
+        dataAnexos.DataBind();
+    }
+    protected void atualizarComentarios()
+    {
+        ASPxHtmlEditor htmlComentarios = (ASPxHtmlEditor)panelComentarios.FindControl("htmlComentarios");
+        DataTable dtComentarios = cReunioes.valoresReuniao<DataTable>("dtComentarios");
+        string texto = "";
+        DataRow[] rows = dtComentarios.Select(string.Format("CodigoObjetoItemPauta = {0}", cReunioes.valoresReuniao<string>("codigoItemAtual")));
+        if (rows.Count() > 0 && dtComentarios.Rows.Count > 0)
+        {
+            dtComentarios = rows.CopyToDataTable();
+            foreach (DataRow row in dtComentarios.Rows)
+            {
+                DataTable dtItens = cReunioes.valoresReuniao<DataTable>("dtItens");
+                DataTable dtParticipantes = cReunioes.valoresReuniao<DataTable>("dtParticipantes");
+                string hora = row["DataComentario"].ToString().Split(' ')[1].Substring(0, 5);
+                string item = dtItens.Select(string.Format("CodigoObjeto = {0}", row["CodigoObjetoItemPauta"].ToString()))[0]["NomeObjeto"].ToString();
+                string participante = dtParticipantes.Select(string.Format("CodigoParticipante = {0}", row["CodigoParticipante"].ToString()))[0]["NomeParticipante"].ToString();
+                texto += string.Format("<br><b>{0}</b> comentou '<i>{1}</i>' às <i>{2}</i><b>:</b> \"<i>{3}</i>\"<br><br>"
+                    , participante, item, hora, row["Comentario"].ToString());
+            }
+        }
+        htmlComentarios.Html = texto;
+        htmlComentarios.DataBind();
+    }
+    protected void atualizarDeliberacao()
+    {
+        DataTable dtDeliberacoes = cReunioes.valoresReuniao<DataTable>("dtDeliberacoes");
+        DataRow row = dtDeliberacoes.Select(string.Format("CodigoObjetoAssociado = {0}", cReunioes.valoresReuniao<string>("codigoItemAtual")))[0];
+        ASPxMemo texto = (ASPxMemo)panelDeliberacaoAtual.FindControl("quadroDeliberacoes");
+        texto.Text = row["Deliberacao"].ToString();
+    }
+    protected void atualizarPlanos()
+    {
+        DataTable dtPlanos = cReunioes.valoresReuniao<DataTable>("dtPlanos").Copy();
+        if (dtPlanos != null)
+        {
+            ASPxGridView tabela = (ASPxGridView)panelPlanosItens.FindControl("gvPlanos");
+            DataRow[] rows;
+            if (cReunioes.valoresReuniao<string>("filtroConcluidoPlanos") == "false")
+                rows = dtPlanos.Select(string.Format("CodigoItemReuniao = {0}", cReunioes.valoresReuniao<string>("codigoItemAtual")));
+            else
+                rows = dtPlanos.Select(string.Format("CodigoItemReuniao = {0} and CodigoStatusTarefa <> 2 and CodigoEvento is not null", cReunioes.valoresReuniao<string>("codigoItemAtual")));
+            if (rows.Count() > 0)
+                dtPlanos = rows.CopyToDataTable();
+            else
+                dtPlanos = new DataTable();
+            tabela.DataSource = dtPlanos;
+            tabela.DataBind();
+        }
+    }
+    protected void atualizarParametros()
+    {
+        string[] valores = cReunioes.carregarParametros();
+        ASPxUploadControl uploadAnexos = (ASPxUploadControl)popEditarAnexos.FindControl("uploadAnexos");
+        uploadAnexos.ValidationSettings.MaxFileSize = int.Parse(valores[0]);
+    }
+    protected void atualizarCombos()
+    {
+        cReunioes.carregarCombos();
+        DataTable dtUsuarios = cReunioes.valoresReuniao<DataTable>("dtUsuarios");
+        DataTable dtStatusTarefa = cReunioes.valoresReuniao<DataTable>("dtStatusTarefa");
+        ASPxComboBox cbResponsavel = (ASPxComboBox)popEditarPlanos.FindControl("cbResponsavel");
+        ASPxComboBox cbStatus = (ASPxComboBox)popEditarPlanos.FindControl("cbStatus");
+        ASPxComboBox cbResponsavelP = (ASPxComboBox)popEditarPlanosPendentes.FindControl("cbResponsavel");
+        ASPxComboBox cbStatusP = (ASPxComboBox)popEditarPlanosPendentes.FindControl("cbStatus");
+        if (dtUsuarios.Rows.Count > 0)
+        {
+            foreach (DataRow row in dtUsuarios.Rows)
+            {
+                cbResponsavel.Items.Add(row[1].ToString(), int.Parse(row[0].ToString()));
+                cbResponsavelP.Items.Add(row[1].ToString(), int.Parse(row[0].ToString()));
+            }
+        }
+        if (dtStatusTarefa.Rows.Count > 0)
+        {
+            foreach (DataRow row in dtStatusTarefa.Rows)
+            {
+                cbStatus.Items.Add(row[1].ToString(), int.Parse(row[0].ToString()));
+                cbStatusP.Items.Add(row[1].ToString(), int.Parse(row[0].ToString()));
+            }
+        }
+    }
+    #endregion
+
+    #region Metodos iniciais
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        DevExpress.Web.ASPxWebControl.SetIECompatibilityModeEdge();
+
+        if (cConversores == null)
+            cConversores = new dadosConversores();
+        if (cReunioes == null)
+            cReunioes = new dadosReunioes();
+        if (cDados == null)
+            cDados = cReunioes.funcoes();
+
+        if (!IsPostBack)
+        {
+            cReunioes.valoresReuniao<string>(limpar: true);
+            cReunioes.valoresReuniao<DataTable>(limpar: true);
+            cReunioes.valoresReuniao<DataSet>(limpar: true);
+            cReunioes.valoresReuniao<DataTable>(geral: true, limpar: true);
+        }
+
+    }
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            if (cDados.getInfoSistema("IDUsuarioLogado") == null)
+                Response.Redirect("~/erros/erroInatividade.aspx");
+        }
+        catch
+        {
+            Response.RedirectLocation = cDados.getPathSistema() + "erros/erroInatividade.aspx";
+            Response.End();
+        }
+        if (cReunioes.valoresReuniao<string>("endereco") != cDados.getPathSistema())
+        {
+            var codigoEvento = "229";
+            var codigoTipo = "15";
+            var codigoObjeto = "878";
+            if (Request.QueryString["CE"] != null)
+            {
+                codigoEvento = Request.QueryString["CE"].ToString();
+                codigoTipo = Request.QueryString["CT"].ToString();
+                codigoObjeto = Request.QueryString["CO"].ToString();
+            }
+            cReunioes.valoresReuniao<string>("endereco", cDados.getPathSistema());
+            cReunioes.valoresReuniao<string>("resolucaoTela", cDados.getInfoSistema("ResolucaoCliente").ToString());
+            cReunioes.valoresReuniao<string>("alturaPrincipal", cDados.getInfoSistema("ResolucaoCliente").ToString().Split('x')[1]);
+            cReunioes.valoresReuniao<string>("larguraPrincipal", cDados.getInfoSistema("ResolucaoCliente").ToString().Split('x')[0]);
+            cReunioes.valoresReuniao<string>("codigoEvento", codigoEvento);
+            cReunioes.valoresReuniao<string>("CodigoTipoAssociacao", codigoTipo);
+            cReunioes.valoresReuniao<string>("codigoEventoAssociacao", codigoObjeto);
+            cReunioes.valoresReuniao<string>("codigoUsuario", cDados.getInfoSistema("IDUsuarioLogado").ToString());
+            cReunioes.valoresReuniao<string>("codigoEntidade", cDados.getInfoSistema("CodigoEntidade").ToString());
+            cReunioes.valoresReuniao<string>("nomeUsuario", cDados.getInfoSistema("NomeUsuarioLogado").ToString());
+        }
+
+        if (!buscarComponentesSistema(ref retornoMensagem))
+        {
+            //MessageBox.Show("Não foi possível realizar a busca dos componentes. Motivo: " + retornoMensagem, "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+
+        if (!IsPostBack)
+        {
+            atualizarParametros();
+            atualizarCombos();
+            atualizarTitulo();
+        }
+        hfValores.Set("codigoItemAtual", cReunioes.valoresReuniao<string>("codigoItemAtual"));
+        hfValores.Set("tipoItemAtual", cReunioes.valoresReuniao<string>("tipoItemAtual"));
+
+
+    }
+    protected override void OnUnload(EventArgs e)
+    {
+
+    }
+
+    #endregion
+
+    #region Eventos personalizados
+    public string chamarGrafico(string valor = "")
+    {
+        Dictionary<string, string> valores = new Dictionary<string, string>();
+        List<string> retorno = new List<string> { };
+        switch (cReunioes.valoresReuniao<string>("tipoItemAtual"))
+        {
+            case "8":
+                valores = cReunioes.criarGraficos("metasItem", valor);
+                retorno.Add(valores["grafico_swf"]);
+                retorno.Add(valores["larguraGrafico"]);
+                retorno.Add(valores["alturaGrafico"]);
+                retorno.Add(valores["grafico_xml"]);
+                retorno.Add(valores["divGrafico"]);
+                break;
+            case "-100":
+            case null:
+                if (valor.Contains("Projeto_Grafico_"))
+                {
+                    if (valor.Contains("Fisico"))
+                        valores = cReunioes.criarGraficos("projetoItem", "Físico§" + valor);
+                    else if (valor.Contains("Despesa"))
+                        valores = cReunioes.criarGraficos("projetoItem", "Despesa§" + valor);
+                    else if (valor.Contains("Receita"))
+                        valores = cReunioes.criarGraficos("projetoItem", "Receita§" + valor);
+                    retorno.Add(valores["grafico_swf"]);
+                    retorno.Add(valores["larguraGrafico"]);
+                    retorno.Add(valores["alturaGrafico"]);
+                    retorno.Add(valores["grafico_xml"]);
+                    retorno.Add(valores["divGrafico"]);
+                    if (valores["naoMostrar"].ToString() == "true")
+                        retorno.Add(valores["naoMostrar"]);
+                }
+                break;
+        }
+        return string.Join("§", retorno);
+    }
+    /// <summary>
+    /// Realiza a busca do principais componentes do sistema
+    /// </summary>
+    /// <param name="mensagem">string que recebera a mensagem do erro ocorrido.</param>
+    /// <returns></returns>
+    protected Boolean buscarComponentesSistema(ref string mensagem)
+    {
+        Boolean retorno = false;
+        try
+        {
+            navQuadrosPrincipais = (ASPxNavBar)cpQuadrosPincipais.FindControl("quadrosPrincipais");
+            panelDadosItem = (ASPxCallbackPanel)navQuadrosPrincipais.Groups[0].FindControl("cpDadosItem");
+            panelDeliberacaoAtual = (ASPxCallbackPanel)navQuadrosPrincipais.Groups[1].FindControl("cpDeliberacaoAtual");
+            panelPlanosItens = (ASPxCallbackPanel)navQuadrosPrincipais.Groups[2].FindControl("cpPlanosItens");
+            updateComentarios = (UpdatePanel)navQuadrosPrincipais.Groups[4].FindControl("upComentarios");
+            panelComentarios = (ASPxCallbackPanel)updateComentarios.FindControl("cpComentariosItens");
+            panelAnexos = (ASPxCallbackPanel)navQuadrosPrincipais.Groups[3].FindControl("cpAnexosItens");
+            updateAnexos = (UpdatePanel)panelAnexos.FindControl("upAnexos");
+            popEditarPlanos = (ASPxPopupControl)panelPlanosItens.FindControl("pcEditarPlanos");
+            popEditarAnexos = (ASPxPopupControl)updateAnexos.FindControl("pcEditarAnexos");
+            popEditarComentarios = (ASPxPopupControl)panelComentarios.FindControl("pcEditarComentarios");
+            popEditarPlanosPendentes = (ASPxPopupControl)panelDadosItem.FindControl("pcEditarPlanosPendentes");
+            retorno = true;
+        }
+        catch (Exception ex)
+        {
+            mensagem = ex.ToString();
+        }
+        return retorno;
+    }
+    /// <summary>
+    /// Muda o item atual, para o próximo, anterior ou especifico
+    /// </summary>
+    /// <param name="tipo">Tipo de mudança, se 'proximo' para o seguinte ou 'anterior' para o antecessor</param>
+    /// <param name="item">Ao ser informado o evento irá mudar para o número do item informado</param>
+    protected void mudancaItem(string tipo = "", int item = -1)
+    {
+        DataTable dtItens = cReunioes.valoresReuniao<DataTable>("dtItens");
+        string codigoObjeto = cReunioes.valoresReuniao<string>("codigoItemAtual");
+        string codigoTipoObjeto = cReunioes.valoresReuniao<string>("tipoItemAtual");
+        if (item == -1)
+        {
+            if (codigoObjeto == "-100" && codigoTipoObjeto == "-100")
+            {
+                codigoObjeto = "0";
+                codigoTipoObjeto = "-99";
+            }
+            DataRow row = dtItens.Select(string.Format("CodigoObjeto = {0} and CodigoTipoObjeto = {1}", codigoObjeto, codigoTipoObjeto))[0];
+            int numero = int.Parse(row["SequenciaApresentacao"].ToString());
+
+            if (numero < (dtItens.Rows.Count - 1) && tipo == "proximo")
+            {
+                if (numero < 0)
+                    numero = 1;
+                else
+                    numero++;
+            }
+            else if (numero >= (dtItens.Rows.Count - 1) && tipo == "proximo")
+            {
+                numero = 1;
+            }
+            else if (numero > 1 && tipo == "anterior")
+            {
+                numero--;
+            }
+            else if (numero <= 1 && tipo == "anterior")
+            {
+                numero = dtItens.Rows.Count - 1;
+            }
+            DataRow[] rows = dtItens.Select(string.Format("SequenciaApresentacao = {0}", numero));
+            if (rows.Count() > 0)
+            {
+                row = rows[0];
+                cReunioes.valoresReuniao<string>("codigoItemAtual", row["CodigoObjeto"].ToString());
+                cReunioes.valoresReuniao<string>("tipoItemAtual", row["CodigoTipoObjeto"].ToString());
+                cReunioes.valoresReuniao<string>("sequenciaItemAtual", row["SequenciaApresentacao"].ToString());
+                hfValores.Set("codigoItemAtual", row["CodigoObjeto"].ToString());
+                hfValores.Set("tipoItemAtual", row["CodigoTipoObjeto"].ToString());
+            }
+
+        }
+        else
+        {
+            if (item == -100)
+            {
+                codigoObjeto = item.ToString();
+                codigoTipoObjeto = item.ToString();
+            }
+            else
+            {
+                DataRow row2 = dtItens.Rows[item];
+                codigoObjeto = row2["CodigoObjeto"].ToString();
+                codigoTipoObjeto = row2["CodigoTipoObjeto"].ToString();
+            }
+            cReunioes.valoresReuniao<string>("codigoItemAtual", codigoObjeto);
+            cReunioes.valoresReuniao<string>("tipoItemAtual", codigoTipoObjeto);
+            hfValores.Set("codigoItemAtual", codigoObjeto);
+            hfValores.Set("tipoItemAtual", codigoTipoObjeto);
+        }
+
+    }
+    /// <summary>
+    /// Carrega ou especifica os valores dos campos de adição/alteração de planos de ação
+    /// </summary>
+    /// <param name="valores">Valores para serem especificados nos campos, caso nulo será carregado os valores dos campos</param>
+    /// <returns></returns>
+    protected List<string> carregarValoresPlanos(DataRow valores = null, string tipo = "")
+    {
+        List<string> retorno = new List<string>();
+        ASPxPopupControl pop = new ASPxPopupControl();
+        if (tipo == "planos")
+            pop = popEditarPlanos;
+        else if (tipo == "planosPendentes")
+            pop = popEditarPlanosPendentes;
+        ASPxTextBox tbPlanosDescricao = (ASPxTextBox)pop.FindControl("tbPlanosDescricao");
+        ASPxComboBox cbPrioridade = (ASPxComboBox)pop.FindControl("cbPrioridade");
+        ASPxComboBox cbResponsavel = (ASPxComboBox)pop.FindControl("cbResponsavel");
+        ASPxComboBox cbStatus = (ASPxComboBox)pop.FindControl("cbStatus");
+        ASPxDateEdit deInicioPrevisto = (ASPxDateEdit)pop.FindControl("deInicioPrevisto");
+        ASPxDateEdit deTerminoPrevisto = (ASPxDateEdit)pop.FindControl("deTerminoPrevisto");
+        ASPxTextBox teEsforcoPrevisto = (ASPxTextBox)pop.FindControl("teEsforcoPrevisto");
+        ASPxTextBox tbCustoPrevisto = (ASPxTextBox)pop.FindControl("tbCustoPrevisto");
+        ASPxDateEdit deInicioReal = (ASPxDateEdit)pop.FindControl("deInicioReal");
+        ASPxDateEdit deTerminoReal = (ASPxDateEdit)pop.FindControl("deTerminoReal");
+        ASPxTextBox teEsforcoReal = (ASPxTextBox)pop.FindControl("teEsforcoReal");
+        ASPxTextBox tbCustoReal = (ASPxTextBox)pop.FindControl("tbCustoReal");
+        ASPxMemo memoAnotacoes = (ASPxMemo)pop.FindControl("memoAnotacoes");
+
+
+        if (valores == null)
+        {
+            retorno.Add(tbPlanosDescricao.Text.ToString());
+            retorno.Add(cbPrioridade.Value != null ? cbPrioridade.Value.ToString() : "NULL");
+            retorno.Add(cbResponsavel.Value != null ? cbResponsavel.Value.ToString() : "NULL");
+            retorno.Add(cbStatus.Value != null ? cbStatus.Value.ToString() : "NULL");
+            retorno.Add(deInicioPrevisto.Value != null ? deInicioPrevisto.Value.ToString() : "");
+            retorno.Add(deTerminoPrevisto.Value != null ? deTerminoPrevisto.Value.ToString() : "");
+            retorno.Add(teEsforcoPrevisto.Text.ToString() == "" ? "0" : teEsforcoPrevisto.Text.ToString());
+            retorno.Add(tbCustoPrevisto.Text.ToString() == "" ? "0" : tbCustoPrevisto.Text.ToString());
+            retorno.Add(deInicioReal.Value != null ? deInicioReal.Value.ToString() : "");
+            retorno.Add(deTerminoReal.Value != null ? deTerminoReal.Value.ToString() : "");
+            retorno.Add(teEsforcoReal.Text.ToString() == "" ? "0" : teEsforcoReal.Text.ToString());
+            retorno.Add(tbCustoReal.Text.ToString() == "" ? "0" : tbCustoReal.Text.ToString());
+            retorno.Add(memoAnotacoes.Text.ToString());
+
+        }
+        else
+        {
+            int numeroP = -1;
+            switch (valores["Prioridade"].ToString())
+            {
+                case "B":
+                    numeroP = 0;
+                    break;
+                case "M":
+                    numeroP = 1;
+                    break;
+                case "A":
+                    numeroP = 2;
+                    break;
+            }
+            int numeroU = -1;
+            DataTable dtUsuarios = cReunioes.valoresReuniao<DataTable>("dtUsuarios");
+            if (valores["CodigoStatusTarefa"].ToString() != "")
+            {
+                DataRow rowU = dtUsuarios.Select(string.Format("CodigoUsuario = {0}", valores["CodigoUsuarioResponsavelTarefa"].ToString()))[0];
+                numeroU = dtUsuarios.Rows.IndexOf(rowU);
+            }
+            int numeroS = -1;
+            DataTable dtStatusTarefa = cReunioes.valoresReuniao<DataTable>("dtStatusTarefa");
+            if (valores["CodigoStatusTarefa"].ToString() != "")
+            {
+                DataRow rowS = dtStatusTarefa.Select(string.Format("CodigoStatusTarefa = {0}", valores["CodigoStatusTarefa"].ToString()))[0];
+                numeroS = dtStatusTarefa.Rows.IndexOf(rowS);
+            }
+
+            tbPlanosDescricao.Text = valores["DescricaoTarefa"].ToString();
+            cbPrioridade.SelectedIndex = numeroP;
+            cbResponsavel.SelectedIndex = numeroU;
+            cbStatus.SelectedIndex = numeroS;
+            deInicioPrevisto.Date = Convert.ToDateTime(valores["InicioPrevisto"].ToString());
+            deTerminoPrevisto.Date = Convert.ToDateTime(valores["TerminoPrevisto"].ToString());
+            teEsforcoPrevisto.Text = valores["EsforcoPrevisto"].ToString();
+            tbCustoPrevisto.Text = valores["CustoPrevisto"].ToString();
+            if (valores["InicioReal"].ToString() != "")
+                deInicioReal.Date = Convert.ToDateTime(valores["InicioReal"].ToString());
+            if (valores["TerminoReal"].ToString() != "")
+                deTerminoReal.Date = Convert.ToDateTime(valores["TerminoReal"].ToString());
+            teEsforcoReal.Text = valores["EsforcoReal"].ToString();
+            tbCustoReal.Text = valores["CustoReal"].ToString();
+            memoAnotacoes.Text = valores["Anotacoes"].ToString();
+        }
+        return retorno;
+    }
+    /// <summary>
+    /// Aciona o verificador de atualização das partes do sistema
+    /// </summary>
+    /// <returns>Retorna se atualizado como sucesso ou não</returns>
+    protected Boolean atualizaSistema()
+    {
+        Boolean retorno = false;
+        try
+        {
+            cReunioes.atualizarAtualizacaoStatus(atualizar: true);
+            retorno = true;
+        }
+        catch
+        {
+            retorno = false;
+        }
+        return retorno;
+    }
+    /// <summary>
+    /// Altera o ícone para avisar sobre comentário ou anexo novo
+    /// </summary>
+    /// <param name="tipo">Informar se 'anexosNovos' para anexos ou 'comentariosNovos' para comentários</param>
+    /// <param name="ativar">Informar se é para ativar ou desativar o aviso</param>
+    protected void trocarAvisarMenu(string tipo, Boolean ativar)
+    {
+        string caminho = String.Empty;
+        int numero = -1;
+        switch (tipo)
+        {
+            case "anexosNovos":
+                numero = 3;
+                break;
+            case "comentariosNovos":
+                numero = 4;
+                break;
+        }
+        caminho = navQuadrosPrincipais.Groups[numero].HeaderImage.Url;
+        string avisando = caminho.Contains("A.png") ? tipo : tipo.Replace("A.png", ".png");
+        string normal = caminho.Contains("A.png") ? tipo.Replace("A.png", ".png") : tipo;
+        if (caminho.Contains("comentarios"))
+            navQuadrosPrincipais.Groups[numero].HeaderImage.Url = ativar ? avisando : normal;
+        else if (caminho.Contains("anexar"))
+            navQuadrosPrincipais.Groups[numero].HeaderImage.Url = ativar ? avisando : normal;
+        cReunioes.valoresReuniao<string>(tipo, ativar.ToString());
+    }
+    /// <summary>
+    /// Retorna a montagem dos valores para ser enviado ao callback
+    /// </summary>
+    /// <param name="tipo">origem dos valores</param>
+    /// <param name="linha">se o evento de origem é de uma 'ASPxGridViewTableRowEventArgs' </param>
+    /// <param name="celula">se o evento de origem é de uma'ASPxGridViewTableDataCellEventArgs'</param>
+    /// <returns>retorna a string separa por / com os valores necessários</returns>
+    protected string retornarValoresLinhas(string tipo, ASPxGridViewTableDataCellEventArgs celula = null)
+    {
+        string retorno = "";
+        if (celula != null)
+        {
+            retorno = celula.CellValue + "§" + celula.DataColumn.Name + "§" + celula.VisibleIndex + "§" + tipo;
+            switch (tipo)
+            {
+                case "todosItensT":
+                    retorno = string.Format("cpTodosItens.PerformCallback('{0}')", retorno);
+                    break;
+                case "todosItensM":
+                    retorno = string.Format("irDiretoItem('{0}')", retorno);//cpTodosItens.PerformCallback
+                    break;
+                case "participantes":
+                    retorno = string.Format("cpParticipantes.PerformCallback('{0}')", retorno);
+                    break;
+                default:
+                    retorno = string.Format("callItens.PerformCallback('{0}')", retorno);
+                    break;
+            }
+        }
+        return retorno;
+    }
+    /// <summary>
+    /// retorna a imagem de acordo com o valor informado
+    /// </summary>
+    /// <param name="valor">valor da celular 'N' ou 'S'</param>
+    /// <returns>retorna o caminho da imagem para url</returns>
+    protected string imagemTratado(string valor)
+    {
+        return valor == "S" ? "~/imagens/Reuniao/confirmar.gif" : "~/imagens/Reuniao/aconfirmar.png";
+    }
+    /// <summary>
+    /// Solicita a atualização do texto do título
+    /// </summary>
+    protected void atualizarTitulo()
+    {
+        string[] titulo = cReunioes.carregarDadosReuniao().Split('§');
+        ASPxLabel item = (ASPxLabel)cpTitulo.FindControl("lbTituloItem");
+        ASPxLabel tipo = (ASPxLabel)cpTitulo.FindControl("lbTituloTipo");
+        tipo.Text = titulo.Length > 0 ? titulo[0] : "";
+        item.Text = titulo.Length > 1 ? titulo[1] : "";
+        DataBind();
+    }
+    /// <summary>
+    /// Carrega os dados do item atual
+    /// </summary>
+    protected void valoresDadosItens()
+    {
+
+        HtmlGenericControl divRisco = (HtmlGenericControl)panelDadosItem.FindControl("divTipoItem11");
+        HtmlGenericControl divTarefa = (HtmlGenericControl)panelDadosItem.FindControl("divTipoItem5");
+        HtmlGenericControl divIndicador = (HtmlGenericControl)panelDadosItem.FindControl("divTipoItem8");
+        HtmlGenericControl divPendencias = (HtmlGenericControl)panelDadosItem.FindControl("divTipoItem0");
+        HtmlGenericControl divEvento = (HtmlGenericControl)panelDadosItem.FindControl("divTipoItem_99");
+        HtmlGenericControl divObjetoEvento = (HtmlGenericControl)panelDadosItem.FindControl("divTipoItem_100");
+        divEvento.Visible = false;
+        divObjetoEvento.Visible = false;
+        divRisco.Visible = false;
+        divTarefa.Visible = false;
+        divIndicador.Visible = false;
+        divPendencias.Visible = false;
+
+        switch (cReunioes.valoresReuniao<string>("tipoItemAtual"))
+        {
+            case "-100":
+                if (cReunioes.valoresReuniao<string>("tipoObjetoEvento") == "Projeto")
+                {
+                    divObjetoEvento.Visible = true;
+                    #region campos
+                    DataSet dsDadosAssociado = cReunioes.carregarDadosEvento<DataSet>();
+                    ASPxLabel objetoOrcamento = (ASPxLabel)panelDadosItem.FindControl("lbDadosObjetoAOrcamento");
+                    ASPxLabel objetoInicio = (ASPxLabel)panelDadosItem.FindControl("lbDadosObjetoAInicio");
+                    ASPxLabel objetoTermino = (ASPxLabel)panelDadosItem.FindControl("lbDadosObjetoATermino");
+                    ASPxMemo objetoMemo = (ASPxMemo)panelDadosItem.FindControl("memoDadosObjetoA");
+                    ASPxLabel objetoFisicoG = (ASPxLabel)panelDadosItem.FindControl("lbDadosObjetoAFisicoG");
+                    ASPxLabel objetoDespesaG = (ASPxLabel)panelDadosItem.FindControl("lbDadosObjetoADespesaG");
+                    ASPxLabel objetoReceitaG = (ASPxLabel)panelDadosItem.FindControl("lbDadosObjetoAReceitaG");
+                    ASPxLabel objetoFisicoD = (ASPxLabel)panelDadosItem.FindControl("lbDadosObjetoAFisicoDesvio");
+                    ASPxLabel objetoDespesaD = (ASPxLabel)panelDadosItem.FindControl("lbDadosObjetoADespesaDesvio");
+                    ASPxLabel objetoReceitaD = (ASPxLabel)panelDadosItem.FindControl("lbDadosObjetoAReceitaDesvio");
+                    ASPxDataView objetoLegendaFisico = (ASPxDataView)panelDadosItem.FindControl("dvDadosObjetoALegendaFisico");
+                    ASPxDataView objetoLegendaDespesa = (ASPxDataView)panelDadosItem.FindControl("dvDadosObjetoALegendaDespesa");
+                    ASPxDataView objetoLegendaReceita = (ASPxDataView)panelDadosItem.FindControl("dvDadosObjetoALegendaReceita");
+                    #endregion
+                    #region valores campos
+                    if (dsDadosAssociado.Tables.Count > 0 && dsDadosAssociado.Tables[0].Rows.Count > 0)
+                    {
+                        DataRow rowObjeto = dsDadosAssociado.Tables[0].Rows[0];
+                        objetoOrcamento.Text = rowObjeto["ValorCustoPrevisto"].ToString().Length > 0 ? string.Format("R$ {0:n2}", Decimal.Parse(rowObjeto["ValorCustoPrevisto"].ToString())) : "";
+                        objetoInicio.Text = rowObjeto["DataInicioProjeto"].ToString().Length > 0 ? rowObjeto["DataInicioProjeto"].ToString().Substring(0, 10) : "";
+                        objetoTermino.Text = rowObjeto["DataTerminoPrevistoProjeto"].ToString().Length > 0 ? rowObjeto["DataTerminoPrevistoProjeto"].ToString().Substring(0, 10) : "";
+                        objetoMemo.Text = rowObjeto["descricaoObjetivoPrincipal"].ToString().Length > 0 ? rowObjeto["descricaoObjetivoPrincipal"].ToString() : "";
+                        objetoMemo.ReadOnly = true;
+
+
+
+                        objetoFisicoD.Text = rowObjeto["desvioFisico"].ToString().Length > 0 ? string.Format("Desvio: {0:#,##}%", Decimal.Parse(rowObjeto["desvioFisico"].ToString())) : "";
+                        objetoDespesaD.Text = rowObjeto["desvioCusto"].ToString().Length > 0 ? string.Format("Desvio: {0:#,##}%", Decimal.Parse(rowObjeto["desvioCusto"].ToString())) : "";
+                        objetoReceitaD.Text = rowObjeto["desvioReceita"].ToString().Length > 0 ? string.Format("Desvio: {0:#,##}%", Decimal.Parse(rowObjeto["desvioReceita"].ToString())) : "";
+
+                    }
+                    if (dsDadosAssociado.Tables.Count > 1 && dsDadosAssociado.Tables[1].Rows.Count > 0)
+                    {
+                        DataTable dtLegendas = dsDadosAssociado.Tables[1];
+                        DataTable dtFisico = ObtemDadosLegenda(dtLegendas, "Fisico");
+                        DataTable dtDespesa = ObtemDadosLegenda(dtLegendas, "Financeiro");
+                        DataTable dtReceita = ObtemDadosLegenda(dtLegendas, "Receita");
+                        if (dtFisico.Rows.Count > 0)
+                        {
+                            objetoLegendaFisico.DataSource = dtFisico;
+                            objetoLegendaFisico.DataBind();
+                        }
+                        if (dtDespesa.Rows.Count > 0)
+                        {
+                            objetoLegendaDespesa.DataSource = dtDespesa;
+                            objetoLegendaDespesa.DataBind();
+                        }
+                        if (dtReceita.Rows.Count > 0)
+                        {
+                            objetoLegendaReceita.DataSource = dtReceita;
+                            objetoLegendaReceita.DataBind();
+                        }
+                    }
+
+                    #endregion
+                }
+                break;
+            case "-99":
+                divEvento.Visible = true;
+                #region campos
+                ASPxLabel eventoNome = (ASPxLabel)panelDadosItem.FindControl("lbDadosEventoNome");
+                ASPxLabel eventoInicio = (ASPxLabel)panelDadosItem.FindControl("lbDadosEventoInicio");
+                ASPxLabel eventoTermino = (ASPxLabel)panelDadosItem.FindControl("lbDadosEventoTermino");
+                ASPxLabel eventoTipoObjeto = (ASPxLabel)panelDadosItem.FindControl("lbDadosEventoTipoNome");
+                ASPxLabel eventoNomeObjeto = (ASPxLabel)panelDadosItem.FindControl("lbDadosEventoNomeTipo");
+                ASPxGridView gvItensEvento = (ASPxGridView)panelDadosItem.FindControl("gvItensReuniao");
+                ASPxGridView gvParticipantesEvento = (ASPxGridView)panelDadosItem.FindControl("gvParticipantesReuniao");
+                DataTable dtEvento = cReunioes.valoresReuniao<DataTable>("dtEvento");
+                #endregion
+                #region valores campos
+                if (dtEvento == null)
+                {
+                    dtEvento = cReunioes.carregarDadosEvento<DataTable>(true);
+                }
+                if (dtEvento != null)
+                {
+                    eventoNome.Text = dtEvento.Rows[0]["DescricaoResumida"].ToString();
+                    string[] dataInicioPrevisto = dtEvento.Rows[0]["InicioPrevisto"].ToString().Split(' ');
+                    string[] dataTerminoPrevisto = dtEvento.Rows[0]["TerminoPrevisto"].ToString().Split(' ');
+
+                    if (dataInicioPrevisto.Length > 1)
+                        eventoInicio.Text = dataInicioPrevisto[0] + " às " + dataInicioPrevisto[1].Substring(0, 5);
+                    if (dataTerminoPrevisto.Length > 1)
+                        eventoTermino.Text = dataTerminoPrevisto[0] + " às " + dataTerminoPrevisto[1].Substring(0, 5);
+                }
+                eventoTipoObjeto.Text = cReunioes.valoresReuniao<string>("tipoObjetoEvento") + ": ";
+                eventoNomeObjeto.Text = cReunioes.valoresReuniao<string>("nomeObjetoEvento");
+                DataTable tabelaItens = cReunioes.valoresReuniao<DataTable>("dtItens").Copy();
+                if (tabelaItens.Rows.Count > 1)
+                    gvItensEvento.DataSource = tabelaItens.Select("CodigoTipoObjeto <> -99").CopyToDataTable();
+                gvItensEvento.DataBind();
+                gvParticipantesEvento.DataSource = cReunioes.valoresReuniao<DataTable>("dtParticipantes");
+                gvParticipantesEvento.DataBind();
+                #endregion
+                break;
+            case "11":
+                divRisco.Visible = true;
+
+                #region campos
+                HtmlGenericControl corRisco = (HtmlGenericControl)panelDadosItem.FindControl("divDadosItemEfeito");
+                ASPxLabel tituloRisco = (ASPxLabel)panelDadosItem.FindControl("lbDadosItemNome");
+                ASPxLabel responsavelRisco = (ASPxLabel)panelDadosItem.FindControl("lbDadosItemResponsavel");
+                ASPxLabel probabilidadeRisco = (ASPxLabel)panelDadosItem.FindControl("lbDadosItemProbabilidade");
+                ASPxLabel impactoRisco = (ASPxLabel)panelDadosItem.FindControl("lbDadosItemImpacto");
+                ASPxLabel limiteRisco = (ASPxLabel)panelDadosItem.FindControl("lbDadosItemLimite");
+                ASPxMemo descricaoRisco = (ASPxMemo)panelDadosItem.FindControl("memoDadosItemDescricao");
+                ASPxLabel dataRisco = (ASPxLabel)panelDadosItem.FindControl("lbDadosItemData");
+                #endregion
+                #region valores campos
+                DataRow rowRisco = cReunioes.valoresReuniao<DataTable>("dtDadosRisco").Select(string.Format("CodigoRiscoQuestao = {0}", cReunioes.valoresReuniao<string>("codigoItemAtual")))[0];
+                corRisco.Attributes.Add("style", corStatusItem(rowRisco["CorRiscoQuestao"].ToString()));
+                tituloRisco.Text = rowRisco["DescricaoRiscoQuestao"].ToString();
+                responsavelRisco.Text = string.Format("{0} é o responsável do {1}", rowRisco["NomeUsuarioResponsavel"].ToString(), rowRisco["Indica_Risco_Questao"].ToString());
+                probabilidadeRisco.Text = string.Format("Prioridade {0} do {1}", rowRisco["ProbabilidadePrioridade"].ToString(), rowRisco["Indica_Risco_Questao"].ToString());
+                impactoRisco.Text = string.Format("A urgência do {1} é {0}", rowRisco["ImpactoUrgencia"].ToString().Contains("/") ? rowRisco["ImpactoUrgencia"].ToString().Split('/')[1] : rowRisco["ImpactoUrgencia"].ToString(), rowRisco["Indica_Risco_Questao"].ToString());
+                if (rowRisco["DataLimiteResolucao"].ToString().Count() > 0)
+                    limiteRisco.Text = string.Format("Dia {0} é a data limite", rowRisco["DataLimiteResolucao"].ToString().Substring(0, 10));
+                descricaoRisco.Text = rowRisco["DetalheRiscoQuestao"].ToString();
+                descricaoRisco.ReadOnly = true;
+                dataRisco.Text = "";
+                #endregion
+                break;
+            case "5":
+                divTarefa.Visible = true;
+                #region campos
+                HtmlGenericControl corTarefa = (HtmlGenericControl)panelDadosItem.FindControl("divDadosTarefaEfeito");
+                ASPxLabel tituloTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaNome");
+                ASPxLabel superiorTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaSuperior");
+                //inicio
+                ASPxLabel inicioAnoTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaInicioAno");
+                ASPxLabel inicioMesTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaInicioMes");
+                ASPxLabel inicioDiaTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaInicioDia");
+                //termino
+                ASPxLabel terminoAnoTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTerminoAno");
+                ASPxLabel terminoMesTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTerminoMes");
+                ASPxLabel terminoDiaTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTerminoDia");
+                //inicio real
+                ASPxLabel iRealAnoTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaIRealAno");
+                ASPxLabel iRealMesTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaIRealMes");
+                ASPxLabel iRealDiaTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaIRealDia");
+                //termino real
+                ASPxLabel tRealAnoTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTRealAno");
+                ASPxLabel tRealMesTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTRealMes");
+                ASPxLabel tRealDiaTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTRealDia");
+                //porcentagens
+                ASPxLabel previsaoTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaPrevisao");
+                HtmlGenericControl divPrevisaoTarefa = (HtmlGenericControl)panelDadosItem.FindControl("divDadosTarefaPrevisao");
+                ASPxLabel concluidoTarefa = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaConcluido");
+                HtmlGenericControl divConcluidoTarefa = (HtmlGenericControl)panelDadosItem.FindControl("divDadosTarefaConcluido");
+                ASPxGridView gvRecursos = (ASPxGridView)panelDadosItem.FindControl("gvTarefaRecursos");
+                //Trabalhos
+                ASPxLabel trabalhosT = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTrabalhosT");
+                ASPxLabel trabalhosLb = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTrabalhosLb");
+                ASPxLabel trabalhosR = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTrabalhosR");
+                ASPxLabel trabalhosVt = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTrabalhosVt");
+                //Custos
+                HtmlGenericControl divTarefaCustos = (HtmlGenericControl)panelDadosItem.FindControl("divDadosTarefaCustos");
+                ASPxLabel custosC = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaCustosC");
+                ASPxLabel custosLb = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaCustosLb");
+                ASPxLabel custosR = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaCustosR");
+                ASPxLabel custosVc = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaCustosVc");
+                //LBs
+                ASPxLabel custosLbInicio = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaInicioLB");
+                ASPxLabel custosLbTermino = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaTerminoLB");
+                ASPxLabel custosLbPrevisto = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaPrevisaoLB");
+                ASPxLabel custosLbConcluido = (ASPxLabel)panelDadosItem.FindControl("lbDadosTarefaConcluidoLB");
+                custosLbConcluido.Visible = false;
+
+                #endregion
+                #region valores campos
+                DataTable tabelaTarefas = cReunioes.valoresReuniao<DataTable>("dtDadosTarefa");
+                if (tabelaTarefas != null)
+                {
+                    DataRow[] rowsTarefas = tabelaTarefas.Select(string.Format("CodigoTarefa = {0}", cReunioes.valoresReuniao<string>("codigoItemAtual")));
+                    if (rowsTarefas.Count() > 0)
+                    {
+                        DataRow rowTarefa = rowsTarefas[0];
+                        corTarefa.Attributes.Add("style", corStatusItem("Vermelho"));
+                        tituloTarefa.Text = rowTarefa["NomeTarefa"].ToString();
+                        superiorTarefa.Text = rowTarefa["NomeTarefaSuperior"].ToString();
+                        if (superiorTarefa.Text == "")
+                            superiorTarefa.ClientVisible = false;
+                        Boolean validaInicio = rowTarefa["InicioLB"].ToString() == "";
+                        string[] dataInicio = validaInicio ? rowTarefa["Inicio"].ToString().Split('/') : rowTarefa["InicioLB"].ToString().Split('/');
+                        custosLbInicio.Visible = !validaInicio;
+                        if (dataInicio.Length > 2)
+                        {
+                            inicioAnoTarefa.Text = dataInicio[2].Substring(0, 4);
+                            inicioMesTarefa.Text = cConversores.mesPorExtenso(dataInicio[1]);
+                            inicioDiaTarefa.Text = dataInicio[0];
+                        }
+                        Boolean validaTermino = rowTarefa["TerminoLB"].ToString() == "";
+                        string[] dataTermino = validaTermino ? rowTarefa["Termino"].ToString().Split('/') : rowTarefa["TerminoLB"].ToString().Split('/');
+                        custosLbTermino.Visible = !validaTermino;
+                        if (dataTermino.Length > 2)
+                        {
+                            terminoAnoTarefa.Text = dataTermino[2].Substring(0, 4);
+                            terminoMesTarefa.Text = cConversores.mesPorExtenso(dataTermino[1]);
+                            terminoDiaTarefa.Text = dataTermino[0];
+                        }
+                        string[] dataIReal = rowTarefa["InicioReal"].ToString().Split('/');
+                        if (dataIReal.Length > 2)
+                        {
+                            iRealAnoTarefa.Text = dataIReal[2].Substring(0, 4);
+                            iRealMesTarefa.Text = cConversores.mesPorExtenso(dataIReal[1]);
+                            iRealDiaTarefa.Text = dataIReal[0];
+                        }
+                        string[] dataTReal = rowTarefa["TerminoReal"].ToString().Split('/');
+                        if (dataTReal.Length > 2)
+                        {
+                            tRealAnoTarefa.Text = dataTReal[2].Substring(0, 4);
+                            tRealMesTarefa.Text = cConversores.mesPorExtenso(dataTReal[1]);
+                            tRealDiaTarefa.Text = dataTReal[0];
+                        }
+                        Boolean validaPrevisto = true;//Verifica se existe o concluído LB// rowTarefa["PercentualFisicoPrevistoLB"].ToString() == "";
+                        string nomeNumeroPrevisto = validaPrevisto ? rowTarefa["PercentualFisicoPrevisto"].ToString() : rowTarefa["PercentualFisicoPrevistoLB"].ToString();
+                        custosLbPrevisto.Visible = !validaTermino;
+                        int numeroPrevisto = nomeNumeroPrevisto == "" ? 0 : int.Parse(nomeNumeroPrevisto);
+                        previsaoTarefa.Text = numeroPrevisto.ToString() + "%";
+                        if (numeroPrevisto > 100)
+                            numeroPrevisto = 100;
+                        numeroPrevisto = (250 * numeroPrevisto) / 100;
+                        divPrevisaoTarefa.Attributes.Add("style", string.Format("width: {0}px", numeroPrevisto));
+                        Boolean validaConcluido = true;//Verifica se existe previsto LB// rowTarefa["PercentualFisicoConcluidoLB"].ToString() == "";
+                        string nomeNumeroConcluido = validaConcluido ? rowTarefa["PercentualFisicoConcluido"].ToString() : rowTarefa["PercentualFisicoConcluidoLB"].ToString();
+                        //custosLbConcluido.Visible = !validaConcluido;
+                        int numeroConcluido = nomeNumeroConcluido == "" ? 0 : int.Parse(nomeNumeroConcluido);
+                        concluidoTarefa.Text = numeroConcluido.ToString() + "%";
+                        if (numeroConcluido > 100)
+                            numeroConcluido = 100;
+                        numeroConcluido = (250 * numeroConcluido) / 100;
+                        divConcluidoTarefa.Attributes.Add("style", string.Format("width: {0}px", numeroConcluido));
+                        if (rowTarefa["Trabalho"].ToString().Count() > 0 && decimal.Parse(rowTarefa["Trabalho"].ToString()) > 0)
+                            trabalhosT.Text = string.Format("{0:0,0} horas", decimal.Parse(rowTarefa["Trabalho"].ToString()));
+                        if (rowTarefa["TrabalhoLB"].ToString().Count() > 0 && decimal.Parse(rowTarefa["TrabalhoLB"].ToString()) > 0)
+                            trabalhosLb.Text = string.Format("{0:0,0} horas", decimal.Parse(rowTarefa["TrabalhoLB"].ToString()));
+                        if (rowTarefa["TrabalhoReal"].ToString().Count() > 0 && decimal.Parse(rowTarefa["TrabalhoReal"].ToString()) > 0)
+                            trabalhosR.Text = string.Format("{0:0,0} horas", decimal.Parse(rowTarefa["TrabalhoReal"].ToString()));
+                        if (rowTarefa["VariacaoTrabalho"].ToString().Count() > 0 && decimal.Parse(rowTarefa["VariacaoTrabalho"].ToString()) > 0)
+                            trabalhosVt.Text = string.Format("{0:0,0} horas", decimal.Parse(rowTarefa["VariacaoTrabalho"].ToString()));
+                        if (rowTarefa["IndicaMostraCusto"].ToString() == "S")
+                        {
+                            if (rowTarefa["Custo"].ToString().Count() > 0 && decimal.Parse(rowTarefa["Custo"].ToString()) > 0)
+                                custosC.Text = string.Format("R$ {0:n2}", decimal.Parse(rowTarefa["Custo"].ToString()));
+                            if (rowTarefa["CustoLB"].ToString().Count() > 0 && decimal.Parse(rowTarefa["CustoLB"].ToString()) > 0)
+                                custosLb.Text = string.Format("R$ {0:n2}", decimal.Parse(rowTarefa["CustoLB"].ToString()));
+                            if (rowTarefa["CustoReal"].ToString().Count() > 0 && decimal.Parse(rowTarefa["CustoReal"].ToString()) > 0)
+                                custosR.Text = string.Format("R$ {0:n2}", decimal.Parse(rowTarefa["CustoReal"].ToString()));
+                            if (rowTarefa["VariacaoCusto"].ToString().Count() > 0 && decimal.Parse(rowTarefa["VariacaoCusto"].ToString()) > 0)
+                                custosVc.Text = string.Format("R$ {0:n2}", decimal.Parse(rowTarefa["VariacaoCusto"].ToString()));
+                        }
+                        else
+                        {
+                            divTarefaCustos.Visible = false;
+                        }
+                        DataRow[] rowsRecursos = cReunioes.valoresReuniao<DataTable>("dtDadosTarefaRecursos").Select(string.Format("CodigoTarefa = {0}", cReunioes.valoresReuniao<string>("codigoItemAtual")));
+                        if (rowsRecursos.Count() > 0)
+                            gvRecursos.DataSource = rowsRecursos.CopyToDataTable();
+                        else
+                            gvRecursos.DataSource = null;
+                        gvRecursos.DataBind();
+                    }
+                }
+                #endregion
+
+                break;
+            case "8":
+                divIndicador.Visible = true;
+                #region campos
+                ASPxDataView tabelaMetas = (ASPxDataView)panelDadosItem.FindControl("dvDadosIndicadorMeta");
+                ASPxLabel nomeIndicador = (ASPxLabel)panelDadosItem.FindControl("lbDadosIndicadorNome");
+                ASPxLabel responsavelIndicador = (ASPxLabel)panelDadosItem.FindControl("lbDadosIndicadorResponsavel");
+                DataTable dtDadosIndicador = cReunioes.valoresReuniao<DataTable>("dtDadosIndicador").Copy();
+                DataRow[] rowIndicador = dtDadosIndicador.Select(string.Format("CodigoIndicador = {0}", cReunioes.valoresReuniao<string>("codigoItemAtual")));
+                #endregion
+                #region valores campos
+                nomeIndicador.Text = rowIndicador[0]["NomeIndicador"].ToString();
+                responsavelIndicador.Text = "Responsável: " + rowIndicador[0]["NomeUsuarioResponsavel"].ToString();
+                List<string> codigos = new List<string>();
+                foreach (DataRow row in rowIndicador)
+                {
+                    if (codigos.IndexOf(row["CodigoMetaOperacional"].ToString()) < 0)
+                    {
+                        codigos.Add(row["CodigoMetaOperacional"].ToString());
+                    }
+                    else
+                    {
+                        dtDadosIndicador.Rows.Remove(row);
+                    }
+                }
+                if (tabelaMetas != null && dtDadosIndicador.Rows.Count > 0)
+                {
+                    tabelaMetas.DataSource = dtDadosIndicador;
+                    tabelaMetas.DataBind();
+                }
+                #endregion
+                break;
+            case "0":
+                divPendencias.Visible = true;
+                ASPxGridView tabela = (ASPxGridView)panelDadosItem.FindControl("gvPlanosPendentes");
+                if (cReunioes.valoresReuniao<DataTable>("dtPlanosPendentes") != null && cReunioes.valoresReuniao<DataTable>("dtPlanosPendentes").Rows.Count > 0)
+                {
+                    tabela.DataSource = cReunioes.valoresReuniao<DataTable>("dtPlanosPendentes");
+                    tabela.DataBind();
+                }
+                break;
+
+        }
+    }
+
+    private static DataTable ObtemDadosLegenda(DataTable dtLegendas, string tipoLegenda)
+    {
+        string expressaoFiltro = string.Format(
+            "CorFaixa{0} IS NOT NULL AND DescricaoFaixa{0} IS NOT NULL", tipoLegenda);
+        DataTable dtTemp = dtLegendas.Select(expressaoFiltro).CopyToDataTable();
+        dtTemp.DefaultView.Sort = "IDRegistro";
+        return dtTemp;
+    }
+
+    /// <summary>
+    /// Prepara os valores para item do tipo indicador
+    /// </summary>
+    /// <param name="meta">Meta da linha atual</param>
+    /// <param name="ano">Ano da linha atual </param>
+    /// <param name="tipo">Tipo da linha atual</param>
+    /// <returns></returns>
+    public string valoresMetasIndicadores(string meta, string ano, string tipo)
+    {
+        string retorno = "";
+        if (cReunioes.valoresReuniao<string>("tipoItemAtual") == "8")
+        {
+            DataTable dtDadosIndicador = cReunioes.valoresReuniao<DataTable>("dtDadosIndicador");
+            DataRow[] rows = dtDadosIndicador.Select(string.Format("CodigoIndicador = {0} and CodigoMetaOperacional = {1} and Ano = {2}", cReunioes.valoresReuniao<string>("codigoItemAtual"), meta, ano));
+            if (rows.Count() > 0)
+            {
+                DataRow row = rows[0];
+                switch (tipo)
+                {
+                    case "nome":
+                        retorno = row["MetaDescritiva"].ToString();
+                        break;
+                    case "nomePeriocidade":
+                        string periodo = "";
+                        switch (row["IntervaloMeses"].ToString())
+                        {
+                            case "1":
+                                periodo = "mensal";
+                                break;
+                            case "2":
+                                periodo = "bimestral";
+                                break;
+                            case "3":
+                                periodo = "trimestral";
+                                break;
+                            case "6":
+                                periodo = "semestral";
+                                break;
+                            case "12":
+                                periodo = "anual";
+                                break;
+                            case "24":
+                                periodo = "bianual";
+                                break;
+                        }
+                        retorno = string.Format("Período {0}", periodo);
+                        break;
+                    case "polaridadeEndereco":
+                        if (row["Polaridade"].ToString() == "NEG")
+                        {
+                            retorno = "~/imagens/Reuniao/polaridadeNeg.png";
+                        }
+                        else
+                        {
+                            retorno = "~/imagens/Reuniao/polaridadePos.png";
+                        }
+                        break;
+                    case "polaridadeTitulo":
+                        if (row["Polaridade"].ToString() == "NEG")
+                        {
+                            retorno = "Polaridade: NEGATIVA";
+                        }
+                        else
+                        {
+                            retorno = "Polaridade: POSITIVA";
+                        }
+                        break;
+                }
+            }
+        }
+        return retorno;
+    }
+    /// <summary>
+    /// Retorna o valor de style para a div que informa o status do item
+    /// </summary>
+    /// <param name="p">cor recebida</param>
+    /// <returns></returns>
+    public string corStatusItem(string p, Boolean completo = false)
+    {
+        string retorno = "";
+        if (completo)
+            retorno = "<div class=\"botaoStatusItemLegenda\" runat=\"server\" style=\"";
+        retorno += "background-color: ";
+        var cores = cReunioes.coresMestasIndicadores();
+        retorno += "#" + cores[p];
+        if (completo)
+            retorno += ";\" ></div>";
+        return retorno;
+    }
+    #endregion
+
+    #region Eventos dos componentes
+
+    //botões
+    protected void botaoMarcarParticipantes_Click(object sender, EventArgs e)
+    {
+        if (cReunioes.valoresReuniao<string>("reuniaoIniciada") == "true")
+        {
+            atualizarParticipantes(cReunioes.marcarParticipanteEvento(true));
+        }
+    }
+    protected void botaoAvisoUsuarioFechar_Click(object sender, EventArgs e)
+    {
+        pcAvisoUsuario.ShowOnPageLoad = false;
+    }
+    protected void botaoIniciarReuniao_Click(object sender, EventArgs e)
+    {
+        if (hfValores.Contains("dataInicio") && hfValores["dataInicio"].ToString().Contains("§"))
+        {
+            string[] valores = hfValores["dataInicio"].ToString().Split('§');
+            if (valores.Length == 4 && valores[0] != "" && valores[1] != "")
+            {
+                cReunioes.iniciarFinalizarReuniao(true, valores[0], valores[1]);
+                //MessageBox.Show("Não foi possível realizar o ínicio da reunião. Tente novamente em instantes.", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+    protected void botaoTerminoReuniao_Click(object sender, EventArgs e)
+    {
+        if (hfValores.Contains("dataFim") && hfValores["dataFim"].ToString().Contains("§"))
+        {
+            string[] valores = hfValores["dataFim"].ToString().Split('§');
+            if (valores.Length == 4 && valores[0] != "" && valores[1] != "")
+            {
+                cReunioes.iniciarFinalizarReuniao(false, valores[0], valores[1]);
+                //MessageBox.Show("Não foi possível realizar o fim da reunião. Tente novamente em instantes.", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+    protected void botaoEnviarComentario_Click(object sender, EventArgs e)
+    {
+        ASPxMemo memoComentarios = (ASPxMemo)popEditarComentarios.FindControl("memoComentarios");
+        if (cReunioes.enviarComentario(memoComentarios.Text))
+        {
+            atualizarComentarios();
+        }
+    }
+    //grids
+    protected void gvTodosItens_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+    {
+        ASPxGridView tabela = (ASPxGridView)sender;
+        if (tabela.DataSource != null && e.VisibleIndex >= 0)
+        {
+            if (e.GetValue("IndicaItemTratado").ToString() == "S")
+                e.Row.BackColor = System.Drawing.Color.GreenYellow;
+            else
+                e.Row.BackColor = System.Drawing.Color.Transparent;
+        }
+    }
+    protected void gvAnexos_CustomColumnDisplayText(object sender, ASPxGridViewColumnDisplayTextEventArgs e)
+    {
+        DataRow row;
+        DataTable dtItens = cReunioes.valoresReuniao<DataTable>("dtItens");
+        DataTable dtParticipantes = cReunioes.valoresReuniao<DataTable>("dtParticipantes");
+        switch (e.Column.Name)
+        {
+            case "CodigoObjetoItemPauta":
+                row = dtItens.Select(string.Format("CodigoObjeto = {0}", e.Value))[0];
+                e.DisplayText = row["NomeObjeto"].ToString();
+                break;
+            case "CodigoUsuarioInclusao":
+                row = dtParticipantes.Select(string.Format("CodigoParticipante = {0}", e.Value))[0];
+                e.DisplayText = row["NomeParticipante"].ToString();
+                break;
+            case "DataInclusao":
+                string hora = e.Value.ToString().Split(' ')[1];
+                e.DisplayText = hora;
+                break;
+        }
+    }
+    protected void gvPlanos_CustomColumnDisplayText(object sender, ASPxGridViewColumnDisplayTextEventArgs e)
+    {
+        DataTable dtItens = cReunioes.valoresReuniao<DataTable>("dtItens");
+        switch (e.Column.Name)
+        {
+            case "Prioridade":
+                switch (e.Value.ToString())
+                {
+                    case "B":
+                        e.DisplayText = "Baixa";
+                        break;
+                    case "M":
+                        e.DisplayText = "Média";
+                        break;
+                    case "A":
+                        e.DisplayText = "Alta";
+                        break;
+                }
+                break;
+            case "InicioPrevisto":
+            case "TerminoPrevisto":
+            case "InicioReal":
+            case "TerminoReal":
+            case "dataReuniaoRegistroPendencia":
+                if (e.Value.ToString() != "")
+                {
+                    e.DisplayText = Convert.ToDateTime(e.Value).ToString("dd/MM/yyyy");
+                }
+                break;
+            case "CodigoRiscoQuestao":
+                if (e.Value.ToString() != "")
+                {
+                    DataRow row = dtItens.Select(string.Format("CodigoObjeto = {0}", e.Value.ToString()))[0];
+                    e.DisplayText = row["NomeObjeto"].ToString();
+                }
+                break;
+            case "CodigoStatusTarefa":
+                DataTable dtStatusTarefa = cReunioes.valoresReuniao<DataTable>("dtStatusTarefa");
+                if (dtStatusTarefa == null)
+                {
+                    cReunioes.carregarCombos();
+                    dtStatusTarefa = cReunioes.valoresReuniao<DataTable>("dtStatusTarefa");
+                }
+                DataRow rowStatus = dtStatusTarefa.Select(string.Format("CodigoStatusTarefa = {0}", e.Value.ToString()))[0];
+                e.DisplayText = rowStatus["DescricaoStatusTarefa"].ToString();
+                break;
+        }
+    }
+    protected void gvTodosItens_HtmlDataCellPrepared(object sender, ASPxGridViewTableDataCellEventArgs e)
+    {
+        if (e.DataColumn.Name == "IndicaItemTratado")
+            e.Cell.Attributes.Add("onclick", retornarValoresLinhas("todosItensT", celula: e));
+        else
+            e.Cell.Attributes.Add("onclick", retornarValoresLinhas("todosItensM", celula: e));
+    }
+    protected void gvParticipantes_HtmlDataCellPrepared(object sender, ASPxGridViewTableDataCellEventArgs e)
+    {
+        if (e.DataColumn.Name == "IndicaParticipantePresente")
+        {
+            e.Cell.Attributes.Add("onclick", retornarValoresLinhas("participantes", e));
+        }
+        if (e.DataColumn.Name == "NomeParticipante")
+        {
+            if (e.GetValue("TipoParticipante").ToString() == "C")
+            {
+                e.Cell.ToolTip = "Convidado externo";
+            }
+        }
+    }
+    protected void gvParticipantes_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+    {
+        ASPxGridView tabela = (ASPxGridView)sender;
+        if (tabela.DataSource != null && e.VisibleIndex >= 0)
+        {
+            if (e.GetValue("IndicaParticipantePresente").ToString() == "S")
+                e.Row.BackColor = System.Drawing.Color.GreenYellow;
+            else
+                e.Row.BackColor = System.Drawing.Color.Transparent;
+        }
+    }
+    protected void gvParticipantes_CustomColumnDisplayText(object sender, ASPxGridViewColumnDisplayTextEventArgs e)
+    {
+        if (e.Column.Name == "NomeParticipante" && e.GetFieldValue("TipoParticipante").ToString() == "C")
+        {
+            e.DisplayText = e.Value + " *";
+        }
+    }
+    protected void gvPlanos_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+    {
+        ASPxGridView tabela = (ASPxGridView)sender;
+        if (tabela.DataSource != null && e.VisibleIndex >= 0)
+        {
+            if (e.GetValue("CodigoItemReuniao") != null && (e.GetValue("CodigoEvento") == null || e.GetValue("CodigoEvento").ToString() == ""))
+                e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#98FB98");
+            else
+                e.Row.BackColor = System.Drawing.Color.Transparent;
+        }
+    }
+    protected void gvPlanos_CustomButtonInitialize(object sender, ASPxGridViewCustomButtonEventArgs e)
+    {
+        DataTable dados = (DataTable)((ASPxGridView)sender).DataSource;
+        if (dados != null && dados.Rows.Count > 0 && cReunioes.valoresReuniao<string>("filtroConcluidoPlanos") == "false")
+        {
+            if (dados.Rows[e.VisibleIndex]["CodigoStatusTarefa"].ToString() == "2")
+            {
+                e.Visible = DevExpress.Utils.DefaultBoolean.False;
+            }
+        }
+    }
+    //callbacks
+    protected void callItens_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        string[] valores = null;
+        string valor = e.Parameter.ToString();
+        if (e.Parameter.ToString().Contains("§"))
+        {
+            valores = e.Parameter.ToString().Split('§');
+            if (valores.Length == 2 && valores[1] == "atualizarDeliberacaoAtual")
+            {
+                string retorno = string.Empty;
+                string recebido = e.Parameter.ToString().Replace("§atualizarDeliberacaoAtual", "");
+                retorno = cReunioes.gravarDeliberacao(recebido);
+                //if (retorno != string.Empty && retorno != "true")
+                //    MessageBox.Show(retorno, "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (valores.Length == 3 && valores[2] == "atualizarValoresDataSelecionadas")
+            {
+                cReunioes.valoresReuniao<string>(valores[1], valores[0]);
+            }
+            else if (valores != null && valores.Length > 3)
+            {
+                int linha = int.Parse(valores[2]);
+                if (cReunioes.valoresReuniao<string>("reuniaoIniciada") == "true")
+                {
+                    switch (valores[3].ToString())
+                    {
+                        case "planosItens":
+                        case "deliberacoesItens":
+                            DataRow rowL = cReunioes.valoresReuniao<DataTable>("dtItens").Select(string.Format("CodigoObjeto = {0}", valores[0].ToString()))[0];
+                            int numeroLinha = int.Parse(rowL["SequenciaApresentacao"].ToString()) - 1;
+                            mudancaItem(item: numeroLinha);
+                            break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            switch (e.Parameter.ToString())
+            {
+                case "proximo":
+                case "anterior":
+                    mudancaItem(e.Parameter.ToString());
+                    break;
+                case "iniciar":
+                    if (cReunioes.valoresReuniao<string>("reuniaoIniciada") == "true")
+                    {
+                        cReunioes.iniciarFinalizarReuniao(false);
+                        //MessageBox.Show("Não foi possível finalizar a reunião. Tente novamente em instantes.", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        cReunioes.iniciarFinalizarReuniao(true);
+                        //MessageBox.Show("Não foi possível iniciar a reunião. Tente novamente em instantes.", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    break;
+                case "finalizar":
+                    cReunioes.iniciarFinalizarReuniao(false);
+                    //MessageBox.Show("Não foi possível finalizar a reunião. Tente novamente em instantes.", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                case "visao":
+                    mudancaItem(e.Parameter.ToString(), -100);
+                    break;
+            }
+        }
+    }
+    protected void cpTodosItens_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+    {
+        if (e.Parameter.ToString().Contains("§"))
+        {
+            string[] valores = e.Parameter.ToString().Split('§');
+            int linha = int.Parse(valores[2]);
+            switch (valores[3].ToString())
+            {
+                case "todosItensT":
+                    DataTable dtItens = cReunioes.valoresReuniao<DataTable>("dtItens");
+                    DataRow row = dtItens.Rows[linha];
+                    string valor = dtItens.Rows[linha]["IndicaItemTratado"].ToString();
+                    if (valor == "N" || valor == "")
+                        dtItens.Rows[linha]["IndicaItemTratado"] = "S";
+                    else
+                        dtItens.Rows[linha]["IndicaItemTratado"] = "N";
+                    cReunioes.marcarDeliberacao(linha, dtItens.Rows[linha]["IndicaItemTratado"].ToString());
+                    cReunioes.valoresReuniao<DataTable>("dtItens", dtItens);
+                    cReunioes.atualizarAtualizacaoStatus("dtItens", true);
+                    atualizaItens();
+                    break;
+                case "todosItensM":
+                    mudancaItem(item: linha);
+                    atualizaItens();
+                    break;
+            }
+        }
+        else if (e.Parameter.ToString() == "atualizarDados")
+        {
+            atualizaItens();
+        }
+    }
+    protected void cpParticipantes_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+    {
+        if (e.Parameter.ToString().Contains("§"))
+        {
+            string[] valores = e.Parameter.ToString().Split('§');
+            int linha = int.Parse(valores[2]);
+            atualizarParticipantes(cReunioes.marcarParticipanteEvento(false, linha));
+
+        }
+        else if (e.Parameter.ToString() == "atualizarDados")
+        {
+            atualizarParticipantes();
+        }
+
+    }
+    protected void cpPlanosItens_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+    {
+        int numero = -1;
+
+        if (e.Parameter.ToString().Contains("§botaoExcluir"))
+        {
+            var linha = e.Parameter.ToString().Replace("§botaoExcluir", "");
+            if (int.TryParse(linha, out numero))
+            {
+                cReunioes.valoresReuniao<string>("editarPlanos", "false");
+                cReunioes.excluirPlanos(numero);
+                cReunioes.atualizarAtualizacaoStatus("dtPlanos", true);
+            }
+        }
+        else if (e.Parameter.ToString() == "atualizarDadosHistorico")
+        {
+            if (cReunioes.valoresReuniao<string>("filtroConcluidoPlanos") == "false")
+            {
+                cReunioes.valoresReuniao<string>("filtroConcluidoPlanos", "true");
+            }
+            else
+            {
+                cReunioes.valoresReuniao<string>("filtroConcluidoPlanos", "false");
+            }
+            atualizarPlanos();
+        }
+        else if (e.Parameter.ToString() != "atualizarDados")
+        {
+            if (int.TryParse(cReunioes.valoresReuniao<string>("editarPlanos"), out numero))
+            {
+                cReunioes.gravarAlterarPlanos(carregarValoresPlanos(tipo: "planos"), numero);
+                atualizarPlanos();
+            }
+            else
+            {
+                cReunioes.gravarAlterarPlanos(valoresPlanos: carregarValoresPlanos(tipo: "planos"));
+                popEditarPlanos.ShowOnPageLoad = false;
+                atualizarPlanos();
+            }
+
+        }
+        else
+        {
+            atualizarPlanos();
+        }
+
+
+    }
+    protected void pcEditarPlanos_WindowCallback(object source, PopupWindowCallbackArgs e)
+    {
+        int numero = int.Parse(e.Parameter.ToString());
+        cReunioes.valoresReuniao<string>("editarPlanos", numero.ToString());
+        DataTable dtPlanos = cReunioes.valoresReuniao<DataTable>("dtPlanos").Copy();
+        if (cReunioes.valoresReuniao<string>("filtroConcluidoPlanos") == "false")
+            dtPlanos = dtPlanos.Select(string.Format("CodigoItemReuniao = {0}", cReunioes.valoresReuniao<string>("codigoItemAtual"))).CopyToDataTable();
+        else
+            dtPlanos = dtPlanos.Select(string.Format("CodigoItemReuniao = {0} and CodigoStatusTarefa <> 2 and CodigoEvento is not null", cReunioes.valoresReuniao<string>("codigoItemAtual"))).CopyToDataTable();
+        DataRow row = dtPlanos.Rows[numero];
+        carregarValoresPlanos(row, "planos");
+        popEditarPlanos.ShowOnPageLoad = true;
+    }
+    protected void cpAnexosItens_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+    {
+        switch (e.Parameter.ToString())
+        {
+            case "atualizarDados":
+                atualizarAnexos();
+                break;
+            case "marcarNovidade":
+                trocarAvisarMenu("anexosNovos", true);
+                break;
+            default:
+                cReunioes.carregarAnexos();
+                atualizarAnexos();
+                break;
+        }
+    }
+    protected void cpComentariosItens_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+    {
+        switch (e.Parameter.ToString())
+        {
+            case "atualizarDados":
+                atualizarComentarios();
+                break;
+            case "marcarNovidade":
+                trocarAvisarMenu("comentariosNovos", true);
+                break;
+        }
+    }
+    protected void cpDeliberacaoAtual_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+    {
+        if (e.Parameter.ToString() == "atualizarDados")
+        {
+            atualizarDeliberacao();
+        }
+    }
+    protected void cpDadosItem_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+    {
+        if (e.Parameter.ToString() == "atualizarDados")
+        {
+            cReunioes.carregarDadosReuniao();
+        }
+    }
+    protected void cpMenu_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+    {
+        if (e.Parameter.ToString() == "atualizarDados")
+        {
+            atualizaItens();
+            atualizarParticipantes();
+        }
+    }
+    protected void gvPlanosPendentes_CustomCallback(object sender, ASPxGridViewCustomCallbackEventArgs e)
+    {
+        string[] valores = e.Parameters.ToString().Split('§');
+        int codigoTarefa;
+
+        if (valores.Length > 1)
+        {
+            codigoTarefa = int.Parse(((DataTable)((ASPxGridView)sender).DataSource).Rows[int.Parse(valores[0])]["codigoTarefa"].ToString());
+            switch (valores[1])
+            {
+                case "editar":
+
+                    break;
+                case "excluir":
+                    cReunioes.excluirPlanos(0, codigoTarefa);
+                    break;
+            }
+        }
+        else
+        {
+
+            switch (e.Parameters.ToString())
+            {
+                case "atualizarDados":
+                    atualizarPlanos();
+                    ((ASPxGridView)sender).DataSource = cReunioes.valoresReuniao<DataTable>("dtPlanosPendentes").Copy();
+                    ((ASPxGridView)sender).DataBind();
+                    break;
+                case "SalvarDados":
+                    codigoTarefa = int.Parse(cReunioes.valoresReuniao<string>("codigoEdicaoTarefaPendente"));
+                    cReunioes.gravarAlterarPlanos(carregarValoresPlanos(tipo: "planosPendentes"), codigoTarefa: codigoTarefa);
+                    break;
+            }
+        }
+    }
+    protected void pcEditarPlanosPendentes_WindowCallback(object source, PopupWindowCallbackArgs e)
+    {
+        DataRow row;
+        DataTable dtPlanosPendentes = new DataTable();
+        string[] valores = e.Parameter.ToString().Split('§');
+        int codigoTarefa;
+        if (valores.Length > 1)
+        {
+            dtPlanosPendentes = cReunioes.valoresReuniao<DataTable>("dtPlanosPendentes").Copy();
+            codigoTarefa = int.Parse(dtPlanosPendentes.Rows[int.Parse(valores[0])]["codigoTarefa"].ToString());
+            cReunioes.valoresReuniao<string>("codigoEdicaoTarefaPendente", codigoTarefa.ToString());
+            switch (valores[1])
+            {
+                case "editar":
+                    //Nomes padrões
+                    dtPlanosPendentes.Columns["codigoUsuarioResponsavel"].ColumnName = "CodigoUsuarioResponsavelTarefa";
+                    dtPlanosPendentes.Columns["descricaoTarefa"].ColumnName = "DescricaoTarefa";
+                    dtPlanosPendentes.Columns["inicioPrevisto"].ColumnName = "InicioPrevisto";
+                    dtPlanosPendentes.Columns["terminoPrevisto"].ColumnName = "TerminoPrevisto";
+                    dtPlanosPendentes.Columns["inicioReal"].ColumnName = "InicioReal";
+                    dtPlanosPendentes.Columns["terminoReal"].ColumnName = "TerminoReal";
+                    ///
+                    row = dtPlanosPendentes.Select(string.Format("codigoTarefa = {0}", codigoTarefa))[0];
+                    carregarValoresPlanos(row, "planosPendentes");
+                    break;
+            }
+        }
+    }
+    //loads
+    protected void htmlComentarios_Load(object sender, EventArgs e)
+    {
+        if (cReunioes.valoresReuniao<string>("comentariosNovos") == "true")
+            trocarAvisarMenu("comentariosNovos", false);
+        ASPxHtmlEditor editor = (ASPxHtmlEditor)sender;
+        if (hfValores.Contains("fontePadraoSistema") && hfValores["fontePadraoSistema"].ToString() != "")
+            editor.Font.Size = int.Parse(hfValores["fontePadraoSistema"].ToString());
+    }
+    protected void dataAnexos_Load(object sender, EventArgs e)
+    {
+        if (cReunioes.valoresReuniao<string>("anexosNovos") == "true")
+            trocarAvisarMenu("anexosNovos", false);
+    }
+    protected void cpDadosItem_Load(object sender, EventArgs e)
+    {
+        valoresDadosItens();
+    }
+    //outros
+    protected void uploadAnexos_FileUploadComplete(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
+    {
+        string respostaInclusao;
+        ASPxUploadControl uploadAnexos = (ASPxUploadControl)sender;
+        if (cReunioes.valoresReuniao<string>("nomeAnexo") == "")
+        {
+            return;
+        }
+        if (uploadAnexos.UploadedFiles.Length > 0)
+        {
+            string nomeNovoAnexo = Path.GetFileName(uploadAnexos.UploadedFiles[uploadAnexos.UploadedFiles.Length - 1].FileName);
+            string descricaoNovoAnexo = cReunioes.valoresReuniao<string>("nomeAnexo").Replace("'", "");
+            int tamanhoImagem = (int)uploadAnexos.UploadedFiles[uploadAnexos.UploadedFiles.Length - 1].ContentLength;
+            if (cDados == null)
+                cDados = cReunioes.funcoes();
+            if (nomeNovoAnexo.Length > 255)
+            {
+                return;
+            }
+            //RECEBE O ARQUIVO COLOCANDO-O NA MEMÓRIA
+            Stream imagem = uploadAnexos.UploadedFiles[uploadAnexos.UploadedFiles.Length - 1].FileContent;
+            byte[] imagemBinario = new byte[tamanhoImagem];
+            int n = imagem.Read(imagemBinario, 0, tamanhoImagem);
+
+            respostaInclusao = cDados.incluirAnexo(descricaoNovoAnexo, cReunioes.valoresReuniao<string>("codigoUsuario"), nomeNovoAnexo, cReunioes.valoresReuniao<string>("codigoEntidade"), null, 'N', 'N', 15, "NULL", "", cReunioes.valoresReuniao<string>("codigoEvento"), imagemBinario, "N", true, cReunioes.valoresReuniao<string>("codigoItemAtual"), cReunioes.valoresReuniao<string>("tipoItemAtual"));
+            if (respostaInclusao == "")
+            {
+                cReunioes.carregarAnexos();
+                popEditarAnexos.ShowOnPageLoad = false;
+                cReunioes.atualizarAtualizacaoStatus("dtAnexos", true);
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+    protected void dataAnexos_ItemCommand(object source, DataViewItemCommandEventArgs e)
+    {
+        if (cDados == null)
+            cDados = cReunioes.funcoes();
+        int codigo = e.Item.Index;
+        DataTable dtAnexos = cReunioes.valoresReuniao<DataTable>("dtAnexos");
+        int numero = int.Parse(dtAnexos.Rows[codigo]["CodigoAnexo"].ToString());
+        cDados.download(numero, null, Page, Response, Request, false);
+    }
+    protected void inputAnexos_TextChanged(object sender, EventArgs e)
+    {
+        ASPxTextBox campo = (ASPxTextBox)sender;
+        cReunioes.valoresReuniao<string>("nomeAnexo", campo.Text.ToString());
+    }
+
+    #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    protected void caleInicioReuniao_Load(object sender, EventArgs e)
+    {
+        ASPxCalendar cal = (ASPxCalendar)sender;
+        DataTable dtItens = cReunioes.valoresReuniao<DataTable>("dtItens");
+        if (dtItens != null)
+        {
+            DataRow[] rows = dtItens.Select("SequenciaApresentacao = -99 and CodigoTipoObjeto = -99");
+            if (rows.Count() > 0)
+            {
+                DataRow row = rows[0];
+                if (row["DataInicioPrevisto"].ToString() != "")
+                {
+                    DateTime data = Convert.ToDateTime(row["DataInicioPrevisto"].ToString());
+                    cal.SelectedDate = data;
+                    cal.VisibleDate = data;
+                }
+            }
+        }
+    }
+    protected void caleTerminoReuniao_Load(object sender, EventArgs e)
+    {
+        ASPxCalendar cal = (ASPxCalendar)sender;
+        DataTable dtItens = cReunioes.valoresReuniao<DataTable>("dtItens");
+        if (dtItens != null)
+        {
+            DataRow[] rows = dtItens.Select("SequenciaApresentacao = -99 and CodigoTipoObjeto = -99");
+            if (rows.Count() > 0)
+            {
+                DataRow row = rows[0];
+                if (row["DataTerminoPrevisto"].ToString() != "")
+                {
+                    DateTime data = Convert.ToDateTime(row["DataTerminoPrevisto"].ToString());
+                    cal.SelectedDate = data;
+                    cal.VisibleDate = data;
+                }
+            }
+        }
+    }
+    protected void timeHoraInicioReuniao_Load(object sender, EventArgs e)
+    {
+        ASPxTimeEdit hora = (ASPxTimeEdit)sender;
+        DataTable dtItens = cReunioes.valoresReuniao<DataTable>("dtItens");
+        if (dtItens != null)
+        {
+            DataRow[] rows = dtItens.Select("SequenciaApresentacao = -99 and CodigoTipoObjeto = -99");
+            if (rows.Count() > 0)
+            {
+                DataRow row = rows[0];
+                if (row["DataInicioPrevisto"].ToString() != "")
+                {
+                    DateTime data = Convert.ToDateTime(row["DataInicioPrevisto"].ToString());
+                    hora.DateTime = data;
+                }
+            }
+        }
+    }
+    protected void timeTerminoReuniao_Load(object sender, EventArgs e)
+    {
+        ASPxTimeEdit hora = (ASPxTimeEdit)sender;
+        DataTable dtItens = cReunioes.valoresReuniao<DataTable>("dtItens");
+        if (dtItens != null)
+        {
+            DataRow[] rows = dtItens.Select("SequenciaApresentacao = -99 and CodigoTipoObjeto = -99");
+            if (rows.Count() > 0)
+            {
+                DataRow row = rows[0];
+                if (row["DataTerminoPrevisto"].ToString() != "")
+                {
+                    DateTime data = Convert.ToDateTime(row["DataTerminoPrevisto"].ToString());
+                    hora.DateTime = data;
+                }
+            }
+        }
+    }
+}

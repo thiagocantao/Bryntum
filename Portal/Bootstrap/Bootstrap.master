@@ -1,0 +1,85 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Bootstrap.master.cs" Inherits="Bootstrap" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Brisk PPM</title>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="cabecalhoMaster" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="cabecalhoPagina" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <script>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="cabecalhoMasterScript" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="cabecalhoPaginaScript" runat="server">
+    </asp:ContentPlaceHolder>
+
+    </script>
+
+    <style type="text/css">
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="cabecalhoMasterStyle" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="cabecalhoPaginaStyle" runat="server">
+    </asp:ContentPlaceHolder>
+
+    </style>
+
+</head>
+<body>
+
+    <header>
+
+    <%
+        if (exibeMenu)
+        {
+    %>
+        <!-- Menu Bootstrap -->
+        <!-- Aqui deve entrar o código HTML do menu Bootstrap que se encontra na página novaCdis.master. -->
+
+    <%
+        }
+    %>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="conteudoMasterHeader" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="conteudoPaginaHeader" runat="server">
+    </asp:ContentPlaceHolder>
+
+    </header>
+
+    <main>
+
+    <form id="formularioMaster" runat="server">
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="conteudoMasterForm" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="conteudoPaginaForm" runat="server">
+    </asp:ContentPlaceHolder>
+
+    </form>
+
+    </main>
+
+    <footer>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="conteudoMasterFooter" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ClientIDMode="Static" id="conteudoPaginaFooter" runat="server">
+    </asp:ContentPlaceHolder>
+
+    </footer>
+
+</body>
+</html>

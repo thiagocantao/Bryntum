@@ -1,0 +1,305 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DevExpress.Web;
+using System.Data;
+
+public partial class Reunioes_ExecucaoReuniao_Item : System.Web.UI.Page
+{
+    protected int codigoObjeto;
+    protected int codigoReuniao;
+    protected int codigoTipoObjeto;
+    protected string iniciaisTipoAssociacao;
+    protected int codigoUsuarioLogado;
+    protected int codigoEntidade;
+    protected int alturaPrincipal;
+
+    protected string nomeObjeto;
+    protected string descricaoTipoObjeto;
+    protected string deliberacao;
+    protected DateTime? dataDeliberacao;
+
+    dados cDados;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        cDados = CdadosUtil.GetCdados(null);
+        cDados.aplicaEstiloVisual(pageControl);
+
+        codigoObjeto = int.Parse(Request.QueryString["co"]);
+        codigoReuniao = int.Parse(Request.QueryString["cr"]);
+        codigoTipoObjeto = int.Parse(Request.QueryString["cto"]);
+        iniciaisTipoAssociacao = Request.QueryString["ini"];
+
+        codigoEntidade = Convert.ToInt32(
+            cDados.getInfoSistema("CodigoEntidade") ?? -1);
+        codigoUsuarioLogado = Convert.ToInt32(
+            cDados.getInfoSistema("IDUsuarioLogado") ?? -1);
+
+        Session["ce"] = codigoEntidade;
+        Session["cul"] = codigoUsuarioLogado;
+
+        DefineStringsConexao();
+        DefineAlturaTela();
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsCallback)
+        {
+            DefineInformacoesObjeto();
+            DefineAbasVisibeis();
+            DefineUrlFrameDetalhes();
+        }
+    }
+
+    private void DefineUrlFrameDetalhes()
+    {
+        string url = string.Empty;
+        switch (iniciaisTipoAssociacao)
+        {
+            case "RE":
+                url = string.Format("ResumoReuniao.aspx?cr={0}&al={1}"
+                    , codigoReuniao, alturaPrincipal);
+                break;
+            case "RQ":
+                url = string.Format("DetalhesRiscoQuestao.aspx?cr={0}&al={1}&co={2}"
+                    , codigoReuniao, alturaPrincipal, codigoObjeto);
+                break;
+            case "IN":
+                url = string.Format("DetalhesIndicador.aspx?cr={0}&al={1}&co={2}"
+                    , codigoReuniao, alturaPrincipal, codigoObjeto);
+                break;
+            case "TC":
+                url = string.Format("DetalhesTarefaCronograma.aspx?cr={0}&al={1}&co={2}"
+                    , codigoReuniao, alturaPrincipal, codigoObjeto);
+                break;
+            default:
+                if (string.IsNullOrWhiteSpace(iniciaisTipoAssociacao))
+                {
+                    if (codigoTipoObjeto == 0)
+                    {
+                        url = string.Format("PendenciasReunioesAnteriores.aspx?cr={0}&al={1}"
+                            , codigoReuniao, alturaPrincipal);
+                    }
+                    else if (codigoTipoObjeto == -1)
+                    {
+                        url = string.Format("DadosFinanceiros_CuvaS.aspx?cr={0}&al={1}"
+                            , codigoReuniao, alturaPrincipal);
+                    }
+                    else if (codigoObjeto == -100 && codigoTipoObjeto == -100)
+                    {
+                        url = string.Format("ConsideracoesFinais.aspx?cr={0}&al={1}&cp=-1"
+                            , codigoReuniao, alturaPrincipal);
+                    }
+                }
+                break;
+        }
+        url = string.Format("ItensPauta/{0}", url);
+        frmDetalhes.Attributes["src"] = url;
+    }
+
+    private void DefineAbasVisibeis()
+    {
+        switch (iniciaisTipoAssociacao)
+        {
+            case "RE":
+                pageControl.TabPages[0].Visible = true;
+                pageControl.TabPages[1].Visible = false;
+                pageControl.TabPages[2].Visible = false;
+                pageControl.TabPages[3].Visible = false;
+                break;
+            default:
+                if (string.IsNullOrWhiteSpace(iniciaisTipoAssociacao))
+                {
+                    //Pendencias Reunioes Anteriores
+                    if (codigoTipoObjeto == 0)
+                    {
+                        pageControl.TabPages[0].Visible = true;
+                        pageControl.TabPages[1].Visible = false;
+                        pageControl.TabPages[2].Visible = false;
+                        pageControl.TabPages[3].Visible = false;
+                    }
+                    //Dados Financeiros
+                    else if (codigoTipoObjeto == -1)
+                    {
+                    }
+                    //Consideracoes Finais
+                    else if (codigoObjeto == -100 && codigoTipoObjeto == -100)
+                    {
+                        pageControl.TabPages[0].Visible = true;
+                        pageControl.TabPages[1].Visible = false;
+                        pageControl.TabPages[2].Visible = false;
+                        pageControl.TabPages[3].Visible = false;
+                    }
+                }
+                break;
+        }
+    }
+
+    private void DefineInformacoesObjeto()
+    {
+        DataView dv = (DataView)dsDadosObjeto.Select(DataSourceSelectArguments.Empty);
+        DataRowView drv = dv.OfType<DataRowView>().SingleOrDefault();
+        TabPage tabDetalhes = pageControl.TabPages[0];
+        if (drv == null)
+        {
+            if (codigoObjeto == -100 && codigoTipoObjeto == -100)
+                //lblNomeObjeto.Text = "Considerações Finais";
+                tabDetalhes.Text = "Considerações Finais";
+        }
+        else
+        {
+            nomeObjeto = drv["NomeObjeto"] as string;
+            deliberacao = drv["Deliberacao"] as string;
+            dataDeliberacao = drv["DataDeliberacao"] as DateTime?;
+            descricaoTipoObjeto = drv["DescricaoTipoObjeto"] as string;
+            if (string.IsNullOrWhiteSpace(descricaoTipoObjeto))
+                //lblNomeObjeto.Text = nomeObjeto;
+                tabDetalhes.Text = nomeObjeto;
+            else
+                //lblNomeObjeto.Text = string.Format(@"{0}: {1}"
+                //    , descricaoTipoObjeto, nomeObjeto);
+                tabDetalhes.Text = string.Format(@"{0}: {1}"
+                        , descricaoTipoObjeto, nomeObjeto);
+            memoDeliberacoes.Text = deliberacao;
+        }
+    }
+
+    private void DefineStringsConexao()
+    {
+        string connectionString = cDados.classeDados.getStringConexao();
+        dsUsuarioReponsavel.ConnectionString = connectionString;
+        dsStatusTarefa.ConnectionString = connectionString;
+        dsDadosObjeto.ConnectionString = connectionString;
+        dsPlanoAcao.ConnectionString = connectionString;
+    }
+
+    private void DefineAlturaTela()
+    {
+        int ajuste = Convert.ToInt32(Session["AJUSTE_ESPACO_DIPONIVEL"]);
+        string resolucaoCliente = cDados.getInfoSistema("ResolucaoCliente").ToString();
+        alturaPrincipal = int.Parse(resolucaoCliente.Substring(resolucaoCliente.IndexOf('x') + 1)) + ajuste;
+        frmDetalhes.Style.Add(HtmlTextWriterStyle.Height, alturaPrincipal - 175 + "px");
+        memoDeliberacoes.Height = new Unit(alturaPrincipal - 225, UnitType.Pixel);
+        gvPlanoAcao.Settings.VerticalScrollableHeight = alturaPrincipal - 220;
+        pageControl.Height = new Unit(alturaPrincipal - 150, UnitType.Pixel);
+    }
+
+    protected void gvPlanoAcao_CellEditorInitialize(object sender, DevExpress.Web.ASPxGridViewEditorEventArgs e)
+    {
+        ASPxGridView grid = (ASPxGridView)sender;
+        string fieldName = e.Column.FieldName;
+        if (fieldName.Equals("CodigoUsuarioResponsavelTarefa"))
+        {
+            ASPxComboBox combo = (ASPxComboBox)e.Editor;
+            combo.ItemRequestedByValue += combo_ItemRequestedByValue;
+            combo.ItemsRequestedByFilterCondition += combo_ItemsRequestedByFilterCondition;
+        }
+    }
+
+    void combo_ItemsRequestedByFilterCondition(object source, ListEditItemsRequestedByFilterConditionEventArgs e)
+    {
+        ASPxComboBox comboBox = (ASPxComboBox)source;
+        SqlDataSource dataSource = dsUsuarioReponsavel;
+        string comandoSQL = cDados.getSQLComboUsuarios(codigoEntidade, e.Filter, "");
+
+        cDados.populaComboVirtual(dataSource, comandoSQL, comboBox, e.BeginIndex, e.EndIndex);
+    }
+
+    void combo_ItemRequestedByValue(object source, ListEditItemRequestedByValueEventArgs e)
+    {
+        if (string.IsNullOrEmpty(dsUsuarioReponsavel.ConnectionString))
+            dsUsuarioReponsavel.ConnectionString = cDados.classeDados.getStringConexao();
+        if (e.Value != null)
+        {
+            long value;
+            if (!Int64.TryParse(e.Value.ToString(), out value))
+                return;
+            ASPxComboBox comboBox = (ASPxComboBox)source;
+            SqlDataSource dataSource = dsUsuarioReponsavel;
+
+            dataSource.SelectCommand = cDados.getSQLComboUsuariosPorID(codigoEntidade);
+
+            dataSource.SelectParameters.Clear();
+            dataSource.SelectParameters.Add("ID", TypeCode.Int64, e.Value.ToString());
+
+            comboBox.DataBind();
+        }
+    }
+
+    protected void callback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        string parameter = e.Parameter;
+        switch (parameter)
+        {
+            case "deliberacoes":
+                SalvaDeliberacoes();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void SalvaDeliberacoes()
+    {
+        string deliberacao = memoDeliberacoes.Text.Replace("'", "''");
+        string comandoSql = string.Format(@"
+DECLARE @CodigoEvento INT
+DECLARE @CodigoObjeto INT
+DECLARE @CodigoTipoObjeto INT
+    SET @CodigoEvento = {0}
+    SET @CodigoObjeto = {1}
+    SET @CodigoTipoObjeto = {2}
+
+IF EXISTS(   
+             SELECT 1 
+               FROM ObjetoAssociadoEvento
+              WHERE CodigoObjetoAssociado = @CodigoObjeto
+                AND CodigoTipoObjetoAssociado = @CodigoTipoObjeto
+                AND CodigoEvento = @CodigoEvento)
+BEGIN
+     UPDATE ObjetoAssociadoEvento
+        SET DataDeliberacao = GETDATE(),
+            Deliberacao = '{3}'
+      WHERE CodigoObjetoAssociado = @CodigoObjeto
+        AND CodigoTipoObjetoAssociado = @CodigoTipoObjeto
+        AND CodigoEvento = @CodigoEvento
+END
+ELSE
+BEGIN
+     INSERT INTO ObjetoAssociadoEvento 
+     (
+            CodigoObjetoAssociado,
+            CodigoTipoObjetoAssociado,
+            CodigoEvento,
+            DataDeliberacao,
+            Deliberacao
+     )
+     VALUES
+     (
+            @CodigoObjeto,
+            @CodigoTipoObjeto,
+            @CodigoEvento,
+            GETDATE(),
+            '{3}'
+     )
+END"
+            , codigoReuniao
+            , codigoObjeto
+            , codigoTipoObjeto
+            , deliberacao);
+        int registrosAfetados = 0;
+        cDados.execSQL(comandoSql, ref registrosAfetados);
+    }
+
+    protected void memoDeliberacoes_Load(object sender, EventArgs e)
+    {
+        ASPxMemo memo = (ASPxMemo)sender;
+        memo.Font.Name = "Verdana";
+        memo.Font.Size = new FontUnit(12, UnitType.Point);
+    }
+}

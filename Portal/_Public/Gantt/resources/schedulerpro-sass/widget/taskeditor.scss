@@ -1,0 +1,73 @@
+@import '../variables';
+
+.b-schedulerpro-taskeditor {
+    @extend .b-taskeditor;
+
+    .b-taskeditorbase-content {
+        padding : $panel-content-padding;
+    }
+
+    .b-tabpanel-body {
+        padding-bottom : 0
+    }
+
+    .b-tabpanel-content > .b-container:not(.b-panel-body) {
+        padding-bottom : bottom($panel-content-padding);
+    }
+
+    .b-tabpanel-tab-title.b-invalid {
+        white-space : nowrap;
+
+        .b-icon {
+            color        : $red;
+            display      : inline-block;
+            margin-right : .5em;
+        }
+    }
+
+    .b-tabpanel-item {
+        align-content : flex-start;
+    }
+
+    > .b-panel-body-wrap > .b-bottom-toolbar {
+        button {
+            flex         : none;
+            min-width    : 9em;
+            margin-right : .5em;
+
+            &:last-child {
+                margin-right : 0;
+            }
+        }
+    }
+}
+
+// Compact toolbar displayed below grids in the task editor
+.b-schedulerpro-taskeditor .b-toolbar.b-compact-bbar {
+    font-size  : .8em;
+    min-height : 2.5em;
+
+    > .b-toolbar-content {
+        padding : 0;
+    }
+
+    .b-button {
+        border : none;
+    }
+}
+
+.b-toolbar.occurrence-info-toolbar {
+    font-size        : 0.9em;
+    background-color : $taskeditor-recurrence-info-background-color;
+    border-color     : $taskeditor-recurrence-info-border-color;
+
+    .b-toolbar-content {
+        padding-inline : calc(1em / 0.9);
+        min-height     : 0;
+    }
+
+    .b-button {
+        min-height    : 0;
+        padding-block : .5em;
+    }
+}

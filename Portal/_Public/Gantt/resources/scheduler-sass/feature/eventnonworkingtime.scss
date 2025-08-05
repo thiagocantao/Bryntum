@@ -1,0 +1,20 @@
+@import '../variables';
+
+// Place bar mode non working time below event text
+.b-sch-event-wrap .b-sch-nonworkingtime {
+    z-index : 0;
+}
+
+// Hide bar mode non working time during drag
+.b-dragging-event .b-sch-event-wrap.b-dragging .b-sch-nonworkingtime {
+    display : none;
+}
+
+// Disable transitions to not look weird when dropping on another weekend
+.b-animating .b-sch-event-wrap .b-sch-timerange {
+    transition : none;
+}
+
+.b-sch-vertical .b-sch-event-wrap .b-sch-nonworkingtime {
+    left : 0;
+}

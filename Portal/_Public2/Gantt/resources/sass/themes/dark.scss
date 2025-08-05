@@ -1,0 +1,7 @@
+@import '../../scheduler-sass/themes/dark.scss';
+
+$gantt-timeline-border-color: lighten($gray, 10);
+$gantt-timeline-label-color: lighten($gray, 20);
+$gantt-timeline-label-font-weight: 400;
+
+@import 'shared';

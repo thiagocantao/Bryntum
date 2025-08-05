@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsOficioDemanda" targetNamespace="http://tempuri.org/dsOficioDemanda.xsd" xmlns:mstns="http://tempuri.org/dsOficioDemanda.xsd" xmlns="http://tempuri.org/dsOficioDemanda.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsOficioDemanda" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsOficioDemanda" msprop:Generator_UserDSName="dsOficioDemanda">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tbOficioDemanda" msprop:Generator_TableClassName="tbOficioDemandaDataTable" msprop:Generator_TableVarName="tabletbOficioDemanda" msprop:Generator_TablePropName="tbOficioDemanda" msprop:Generator_RowDeletingName="tbOficioDemandaRowDeleting" msprop:Generator_RowChangingName="tbOficioDemandaRowChanging" msprop:Generator_RowEvHandlerName="tbOficioDemandaRowChangeEventHandler" msprop:Generator_RowDeletedName="tbOficioDemandaRowDeleted" msprop:Generator_UserTableName="tbOficioDemanda" msprop:Generator_RowChangedName="tbOficioDemandaRowChanged" msprop:Generator_RowEvArgName="tbOficioDemandaRowChangeEvent" msprop:Generator_RowClassName="tbOficioDemandaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SiglaOrgao" msprop:Generator_ColumnVarNameInTable="columnSiglaOrgao" msprop:Generator_ColumnPropNameInRow="SiglaOrgao" msprop:Generator_ColumnPropNameInTable="SiglaOrgaoColumn" msprop:Generator_UserColumnName="SiglaOrgao" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroOficio" msprop:Generator_ColumnVarNameInTable="columnNumeroOficio" msprop:Generator_ColumnPropNameInRow="NumeroOficio" msprop:Generator_ColumnPropNameInTable="NumeroOficioColumn" msprop:Generator_UserColumnName="NumeroOficio" type="xs:int" minOccurs="0" />
+              <xs:element name="AnoOficio" msprop:Generator_ColumnVarNameInTable="columnAnoOficio" msprop:Generator_ColumnPropNameInRow="AnoOficio" msprop:Generator_ColumnPropNameInTable="AnoOficioColumn" msprop:Generator_UserColumnName="AnoOficio" type="xs:short" minOccurs="0" />
+              <xs:element name="DataOficio" msprop:Generator_ColumnVarNameInTable="columnDataOficio" msprop:Generator_ColumnPropNameInRow="DataOficio" msprop:Generator_ColumnPropNameInTable="DataOficioColumn" msprop:Generator_UserColumnName="DataOficio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="NumeroDemanda" msprop:Generator_ColumnVarNameInTable="columnNumeroDemanda" msprop:Generator_ColumnPropNameInRow="NumeroDemanda" msprop:Generator_ColumnPropNameInTable="NumeroDemandaColumn" msprop:Generator_UserColumnName="NumeroDemanda" type="xs:string" minOccurs="0" />
+              <xs:element name="TituloDemanda" msprop:Generator_ColumnVarNameInTable="columnTituloDemanda" msprop:Generator_ColumnPropNameInRow="TituloDemanda" msprop:Generator_ColumnPropNameInTable="TituloDemandaColumn" msprop:Generator_UserColumnName="TituloDemanda" type="xs:string" minOccurs="0" />
+              <xs:element name="Decisao" msprop:Generator_ColumnVarNameInTable="columnDecisao" msprop:Generator_ColumnPropNameInRow="Decisao" msprop:Generator_ColumnPropNameInTable="DecisaoColumn" msprop:Generator_UserColumnName="Decisao" type="xs:string" minOccurs="0" />
+              <xs:element name="TipoDeliberacao" msprop:Generator_ColumnVarNameInTable="columnTipoDeliberacao" msprop:Generator_ColumnPropNameInRow="TipoDeliberacao" msprop:Generator_ColumnPropNameInTable="TipoDeliberacaoColumn" msprop:Generator_UserColumnName="TipoDeliberacao" type="xs:string" minOccurs="0" />
+              <xs:element name="DataDeliberacao" msprop:Generator_ColumnVarNameInTable="columnDataDeliberacao" msprop:Generator_ColumnPropNameInRow="DataDeliberacao" msprop:Generator_ColumnPropNameInTable="DataDeliberacaoColumn" msprop:Generator_UserColumnName="DataDeliberacao" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Deliberacao" msprop:Generator_ColumnVarNameInTable="columnDeliberacao" msprop:Generator_ColumnPropNameInRow="Deliberacao" msprop:Generator_ColumnPropNameInTable="DeliberacaoColumn" msprop:Generator_UserColumnName="Deliberacao" type="xs:string" minOccurs="0" />
+              <xs:element name="NomeSecretario" msprop:Generator_ColumnVarNameInTable="columnNomeSecretario" msprop:Generator_ColumnPropNameInRow="NomeSecretario" msprop:Generator_ColumnPropNameInTable="NomeSecretarioColumn" msprop:Generator_UserColumnName="NomeSecretario" type="xs:string" minOccurs="0" />
+              <xs:element name="Secretaria" msprop:Generator_ColumnVarNameInTable="columnSecretaria" msprop:Generator_ColumnPropNameInRow="Secretaria" msprop:Generator_ColumnPropNameInTable="SecretariaColumn" msprop:Generator_UserColumnName="Secretaria" type="xs:string" minOccurs="0" />
+              <xs:element name="NomeTitularOrgao" msprop:Generator_ColumnVarNameInTable="columnNomeTitularOrgao" msprop:Generator_ColumnPropNameInRow="NomeTitularOrgao" msprop:Generator_ColumnPropNameInTable="NomeTitularOrgaoColumn" msprop:Generator_UserColumnName="NomeTitularOrgao" type="xs:string" minOccurs="0" />
+              <xs:element name="NomeOrgao" msprop:Generator_ColumnVarNameInTable="columnNomeOrgao" msprop:Generator_ColumnPropNameInRow="NomeOrgao" msprop:Generator_ColumnPropNameInTable="NomeOrgaoColumn" msprop:Generator_UserColumnName="NomeOrgao" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoDemanda" msprop:Generator_ColumnVarNameInTable="columnCodigoDemanda" msprop:Generator_ColumnPropNameInRow="CodigoDemanda" msprop:Generator_ColumnPropNameInTable="CodigoDemandaColumn" msprop:Generator_UserColumnName="CodigoDemanda" type="xs:int" minOccurs="0" />
+              <xs:element name="ValorSolicitado" msprop:Generator_ColumnVarNameInTable="columnValorSolicitado" msprop:Generator_ColumnPropNameInRow="ValorSolicitado" msprop:Generator_ColumnPropNameInTable="ValorSolicitadoColumn" msprop:Generator_UserColumnName="ValorSolicitado" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorSolicitadoAno" msprop:Generator_ColumnVarNameInTable="columnValorSolicitadoAno" msprop:Generator_ColumnPropNameInRow="ValorSolicitadoAno" msprop:Generator_ColumnPropNameInTable="ValorSolicitadoAnoColumn" msprop:Generator_UserColumnName="ValorSolicitadoAno" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorAprovado" msprop:Generator_ColumnVarNameInTable="columnValorAprovado" msprop:Generator_ColumnPropNameInRow="ValorAprovado" msprop:Generator_ColumnPropNameInTable="ValorAprovadoColumn" msprop:Generator_UserColumnName="ValorAprovado" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorAprovadoAno" msprop:Generator_ColumnVarNameInTable="columnValorAprovadoAno" msprop:Generator_ColumnPropNameInRow="ValorAprovadoAno" msprop:Generator_ColumnPropNameInTable="ValorAprovadoAnoColumn" msprop:Generator_UserColumnName="ValorAprovadoAno" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ChaveAssinatura" msprop:Generator_ColumnVarNameInTable="columnChaveAssinatura" msprop:Generator_ColumnPropNameInRow="ChaveAssinatura" msprop:Generator_ColumnPropNameInTable="ChaveAssinaturaColumn" msprop:Generator_UserColumnName="ChaveAssinatura" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeRespSolicitacao" msprop:Generator_ColumnVarNameInTable="columnNomeRespSolicitacao" msprop:Generator_ColumnPropNameInRow="NomeRespSolicitacao" msprop:Generator_ColumnPropNameInTable="NomeRespSolicitacaoColumn" msprop:Generator_UserColumnName="NomeRespSolicitacao" type="xs:string" minOccurs="0" />
+              <xs:element name="SiglaOrgaoRespSolicitacao" msprop:Generator_ColumnVarNameInTable="columnSiglaOrgaoRespSolicitacao" msprop:Generator_ColumnPropNameInRow="SiglaOrgaoRespSolicitacao" msprop:Generator_ColumnPropNameInTable="SiglaOrgaoRespSolicitacaoColumn" msprop:Generator_UserColumnName="SiglaOrgaoRespSolicitacao" type="xs:string" minOccurs="0" />
+              <xs:element name="NomeOrgaoRespSolicitacao" msprop:Generator_ColumnVarNameInTable="columnNomeOrgaoRespSolicitacao" msprop:Generator_ColumnPropNameInRow="NomeOrgaoRespSolicitacao" msprop:Generator_ColumnPropNameInTable="NomeOrgaoRespSolicitacaoColumn" msprop:Generator_UserColumnName="NomeOrgaoRespSolicitacao" type="xs:string" minOccurs="0" />
+              <xs:element name="Descricao" msprop:Generator_ColumnVarNameInTable="columnDescricao" msprop:Generator_ColumnPropNameInRow="Descricao" msprop:Generator_ColumnPropNameInTable="DescricaoColumn" msprop:Generator_UserColumnName="Descricao" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

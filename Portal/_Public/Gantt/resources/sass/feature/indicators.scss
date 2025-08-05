@@ -1,0 +1,158 @@
+@import '../variables';
+
+.b-indicator {
+    position       : absolute;
+    pointer-events : all;
+    z-index        : 6;
+    overflow       : visible;
+    white-space    : nowrap;
+    transition     : color .2s, border-color .2s;
+    color          : $indicator-dates-color;
+
+    &.b-has-icon {
+        display         : flex;
+        justify-content : center;
+        align-items     : center;
+    }
+
+    .b-animating & {
+        transition : all .2s;
+    }
+
+    i {
+        font-size : .6em;
+        color     : $indicator-dates-color;
+    }
+
+    &:hover {
+        z-index      : 7;
+        color        : $indicator-dates-hover-color;
+        border-color : $indicator-dates-hover-color;
+    }
+
+    &.b-has-icon::before {
+        top : 90%;
+    }
+
+    &.b-bottom {
+        margin-top : $indicator-at-bottom-top;
+    }
+
+    &.b-early-dates,
+    &.b-late-dates {
+        height       : $indicator-at-bottom-size !important;
+        border-width : 1px;
+        border-style : solid;
+        border-top   : none;
+        border-color : $indicator-dates-color;
+
+        &:hover {
+            border-color : $indicator-dates-hover-color;
+        }
+    }
+
+    &.b-deadline-date {
+        @extend .b-icon;
+
+        width               : auto;
+        margin-inline-start : -2.5px;
+
+        &::before {
+            content        : "#{ $fa-var-flag }";
+            color          : $red;
+            font-size      : $indicator-at-bottom-size * 2;
+            vertical-align : top;
+            position       : relative;
+            top            : -2px;
+            transition     : color .2s;
+
+            .b-timeaxissubgrid.b-rtl & {
+                transform : rotateY(180deg);
+            }
+        }
+
+        &:hover::before {
+            color : darken($red, 20);
+        }
+    }
+
+    &.b-constraint-date {
+        width : $indicator-at-bottom-size;
+
+        &::before {
+            transition : border-color .2s, background-color .2s;
+        }
+
+        &:hover::before {
+            border-color : $indicator-dates-hover-color;
+        }
+    }
+
+    &.b-constraint-type-muststarton,
+    &.b-constraint-type-mustfinishon {
+        @extend .b-icon;
+
+        border              : none;
+        width               : auto;
+        margin-inline-start : -$indicator-at-bottom-size * .75; // Cannot use translateX(-50%) on pseudo, misaligns tooltip
+
+        &::before {
+            content        : "#{ $fa-var-thumbtack }";
+            font-size      : $indicator-at-bottom-size * 2;
+            vertical-align : top;
+            position       : relative;
+            top            : -2px;
+        }
+    }
+
+    &.b-constraint-type-startnoearlierthan,
+    &.b-constraint-type-startnolaterthan {
+        width                      : $indicator-constraint-size;
+        height                     : $indicator-constraint-size * 2 !important;
+        border-top-right-radius    : $indicator-constraint-size * 2;
+        border-bottom-right-radius : $indicator-constraint-size * 2;
+        border                     : 1px solid $indicator-dates-color;
+        background-color           : $indicator-dates-color;
+
+        .b-timeaxissubgrid.b-rtl & {
+            border-top-right-radius    : initial;
+            border-bottom-right-radius : initial;
+            border-top-left-radius     : $indicator-constraint-size * 2;
+            border-bottom-left-radius  : $indicator-constraint-size * 2;
+        }
+    }
+
+    &.b-constraint-type-startnolaterthan {
+        background-color : transparent;
+    }
+
+    &.b-constraint-type-startnoearlierthan:hover {
+        background-color : $indicator-dates-hover-color;
+    }
+
+    &.b-constraint-type-finishnoearlierthan,
+    &.b-constraint-type-finishnolaterthan {
+        margin-inline-start       : -$indicator-constraint-size;
+        width                     : $indicator-constraint-size;
+        height                    : $indicator-constraint-size * 2 !important;
+        border-top-left-radius    : $indicator-constraint-size * 2;
+        border-bottom-left-radius : $indicator-constraint-size * 2;
+        border                    : 1px solid $indicator-dates-color;
+        background-color          : $indicator-dates-color;
+
+        .b-timeaxissubgrid.b-rtl & {
+            border-top-left-radius     : initial;
+            border-bottom-left-radius  : initial;
+            border-top-right-radius    : $indicator-constraint-size * 2;
+            border-bottom-right-radius : $indicator-constraint-size * 2;
+        }
+    }
+
+    &.b-constraint-type-finishnolaterthan {
+        background-color : transparent;
+    }
+
+    &.b-constraint-type-finishnoearlierthan:hover {
+        background-color : $indicator-dates-hover-color;
+    }
+}

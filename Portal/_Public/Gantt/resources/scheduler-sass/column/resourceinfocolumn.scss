@@ -1,0 +1,34 @@
+@import '../variables';
+
+.b-resource-info {
+    flex           : 1;
+    height         : 100%;
+
+    display        : flex;
+    flex-direction : row;
+    align-items    : center;
+    overflow       : hidden;
+
+    dl { 
+        overflow : hidden;
+    }
+
+    dt {
+        font-weight   : 600;
+        margin-bottom : .2em;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+    }
+
+    dd {
+        margin        : 0;
+        font-size     : .8em;
+        color         : $resourceinfo-role-color;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+    }
+
+    .b-resource-avatar {
+        margin-inline-end : .5em;
+    }
+}

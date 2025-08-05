@@ -1,0 +1,29 @@
+.b-schedulerpro-issueresolutionpopup {
+    width     : clamp(400px, 45%, 100%);
+
+    max-width : 80%;
+
+    .b-error-description,
+    .b-invalid-dependencies-description {
+        display       : block;
+        margin-bottom : 1em;
+        line-height   : 1.5em;
+    }
+
+    .b-radio {
+        margin-bottom : 1em;
+
+        .b-field-inner .b-checkbox-label {
+            text-transform : none;
+            font-size      : 1em;
+        }
+    }
+
+    .b-dependency-field {
+        width : 33em;
+    }
+
+    .b-radiogroup-body-wrap {
+        background : transparent;
+    }
+}

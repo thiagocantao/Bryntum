@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BCFD7169-D740-455E-ADB1-23B33697AC35}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cdis.Brisk.DataTransfer</RootNamespace>
+    <AssemblyName>Cdis.Brisk.DataTransfer</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cronograma\InfoCronogramaDataTransfer.cs" />
+    <Compile Include="Cronograma\LinhaBaseDataTransfer.cs" />
+    <Compile Include="Gantt\Balanceamento\TaskItemGanttBalanceamentoDataTransfer.cs" />
+    <Compile Include="Gantt\Balanceamento\TasksGanttBalanceamentoDataTransfer.cs" />
+    <Compile Include="Gantt\DependenciesGanttDataTransfer.cs" />
+    <Compile Include="Gantt\DependencyGanttDataTransfer.cs" />
+    <Compile Include="Cronograma\InfoEapDataTransfer.cs" />
+    <Compile Include="Gantt\GanttSaveDataTransfer.cs" />
+    <Compile Include="Gantt\PlanoAcao\TaskItemGanttPlanoAcaoDataTransfer.cs" />
+    <Compile Include="Gantt\PlanoAcao\TasksGanttPlanoAcaoDataTransfer.cs" />
+    <Compile Include="Gantt\ProjetoMeta\TaskItemGanttProjetoMetaDataTransfer.cs" />
+    <Compile Include="Gantt\ProjetoMeta\TasksGanttProjetoMetaDataTransfer.cs" />
+    <Compile Include="Gantt\TaskGanttDataTransfer.cs" />
+    <Compile Include="Gantt\GanttDatasetDataTransfer.cs" />
+    <Compile Include="Gantt\ProjectGanttDataTransfer.cs" />
+    <Compile Include="Gantt\TasksGanttDataTransfer.cs" />
+    <Compile Include="Orcamentacao\OrcamentacaoProjetoAnoDataTransfer.cs" />
+    <Compile Include="Orcamentacao\OrcamentacaoProjetoDataTransfer.cs" />
+    <Compile Include="Orcamentacao\OrcamentoContaProjetoDataTransfer.cs" />
+    <Compile Include="Orcamentacao\ValorOrcamentacaoDataTransfer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relatorio\CarteiraDataTransfer.cs" />
+    <Compile Include="Relatorio\Ministerio\RelatorioMinisterioFinalidade52005400DataTransfer.cs" />
+    <Compile Include="Relatorio\Ministerio\RelatorioMinisterioFinalidadeDataTransfer.cs" />
+    <Compile Include="Relatorio\Ministerio\RelatorioMinisterioReceitaDespesaDataTransfer.cs" />
+    <Compile Include="Relatorio\PlanoTrabalho\InfoGrupoItemPageDataTransfer.cs" />
+    <Compile Include="Relatorio\PlanoTrabalho\InfoItemPageDataTranfer.cs" />
+    <Compile Include="Relatorio\PlanoTrabalho\InfoListPageDataTransfer.cs" />
+    <Compile Include="Relatorio\PlanoTrabalho\PlanoTrabalhoAtividadeEntregaDataTransfer.cs" />
+    <Compile Include="Relatorio\PlanoTrabalho\PlanoTrabalhoDataTransfer.cs" />
+    <Compile Include="Relatorio\PlanoTrabalho\PlanoTrabalhoEntregaDataTransfer.cs" />
+    <Compile Include="Relatorio\PlanoTrabalho\PlanoTrabalhoProdutoDataTransfer.cs" />
+    <Compile Include="Relatorio\PlanoTrabalho\PlanoTrabalhoResultadoEsperadoDataTransfer.cs" />
+    <Compile Include="UnidadeNegocio\UnidadeNegocioDataTransfer.cs" />
+    <Compile Include="Usuario\UsuarioLogadoDataTransfer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cdis.Brisk.Infra.Core\Cdis.Brisk.Infra.Core.csproj">
+      <Project>{9a5304b0-f4a2-4dad-adca-6e5fa5b48dd5}</Project>
+      <Name>Cdis.Brisk.Infra.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

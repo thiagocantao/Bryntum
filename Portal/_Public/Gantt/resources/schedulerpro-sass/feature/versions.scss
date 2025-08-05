@@ -1,0 +1,43 @@
+@import '../variables';
+
+.b-versiongrid-property-update-desc {
+  display: flex;
+  gap: 0.4em;
+  align-items: baseline;
+  font-size: 90%;
+}
+
+.b-versiongrid-property-name::after {
+  content: ':';
+}
+
+.b-versiongrid-property-before,
+.b-versiongrid-property-after {
+  padding: 0.2em 0.4em;
+  border-radius: 0.1em;
+  background: #f0f0f0;
+}
+
+.b-versiongrid-empty-value {
+  opacity: 0.5;
+}
+
+.b-versiongrid .b-tree-cell.b-tree-parent-cell {
+  font-weight: 400;
+}
+
+.b-icon-version {
+  @extend .b-icon;
+
+  &::before {
+      content : "#{ $fa-var-file-circle-check }";
+  }
+}
+
+.b-versiongrid-highlighted-entity {
+  font-weight: 700;
+}
+
+.b-versiongrid-comparing {
+  background: $blue;
+}

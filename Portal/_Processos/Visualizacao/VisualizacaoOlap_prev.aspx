@@ -1,0 +1,281 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="VisualizacaoOlap_prev.aspx.cs"
+    Inherits="_Processos_Visualizacao_VisualizacaoOlap_prev" %>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head runat="server">
+        <link href="../../estilos/custom.css" rel="stylesheet" />
+        <script language="javascript" type="text/javascript">
+
+            
+            function SalvarConsulta() {
+                callback.PerformCallback("salvar");
+            }
+
+           
+            function SalvarConsultaComo(nomeConsulta) {
+                callback.PerformCallback("salvar_como;" + nomeConsulta);
+            }
+
+            function CarregarConsulta(codigoListaUsuario) {
+                var obj = {};
+                var variaveis = location.search.substr(1).split('&')
+                for (var i = 0; i < variaveis.length; i++) {
+                    var keyValue = variaveis[i].split('=');
+                    if (keyValue.length != 2) continue;
+
+                    obj[keyValue[0]] = keyValue[1];
+                }
+                obj['clu'] = codigoListaUsuario;
+                var queryString = '?cl=' + obj['cl'] + '&ir=' + obj['ir'] + '&clu=' + obj['clu'];
+
+                var href = location.href;
+                location.replace(href.substring(0, href.indexOf('?')) + queryString);
+            }
+
+           function SalvarConfiguracoesLayout() {
+                //if (confirm('Deseja salvar as alterações realizadas no layout da consulta?'))
+                callback.PerformCallback("save_layout");
+            }
+
+            function RestaurarConfiguracoesLayout() {
+                var funcObj = {
+                    funcaoClickOK: function() {
+                        callback.PerformCallback("restore_layout");
+                    }
+                }
+                window.parent.mostraConfirmacao(Resources.traducao.VisualizacaoOlap_deseja_restaurar_as_configura__es_originais_do_layout_da_consulta_, function() {
+                    funcObj['funcaoClickOK']()
+                }, null);
+            }
+        </script>
+        <title></title>
+        <style type="text/css">
+            .dxmMenu {
+                font: 12px Tahoma, Geneva, sans-serif;
+                color: black;
+                background-color: #F0F0F0;
+                border: 1px solid #A8A8A8;
+                padding: 2px;
+            }
+            
+            .dxmMenuItemWithImage {
+                white-space: nowrap;
+            }
+            
+            .dxmMenuItemWithImage {
+                padding: 4px 8px 5px;
+            }
+            
+            .dxmMenuItemSpacing {
+                width: 2px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form id="form1" runat="server">
+            <div>
+                <%--<div id="divTitulo" style="margin: 5px 10px 5px 10px; background-image: url(../../imagens/titulo/back_Titulo_Desktop.gif);
+            height: 20px;">
+            <asp:Label ID="lblTitulo" runat="server" EnableViewState="False" Font-Bold="True"
+                Font-Overline="False" Font-Strikeout="False" Text="Título"></asp:Label>
+        </div>--%>
+            </div>
+            <table runat="server" id="tbBotoes" cellpadding="0" cellspacing="0">
+                <tr id="Tr1" runat="server">
+                    <td id="Td1" runat="server" style="padding: 3px" valign="top">
+                        <table cellpadding="0" cellspacing="0" style="height: 22px">
+                            <tr>
+                                <td style="padding: 3px;">
+                                    <dxm:ASPxMenu ID="menu" runat="server" BackColor="Transparent" ClientInstanceName="menu" ItemSpacing="5px" OnItemClick="menu_ItemClick" onload="menu_Load">
+                                        <Paddings Padding="0px" />
+                                        <Items>
+                                            <dxm:MenuItem Name="btnIncluir" Text="" ToolTip="<% $Resources:traducao, VizualizacaoOlap_prev_btn_incluir %>">
+                                                <Image Url="~/imagens/botoes/incluirReg02.png">
+                                                </Image>
+                                            </dxm:MenuItem>
+                                            <dxm:MenuItem Name="btnExportar" Text="" ToolTip="<% $Resources:traducao, VizualizacaoOlap_prev_btn_exportar %>">
+                                                <Items>
+                                                    <dxm:MenuItem Name="btnXLS" Text="XLS" ToolTip="<% $Resources:traducao, VizualizacaoOlap_prev_btn_exportar_para_XLS %>">
+                                                        <Image Url="~/imagens/menuExportacao/xls.png">
+                                                        </Image>
+                                                    </dxm:MenuItem>
+                                                    <dxm:MenuItem Name="btnPDF" Text="PDF" ToolTip="<% $Resources:traducao, VizualizacaoOlap_prev_btn_exportar_para_PDF %>">
+                                                        <Image Url="~/imagens/menuExportacao/pdf.png">
+                                                        </Image>
+                                                    </dxm:MenuItem>
+                                                    <dxm:MenuItem Name="btnRTF" Text="RTF" ToolTip="<% $Resources:traducao, VizualizacaoOlap_prev_btn_exportar_para_RTF %>">
+                                                        <Image Url="~/imagens/menuExportacao/rtf.png">
+                                                        </Image>
+                                                    </dxm:MenuItem>
+                                                    <dxm:MenuItem Name="btnHTML" Text="HTML" ToolTip="<% $Resources:traducao, VizualizacaoOlap_prev_btn_exportar_para_HTML %>" ClientVisible="False">
+                                                        <Image Url="~/imagens/menuExportacao/html.png">
+                                                        </Image>
+                                                    </dxm:MenuItem>
+                                                    <dxtv:MenuItem Name="btnCSV" Text="CSV" ToolTip="<% $Resources:traducao, VizualizacaoOlap_prev_btn_exportar_para_CSV %>">
+                                                        <Image Url="~/imagens/menuExportacao/iconoCSV.png">
+                                                        </Image>
+                                                    </dxtv:MenuItem>
+                                                </Items>
+                                                <Image Url="~/imagens/botoes/btnDownload.png">
+                                                </Image>
+                                            </dxm:MenuItem>
+                                            <dxtv:MenuItem Name="btnFilterEditor" Text="" ClientVisible="true" ToolTip="" >
+                                                    <Image Url="~/imagens/filtroOrcamentacaoProjeto.png">
+                                                </Image>
+                                            </dxtv:MenuItem>
+                                            <dxm:MenuItem Name="btnLayout" Text="" ClientVisible="false" ToolTip="Layout">
+                                                <Items>
+                                                    <dxtv:MenuItem Name="btnAbrirConsultas" Text="<% $Resources:traducao, VizualizacaoOlap_prev_btn_abrir %>" ToolTip="<% $Resources:traducao, VizualizacaoOlap_prev_btn_abrir_consultas_salvas %>">
+                                                        <Image IconID="actions_open_16x16">
+                                                        </Image>
+                                                    </dxtv:MenuItem>
+                                                    <dxtv:MenuItem Name="btnSalvarConsultas" Text="<% $Resources:traducao, VisualizacaoOlap_prev_salvar %>" ToolTip="<% $Resources:traducao, VisualizacaoOlap_prev_salvar_consulta %>">
+                                                        <Image IconID="save_save_16x16">
+                                                        </Image>
+                                                    </dxtv:MenuItem>
+                                                    <dxtv:MenuItem Name="btnSalvarComoConsultas" Text="<% $Resources:traducao, VisualizacaoOlap_prev_salvar_como %>" ToolTip="<% $Resources:traducao, VisualizacaoOlap_prev_salvar_consulta_como %>">
+                                                        <Image IconID="save_saveandnew_16x16">
+                                                        </Image>
+                                                    </dxtv:MenuItem>
+                                                    <dxtv:MenuItem Name="btnCerregarOriginalConsultas" Text="<% $Resources:traducao, VisualizacaoOlap_prev_carregar_configuracoes_originais %>" ToolTip="<% $Resources:traducao, VisualizacaoOlap_prev_carrega_configuracoes_originais_consulta %>">
+                                                        <Image IconID="actions_reset_16x16">
+                                                        </Image>
+                                                    </dxtv:MenuItem>
+                                                </Items>
+                                                <Image Url="~/imagens/botoes/layout.png">
+                                                </Image>
+                                            </dxm:MenuItem>
+                                        </Items>
+                                        <ItemStyle Cursor="pointer">
+                                            <HoverStyle>
+                                                <Border BorderStyle="None" />
+                                            </HoverStyle>
+                                            <Paddings Padding="0px" />
+                                        </ItemStyle>
+                                        <SubMenuItemStyle BackColor="White" Cursor="pointer">
+                                            <SelectedStyle>
+                                                <Border BorderStyle="None" />
+                                            </SelectedStyle>
+                                        </SubMenuItemStyle>
+                                        <Border BorderStyle="None" />
+                                    </dxm:ASPxMenu>
+                                </td>
+                                <td style="padding: 3px;">
+                                    <dxcp:ASPxLabel ID="lblNomeConsulta" runat="server" Text="ASPxLabel" Font-Bold="True" Font-Size="10pt">
+                                    </dxcp:ASPxLabel>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <div id="divOlap" runat="server" style="overflow: auto">
+                <dxwpg:ASPxPivotGrid ID="pgDados" runat="server" ClientIDMode="AutoID" ClientInstanceName="pgDados" DataSourceID="dataSource" Width="100%" OnCustomCellDisplayText="pgDados_CustomCellDisplayText" OnCustomSummary="pgDados_CustomSummary" OnHtmlFieldValuePrepared="pgDados_HtmlFieldValuePrepared"
+                    OnHtmlCellPrepared="pgDados_HtmlCellPrepared" OnCustomFilterPopupItems="pgDados_CustomFilterPopupItems">
+                    <OptionsView DataHeadersDisplayMode="Popup" />
+                    <OptionsCustomization AllowPrefilter="False" CustomizationWindowHeight="275" CustomizationWindowWidth="200" />
+                    <OptionsLoadingPanel>
+                        <Style>
+
+                        </Style>
+                    </OptionsLoadingPanel>
+                    <OptionsFilter ShowOnlyAvailableItems="True" />
+                    <Styles>
+                        <HeaderStyle />
+                        <AreaStyle>
+                        </AreaStyle>
+                        <FilterAreaStyle>
+                        </FilterAreaStyle>
+                        <DataAreaStyle>
+                        </DataAreaStyle>
+                        <ColumnAreaStyle>
+                        </ColumnAreaStyle>
+                        <RowAreaStyle>
+                        </RowAreaStyle>
+                        <FieldValueStyle>
+                        </FieldValueStyle>
+                        <FieldValueTotalStyle>
+                        </FieldValueTotalStyle>
+                        <FieldValueGrandTotalStyle>
+                        </FieldValueGrandTotalStyle>
+                        <CellStyle>
+                        </CellStyle>
+                        <TotalCellStyle>
+                        </TotalCellStyle>
+                        <GrandTotalCellStyle>
+                        </GrandTotalCellStyle>
+                        <CustomTotalCellStyle>
+                        </CustomTotalCellStyle>
+                        <FilterButtonPanelStyle>
+                        </FilterButtonPanelStyle>
+                        <MenuItemStyle />
+                        <MenuStyle />
+                        <CustomizationFieldsStyle>
+                        </CustomizationFieldsStyle>
+                        <CustomizationFieldsCloseButtonStyle>
+                        </CustomizationFieldsCloseButtonStyle>
+                        <CustomizationFieldsContentStyle>
+                        </CustomizationFieldsContentStyle>
+                        <CustomizationFieldsHeaderStyle>
+                        </CustomizationFieldsHeaderStyle>
+                        <LoadingPanel>
+                        </LoadingPanel>
+                    </Styles>
+                    <StylesEditors>
+                        <ButtonEdit>
+                        </ButtonEdit>
+                        <ButtonEditButton>
+                        </ButtonEditButton>
+                        <Calendar>
+                        </Calendar>
+                        <CalendarDayHeader>
+                        </CalendarDayHeader>
+                        <CalendarDay>
+                        </CalendarDay>
+                        <CalendarDayOtherMonth>
+                        </CalendarDayOtherMonth>
+                        <CalendarDaySelected>
+                        </CalendarDaySelected>
+                        <CalendarDayWeekEnd>
+                        </CalendarDayWeekEnd>
+                        <CalendarDayOutOfRange>
+                        </CalendarDayOutOfRange>
+                        <CalendarHeader>
+                        </CalendarHeader>
+                        <CalendarButton>
+                        </CalendarButton>
+                        <CalendarFastNav>
+                        </CalendarFastNav>
+                    </StylesEditors>
+                </dxwpg:ASPxPivotGrid>
+            </div>
+            <asp:SqlDataSource ID="dataSource" runat="server" OnSelecting="dataSource_Selecting">
+            </asp:SqlDataSource>
+            <dxpgwx:ASPxPivotGridExporter ID="exporter" runat="server" OnCustomExportCell="exporter_CustomExportCell" ASPxPivotGridID="pgDados" OnCustomExportFieldValue="exporter_CustomExportFieldValue" OnCustomExportHeader="exporter_CustomExportHeader">
+                <OptionsPrint>
+                    <PageSettings Landscape="True" PaperKind="A4" />
+                </OptionsPrint>
+            </dxpgwx:ASPxPivotGridExporter>
+            <dxcb:ASPxCallback ID="callback" runat="server" ClientInstanceName="callback" OnCallback="callback_Callback">
+                <ClientSideEvents CallbackComplete="function(s, e) {
+	if(e.parameter.indexOf('salvar_como') != -1){
+		CarregarConsulta(e.result);
+	}
+	else if(e.parameter.indexOf('salvar') != -1){
+		//Se o retorno indicar que a consulta não foi salva ou por a consulta
+		 //carregada ter sido excluída ou por ter sido carregada as configurações
+		//originais da consulta, é exibida o popup de salvar como
+		if(e.result.toLowerCase() == String(true)){
+			 parent.ExibirJanelaSalvarComo();
+}
+}
+}
+" />
+            </dxcb:ASPxCallback>
+        </form>
+    </body>
+
+    </html>

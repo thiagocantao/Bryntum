@@ -1,0 +1,388 @@
+﻿#conteudoPrincipal {
+    margin: 0;
+    padding: 0;
+}
+
+.kanban-agil-icones {
+    margin-left: 0.5rem;
+}
+
+    .kanban-agil-icones > i {
+        color: #656469;
+        cursor: pointer;
+        font-size: 18px;
+        margin: 0 0.25rem;
+    }
+
+        .kanban-agil-icones > i:hover {
+            color: #949886;
+        }
+
+.kanban-agil-cabecalho {
+    align-items: center;
+    background-color: #daded0;
+    border: 1px solid #b9d176;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 0.5rem 0;
+    padding: 0;
+}
+
+.kanban-agil-cabecalho-indica-item-bloqueado {
+    background-color: #c2a8b8;
+}
+
+.kanban-agil-data-sprint > div {
+    text-align: center;
+}
+
+.kanban-agil-data-sprint > span:nth-child(1) {
+    /*color: #949886;*/
+    color: #656469;
+    font-size: 95%;
+}
+
+.kanban-agil-data-sprint > span:nth-child(2) {
+    color: #656469;
+    font-size: 80%;
+}
+
+#kanban {
+    background-color: #FFFFFF;
+    overflow-x: scroll;
+    white-space: nowrap;
+    width: 100%;
+}
+
+/*@media (max-height: 768px) {
+
+    #kanban {
+        height: 84vh;
+    }
+}
+
+@media (min-height: 769px) {
+
+    #kanban {
+        height: 94vh;
+    }
+}*/
+
+.kanban-agil-raias {
+    display: flex;
+    flex-direction: row;
+    position: sticky;
+    top: 0px;
+    z-index: 400;
+    /*
+        classe para deixar o cabeçalho fixo
+        position: sticky;
+    top: 0px;*/
+}
+
+    .kanban-agil-raias > h2 {
+        flex: 0 0 auto;
+        font-size: 1.1rem;
+        font-weight: 400;
+        padding: 0.5rem;
+        width: 325px;
+    }
+
+        .kanban-agil-raias > h2:first-child {
+            background-color: #C7DFB9;
+            display: flex;
+            align-items: center;
+        }
+
+
+        .kanban-agil-raias > h2:not(:first-child) {
+            border-left: 3px solid #ffffff;
+            color: #ffffff;
+        }
+
+        .kanban-agil-raias > h2:not(:last-child) {
+            border-right: 3px solid #ffffff;
+        }
+
+        .kanban-agil-raias > h2 > span {
+            float: right;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .kanban-agil-raias > h2:not(:first-child) > span {
+            color: #ffffff;
+        }
+
+.kanban-agil {
+    display: flex;
+    flex-wrap: nowrap;
+    /*
+        propriedades para deixar o cabeçalho fixo
+    position: sticky;
+    top: 56px;*/
+}
+
+    .kanban-agil:not(:first-child) {
+        border-top: 3px solid #ffffff;
+    }
+
+    .kanban-agil:not(:last-child) {
+        border-bottom: 3px solid #ffffff;
+    }
+
+    .kanban-agil > ul {
+        display: inline-block;
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 0;
+        width: 325px;
+    }
+
+        .kanban-agil > ul:first-child {
+            background-color: #C7DFB9;
+        }
+
+        .kanban-agil > ul:not(:first-child) {
+            background-color: #f6f6f6;
+            border-left: 3px solid #ffffff;
+        }
+
+        .kanban-agil > ul:not(:last-child) {
+            border-right: 3px solid #ffffff;
+        }
+
+        .kanban-agil > ul > li {
+            background-color: #ffffff;
+            border-radius: 4px;
+            list-style-type: none;
+            margin: 0.5rem;
+            /*min-height: 8.75rem;*/
+            padding: 0.5rem;
+            border-left: 3px solid #857A11;
+        }
+
+.borda-lateral-amarela {
+    border-left: 3px solid #ffd800;
+}
+
+.kanban-agil > ul:first-child > li {
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    border-left: 3px solid #857A11;
+}
+
+
+.kanban-agil > ul:not(:first-child) > li {
+    border: 1px solid #e0e0e0;
+    border-left: 3px solid #857A11;
+}
+
+
+.kanban-agil-tarefa {
+    position: relative;
+    min-height: 55px;
+}
+
+.kanban-agil-tarefa-cabecalho-titulo {
+    background-color: #f0f0f0;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 0 45px 0 5px;
+    white-space: break-spaces;
+}
+
+.kanban-agil-tarefa-cabecalho-titulo-bug {
+    background-color: #F8EA8C;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 0 45px 0 5px;
+}
+
+.kanban-agil-tarefa-cabecalho-titulo-bloqueio {
+    background-color: #c2a8b8;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 0 45px 0 5px;
+    white-space: break-spaces;
+}
+
+.kanban-agil-tarefa-cabecalho-titulo > span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+.kanban-agil-tarefa-menu {
+    cursor: pointer;
+    margin-right: 5px;
+    margin-top: 2px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+    .kanban-agil-tarefa-menu i {
+        font-size: 1.3rem;
+    }
+
+.kanban-agil-tarefa-usuario {
+    align-items: center;
+    display: flex;
+    margin: 0;
+    padding: 0.3rem 0 0.3rem 0;
+}
+
+.kanban-agil-tarefa-usuario-float-right {
+    align-items: center;
+    display: flex;
+    margin: 0;
+    padding: 0.3rem 0 0.3rem 0;
+    float: right;
+}
+
+.kanban-agil-tarefa-usuario-sigla {
+    align-items: center;
+    background: #515E6E;
+    border-radius: 50%;
+    cursor: default;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+}
+
+    .kanban-agil-tarefa-usuario-sigla > span {
+        color: #ffffff;
+        font-size: 0.8rem;
+    }
+
+.kanban-agil-tarefa-usuario-nome {
+    flex: 1;
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin-left: 0.5rem;
+}
+
+.kanban-agil-tarefa-usuario-detalhes-concluido {
+    float: right;
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin-left: 0.5rem;
+}
+
+
+    .kanban-agil-tarefa-usuario-detalhes-concluido > span {
+        background-color: #daded0;
+        /*
+    border: 1px solid #e0e0e0;
+    */
+        border-bottom-left-radius: 32px;
+        border-bottom-right-radius: 32px;
+        box-shadow: 1px 1px 2px #656469;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 400;
+        padding: 0.20rem 0.20rem 0.60rem 0.20rem;
+    }
+
+.kanban-agil-tarefa-detalhes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 0;
+    padding: 0.3rem 0 0.5rem;
+    justify-content: left;
+    width: 100%;
+}
+
+.kanban-agil-tarefa-detalhes-contador-tarefas {
+    /*display: flex;*/
+    margin: 0;
+    padding: 0.5rem 0 1rem;
+    /*justify-content: space-between;*/
+    text-align: right;
+    font-size: 0.7rem;
+}
+
+.kanban-agil-tarefa-detalhes > div {
+    margin: 0 0.5rem;
+}
+
+    .kanban-agil-tarefa-detalhes > div > span {
+        display: block;
+        font-size: 0.8rem;
+        text-align: left;
+    }
+
+        .kanban-agil-tarefa-detalhes > div > span:first-child {
+            opacity: .7;
+        }
+
+    .kanban-agil-tarefa-detalhes > div.kanban-agil-tarefa-detalhes-data > span:nth-child(1) {
+        display: none;
+    }
+
+    .kanban-agil-tarefa-detalhes > div.atrasada > span:nth-child(2) {
+        color: #FF0000;
+    }
+
+.kanban-agil-tarefa-detalhes-anexo {
+    text-align: right;
+}
+
+.kanban-agil-tarefa-tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap
+}
+
+.kanban-agil-tarefa-tag {
+    background-color: #daded0;
+    font-size: 0.6rem;
+    list-style-type: none;
+    margin: 0.25rem;
+    text-transform: uppercase;
+}
+
+#kanban .kanban-agil-tarefa-sombra {
+    background-color: #ffffff;
+}
+
+i.fa-paperclip {
+    color: #c7cbbc;
+}
+
+.no-data-to-display {
+    text-align: center;
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.form-control {
+    display: inline-block;
+    width: 200px;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-right: 10px;
+}

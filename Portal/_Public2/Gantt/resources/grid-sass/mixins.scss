@@ -1,0 +1,67 @@
+//region Flex mixins
+
+@mixin display-flex() {
+    //display : -webkit-box; /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    //display : -ms-flexbox; /* TWEENER - IE 10 */
+    //display : -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display : flex;
+}
+
+@mixin display-inline-flex() {
+    //display : -webkit-inline-box;
+    //display : -webkit-inline-flex;
+    //display : -ms-inline-flexbox;
+    display : inline-flex;
+}
+
+@mixin flex-direction-column() {
+    //-webkit-box-orient     : vertical;
+    //-webkit-box-direction  : normal;
+    //-webkit-flex-direction : column;
+    //-ms-flex-direction     : column;
+    flex-direction         : column;
+}
+
+@mixin flex-direction-row() {
+    //-webkit-box-orient     : horizontal;
+    //-webkit-box-direction  : normal;
+    //-webkit-flex-direction : row;
+    //-ms-flex-direction     : row;
+    flex-direction         : row;
+}
+
+@mixin align-items($align) {
+    //-webkit-box-align   : $align;
+    //-webkit-align-items : $align;
+    //-ms-flex-align      : $align;
+    align-items         : $align;
+}
+
+@mixin flex($flex) {
+    //-webkit-box-flex : $flex;
+    //-webkit-flex     : $flex;
+    //-ms-flex         : $flex;
+    flex             : $flex;
+}
+
+@mixin justify-content($justify) {
+    //-webkit-box-pack        : $justify;
+    //-webkit-justify-content : $justify;
+   // -ms-flex-pack           : $justify;
+    justify-content         : $justify;
+}
+
+@mixin order($order) {
+    //-ms-order: $order;
+    //-webkit-order: $order;
+    order: $order;
+}
+
+//endregion
+
+@mixin user-select-none() {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

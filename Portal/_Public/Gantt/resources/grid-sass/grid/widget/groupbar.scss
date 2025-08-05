@@ -1,0 +1,63 @@
+.b-groupbar {
+    display             : flex;
+    flex                : 1;
+    align-self          : center;
+    gap                 : 2em;
+    margin-inline-start : .3em;
+    height              : 2.5em;
+
+    .b-chip {
+        position       : relative;
+        padding-block  : 0.5em;
+        padding-inline : 1em;
+        outline        : none !important;
+        cursor         : pointer;
+
+        .b-close-icon {
+            margin-inline-start : 1em;
+        }
+
+        &:not(:last-child):after {
+            content           : "#{ $fa-var-angle-right }";
+            font-family       : $icon-font;
+            font-weight       : $icon-font-weight;
+            font-style        : normal;
+            text-decoration   : none;
+            position          : absolute;
+            right             : -1.25em;
+        }
+
+        .b-rtl &:not(:last-child):after {
+            content           : "#{ $fa-var-angle-left }";
+            right             : unset;
+            left              : -1.25em;
+        }
+    }
+
+    &.b-chips-closable .b-chip {
+        padding-inline-end : 0.6em;
+    }
+
+    .b-chip.b-drop-target {
+        width   : 8em;
+        opacity : .5;
+
+        .b-icon {
+            display : none;
+        }
+    }
+}
+
+.b-grid-reordering-columns-with-groupbar.b-grid-header.b-drag-proxy {
+    border-radius  : 1em;
+    min-width      : 10em !important;
+    padding-inline : 1em;
+
+    .b-grid-header-text {
+        padding : 0.5em 0;
+    }
+
+    &, & .b-grid-header-text-content {
+        width : auto !important;
+    }
+}

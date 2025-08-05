@@ -1,0 +1,135 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DetalhesRiscoQuestao.aspx.cs"
+    Inherits="Reunioes_ItensPauta_DetalhesRiscoQuestao" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script src="../../scripts/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="../../scripts/UtilReuniao.js" type="text/javascript"></script>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td style="padding-top: 20px">
+                    <dxwgv:ASPxGridView ID="gvRiscoQuestao" runat="server" AutoGenerateColumns="False"
+                        DataSourceID="dsRiscoQuestao" Width="100%" Font-Size="12pt">
+                        <Columns>
+                            <dxwgv:GridViewDataTextColumn Caption="Responsável" FieldName="NomeUsuarioResponsavel"
+                                VisibleIndex="4" Width="40%">
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <CellStyle HorizontalAlign="Center">
+                                </CellStyle>
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn Caption="Prioridade" FieldName="ProbabilidadePrioridade"
+                                VisibleIndex="6" Width="15%">
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <CellStyle HorizontalAlign="Center">
+                                </CellStyle>
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn Caption="Urgência" FieldName="ImpactoUrgencia" VisibleIndex="5"
+                                Width="15%">
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <CellStyle HorizontalAlign="Center">
+                                </CellStyle>
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataDateColumn Caption="Data Limite" FieldName="DataLimiteResolucao"
+                                VisibleIndex="10" Width="15%">
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <CellStyle HorizontalAlign="Center">
+                                </CellStyle>
+                            </dxwgv:GridViewDataDateColumn>
+                            <dxwgv:GridViewDataImageColumn Caption="Severidade" FieldName="CorRiscoQuestao" VisibleIndex="14"
+                                Width="15%">
+                                <PropertiesImage ImageHeight="20px" ImageUrlFormatString="~/imagens/{0}.gif" ImageWidth="20px">
+                                </PropertiesImage>
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <CellStyle HorizontalAlign="Center">
+                                </CellStyle>
+                            </dxwgv:GridViewDataImageColumn>
+                        </Columns>
+                        <SettingsPager Mode="ShowAllRecords">
+                        </SettingsPager>
+                        <Styles>
+                            <Header Font-Size="12pt">
+                            </Header>
+                            <Cell Font-Size="12pt">
+                            </Cell>
+                        </Styles>
+                    </dxwgv:ASPxGridView>
+                    <asp:SqlDataSource ID="dsRiscoQuestao" runat="server" SelectCommand="p_getDadosRiscoQuestao"
+                        SelectCommandType="StoredProcedure">
+                        <SelectParameters>
+                            <asp:QueryStringParameter Name="CodigoRiscoQuestao" QueryStringField="co" Type="Int32" />
+                        </SelectParameters>
+                    </asp:SqlDataSource>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <dx:ASPxDataView ID="dataView" runat="server" AllowPaging="False" 
+                        DataSourceID="dsRiscoQuestao"  Width="98%">
+                        <ItemTemplate>
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxLabel ID="ASPxLabel5" runat="server" Text="Detalhes" Font-Bold="True"
+                                            Font-Size="12pt">
+                                        </dxe:ASPxLabel>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxMemo ID="ASPxMemo1" runat="server" 
+                                            Font-Size="12pt" Rows="10" Text='<%#Eval("DetalheRiscoQuestao") %>' 
+                                            Width="100%" ReadOnly="True">
+                                        </dxe:ASPxMemo>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxLabel ID="ASPxLabel6" runat="server" Text="Consequências" Font-Bold="True"
+                                            Font-Size="12pt">
+                                        </dxe:ASPxLabel>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxMemo ID="ASPxMemo2" runat="server" 
+                                            Font-Size="12pt" Rows="10" Text='<%#Eval("ConsequenciaRiscoQuestao") %>' 
+                                            Width="100%" ReadOnly="True">
+                                        </dxe:ASPxMemo>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxLabel ID="ASPxLabel7" runat="server" Text="Estratégia para tratamento" Font-Bold="True"
+                                            Font-Size="12pt">
+                                        </dxe:ASPxLabel>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxMemo ID="ASPxMemo3" runat="server" 
+                                            Font-Size="12pt" Rows="10" Text='<%#Eval("TratamentoRiscoQuestao") %>' 
+                                            Width="100%" ReadOnly="True">
+                                        </dxe:ASPxMemo>
+                                    </td>
+                                </tr>
+                            </table>
+                        </ItemTemplate>
+                        <Paddings Padding="0px" />
+                        <ItemStyle>
+                            <Paddings Padding="0px" />
+                        </ItemStyle>
+                        <SettingsTableLayout ColumnCount="1" RowsPerPage="1"/>
+                    </dx:ASPxDataView>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,28 @@
+.b-fill-handle {
+    width           : .8em;
+    height          : .8em;
+    transform       : translate(-50%, -50%);
+    position        : absolute;
+    background      : $grid-cell-focused-outline-color;
+    cursor          : crosshair;
+    border          : 1px solid $grid-background-color;
+    z-index         : 2;
+    background-clip : content-box;
+    user-select    : none;
+    -webkit-user-select : none;
+}
+
+
+.b-fill-selection-border {
+    position            : absolute;
+    border              : $grid-cell-focused-outline-width $grid-cell-focused-outline-style $grid-cell-focused-outline-color;
+    border-radius       : .1em;
+    pointer-events      : none;
+    z-index             : 2;
+    -webkit-user-select : none;
+    user-select         : none;
+}
+
+.b-indicate-crop {
+    opacity : 0.4;
+}

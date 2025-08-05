@@ -1,0 +1,2705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.tasques.com.br/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.tasques.com.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.tasques.com.br/">
+      <s:element name="testeComunicacao">
+        <s:complexType />
+      </s:element>
+      <s:element name="testeComunicacaoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="testeComunicacaoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="testeComunicacaoLista">
+        <s:complexType />
+      </s:element>
+      <s:element name="testeComunicacaoListaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="testeComunicacaoListaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="testeComunicacao2">
+        <s:complexType />
+      </s:element>
+      <s:element name="testeComunicacao2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="testeComunicacao2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CdisSoapHeader" type="tns:CdisSoapHeader" />
+      <s:complexType name="CdisSoapHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Key2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mac" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xml">
+            <s:complexType mixed="true">
+              <s:sequence>
+                <s:any />
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="SystemUser" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SystemPassword" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SystemID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SystemNome" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SystemAnonimo" type="s:boolean" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="getIDSessaoTasques">
+        <s:complexType />
+      </s:element>
+      <s:element name="getIDSessaoTasquesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getIDSessaoTasquesResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getVersaoWS">
+        <s:complexType />
+      </s:element>
+      <s:element name="getVersaoWSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getVersaoWSResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDataAtual">
+        <s:complexType />
+      </s:element>
+      <s:element name="getDataAtualResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getDataAtualResult" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getIDServicoWEB">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nomeProtocolo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getIDServicoWEBResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getIDServicoWEBResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="autenticarUsuarioSistema">
+        <s:complexType />
+      </s:element>
+      <s:element name="autenticarUsuarioSistemaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="autenticarUsuarioSistemaResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getSystemID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nome" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getSystemIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getSystemIDResult" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="nome" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="novoRegistro">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="registro" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="key2" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="novoRegistroResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="novoRegistroResult" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="resultadoRegistro" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEntidadesUsuario">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="where" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEntidadesUsuarioResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getEntidadesUsuarioResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="listaArquivosXmlCronogramasServidor">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="listaArquivosXmlCronogramasServidorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="listaArquivosXmlCronogramasServidorResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getArquivoCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nome" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getArquivoCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getArquivoCronogramaResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="listaCronogramasServidor">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoEntidade" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="listaCronogramasServidorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="listaCronogramasServidorResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getParametros">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoEntidade" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="parametros" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="parametrosIn" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="getParametrosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getParametrosResult" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="parametrosOut" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCalendarioEmpresa">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoEntidade" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="codigoCalendario" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="codigoProjeto" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCalendarioEmpresaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCalendarioEmpresaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCalendarioRecursosCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCalendarioRecursosCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCalendarioRecursosCronogramaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCodigoProjeto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoProjeto" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="codigoEntidade" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCodigoProjetoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCodigoProjetoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPermissoesProjeto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoProjeto" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPermissoesProjetoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getPermissoesProjetoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getInformacoesProjeto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getInformacoesProjetoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getInformacoesProjetoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getInformacoesModelo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoEntidade" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getInformacoesModeloResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getInformacoesModeloResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getLimitesProjeto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoProjeto" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getLimitesProjetoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getLimitesProjetoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getFluxosAlteracaoCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoProjeto" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getFluxosAlteracaoCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getFluxosAlteracaoCronogramaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getMaiorCodigoTarefaProjeto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getMaiorCodigoTarefaProjetoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getMaiorCodigoTarefaProjetoResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTipoTarefaCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoEntidade" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTipoTarefaCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getTipoTarefaCronogramaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTarefasProjeto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTarefasProjetoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getTarefasProjetoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTarefasProjetoTipoTarefaAssociado">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTarefasProjetoTipoTarefaAssociadoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getTarefasProjetoTipoTarefaAssociadoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTarefasExcluidasProjeto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTarefasExcluidasProjetoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getTarefasExcluidasProjetoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTarefasPredecessorasProjeto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTarefasPredecessorasProjetoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getTarefasPredecessorasProjetoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getRecursosCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getRecursosCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getRecursosCronogramaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getRecursosCorporativos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="OcultarRecursoCronograma" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="CodigoEntidade" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Inicio" nillable="true" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="Termino" nillable="true" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getRecursosCorporativosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getRecursosCorporativosResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDisponibilidadeRecursosCorporativos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listaRecursos" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Inicio" nillable="true" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="Termino" nillable="true" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDisponibilidadeRecursosCorporativosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getDisponibilidadeRecursosCorporativosResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAtribuicaoRecursosCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAtribuicaoRecursosCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getAtribuicaoRecursosCronogramaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getLancamentoFinanceiroAtribuicaoRecursosCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="codigoAtribuicao" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getLancamentoFinanceiroAtribuicaoRecursosCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getLancamentoFinanceiroAtribuicaoRecursosCronogramaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getGrupoRecursos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoEntidade" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getGrupoRecursosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getGrupoRecursosResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getInformacoesCronogramaBloqueado">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronograma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getInformacoesCronogramaBloqueadoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getInformacoesCronogramaBloqueadoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="chekoutCronogramaUsuario">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="NomeDoUsuarioQueBloqueou" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="chekoutCronogramaUsuarioResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="chekoutCronogramaUsuarioResult" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="NomeDoUsuarioQueBloqueou" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="chekinCronogramaUsuario">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="chekinCronogramaUsuarioResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="chekinCronogramaUsuarioResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPermissaoLinhaBase">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="codigoProjetoCorporativo" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPermissaoLinhaBaseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getPermissaoLinhaBaseResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="salvarLinhaBase">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UsandoReplanejamento" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="PermissaoLinhaBase" nillable="true" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaProjeto" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="codigoTarefas" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="anotacoes" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="salvarLinhaBaseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="salvarLinhaBaseResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="atualizarModeloCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaProjeto" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nome" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="descricao" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="atualizarModeloCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="atualizarModeloCronogramaResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="excluirModeloCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaProjeto" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="codigoTipoCronograma" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="excluirModeloCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="excluirModeloCronogramaResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execP_AtualizaStatusProjetos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execP_AtualizaStatusProjetosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="execP_AtualizaStatusProjetosResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execP_IniciaFluxos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaProjeto" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="justificativa" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="inicias" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parametros" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execP_IniciaFluxosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="execP_IniciaFluxosResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execP_Crono_ReplicaCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execP_Crono_ReplicaCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="execP_Crono_ReplicaCronogramaResult" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaProjetoReplicado" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execP_Crono_ExcluiCronogramaReplanejamento">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaProjetoReplicado" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="codigoProjeto" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execP_Crono_ExcluiCronogramaReplanejamentoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="execP_Crono_ExcluiCronogramaReplanejamentoResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getArquivoAtzCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CodigoCronogramaProjeto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getArquivoAtzCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getArquivoAtzCronogramaResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="uploadArquivoCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CodigoCronogramaProjeto" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="publicarCronograma" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="conteudoCronograma" type="s:base64Binary" />
+            <s:element minOccurs="1" maxOccurs="1" name="formato" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="importado" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="uploadArquivoCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="uploadArquivoCronogramaResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="DataServidor" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="retorno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="uploadXMLCronograma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CodigoCronogramaProjeto" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="publicarCronograma" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="XmlCronograma">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="formato" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="importado" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="uploadXMLCronogramaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="uploadXMLCronogramaResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="DataServidor" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="retorno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getXMLGantt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlCronograma">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getXMLGanttResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getXMLGanttResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPossiveisCronogramasVinculoExterno">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaContexto" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="codigoEntidade" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPossiveisCronogramasVinculoExternoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getPossiveisCronogramasVinculoExternoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="retorno" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getInfoVinculoExterno">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CodigoCalendario" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="codigoCronogramaExterno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="codigoTarefaExterna" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="indiceTarefaExterna" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="dataRefenciaInicioTarefa" nillable="true" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getInfoVinculoExternoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getInfoVinculoExternoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="retorno" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="testeComunicacaoSoapIn">
+    <wsdl:part name="parameters" element="tns:testeComunicacao" />
+  </wsdl:message>
+  <wsdl:message name="testeComunicacaoSoapOut">
+    <wsdl:part name="parameters" element="tns:testeComunicacaoResponse" />
+  </wsdl:message>
+  <wsdl:message name="testeComunicacaoListaSoapIn">
+    <wsdl:part name="parameters" element="tns:testeComunicacaoLista" />
+  </wsdl:message>
+  <wsdl:message name="testeComunicacaoListaSoapOut">
+    <wsdl:part name="parameters" element="tns:testeComunicacaoListaResponse" />
+  </wsdl:message>
+  <wsdl:message name="testeComunicacao2SoapIn">
+    <wsdl:part name="parameters" element="tns:testeComunicacao2" />
+  </wsdl:message>
+  <wsdl:message name="testeComunicacao2SoapOut">
+    <wsdl:part name="parameters" element="tns:testeComunicacao2Response" />
+  </wsdl:message>
+  <wsdl:message name="testeComunicacao2CdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getIDSessaoTasquesSoapIn">
+    <wsdl:part name="parameters" element="tns:getIDSessaoTasques" />
+  </wsdl:message>
+  <wsdl:message name="getIDSessaoTasquesSoapOut">
+    <wsdl:part name="parameters" element="tns:getIDSessaoTasquesResponse" />
+  </wsdl:message>
+  <wsdl:message name="getIDSessaoTasquesCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getVersaoWSSoapIn">
+    <wsdl:part name="parameters" element="tns:getVersaoWS" />
+  </wsdl:message>
+  <wsdl:message name="getVersaoWSSoapOut">
+    <wsdl:part name="parameters" element="tns:getVersaoWSResponse" />
+  </wsdl:message>
+  <wsdl:message name="getVersaoWSCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getDataAtualSoapIn">
+    <wsdl:part name="parameters" element="tns:getDataAtual" />
+  </wsdl:message>
+  <wsdl:message name="getDataAtualSoapOut">
+    <wsdl:part name="parameters" element="tns:getDataAtualResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDataAtualCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getIDServicoWEBSoapIn">
+    <wsdl:part name="parameters" element="tns:getIDServicoWEB" />
+  </wsdl:message>
+  <wsdl:message name="getIDServicoWEBSoapOut">
+    <wsdl:part name="parameters" element="tns:getIDServicoWEBResponse" />
+  </wsdl:message>
+  <wsdl:message name="getIDServicoWEBCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="autenticarUsuarioSistemaSoapIn">
+    <wsdl:part name="parameters" element="tns:autenticarUsuarioSistema" />
+  </wsdl:message>
+  <wsdl:message name="autenticarUsuarioSistemaSoapOut">
+    <wsdl:part name="parameters" element="tns:autenticarUsuarioSistemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="autenticarUsuarioSistemaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getSystemIDSoapIn">
+    <wsdl:part name="parameters" element="tns:getSystemID" />
+  </wsdl:message>
+  <wsdl:message name="getSystemIDSoapOut">
+    <wsdl:part name="parameters" element="tns:getSystemIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="getSystemIDCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="novoRegistroSoapIn">
+    <wsdl:part name="parameters" element="tns:novoRegistro" />
+  </wsdl:message>
+  <wsdl:message name="novoRegistroSoapOut">
+    <wsdl:part name="parameters" element="tns:novoRegistroResponse" />
+  </wsdl:message>
+  <wsdl:message name="novoRegistroCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getEntidadesUsuarioSoapIn">
+    <wsdl:part name="parameters" element="tns:getEntidadesUsuario" />
+  </wsdl:message>
+  <wsdl:message name="getEntidadesUsuarioSoapOut">
+    <wsdl:part name="parameters" element="tns:getEntidadesUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="getEntidadesUsuarioCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="listaArquivosXmlCronogramasServidorSoapIn">
+    <wsdl:part name="parameters" element="tns:listaArquivosXmlCronogramasServidor" />
+  </wsdl:message>
+  <wsdl:message name="listaArquivosXmlCronogramasServidorSoapOut">
+    <wsdl:part name="parameters" element="tns:listaArquivosXmlCronogramasServidorResponse" />
+  </wsdl:message>
+  <wsdl:message name="listaArquivosXmlCronogramasServidorCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getArquivoCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:getArquivoCronograma" />
+  </wsdl:message>
+  <wsdl:message name="getArquivoCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:getArquivoCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getArquivoCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="listaCronogramasServidorSoapIn">
+    <wsdl:part name="parameters" element="tns:listaCronogramasServidor" />
+  </wsdl:message>
+  <wsdl:message name="listaCronogramasServidorSoapOut">
+    <wsdl:part name="parameters" element="tns:listaCronogramasServidorResponse" />
+  </wsdl:message>
+  <wsdl:message name="listaCronogramasServidorCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getParametrosSoapIn">
+    <wsdl:part name="parameters" element="tns:getParametros" />
+  </wsdl:message>
+  <wsdl:message name="getParametrosSoapOut">
+    <wsdl:part name="parameters" element="tns:getParametrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="getParametrosCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getCalendarioEmpresaSoapIn">
+    <wsdl:part name="parameters" element="tns:getCalendarioEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="getCalendarioEmpresaSoapOut">
+    <wsdl:part name="parameters" element="tns:getCalendarioEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCalendarioEmpresaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getCalendarioRecursosCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:getCalendarioRecursosCronograma" />
+  </wsdl:message>
+  <wsdl:message name="getCalendarioRecursosCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:getCalendarioRecursosCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCalendarioRecursosCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getCodigoProjetoSoapIn">
+    <wsdl:part name="parameters" element="tns:getCodigoProjeto" />
+  </wsdl:message>
+  <wsdl:message name="getCodigoProjetoSoapOut">
+    <wsdl:part name="parameters" element="tns:getCodigoProjetoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCodigoProjetoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getPermissoesProjetoSoapIn">
+    <wsdl:part name="parameters" element="tns:getPermissoesProjeto" />
+  </wsdl:message>
+  <wsdl:message name="getPermissoesProjetoSoapOut">
+    <wsdl:part name="parameters" element="tns:getPermissoesProjetoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPermissoesProjetoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getInformacoesProjetoSoapIn">
+    <wsdl:part name="parameters" element="tns:getInformacoesProjeto" />
+  </wsdl:message>
+  <wsdl:message name="getInformacoesProjetoSoapOut">
+    <wsdl:part name="parameters" element="tns:getInformacoesProjetoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getInformacoesProjetoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getInformacoesModeloSoapIn">
+    <wsdl:part name="parameters" element="tns:getInformacoesModelo" />
+  </wsdl:message>
+  <wsdl:message name="getInformacoesModeloSoapOut">
+    <wsdl:part name="parameters" element="tns:getInformacoesModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="getInformacoesModeloCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getLimitesProjetoSoapIn">
+    <wsdl:part name="parameters" element="tns:getLimitesProjeto" />
+  </wsdl:message>
+  <wsdl:message name="getLimitesProjetoSoapOut">
+    <wsdl:part name="parameters" element="tns:getLimitesProjetoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getLimitesProjetoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getFluxosAlteracaoCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:getFluxosAlteracaoCronograma" />
+  </wsdl:message>
+  <wsdl:message name="getFluxosAlteracaoCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:getFluxosAlteracaoCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getFluxosAlteracaoCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getMaiorCodigoTarefaProjetoSoapIn">
+    <wsdl:part name="parameters" element="tns:getMaiorCodigoTarefaProjeto" />
+  </wsdl:message>
+  <wsdl:message name="getMaiorCodigoTarefaProjetoSoapOut">
+    <wsdl:part name="parameters" element="tns:getMaiorCodigoTarefaProjetoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getMaiorCodigoTarefaProjetoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getTipoTarefaCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:getTipoTarefaCronograma" />
+  </wsdl:message>
+  <wsdl:message name="getTipoTarefaCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:getTipoTarefaCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getTipoTarefaCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasProjetoSoapIn">
+    <wsdl:part name="parameters" element="tns:getTarefasProjeto" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasProjetoSoapOut">
+    <wsdl:part name="parameters" element="tns:getTarefasProjetoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasProjetoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasProjetoTipoTarefaAssociadoSoapIn">
+    <wsdl:part name="parameters" element="tns:getTarefasProjetoTipoTarefaAssociado" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasProjetoTipoTarefaAssociadoSoapOut">
+    <wsdl:part name="parameters" element="tns:getTarefasProjetoTipoTarefaAssociadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasProjetoTipoTarefaAssociadoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasExcluidasProjetoSoapIn">
+    <wsdl:part name="parameters" element="tns:getTarefasExcluidasProjeto" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasExcluidasProjetoSoapOut">
+    <wsdl:part name="parameters" element="tns:getTarefasExcluidasProjetoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasExcluidasProjetoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasPredecessorasProjetoSoapIn">
+    <wsdl:part name="parameters" element="tns:getTarefasPredecessorasProjeto" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasPredecessorasProjetoSoapOut">
+    <wsdl:part name="parameters" element="tns:getTarefasPredecessorasProjetoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getTarefasPredecessorasProjetoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getRecursosCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:getRecursosCronograma" />
+  </wsdl:message>
+  <wsdl:message name="getRecursosCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:getRecursosCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getRecursosCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getRecursosCorporativosSoapIn">
+    <wsdl:part name="parameters" element="tns:getRecursosCorporativos" />
+  </wsdl:message>
+  <wsdl:message name="getRecursosCorporativosSoapOut">
+    <wsdl:part name="parameters" element="tns:getRecursosCorporativosResponse" />
+  </wsdl:message>
+  <wsdl:message name="getRecursosCorporativosCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getDisponibilidadeRecursosCorporativosSoapIn">
+    <wsdl:part name="parameters" element="tns:getDisponibilidadeRecursosCorporativos" />
+  </wsdl:message>
+  <wsdl:message name="getDisponibilidadeRecursosCorporativosSoapOut">
+    <wsdl:part name="parameters" element="tns:getDisponibilidadeRecursosCorporativosResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDisponibilidadeRecursosCorporativosCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getAtribuicaoRecursosCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:getAtribuicaoRecursosCronograma" />
+  </wsdl:message>
+  <wsdl:message name="getAtribuicaoRecursosCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:getAtribuicaoRecursosCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAtribuicaoRecursosCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getLancamentoFinanceiroAtribuicaoRecursosCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:getLancamentoFinanceiroAtribuicaoRecursosCronograma" />
+  </wsdl:message>
+  <wsdl:message name="getLancamentoFinanceiroAtribuicaoRecursosCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:getLancamentoFinanceiroAtribuicaoRecursosCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getLancamentoFinanceiroAtribuicaoRecursosCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGrupoRecursosSoapIn">
+    <wsdl:part name="parameters" element="tns:getGrupoRecursos" />
+  </wsdl:message>
+  <wsdl:message name="getGrupoRecursosSoapOut">
+    <wsdl:part name="parameters" element="tns:getGrupoRecursosResponse" />
+  </wsdl:message>
+  <wsdl:message name="getGrupoRecursosCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getInformacoesCronogramaBloqueadoSoapIn">
+    <wsdl:part name="parameters" element="tns:getInformacoesCronogramaBloqueado" />
+  </wsdl:message>
+  <wsdl:message name="getInformacoesCronogramaBloqueadoSoapOut">
+    <wsdl:part name="parameters" element="tns:getInformacoesCronogramaBloqueadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getInformacoesCronogramaBloqueadoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="chekoutCronogramaUsuarioSoapIn">
+    <wsdl:part name="parameters" element="tns:chekoutCronogramaUsuario" />
+  </wsdl:message>
+  <wsdl:message name="chekoutCronogramaUsuarioSoapOut">
+    <wsdl:part name="parameters" element="tns:chekoutCronogramaUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="chekoutCronogramaUsuarioCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="chekinCronogramaUsuarioSoapIn">
+    <wsdl:part name="parameters" element="tns:chekinCronogramaUsuario" />
+  </wsdl:message>
+  <wsdl:message name="chekinCronogramaUsuarioSoapOut">
+    <wsdl:part name="parameters" element="tns:chekinCronogramaUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="chekinCronogramaUsuarioCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getPermissaoLinhaBaseSoapIn">
+    <wsdl:part name="parameters" element="tns:getPermissaoLinhaBase" />
+  </wsdl:message>
+  <wsdl:message name="getPermissaoLinhaBaseSoapOut">
+    <wsdl:part name="parameters" element="tns:getPermissaoLinhaBaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPermissaoLinhaBaseCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="salvarLinhaBaseSoapIn">
+    <wsdl:part name="parameters" element="tns:salvarLinhaBase" />
+  </wsdl:message>
+  <wsdl:message name="salvarLinhaBaseSoapOut">
+    <wsdl:part name="parameters" element="tns:salvarLinhaBaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="salvarLinhaBaseCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="atualizarModeloCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:atualizarModeloCronograma" />
+  </wsdl:message>
+  <wsdl:message name="atualizarModeloCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:atualizarModeloCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="atualizarModeloCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="excluirModeloCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:excluirModeloCronograma" />
+  </wsdl:message>
+  <wsdl:message name="excluirModeloCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:excluirModeloCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="excluirModeloCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="execP_AtualizaStatusProjetosSoapIn">
+    <wsdl:part name="parameters" element="tns:execP_AtualizaStatusProjetos" />
+  </wsdl:message>
+  <wsdl:message name="execP_AtualizaStatusProjetosSoapOut">
+    <wsdl:part name="parameters" element="tns:execP_AtualizaStatusProjetosResponse" />
+  </wsdl:message>
+  <wsdl:message name="execP_AtualizaStatusProjetosCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="execP_IniciaFluxosSoapIn">
+    <wsdl:part name="parameters" element="tns:execP_IniciaFluxos" />
+  </wsdl:message>
+  <wsdl:message name="execP_IniciaFluxosSoapOut">
+    <wsdl:part name="parameters" element="tns:execP_IniciaFluxosResponse" />
+  </wsdl:message>
+  <wsdl:message name="execP_IniciaFluxosCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="execP_Crono_ReplicaCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:execP_Crono_ReplicaCronograma" />
+  </wsdl:message>
+  <wsdl:message name="execP_Crono_ReplicaCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:execP_Crono_ReplicaCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="execP_Crono_ReplicaCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="execP_Crono_ExcluiCronogramaReplanejamentoSoapIn">
+    <wsdl:part name="parameters" element="tns:execP_Crono_ExcluiCronogramaReplanejamento" />
+  </wsdl:message>
+  <wsdl:message name="execP_Crono_ExcluiCronogramaReplanejamentoSoapOut">
+    <wsdl:part name="parameters" element="tns:execP_Crono_ExcluiCronogramaReplanejamentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="execP_Crono_ExcluiCronogramaReplanejamentoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getArquivoAtzCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:getArquivoAtzCronograma" />
+  </wsdl:message>
+  <wsdl:message name="getArquivoAtzCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:getArquivoAtzCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getArquivoAtzCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="uploadArquivoCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:uploadArquivoCronograma" />
+  </wsdl:message>
+  <wsdl:message name="uploadArquivoCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:uploadArquivoCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="uploadArquivoCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="uploadXMLCronogramaSoapIn">
+    <wsdl:part name="parameters" element="tns:uploadXMLCronograma" />
+  </wsdl:message>
+  <wsdl:message name="uploadXMLCronogramaSoapOut">
+    <wsdl:part name="parameters" element="tns:uploadXMLCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="uploadXMLCronogramaCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getXMLGanttSoapIn">
+    <wsdl:part name="parameters" element="tns:getXMLGantt" />
+  </wsdl:message>
+  <wsdl:message name="getXMLGanttSoapOut">
+    <wsdl:part name="parameters" element="tns:getXMLGanttResponse" />
+  </wsdl:message>
+  <wsdl:message name="getXMLGanttCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getPossiveisCronogramasVinculoExternoSoapIn">
+    <wsdl:part name="parameters" element="tns:getPossiveisCronogramasVinculoExterno" />
+  </wsdl:message>
+  <wsdl:message name="getPossiveisCronogramasVinculoExternoSoapOut">
+    <wsdl:part name="parameters" element="tns:getPossiveisCronogramasVinculoExternoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPossiveisCronogramasVinculoExternoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getInfoVinculoExternoSoapIn">
+    <wsdl:part name="parameters" element="tns:getInfoVinculoExterno" />
+  </wsdl:message>
+  <wsdl:message name="getInfoVinculoExternoSoapOut">
+    <wsdl:part name="parameters" element="tns:getInfoVinculoExternoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getInfoVinculoExternoCdisSoapHeader">
+    <wsdl:part name="CdisSoapHeader" element="tns:CdisSoapHeader" />
+  </wsdl:message>
+  <wsdl:portType name="wsTasquesregSoap">
+    <wsdl:operation name="testeComunicacao">
+      <wsdl:input message="tns:testeComunicacaoSoapIn" />
+      <wsdl:output message="tns:testeComunicacaoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="testeComunicacaoLista">
+      <wsdl:input message="tns:testeComunicacaoListaSoapIn" />
+      <wsdl:output message="tns:testeComunicacaoListaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="testeComunicacao2">
+      <wsdl:input message="tns:testeComunicacao2SoapIn" />
+      <wsdl:output message="tns:testeComunicacao2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getIDSessaoTasques">
+      <wsdl:input message="tns:getIDSessaoTasquesSoapIn" />
+      <wsdl:output message="tns:getIDSessaoTasquesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getVersaoWS">
+      <wsdl:input message="tns:getVersaoWSSoapIn" />
+      <wsdl:output message="tns:getVersaoWSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDataAtual">
+      <wsdl:input message="tns:getDataAtualSoapIn" />
+      <wsdl:output message="tns:getDataAtualSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getIDServicoWEB">
+      <wsdl:input message="tns:getIDServicoWEBSoapIn" />
+      <wsdl:output message="tns:getIDServicoWEBSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="autenticarUsuarioSistema">
+      <wsdl:input message="tns:autenticarUsuarioSistemaSoapIn" />
+      <wsdl:output message="tns:autenticarUsuarioSistemaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSystemID">
+      <wsdl:input message="tns:getSystemIDSoapIn" />
+      <wsdl:output message="tns:getSystemIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="novoRegistro">
+      <wsdl:input message="tns:novoRegistroSoapIn" />
+      <wsdl:output message="tns:novoRegistroSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getEntidadesUsuario">
+      <wsdl:input message="tns:getEntidadesUsuarioSoapIn" />
+      <wsdl:output message="tns:getEntidadesUsuarioSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="listaArquivosXmlCronogramasServidor">
+      <wsdl:input message="tns:listaArquivosXmlCronogramasServidorSoapIn" />
+      <wsdl:output message="tns:listaArquivosXmlCronogramasServidorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getArquivoCronograma">
+      <wsdl:input message="tns:getArquivoCronogramaSoapIn" />
+      <wsdl:output message="tns:getArquivoCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="listaCronogramasServidor">
+      <wsdl:input message="tns:listaCronogramasServidorSoapIn" />
+      <wsdl:output message="tns:listaCronogramasServidorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getParametros">
+      <wsdl:input message="tns:getParametrosSoapIn" />
+      <wsdl:output message="tns:getParametrosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCalendarioEmpresa">
+      <wsdl:input message="tns:getCalendarioEmpresaSoapIn" />
+      <wsdl:output message="tns:getCalendarioEmpresaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCalendarioRecursosCronograma">
+      <wsdl:input message="tns:getCalendarioRecursosCronogramaSoapIn" />
+      <wsdl:output message="tns:getCalendarioRecursosCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCodigoProjeto">
+      <wsdl:input message="tns:getCodigoProjetoSoapIn" />
+      <wsdl:output message="tns:getCodigoProjetoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPermissoesProjeto">
+      <wsdl:input message="tns:getPermissoesProjetoSoapIn" />
+      <wsdl:output message="tns:getPermissoesProjetoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getInformacoesProjeto">
+      <wsdl:input message="tns:getInformacoesProjetoSoapIn" />
+      <wsdl:output message="tns:getInformacoesProjetoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getInformacoesModelo">
+      <wsdl:input message="tns:getInformacoesModeloSoapIn" />
+      <wsdl:output message="tns:getInformacoesModeloSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLimitesProjeto">
+      <wsdl:input message="tns:getLimitesProjetoSoapIn" />
+      <wsdl:output message="tns:getLimitesProjetoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getFluxosAlteracaoCronograma">
+      <wsdl:input message="tns:getFluxosAlteracaoCronogramaSoapIn" />
+      <wsdl:output message="tns:getFluxosAlteracaoCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getMaiorCodigoTarefaProjeto">
+      <wsdl:input message="tns:getMaiorCodigoTarefaProjetoSoapIn" />
+      <wsdl:output message="tns:getMaiorCodigoTarefaProjetoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getTipoTarefaCronograma">
+      <wsdl:input message="tns:getTipoTarefaCronogramaSoapIn" />
+      <wsdl:output message="tns:getTipoTarefaCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasProjeto">
+      <wsdl:input message="tns:getTarefasProjetoSoapIn" />
+      <wsdl:output message="tns:getTarefasProjetoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasProjetoTipoTarefaAssociado">
+      <wsdl:input message="tns:getTarefasProjetoTipoTarefaAssociadoSoapIn" />
+      <wsdl:output message="tns:getTarefasProjetoTipoTarefaAssociadoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasExcluidasProjeto">
+      <wsdl:input message="tns:getTarefasExcluidasProjetoSoapIn" />
+      <wsdl:output message="tns:getTarefasExcluidasProjetoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasPredecessorasProjeto">
+      <wsdl:input message="tns:getTarefasPredecessorasProjetoSoapIn" />
+      <wsdl:output message="tns:getTarefasPredecessorasProjetoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getRecursosCronograma">
+      <wsdl:input message="tns:getRecursosCronogramaSoapIn" />
+      <wsdl:output message="tns:getRecursosCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getRecursosCorporativos">
+      <wsdl:input message="tns:getRecursosCorporativosSoapIn" />
+      <wsdl:output message="tns:getRecursosCorporativosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDisponibilidadeRecursosCorporativos">
+      <wsdl:input message="tns:getDisponibilidadeRecursosCorporativosSoapIn" />
+      <wsdl:output message="tns:getDisponibilidadeRecursosCorporativosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAtribuicaoRecursosCronograma">
+      <wsdl:input message="tns:getAtribuicaoRecursosCronogramaSoapIn" />
+      <wsdl:output message="tns:getAtribuicaoRecursosCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLancamentoFinanceiroAtribuicaoRecursosCronograma">
+      <wsdl:input message="tns:getLancamentoFinanceiroAtribuicaoRecursosCronogramaSoapIn" />
+      <wsdl:output message="tns:getLancamentoFinanceiroAtribuicaoRecursosCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGrupoRecursos">
+      <wsdl:input message="tns:getGrupoRecursosSoapIn" />
+      <wsdl:output message="tns:getGrupoRecursosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getInformacoesCronogramaBloqueado">
+      <wsdl:input message="tns:getInformacoesCronogramaBloqueadoSoapIn" />
+      <wsdl:output message="tns:getInformacoesCronogramaBloqueadoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="chekoutCronogramaUsuario">
+      <wsdl:input message="tns:chekoutCronogramaUsuarioSoapIn" />
+      <wsdl:output message="tns:chekoutCronogramaUsuarioSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="chekinCronogramaUsuario">
+      <wsdl:input message="tns:chekinCronogramaUsuarioSoapIn" />
+      <wsdl:output message="tns:chekinCronogramaUsuarioSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPermissaoLinhaBase">
+      <wsdl:input message="tns:getPermissaoLinhaBaseSoapIn" />
+      <wsdl:output message="tns:getPermissaoLinhaBaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="salvarLinhaBase">
+      <wsdl:input message="tns:salvarLinhaBaseSoapIn" />
+      <wsdl:output message="tns:salvarLinhaBaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="atualizarModeloCronograma">
+      <wsdl:input message="tns:atualizarModeloCronogramaSoapIn" />
+      <wsdl:output message="tns:atualizarModeloCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="excluirModeloCronograma">
+      <wsdl:input message="tns:excluirModeloCronogramaSoapIn" />
+      <wsdl:output message="tns:excluirModeloCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="execP_AtualizaStatusProjetos">
+      <wsdl:input message="tns:execP_AtualizaStatusProjetosSoapIn" />
+      <wsdl:output message="tns:execP_AtualizaStatusProjetosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="execP_IniciaFluxos">
+      <wsdl:input message="tns:execP_IniciaFluxosSoapIn" />
+      <wsdl:output message="tns:execP_IniciaFluxosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="execP_Crono_ReplicaCronograma">
+      <wsdl:input message="tns:execP_Crono_ReplicaCronogramaSoapIn" />
+      <wsdl:output message="tns:execP_Crono_ReplicaCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="execP_Crono_ExcluiCronogramaReplanejamento">
+      <wsdl:input message="tns:execP_Crono_ExcluiCronogramaReplanejamentoSoapIn" />
+      <wsdl:output message="tns:execP_Crono_ExcluiCronogramaReplanejamentoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getArquivoAtzCronograma">
+      <wsdl:input message="tns:getArquivoAtzCronogramaSoapIn" />
+      <wsdl:output message="tns:getArquivoAtzCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="uploadArquivoCronograma">
+      <wsdl:input message="tns:uploadArquivoCronogramaSoapIn" />
+      <wsdl:output message="tns:uploadArquivoCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="uploadXMLCronograma">
+      <wsdl:input message="tns:uploadXMLCronogramaSoapIn" />
+      <wsdl:output message="tns:uploadXMLCronogramaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getXMLGantt">
+      <wsdl:input message="tns:getXMLGanttSoapIn" />
+      <wsdl:output message="tns:getXMLGanttSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPossiveisCronogramasVinculoExterno">
+      <wsdl:input message="tns:getPossiveisCronogramasVinculoExternoSoapIn" />
+      <wsdl:output message="tns:getPossiveisCronogramasVinculoExternoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getInfoVinculoExterno">
+      <wsdl:input message="tns:getInfoVinculoExternoSoapIn" />
+      <wsdl:output message="tns:getInfoVinculoExternoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wsTasquesregSoap" type="tns:wsTasquesregSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="testeComunicacao">
+      <soap:operation soapAction="http://www.tasques.com.br/testeComunicacao" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testeComunicacaoLista">
+      <soap:operation soapAction="http://www.tasques.com.br/testeComunicacaoLista" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testeComunicacao2">
+      <soap:operation soapAction="http://www.tasques.com.br/testeComunicacao2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:testeComunicacao2CdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIDSessaoTasques">
+      <soap:operation soapAction="http://www.tasques.com.br/getIDSessaoTasques" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getIDSessaoTasquesCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVersaoWS">
+      <soap:operation soapAction="http://www.tasques.com.br/getVersaoWS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getVersaoWSCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDataAtual">
+      <soap:operation soapAction="http://www.tasques.com.br/getDataAtual" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getDataAtualCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIDServicoWEB">
+      <soap:operation soapAction="http://www.tasques.com.br/getIDServicoWEB" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getIDServicoWEBCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="autenticarUsuarioSistema">
+      <soap:operation soapAction="http://www.tasques.com.br/autenticarUsuarioSistema" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:autenticarUsuarioSistemaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSystemID">
+      <soap:operation soapAction="http://www.tasques.com.br/getSystemID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getSystemIDCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="novoRegistro">
+      <soap:operation soapAction="http://www.tasques.com.br/novoRegistro" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:novoRegistroCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEntidadesUsuario">
+      <soap:operation soapAction="http://www.tasques.com.br/getEntidadesUsuario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getEntidadesUsuarioCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listaArquivosXmlCronogramasServidor">
+      <soap:operation soapAction="http://www.tasques.com.br/listaArquivosXmlCronogramasServidor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:listaArquivosXmlCronogramasServidorCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArquivoCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/getArquivoCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getArquivoCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listaCronogramasServidor">
+      <soap:operation soapAction="http://www.tasques.com.br/listaCronogramasServidor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:listaCronogramasServidorCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getParametros">
+      <soap:operation soapAction="http://www.tasques.com.br/getParametros" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getParametrosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCalendarioEmpresa">
+      <soap:operation soapAction="http://www.tasques.com.br/getCalendarioEmpresa" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getCalendarioEmpresaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCalendarioRecursosCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/getCalendarioRecursosCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getCalendarioRecursosCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCodigoProjeto">
+      <soap:operation soapAction="http://www.tasques.com.br/getCodigoProjeto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getCodigoProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPermissoesProjeto">
+      <soap:operation soapAction="http://www.tasques.com.br/getPermissoesProjeto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getPermissoesProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInformacoesProjeto">
+      <soap:operation soapAction="http://www.tasques.com.br/getInformacoesProjeto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getInformacoesProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInformacoesModelo">
+      <soap:operation soapAction="http://www.tasques.com.br/getInformacoesModelo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getInformacoesModeloCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLimitesProjeto">
+      <soap:operation soapAction="http://www.tasques.com.br/getLimitesProjeto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getLimitesProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFluxosAlteracaoCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/getFluxosAlteracaoCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getFluxosAlteracaoCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMaiorCodigoTarefaProjeto">
+      <soap:operation soapAction="http://www.tasques.com.br/getMaiorCodigoTarefaProjeto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getMaiorCodigoTarefaProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTipoTarefaCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/getTipoTarefaCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getTipoTarefaCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasProjeto">
+      <soap:operation soapAction="http://www.tasques.com.br/getTarefasProjeto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getTarefasProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasProjetoTipoTarefaAssociado">
+      <soap:operation soapAction="http://www.tasques.com.br/getTarefasProjetoTipoTarefaAssociado" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getTarefasProjetoTipoTarefaAssociadoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasExcluidasProjeto">
+      <soap:operation soapAction="http://www.tasques.com.br/getTarefasExcluidasProjeto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getTarefasExcluidasProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasPredecessorasProjeto">
+      <soap:operation soapAction="http://www.tasques.com.br/getTarefasPredecessorasProjeto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getTarefasPredecessorasProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRecursosCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/getRecursosCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getRecursosCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRecursosCorporativos">
+      <soap:operation soapAction="http://www.tasques.com.br/getRecursosCorporativos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getRecursosCorporativosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDisponibilidadeRecursosCorporativos">
+      <soap:operation soapAction="http://www.tasques.com.br/getDisponibilidadeRecursosCorporativos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getDisponibilidadeRecursosCorporativosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAtribuicaoRecursosCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/getAtribuicaoRecursosCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getAtribuicaoRecursosCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLancamentoFinanceiroAtribuicaoRecursosCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/getLancamentoFinanceiroAtribuicaoRecursosCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getLancamentoFinanceiroAtribuicaoRecursosCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGrupoRecursos">
+      <soap:operation soapAction="http://www.tasques.com.br/getGrupoRecursos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getGrupoRecursosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInformacoesCronogramaBloqueado">
+      <soap:operation soapAction="http://www.tasques.com.br/getInformacoesCronogramaBloqueado" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getInformacoesCronogramaBloqueadoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chekoutCronogramaUsuario">
+      <soap:operation soapAction="http://www.tasques.com.br/chekoutCronogramaUsuario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:chekoutCronogramaUsuarioCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chekinCronogramaUsuario">
+      <soap:operation soapAction="http://www.tasques.com.br/chekinCronogramaUsuario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:chekinCronogramaUsuarioCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPermissaoLinhaBase">
+      <soap:operation soapAction="http://www.tasques.com.br/getPermissaoLinhaBase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getPermissaoLinhaBaseCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="salvarLinhaBase">
+      <soap:operation soapAction="http://www.tasques.com.br/salvarLinhaBase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:salvarLinhaBaseCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="atualizarModeloCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/atualizarModeloCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:atualizarModeloCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="excluirModeloCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/excluirModeloCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:excluirModeloCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execP_AtualizaStatusProjetos">
+      <soap:operation soapAction="http://www.tasques.com.br/execP_AtualizaStatusProjetos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:execP_AtualizaStatusProjetosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execP_IniciaFluxos">
+      <soap:operation soapAction="http://www.tasques.com.br/execP_IniciaFluxos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:execP_IniciaFluxosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execP_Crono_ReplicaCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/execP_Crono_ReplicaCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:execP_Crono_ReplicaCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execP_Crono_ExcluiCronogramaReplanejamento">
+      <soap:operation soapAction="http://www.tasques.com.br/execP_Crono_ExcluiCronogramaReplanejamento" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:execP_Crono_ExcluiCronogramaReplanejamentoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArquivoAtzCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/getArquivoAtzCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getArquivoAtzCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadArquivoCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/uploadArquivoCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:uploadArquivoCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadXMLCronograma">
+      <soap:operation soapAction="http://www.tasques.com.br/uploadXMLCronograma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:uploadXMLCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXMLGantt">
+      <soap:operation soapAction="http://www.tasques.com.br/getXMLGantt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getXMLGanttCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPossiveisCronogramasVinculoExterno">
+      <soap:operation soapAction="http://www.tasques.com.br/getPossiveisCronogramasVinculoExterno" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getPossiveisCronogramasVinculoExternoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInfoVinculoExterno">
+      <soap:operation soapAction="http://www.tasques.com.br/getInfoVinculoExterno" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getInfoVinculoExternoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsTasquesregSoap12" type="tns:wsTasquesregSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="testeComunicacao">
+      <soap12:operation soapAction="http://www.tasques.com.br/testeComunicacao" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testeComunicacaoLista">
+      <soap12:operation soapAction="http://www.tasques.com.br/testeComunicacaoLista" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testeComunicacao2">
+      <soap12:operation soapAction="http://www.tasques.com.br/testeComunicacao2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:testeComunicacao2CdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIDSessaoTasques">
+      <soap12:operation soapAction="http://www.tasques.com.br/getIDSessaoTasques" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getIDSessaoTasquesCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVersaoWS">
+      <soap12:operation soapAction="http://www.tasques.com.br/getVersaoWS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getVersaoWSCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDataAtual">
+      <soap12:operation soapAction="http://www.tasques.com.br/getDataAtual" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getDataAtualCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIDServicoWEB">
+      <soap12:operation soapAction="http://www.tasques.com.br/getIDServicoWEB" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getIDServicoWEBCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="autenticarUsuarioSistema">
+      <soap12:operation soapAction="http://www.tasques.com.br/autenticarUsuarioSistema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:autenticarUsuarioSistemaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSystemID">
+      <soap12:operation soapAction="http://www.tasques.com.br/getSystemID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getSystemIDCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="novoRegistro">
+      <soap12:operation soapAction="http://www.tasques.com.br/novoRegistro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:novoRegistroCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEntidadesUsuario">
+      <soap12:operation soapAction="http://www.tasques.com.br/getEntidadesUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getEntidadesUsuarioCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listaArquivosXmlCronogramasServidor">
+      <soap12:operation soapAction="http://www.tasques.com.br/listaArquivosXmlCronogramasServidor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:listaArquivosXmlCronogramasServidorCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArquivoCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/getArquivoCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getArquivoCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listaCronogramasServidor">
+      <soap12:operation soapAction="http://www.tasques.com.br/listaCronogramasServidor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:listaCronogramasServidorCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getParametros">
+      <soap12:operation soapAction="http://www.tasques.com.br/getParametros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getParametrosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCalendarioEmpresa">
+      <soap12:operation soapAction="http://www.tasques.com.br/getCalendarioEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getCalendarioEmpresaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCalendarioRecursosCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/getCalendarioRecursosCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getCalendarioRecursosCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCodigoProjeto">
+      <soap12:operation soapAction="http://www.tasques.com.br/getCodigoProjeto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getCodigoProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPermissoesProjeto">
+      <soap12:operation soapAction="http://www.tasques.com.br/getPermissoesProjeto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getPermissoesProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInformacoesProjeto">
+      <soap12:operation soapAction="http://www.tasques.com.br/getInformacoesProjeto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getInformacoesProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInformacoesModelo">
+      <soap12:operation soapAction="http://www.tasques.com.br/getInformacoesModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getInformacoesModeloCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLimitesProjeto">
+      <soap12:operation soapAction="http://www.tasques.com.br/getLimitesProjeto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getLimitesProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFluxosAlteracaoCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/getFluxosAlteracaoCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getFluxosAlteracaoCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMaiorCodigoTarefaProjeto">
+      <soap12:operation soapAction="http://www.tasques.com.br/getMaiorCodigoTarefaProjeto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getMaiorCodigoTarefaProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTipoTarefaCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/getTipoTarefaCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getTipoTarefaCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasProjeto">
+      <soap12:operation soapAction="http://www.tasques.com.br/getTarefasProjeto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getTarefasProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasProjetoTipoTarefaAssociado">
+      <soap12:operation soapAction="http://www.tasques.com.br/getTarefasProjetoTipoTarefaAssociado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getTarefasProjetoTipoTarefaAssociadoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasExcluidasProjeto">
+      <soap12:operation soapAction="http://www.tasques.com.br/getTarefasExcluidasProjeto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getTarefasExcluidasProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTarefasPredecessorasProjeto">
+      <soap12:operation soapAction="http://www.tasques.com.br/getTarefasPredecessorasProjeto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getTarefasPredecessorasProjetoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRecursosCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/getRecursosCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getRecursosCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRecursosCorporativos">
+      <soap12:operation soapAction="http://www.tasques.com.br/getRecursosCorporativos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getRecursosCorporativosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDisponibilidadeRecursosCorporativos">
+      <soap12:operation soapAction="http://www.tasques.com.br/getDisponibilidadeRecursosCorporativos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getDisponibilidadeRecursosCorporativosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAtribuicaoRecursosCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/getAtribuicaoRecursosCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getAtribuicaoRecursosCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLancamentoFinanceiroAtribuicaoRecursosCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/getLancamentoFinanceiroAtribuicaoRecursosCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getLancamentoFinanceiroAtribuicaoRecursosCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGrupoRecursos">
+      <soap12:operation soapAction="http://www.tasques.com.br/getGrupoRecursos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getGrupoRecursosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInformacoesCronogramaBloqueado">
+      <soap12:operation soapAction="http://www.tasques.com.br/getInformacoesCronogramaBloqueado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getInformacoesCronogramaBloqueadoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chekoutCronogramaUsuario">
+      <soap12:operation soapAction="http://www.tasques.com.br/chekoutCronogramaUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:chekoutCronogramaUsuarioCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chekinCronogramaUsuario">
+      <soap12:operation soapAction="http://www.tasques.com.br/chekinCronogramaUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:chekinCronogramaUsuarioCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPermissaoLinhaBase">
+      <soap12:operation soapAction="http://www.tasques.com.br/getPermissaoLinhaBase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getPermissaoLinhaBaseCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="salvarLinhaBase">
+      <soap12:operation soapAction="http://www.tasques.com.br/salvarLinhaBase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:salvarLinhaBaseCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="atualizarModeloCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/atualizarModeloCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:atualizarModeloCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="excluirModeloCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/excluirModeloCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:excluirModeloCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execP_AtualizaStatusProjetos">
+      <soap12:operation soapAction="http://www.tasques.com.br/execP_AtualizaStatusProjetos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:execP_AtualizaStatusProjetosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execP_IniciaFluxos">
+      <soap12:operation soapAction="http://www.tasques.com.br/execP_IniciaFluxos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:execP_IniciaFluxosCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execP_Crono_ReplicaCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/execP_Crono_ReplicaCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:execP_Crono_ReplicaCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execP_Crono_ExcluiCronogramaReplanejamento">
+      <soap12:operation soapAction="http://www.tasques.com.br/execP_Crono_ExcluiCronogramaReplanejamento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:execP_Crono_ExcluiCronogramaReplanejamentoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArquivoAtzCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/getArquivoAtzCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getArquivoAtzCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadArquivoCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/uploadArquivoCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:uploadArquivoCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadXMLCronograma">
+      <soap12:operation soapAction="http://www.tasques.com.br/uploadXMLCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:uploadXMLCronogramaCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXMLGantt">
+      <soap12:operation soapAction="http://www.tasques.com.br/getXMLGantt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getXMLGanttCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPossiveisCronogramasVinculoExterno">
+      <soap12:operation soapAction="http://www.tasques.com.br/getPossiveisCronogramasVinculoExterno" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getPossiveisCronogramasVinculoExternoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInfoVinculoExterno">
+      <soap12:operation soapAction="http://www.tasques.com.br/getInfoVinculoExterno" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getInfoVinculoExternoCdisSoapHeader" part="CdisSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wsTasquesreg">
+    <wsdl:port name="wsTasquesregSoap" binding="tns:wsTasquesregSoap">
+      <soap:address location="http://localhost:49545/wsTasquesreg.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsTasquesregSoap12" binding="tns:wsTasquesregSoap12">
+      <soap12:address location="http://localhost:49545/wsTasquesreg.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

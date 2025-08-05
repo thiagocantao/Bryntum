@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="tasques" targetNamespace="http://www.tasques.com.br/tasques.xsd" xmlns:mstns="http://www.tasques.com.br/tasques.xsd" xmlns="http://www.tasques.com.br/tasques.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="prod_Tasques_regConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="prod_Tasques_regConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.neTasques.Properties.Settings.GlobalReference.Default.prod_Tasques_regConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="tasques" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="tasques" msprop:Generator_UserDSName="tasques">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Projeto" msprop:Generator_UserTableName="Projeto" msprop:Generator_RowEvArgName="ProjetoRowChangeEvent" msprop:Generator_TableVarName="tableProjeto" msprop:Generator_TablePropName="Projeto" msprop:Generator_RowDeletingName="ProjetoRowDeleting" msprop:Generator_RowChangingName="ProjetoRowChanging" msprop:Generator_RowDeletedName="ProjetoRowDeleted" msprop:Generator_RowEvHandlerName="ProjetoRowChangeEventHandler" msprop:Generator_TableClassName="ProjetoDataTable" msprop:Generator_RowChangedName="ProjetoRowChanged" msprop:Generator_RowClassName="ProjetoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoProjeto" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columncodigoProjeto" msprop:Generator_ColumnPropNameInRow="codigoProjeto" msprop:Generator_ColumnPropNameInTable="codigoProjetoColumn" msprop:Generator_UserColumnName="codigoProjeto" type="xs:string" />
+              <xs:element name="codigoProjetoCorporativo" msprop:Generator_ColumnVarNameInTable="columncodigoProjetoCorporativo" msprop:Generator_ColumnPropNameInRow="codigoProjetoCorporativo" msprop:Generator_ColumnPropNameInTable="codigoProjetoCorporativoColumn" msprop:Generator_UserColumnName="codigoProjetoCorporativo" type="xs:int" minOccurs="0" />
+              <xs:element name="codigoEntidadeCorporativa" msprop:Generator_ColumnVarNameInTable="columncodigoEntidadeCorporativa" msprop:Generator_ColumnPropNameInRow="codigoEntidadeCorporativa" msprop:Generator_ColumnPropNameInTable="codigoEntidadeCorporativaColumn" msprop:Generator_UserColumnName="codigoEntidadeCorporativa" type="xs:int" minOccurs="0" />
+              <xs:element name="codigoGerenteProjetoCorporativo" msprop:Generator_ColumnVarNameInTable="columncodigoGerenteProjetoCorporativo" msprop:Generator_ColumnPropNameInRow="codigoGerenteProjetoCorporativo" msprop:Generator_ColumnPropNameInTable="codigoGerenteProjetoCorporativoColumn" msprop:Generator_UserColumnName="codigoGerenteProjetoCorporativo" type="xs:int" minOccurs="0" />
+              <xs:element name="nomeProjeto" msprop:Generator_ColumnVarNameInTable="columnnomeProjeto" msprop:Generator_ColumnPropNameInRow="nomeProjeto" msprop:Generator_ColumnPropNameInTable="nomeProjetoColumn" msprop:Generator_UserColumnName="nomeProjeto">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="dataCriacao" msprop:Generator_ColumnVarNameInTable="columndataCriacao" msprop:Generator_ColumnPropNameInRow="dataCriacao" msprop:Generator_ColumnPropNameInTable="dataCriacaoColumn" msprop:Generator_UserColumnName="dataCriacao" type="xs:dateTime" />
+              <xs:element name="autor" msprop:Generator_ColumnVarNameInTable="columnautor" msprop:Generator_ColumnPropNameInRow="autor" msprop:Generator_ColumnPropNameInTable="autorColumn" msprop:Generator_UserColumnName="autor" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="versaoTasquesOrigem" msprop:Generator_ColumnVarNameInTable="columnversaoTasquesOrigem" msprop:Generator_ColumnPropNameInRow="versaoTasquesOrigem" msprop:Generator_ColumnPropNameInTable="versaoTasquesOrigemColumn" msprop:Generator_UserColumnName="versaoTasquesOrigem" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="versaoTasquesDestino" msprop:Generator_ColumnVarNameInTable="columnversaoTasquesDestino" msprop:Generator_ColumnPropNameInRow="versaoTasquesDestino" msprop:Generator_ColumnPropNameInTable="versaoTasquesDestinoColumn" msprop:Generator_UserColumnName="versaoTasquesDestino" type="xs:string" minOccurs="0" />
+              <xs:element name="dataInicioProjeto" msprop:Generator_ColumnVarNameInTable="columndataInicioProjeto" msprop:Generator_ColumnPropNameInRow="dataInicioProjeto" msprop:Generator_ColumnPropNameInTable="dataInicioProjetoColumn" msprop:Generator_UserColumnName="dataInicioProjeto" type="xs:dateTime" />
+              <xs:element name="dataTerminoProjeto" msprop:Generator_ColumnVarNameInTable="columndataTerminoProjeto" msprop:Generator_ColumnPropNameInRow="dataTerminoProjeto" msprop:Generator_ColumnPropNameInTable="dataTerminoProjetoColumn" msprop:Generator_UserColumnName="dataTerminoProjeto" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="dataUltimaAtualizacao" msprop:Generator_ColumnVarNameInTable="columndataUltimaAtualizacao" msprop:Generator_ColumnPropNameInRow="dataUltimaAtualizacao" msprop:Generator_ColumnPropNameInTable="dataUltimaAtualizacaoColumn" msprop:Generator_UserColumnName="dataUltimaAtualizacao" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="dataUltimaPublicacao" msprop:Generator_ColumnVarNameInTable="columndataUltimaPublicacao" msprop:Generator_ColumnPropNameInRow="dataUltimaPublicacao" msprop:Generator_ColumnPropNameInTable="dataUltimaPublicacaoColumn" msprop:Generator_UserColumnName="dataUltimaPublicacao" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="formatoDuracao" msprop:Generator_ColumnVarNameInTable="columnformatoDuracao" msprop:Generator_ColumnPropNameInRow="formatoDuracao" msprop:Generator_ColumnPropNameInTable="formatoDuracaoColumn" msprop:Generator_UserColumnName="formatoDuracao" default="D">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="formatoTrabalho" msprop:Generator_ColumnVarNameInTable="columnformatoTrabalho" msprop:Generator_ColumnPropNameInRow="formatoTrabalho" msprop:Generator_ColumnPropNameInTable="formatoTrabalhoColumn" msprop:Generator_UserColumnName="formatoTrabalho" default="H">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="formataDataHora" msprop:Generator_ColumnVarNameInTable="columnformataDataHora" msprop:Generator_ColumnPropNameInRow="formataDataHora" msprop:Generator_ColumnPropNameInTable="formataDataHoraColumn" msprop:Generator_UserColumnName="formataDataHora" default="S">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="moedaProjeto" msprop:Generator_ColumnVarNameInTable="columnmoedaProjeto" msprop:Generator_ColumnPropNameInRow="moedaProjeto" msprop:Generator_ColumnPropNameInTable="moedaProjetoColumn" msprop:Generator_UserColumnName="moedaProjeto" default="R$">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="codigoCalendario" msprop:Generator_ColumnVarNameInTable="columncodigoCalendario" msprop:Generator_ColumnPropNameInRow="codigoCalendario" msprop:Generator_ColumnPropNameInTable="codigoCalendarioColumn" msprop:Generator_UserColumnName="codigoCalendario" type="xs:int" />
+              <xs:element name="minutosDia" msprop:Generator_ColumnVarNameInTable="columnminutosDia" msprop:Generator_ColumnPropNameInRow="minutosDia" msprop:Generator_ColumnPropNameInTable="minutosDiaColumn" msprop:Generator_UserColumnName="minutosDia" type="xs:short" default="480" />
+              <xs:element name="minutosSemana" msprop:Generator_ColumnVarNameInTable="columnminutosSemana" msprop:Generator_ColumnPropNameInRow="minutosSemana" msprop:Generator_ColumnPropNameInTable="minutosSemanaColumn" msprop:Generator_UserColumnName="minutosSemana" type="xs:short" default="2400" />
+              <xs:element name="diasMes" msprop:Generator_ColumnVarNameInTable="columndiasMes" msprop:Generator_ColumnPropNameInRow="diasMes" msprop:Generator_ColumnPropNameInTable="diasMesColumn" msprop:Generator_UserColumnName="diasMes" type="xs:byte" default="20" />
+              <xs:element name="maiorCodigoTarefaUtilizado" msprop:Generator_ColumnVarNameInTable="columnmaiorCodigoTarefaUtilizado" msprop:Generator_ColumnPropNameInRow="maiorCodigoTarefaUtilizado" msprop:Generator_ColumnPropNameInTable="maiorCodigoTarefaUtilizadoColumn" msprop:Generator_UserColumnName="maiorCodigoTarefaUtilizado" type="xs:int" />
+              <xs:element name="menorCodigoTarefaUtilizado" msprop:Generator_ColumnVarNameInTable="columnmenorCodigoTarefaUtilizado" msprop:Generator_ColumnPropNameInRow="menorCodigoTarefaUtilizado" msprop:Generator_ColumnPropNameInTable="menorCodigoTarefaUtilizadoColumn" msprop:Generator_UserColumnName="menorCodigoTarefaUtilizado" type="xs:int" default="-1" />
+              <xs:element name="maiorCodigoCalendarioUtilizado" msprop:Generator_ColumnVarNameInTable="columnmaiorCodigoCalendarioUtilizado" msprop:Generator_ColumnPropNameInRow="maiorCodigoCalendarioUtilizado" msprop:Generator_ColumnPropNameInTable="maiorCodigoCalendarioUtilizadoColumn" msprop:Generator_UserColumnName="maiorCodigoCalendarioUtilizado" type="xs:int" minOccurs="0" />
+              <xs:element name="nomeEquipamento" msprop:Generator_ColumnVarNameInTable="columnnomeEquipamento" msprop:Generator_ColumnPropNameInRow="nomeEquipamento" msprop:Generator_ColumnPropNameInTable="nomeEquipamentoColumn" msprop:Generator_UserColumnName="nomeEquipamento" type="xs:string" minOccurs="0" />
+              <xs:element name="sistemaOperacional" msprop:Generator_ColumnVarNameInTable="columnsistemaOperacional" msprop:Generator_ColumnPropNameInRow="sistemaOperacional" msprop:Generator_ColumnPropNameInTable="sistemaOperacionalColumn" msprop:Generator_UserColumnName="sistemaOperacional" type="xs:string" minOccurs="0" />
+              <xs:element name="limite_Custo" msprop:Generator_ColumnVarNameInTable="columnlimite_Custo" msprop:Generator_ColumnPropNameInRow="limite_Custo" msprop:Generator_ColumnPropNameInTable="limite_CustoColumn" msprop:Generator_UserColumnName="limite_Custo" type="xs:decimal" minOccurs="0" />
+              <xs:element name="limite_Trabalho" msprop:Generator_ColumnVarNameInTable="columnlimite_Trabalho" msprop:Generator_ColumnPropNameInRow="limite_Trabalho" msprop:Generator_ColumnPropNameInTable="limite_TrabalhoColumn" msprop:Generator_UserColumnName="limite_Trabalho" type="xs:decimal" minOccurs="0" />
+              <xs:element name="limite_Termino" msprop:Generator_ColumnVarNameInTable="columnlimite_Termino" msprop:Generator_ColumnPropNameInRow="limite_Termino" msprop:Generator_ColumnPropNameInTable="limite_TerminoColumn" msprop:Generator_UserColumnName="limite_Termino" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="tipoVisaoCronograma" msprop:Generator_ColumnVarNameInTable="columntipoVisaoCronograma" msprop:Generator_ColumnPropNameInRow="tipoVisaoCronograma" msprop:Generator_ColumnPropNameInTable="tipoVisaoCronogramaColumn" msprop:Generator_UserColumnName="tipoVisaoCronograma" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="dataStatus" msprop:Generator_ColumnVarNameInTable="columndataStatus" msprop:Generator_ColumnPropNameInRow="dataStatus" msprop:Generator_ColumnPropNameInTable="dataStatusColumn" msprop:Generator_UserColumnName="dataStatus" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="dataBanco" msprop:Generator_ColumnVarNameInTable="columndataBanco" msprop:Generator_ColumnPropNameInRow="dataBanco" msprop:Generator_ColumnPropNameInTable="dataBancoColumn" msprop:Generator_UserColumnName="dataBanco" type="xs:string" minOccurs="0" />
+              <xs:element name="codigoUsuarioCorporativo" msprop:Generator_ColumnVarNameInTable="columncodigoUsuarioCorporativo" msprop:Generator_ColumnPropNameInRow="codigoUsuarioCorporativo" msprop:Generator_ColumnPropNameInTable="codigoUsuarioCorporativoColumn" msprop:Generator_UserColumnName="codigoUsuarioCorporativo" type="xs:string" minOccurs="0" />
+              <xs:element name="erroSalvarServidor" msprop:Generator_ColumnVarNameInTable="columnerroSalvarServidor" msprop:Generator_ColumnPropNameInRow="erroSalvarServidor" msprop:Generator_ColumnPropNameInTable="erroSalvarServidorColumn" msprop:Generator_UserColumnName="erroSalvarServidor" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoTipoCronograma" msprop:Generator_ColumnVarNameInTable="columnCodigoTipoCronograma" msprop:Generator_ColumnPropNameInRow="CodigoTipoCronograma" msprop:Generator_ColumnPropNameInTable="CodigoTipoCronogramaColumn" msprop:Generator_UserColumnName="CodigoTipoCronograma" type="xs:short" default="1" />
+              <xs:element name="DescricaoTipoCronograma" msprop:Generator_ColumnVarNameInTable="columnDescricaoTipoCronograma" msprop:Generator_ColumnPropNameInRow="DescricaoTipoCronograma" msprop:Generator_ColumnPropNameInTable="DescricaoTipoCronogramaColumn" msprop:Generator_UserColumnName="DescricaoTipoCronograma" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoCronogramaReferencia" msprop:Generator_ColumnVarNameInTable="columnCodigoCronogramaReferencia" msprop:Generator_ColumnPropNameInRow="CodigoCronogramaReferencia" msprop:Generator_ColumnPropNameInTable="CodigoCronogramaReferenciaColumn" msprop:Generator_UserColumnName="CodigoCronogramaReferencia" type="xs:string" minOccurs="0" />
+              <xs:element name="UndoRedo_LinhaPosicionada" msprop:Generator_ColumnVarNameInTable="columnUndoRedo_LinhaPosicionada" msprop:Generator_ColumnPropNameInRow="UndoRedo_LinhaPosicionada" msprop:Generator_ColumnPropNameInTable="UndoRedo_LinhaPosicionadaColumn" msprop:Generator_UserColumnName="UndoRedo_LinhaPosicionada" type="xs:short" minOccurs="0" />
+              <xs:element name="UndoRedo_ColunaPosicionada" msprop:Generator_ColumnVarNameInTable="columnUndoRedo_ColunaPosicionada" msprop:Generator_ColumnPropNameInRow="UndoRedo_ColunaPosicionada" msprop:Generator_ColumnPropNameInTable="UndoRedo_ColunaPosicionadaColumn" msprop:Generator_UserColumnName="UndoRedo_ColunaPosicionada" type="xs:short" minOccurs="0" />
+              <xs:element name="UndoRedo_VisaoSelecionada" msprop:Generator_ColumnVarNameInTable="columnUndoRedo_VisaoSelecionada" msprop:Generator_ColumnPropNameInRow="UndoRedo_VisaoSelecionada" msprop:Generator_ColumnPropNameInTable="UndoRedo_VisaoSelecionadaColumn" msprop:Generator_UserColumnName="UndoRedo_VisaoSelecionada" type="xs:short" minOccurs="0" />
+              <xs:element name="IndicaUsoPesoManual" msprop:Generator_ColumnVarNameInTable="columnIndicaUsoPesoManual" msprop:Generator_ColumnPropNameInRow="IndicaUsoPesoManual" msprop:Generator_ColumnPropNameInTable="IndicaUsoPesoManualColumn" msprop:Generator_UserColumnName="IndicaUsoPesoManual" type="xs:boolean" default="false" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tarefas" msprop:Generator_UserTableName="Tarefas" msprop:Generator_RowEvArgName="TarefasRowChangeEvent" msprop:Generator_TableVarName="tableTarefas" msprop:Generator_TablePropName="Tarefas" msprop:Generator_RowDeletingName="TarefasRowDeleting" msprop:Generator_RowChangingName="TarefasRowChanging" msprop:Generator_RowDeletedName="TarefasRowDeleted" msprop:Generator_RowEvHandlerName="TarefasRowChangeEventHandler" msprop:Generator_TableClassName="TarefasDataTable" msprop:Generator_RowChangedName="TarefasRowChanged" msprop:Generator_RowClassName="TarefasRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoProjeto" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columncodigoProjeto" msprop:Generator_ColumnPropNameInRow="codigoProjeto" msprop:Generator_ColumnPropNameInTable="codigoProjetoColumn" msprop:Generator_UserColumnName="codigoProjeto" type="xs:string" />
+              <xs:element name="codigoTarefa" msprop:Generator_ColumnVarNameInTable="columncodigoTarefa" msprop:Generator_ColumnPropNameInRow="codigoTarefa" msprop:Generator_ColumnPropNameInTable="codigoTarefaColumn" msprop:Generator_UserColumnName="codigoTarefa" type="xs:int" />
+              <xs:element name="indice" msprop:Generator_ColumnVarNameInTable="columnindice" msprop:Generator_ColumnPropNameInRow="indice" msprop:Generator_ColumnPropNameInTable="indiceColumn" msprop:Generator_UserColumnName="indice" type="xs:int" minOccurs="0" />
+              <xs:element name="nomeTarefa" msprop:Generator_ColumnVarNameInTable="columnnomeTarefa" msprop:Generator_ColumnPropNameInRow="nomeTarefa" msprop:Generator_ColumnPropNameInTable="nomeTarefaColumn" msprop:Generator_UserColumnName="nomeTarefa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="codigoTarefaSuperior" msprop:Generator_ColumnVarNameInTable="columncodigoTarefaSuperior" msprop:Generator_ColumnPropNameInRow="codigoTarefaSuperior" msprop:Generator_ColumnPropNameInTable="codigoTarefaSuperiorColumn" msprop:Generator_UserColumnName="codigoTarefaSuperior" type="xs:int" minOccurs="0" />
+              <xs:element name="nivel" msprop:Generator_ColumnVarNameInTable="columnnivel" msprop:Generator_ColumnPropNameInRow="nivel" msprop:Generator_ColumnPropNameInTable="nivelColumn" msprop:Generator_UserColumnName="nivel" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="inicioTarefa" msprop:Generator_ColumnVarNameInTable="columninicioTarefa" msprop:Generator_ColumnPropNameInRow="inicioTarefa" msprop:Generator_ColumnPropNameInTable="inicioTarefaColumn" msprop:Generator_UserColumnName="inicioTarefa" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="terminoTarefa" msprop:Generator_ColumnVarNameInTable="columnterminoTarefa" msprop:Generator_ColumnPropNameInRow="terminoTarefa" msprop:Generator_ColumnPropNameInTable="terminoTarefaColumn" msprop:Generator_UserColumnName="terminoTarefa" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="duracaoTarefa" msprop:Generator_ColumnVarNameInTable="columnduracaoTarefa" msprop:Generator_ColumnPropNameInRow="duracaoTarefa" msprop:Generator_ColumnPropNameInTable="duracaoTarefaColumn" msprop:Generator_UserColumnName="duracaoTarefa" type="xs:string" minOccurs="0" />
+              <xs:element name="formatoDuracaoTarefa" msprop:Generator_ColumnVarNameInTable="columnformatoDuracaoTarefa" msprop:Generator_ColumnPropNameInRow="formatoDuracaoTarefa" msprop:Generator_ColumnPropNameInTable="formatoDuracaoTarefaColumn" msprop:Generator_UserColumnName="formatoDuracaoTarefa" type="xs:string" minOccurs="0" />
+              <xs:element name="duracaoTarefaMinutos" msprop:Generator_ColumnVarNameInTable="columnduracaoTarefaMinutos" msprop:Generator_ColumnPropNameInRow="duracaoTarefaMinutos" msprop:Generator_ColumnPropNameInTable="duracaoTarefaMinutosColumn" msprop:Generator_UserColumnName="duracaoTarefaMinutos" type="xs:int" minOccurs="0" />
+              <xs:element name="indiceTarefasPredecessoras" msprop:Generator_ColumnVarNameInTable="columnindiceTarefasPredecessoras" msprop:Generator_ColumnPropNameInRow="indiceTarefasPredecessoras" msprop:Generator_ColumnPropNameInTable="indiceTarefasPredecessorasColumn" msprop:Generator_UserColumnName="indiceTarefasPredecessoras" type="xs:string" minOccurs="0" />
+              <xs:element name="dataRestricao" msprop:Generator_ColumnVarNameInTable="columndataRestricao" msprop:Generator_ColumnPropNameInRow="dataRestricao" msprop:Generator_ColumnPropNameInTable="dataRestricaoColumn" msprop:Generator_UserColumnName="dataRestricao" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="codigoTipoRestricao" msprop:Generator_ColumnVarNameInTable="columncodigoTipoRestricao" msprop:Generator_ColumnPropNameInRow="codigoTipoRestricao" msprop:Generator_ColumnPropNameInTable="codigoTipoRestricaoColumn" msprop:Generator_UserColumnName="codigoTipoRestricao" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="codigoTipoTarefaCronograma" msprop:Generator_ColumnVarNameInTable="columncodigoTipoTarefaCronograma" msprop:Generator_ColumnPropNameInRow="codigoTipoTarefaCronograma" msprop:Generator_ColumnPropNameInTable="codigoTipoTarefaCronogramaColumn" msprop:Generator_UserColumnName="codigoTipoTarefaCronograma" type="xs:short" minOccurs="0" />
+              <xs:element name="textoTipoTarefa" msprop:Generator_ColumnVarNameInTable="columntextoTipoTarefa" msprop:Generator_ColumnPropNameInRow="textoTipoTarefa" msprop:Generator_ColumnPropNameInTable="textoTipoTarefaColumn" msprop:Generator_UserColumnName="textoTipoTarefa" type="xs:string" minOccurs="0" />
+              <xs:element name="estruturaTopicoTarefa" msprop:Generator_ColumnVarNameInTable="columnestruturaTopicoTarefa" msprop:Generator_ColumnPropNameInRow="estruturaTopicoTarefa" msprop:Generator_ColumnPropNameInTable="estruturaTopicoTarefaColumn" msprop:Generator_UserColumnName="estruturaTopicoTarefa" type="xs:string" minOccurs="0" />
+              <xs:element name="textoAlocacaoRecurso" msprop:Generator_ColumnVarNameInTable="columntextoAlocacaoRecurso" msprop:Generator_ColumnPropNameInRow="textoAlocacaoRecurso" msprop:Generator_ColumnPropNameInTable="textoAlocacaoRecursoColumn" msprop:Generator_UserColumnName="textoAlocacaoRecurso" type="xs:string" minOccurs="0" />
+              <xs:element name="trabalhoTarefa" msprop:Generator_ColumnVarNameInTable="columntrabalhoTarefa" msprop:Generator_ColumnPropNameInRow="trabalhoTarefa" msprop:Generator_ColumnPropNameInTable="trabalhoTarefaColumn" msprop:Generator_UserColumnName="trabalhoTarefa" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoTarefa" msprop:Generator_ColumnVarNameInTable="columncustoTarefa" msprop:Generator_ColumnPropNameInRow="custoTarefa" msprop:Generator_ColumnPropNameInTable="custoTarefaColumn" msprop:Generator_UserColumnName="custoTarefa" type="xs:decimal" minOccurs="0" />
+              <xs:element name="percentualConcluido" msprop:Generator_ColumnVarNameInTable="columnpercentualConcluido" msprop:Generator_ColumnPropNameInRow="percentualConcluido" msprop:Generator_ColumnPropNameInTable="percentualConcluidoColumn" msprop:Generator_UserColumnName="percentualConcluido" type="xs:short" minOccurs="0" />
+              <xs:element name="percentualPrevistoDataAtual" msprop:Generator_ColumnVarNameInTable="columnpercentualPrevistoDataAtual" msprop:Generator_ColumnPropNameInRow="percentualPrevistoDataAtual" msprop:Generator_ColumnPropNameInTable="percentualPrevistoDataAtualColumn" msprop:Generator_UserColumnName="percentualPrevistoDataAtual" type="xs:short" minOccurs="0" />
+              <xs:element name="percentualPrevistoDataLB" msprop:Generator_ColumnVarNameInTable="columnpercentualPrevistoDataLB" msprop:Generator_ColumnPropNameInRow="percentualPrevistoDataLB" msprop:Generator_ColumnPropNameInTable="percentualPrevistoDataLBColumn" msprop:Generator_UserColumnName="percentualPrevistoDataLB" type="xs:short" minOccurs="0" />
+              <xs:element name="duracaoTarefaEmMinutosPrevistoDataAtual" msprop:Generator_ColumnVarNameInTable="columnduracaoTarefaEmMinutosPrevistoDataAtual" msprop:Generator_ColumnPropNameInRow="duracaoTarefaEmMinutosPrevistoDataAtual" msprop:Generator_ColumnPropNameInTable="duracaoTarefaEmMinutosPrevistoDataAtualColumn" msprop:Generator_UserColumnName="duracaoTarefaEmMinutosPrevistoDataAtual" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="duracaoTarefaEmMinutosPrevistoDataLB" msprop:Generator_ColumnVarNameInTable="columnduracaoTarefaEmMinutosPrevistoDataLB" msprop:Generator_ColumnPropNameInRow="duracaoTarefaEmMinutosPrevistoDataLB" msprop:Generator_ColumnPropNameInTable="duracaoTarefaEmMinutosPrevistoDataLBColumn" msprop:Generator_UserColumnName="duracaoTarefaEmMinutosPrevistoDataLB" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="inicioReal" msprop:Generator_ColumnVarNameInTable="columninicioReal" msprop:Generator_ColumnPropNameInRow="inicioReal" msprop:Generator_ColumnPropNameInTable="inicioRealColumn" msprop:Generator_UserColumnName="inicioReal" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="terminoReal" msprop:Generator_ColumnVarNameInTable="columnterminoReal" msprop:Generator_ColumnPropNameInRow="terminoReal" msprop:Generator_ColumnPropNameInTable="terminoRealColumn" msprop:Generator_UserColumnName="terminoReal" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="duracaoReal" msprop:Generator_ColumnVarNameInTable="columnduracaoReal" msprop:Generator_ColumnPropNameInRow="duracaoReal" msprop:Generator_ColumnPropNameInTable="duracaoRealColumn" msprop:Generator_UserColumnName="duracaoReal" type="xs:string" minOccurs="0" />
+              <xs:element name="duracaoRealMinutos" msprop:Generator_ColumnVarNameInTable="columnduracaoRealMinutos" msprop:Generator_ColumnPropNameInRow="duracaoRealMinutos" msprop:Generator_ColumnPropNameInTable="duracaoRealMinutosColumn" msprop:Generator_UserColumnName="duracaoRealMinutos" type="xs:int" minOccurs="0" />
+              <xs:element name="trabalhoReal" msprop:Generator_ColumnVarNameInTable="columntrabalhoReal" msprop:Generator_ColumnPropNameInRow="trabalhoReal" msprop:Generator_ColumnPropNameInTable="trabalhoRealColumn" msprop:Generator_UserColumnName="trabalhoReal" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoReal" msprop:Generator_ColumnVarNameInTable="columncustoReal" msprop:Generator_ColumnPropNameInRow="custoReal" msprop:Generator_ColumnPropNameInTable="custoRealColumn" msprop:Generator_UserColumnName="custoReal" type="xs:decimal" minOccurs="0" />
+              <xs:element name="inicioLB" msprop:Generator_ColumnVarNameInTable="columninicioLB" msprop:Generator_ColumnPropNameInRow="inicioLB" msprop:Generator_ColumnPropNameInTable="inicioLBColumn" msprop:Generator_UserColumnName="inicioLB" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="terminoLB" msprop:Generator_ColumnVarNameInTable="columnterminoLB" msprop:Generator_ColumnPropNameInRow="terminoLB" msprop:Generator_ColumnPropNameInTable="terminoLBColumn" msprop:Generator_UserColumnName="terminoLB" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="duracaoLB" msprop:Generator_ColumnVarNameInTable="columnduracaoLB" msprop:Generator_ColumnPropNameInRow="duracaoLB" msprop:Generator_ColumnPropNameInTable="duracaoLBColumn" msprop:Generator_UserColumnName="duracaoLB" type="xs:string" minOccurs="0" />
+              <xs:element name="duracaoLBMinutos" msprop:Generator_ColumnVarNameInTable="columnduracaoLBMinutos" msprop:Generator_ColumnPropNameInRow="duracaoLBMinutos" msprop:Generator_ColumnPropNameInTable="duracaoLBMinutosColumn" msprop:Generator_UserColumnName="duracaoLBMinutos" type="xs:int" minOccurs="0" />
+              <xs:element name="trabalhoLB" msprop:Generator_ColumnVarNameInTable="columntrabalhoLB" msprop:Generator_ColumnPropNameInRow="trabalhoLB" msprop:Generator_ColumnPropNameInTable="trabalhoLBColumn" msprop:Generator_UserColumnName="trabalhoLB" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoLB" msprop:Generator_ColumnVarNameInTable="columncustoLB" msprop:Generator_ColumnPropNameInRow="custoLB" msprop:Generator_ColumnPropNameInTable="custoLBColumn" msprop:Generator_UserColumnName="custoLB" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Receita" msprop:Generator_ColumnVarNameInTable="columnReceita" msprop:Generator_ColumnPropNameInRow="Receita" msprop:Generator_ColumnPropNameInTable="ReceitaColumn" msprop:Generator_UserColumnName="Receita" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ReceitaReal" msprop:Generator_ColumnVarNameInTable="columnReceitaReal" msprop:Generator_ColumnPropNameInRow="ReceitaReal" msprop:Generator_ColumnPropNameInTable="ReceitaRealColumn" msprop:Generator_UserColumnName="ReceitaReal" type="xs:decimal" minOccurs="0" />
+              <xs:element name="tarefaResumo" msprop:Generator_ColumnVarNameInTable="columntarefaResumo" msprop:Generator_ColumnPropNameInRow="tarefaResumo" msprop:Generator_ColumnPropNameInTable="tarefaResumoColumn" msprop:Generator_UserColumnName="tarefaResumo" type="xs:boolean" default="false" />
+              <xs:element name="tarefaMarco" msprop:Generator_ColumnVarNameInTable="columntarefaMarco" msprop:Generator_ColumnPropNameInRow="tarefaMarco" msprop:Generator_ColumnPropNameInTable="tarefaMarcoColumn" msprop:Generator_UserColumnName="tarefaMarco" type="xs:boolean" default="false" />
+              <xs:element name="tarefaEntrega" msprop:Generator_ColumnVarNameInTable="columntarefaEntrega" msprop:Generator_ColumnPropNameInRow="tarefaEntrega" msprop:Generator_ColumnPropNameInTable="tarefaEntregaColumn" msprop:Generator_UserColumnName="tarefaEntrega" type="xs:boolean" default="false" />
+              <xs:element name="tarefaFaturamento" msprop:Generator_ColumnVarNameInTable="columntarefaFaturamento" msprop:Generator_ColumnPropNameInRow="tarefaFaturamento" msprop:Generator_ColumnPropNameInTable="tarefaFaturamentoColumn" msprop:Generator_UserColumnName="tarefaFaturamento" type="xs:boolean" default="false" />
+              <xs:element name="tarefaValida" msprop:Generator_ColumnVarNameInTable="columntarefaValida" msprop:Generator_ColumnPropNameInRow="tarefaValida" msprop:Generator_ColumnPropNameInTable="tarefaValidaColumn" msprop:Generator_UserColumnName="tarefaValida" type="xs:boolean" default="false" />
+              <xs:element name="tarefaCritica" msprop:Generator_ColumnVarNameInTable="columntarefaCritica" msprop:Generator_ColumnPropNameInRow="tarefaCritica" msprop:Generator_ColumnPropNameInTable="tarefaCriticaColumn" msprop:Generator_UserColumnName="tarefaCritica" type="xs:boolean" default="false" />
+              <xs:element name="tarefaExpandida" msprop:Generator_ColumnVarNameInTable="columntarefaExpandida" msprop:Generator_ColumnPropNameInRow="tarefaExpandida" msprop:Generator_ColumnPropNameInTable="tarefaExpandidaColumn" msprop:Generator_UserColumnName="tarefaExpandida" type="xs:boolean" default="true" />
+              <xs:element name="tarefaVisivel" msprop:Generator_ColumnVarNameInTable="columntarefaVisivel" msprop:Generator_ColumnPropNameInRow="tarefaVisivel" msprop:Generator_ColumnPropNameInTable="tarefaVisivelColumn" msprop:Generator_UserColumnName="tarefaVisivel" type="xs:boolean" default="true" />
+              <xs:element name="anotacao" msprop:Generator_ColumnVarNameInTable="columnanotacao" msprop:Generator_ColumnPropNameInRow="anotacao" msprop:Generator_ColumnPropNameInTable="anotacaoColumn" msprop:Generator_UserColumnName="anotacao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="dataInclusao" msprop:Generator_ColumnVarNameInTable="columndataInclusao" msprop:Generator_ColumnPropNameInRow="dataInclusao" msprop:Generator_ColumnPropNameInTable="dataInclusaoColumn" msprop:Generator_UserColumnName="dataInclusao" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="duracaoTarefaDigitada" msprop:Generator_ColumnVarNameInTable="columnduracaoTarefaDigitada" msprop:Generator_ColumnPropNameInRow="duracaoTarefaDigitada" msprop:Generator_ColumnPropNameInTable="duracaoTarefaDigitadaColumn" msprop:Generator_UserColumnName="duracaoTarefaDigitada" type="xs:string" minOccurs="0" />
+              <xs:element name="formatoDuracaoTarefaDigitada" msprop:Generator_ColumnVarNameInTable="columnformatoDuracaoTarefaDigitada" msprop:Generator_ColumnPropNameInRow="formatoDuracaoTarefaDigitada" msprop:Generator_ColumnPropNameInTable="formatoDuracaoTarefaDigitadaColumn" msprop:Generator_UserColumnName="formatoDuracaoTarefaDigitada" type="xs:string" minOccurs="0" />
+              <xs:element name="mensagemAlerta" msprop:Generator_ColumnVarNameInTable="columnmensagemAlerta" msprop:Generator_ColumnPropNameInRow="mensagemAlerta" msprop:Generator_ColumnPropNameInTable="mensagemAlertaColumn" msprop:Generator_UserColumnName="mensagemAlerta" type="xs:string" minOccurs="0" />
+              <xs:element name="edt" msprop:Generator_ColumnVarNameInTable="columnedt" msprop:Generator_ColumnPropNameInRow="edt" msprop:Generator_ColumnPropNameInTable="edtColumn" msprop:Generator_UserColumnName="edt" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="alturaLinha" msprop:Generator_ColumnVarNameInTable="columnalturaLinha" msprop:Generator_ColumnPropNameInRow="alturaLinha" msprop:Generator_ColumnPropNameInTable="alturaLinhaColumn" msprop:Generator_UserColumnName="alturaLinha" type="xs:short" default="0" />
+              <xs:element name="situacao" msprop:Generator_ColumnVarNameInTable="columnsituacao" msprop:Generator_ColumnPropNameInRow="situacao" msprop:Generator_ColumnPropNameInTable="situacaoColumn" msprop:Generator_UserColumnName="situacao" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicaTarefaComVinculoExterno" msprop:Generator_ColumnVarNameInTable="columnIndicaTarefaComVinculoExterno" msprop:Generator_ColumnPropNameInRow="IndicaTarefaComVinculoExterno" msprop:Generator_ColumnPropNameInTable="IndicaTarefaComVinculoExternoColumn" msprop:Generator_UserColumnName="IndicaTarefaComVinculoExterno" type="xs:boolean" default="false" />
+              <xs:element name="CodigoCronogramaVinculoExterno" msprop:Generator_ColumnVarNameInTable="columnCodigoCronogramaVinculoExterno" msprop:Generator_ColumnPropNameInRow="CodigoCronogramaVinculoExterno" msprop:Generator_ColumnPropNameInTable="CodigoCronogramaVinculoExternoColumn" msprop:Generator_UserColumnName="CodigoCronogramaVinculoExterno" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoTarefaVinculoExterno" msprop:Generator_ColumnVarNameInTable="columnCodigoTarefaVinculoExterno" msprop:Generator_ColumnPropNameInRow="CodigoTarefaVinculoExterno" msprop:Generator_ColumnPropNameInTable="CodigoTarefaVinculoExternoColumn" msprop:Generator_UserColumnName="CodigoTarefaVinculoExterno" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoTarefaOrigem" msprop:Generator_ColumnVarNameInTable="columnCodigoTarefaOrigem" msprop:Generator_ColumnPropNameInRow="CodigoTarefaOrigem" msprop:Generator_ColumnPropNameInTable="CodigoTarefaOrigemColumn" msprop:Generator_UserColumnName="CodigoTarefaOrigem" type="xs:int" minOccurs="0" />
+              <xs:element name="ValorPesoTarefa" msprop:Generator_ColumnVarNameInTable="columnValorPesoTarefa" msprop:Generator_ColumnPropNameInRow="ValorPesoTarefa" msprop:Generator_ColumnPropNameInTable="ValorPesoTarefaColumn" msprop:Generator_UserColumnName="ValorPesoTarefa" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PercentualPesoTarefa" msprop:Generator_ColumnVarNameInTable="columnPercentualPesoTarefa" msprop:Generator_ColumnPropNameInRow="PercentualPesoTarefa" msprop:Generator_ColumnPropNameInTable="PercentualPesoTarefaColumn" msprop:Generator_UserColumnName="PercentualPesoTarefa" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IndicaAtribuicaoManualPesoTarefa" msprop:Generator_ColumnVarNameInTable="columnIndicaAtribuicaoManualPesoTarefa" msprop:Generator_ColumnPropNameInRow="IndicaAtribuicaoManualPesoTarefa" msprop:Generator_ColumnPropNameInTable="IndicaAtribuicaoManualPesoTarefaColumn" msprop:Generator_UserColumnName="IndicaAtribuicaoManualPesoTarefa" type="xs:boolean" default="false" />
+              <xs:element name="ValorPesoTarefaLB" msprop:Generator_ColumnVarNameInTable="columnValorPesoTarefaLB" msprop:Generator_ColumnPropNameInRow="ValorPesoTarefaLB" msprop:Generator_ColumnPropNameInTable="ValorPesoTarefaLBColumn" msprop:Generator_UserColumnName="ValorPesoTarefaLB" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PercentualConcluidoAlterado" msprop:Generator_ColumnVarNameInTable="columnPercentualConcluidoAlterado" msprop:Generator_ColumnPropNameInRow="PercentualConcluidoAlterado" msprop:Generator_ColumnPropNameInTable="PercentualConcluidoAlteradoColumn" msprop:Generator_UserColumnName="PercentualConcluidoAlterado" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Parametros" msprop:Generator_UserTableName="Parametros" msprop:Generator_RowEvArgName="ParametrosRowChangeEvent" msprop:Generator_TableVarName="tableParametros" msprop:Generator_TablePropName="Parametros" msprop:Generator_RowDeletingName="ParametrosRowDeleting" msprop:Generator_RowChangingName="ParametrosRowChanging" msprop:Generator_RowDeletedName="ParametrosRowDeleted" msprop:Generator_RowEvHandlerName="ParametrosRowChangeEventHandler" msprop:Generator_TableClassName="ParametrosDataTable" msprop:Generator_RowChangedName="ParametrosRowChanged" msprop:Generator_RowClassName="ParametrosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="diretorioDocumentos" msprop:Generator_ColumnVarNameInTable="columndiretorioDocumentos" msprop:Generator_ColumnPropNameInRow="diretorioDocumentos" msprop:Generator_ColumnPropNameInTable="diretorioDocumentosColumn" msprop:Generator_UserColumnName="diretorioDocumentos" type="xs:string" />
+              <xs:element name="toleranciaInicioLBProjeto" msprop:Generator_ColumnVarNameInTable="columntoleranciaInicioLBProjeto" msprop:Generator_ColumnPropNameInRow="toleranciaInicioLBProjeto" msprop:Generator_ColumnPropNameInTable="toleranciaInicioLBProjetoColumn" msprop:Generator_UserColumnName="toleranciaInicioLBProjeto" type="xs:short" minOccurs="0" />
+              <xs:element name="calculoDesempenhoFisicoTarefa" msprop:Generator_ColumnVarNameInTable="columncalculoDesempenhoFisicoTarefa" msprop:Generator_ColumnPropNameInRow="calculoDesempenhoFisicoTarefa" msprop:Generator_ColumnPropNameInTable="calculoDesempenhoFisicoTarefaColumn" msprop:Generator_UserColumnName="calculoDesempenhoFisicoTarefa" type="xs:string" minOccurs="0" />
+              <xs:element name="ambienteDesenvolvimento" msprop:Generator_ColumnVarNameInTable="columnambienteDesenvolvimento" msprop:Generator_ColumnPropNameInRow="ambienteDesenvolvimento" msprop:Generator_ColumnPropNameInTable="ambienteDesenvolvimentoColumn" msprop:Generator_UserColumnName="ambienteDesenvolvimento" type="xs:string" minOccurs="0" />
+              <xs:element name="dataServidorTasques" msprop:Generator_ColumnVarNameInTable="columndataServidorTasques" msprop:Generator_ColumnPropNameInRow="dataServidorTasques" msprop:Generator_ColumnPropNameInTable="dataServidorTasquesColumn" msprop:Generator_UserColumnName="dataServidorTasques" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="mostrarVisaoExecucao" msprop:Generator_ColumnVarNameInTable="columnmostrarVisaoExecucao" msprop:Generator_ColumnPropNameInRow="mostrarVisaoExecucao" msprop:Generator_ColumnPropNameInTable="mostrarVisaoExecucaoColumn" msprop:Generator_UserColumnName="mostrarVisaoExecucao" type="xs:boolean" default="true" />
+              <xs:element name="corTarefaAtrasada" msprop:Generator_ColumnVarNameInTable="columncorTarefaAtrasada" msprop:Generator_ColumnPropNameInRow="corTarefaAtrasada" msprop:Generator_ColumnPropNameInTable="corTarefaAtrasadaColumn" msprop:Generator_UserColumnName="corTarefaAtrasada" type="xs:string" minOccurs="0" />
+              <xs:element name="corTarefaSemLB" msprop:Generator_ColumnVarNameInTable="columncorTarefaSemLB" msprop:Generator_ColumnPropNameInRow="corTarefaSemLB" msprop:Generator_ColumnPropNameInTable="corTarefaSemLBColumn" msprop:Generator_UserColumnName="corTarefaSemLB" type="xs:string" minOccurs="0" />
+              <xs:element name="PermiteAssociarMultiplosTipoTarefa" msprop:Generator_ColumnVarNameInTable="columnPermiteAssociarMultiplosTipoTarefa" msprop:Generator_ColumnPropNameInRow="PermiteAssociarMultiplosTipoTarefa" msprop:Generator_ColumnPropNameInTable="PermiteAssociarMultiplosTipoTarefaColumn" msprop:Generator_UserColumnName="PermiteAssociarMultiplosTipoTarefa" type="xs:boolean" default="false" />
+              <xs:element name="PermiteAlocarRecursosEmTarefasResumo" msprop:Generator_ColumnVarNameInTable="columnPermiteAlocarRecursosEmTarefasResumo" msprop:Generator_ColumnPropNameInRow="PermiteAlocarRecursosEmTarefasResumo" msprop:Generator_ColumnPropNameInTable="PermiteAlocarRecursosEmTarefasResumoColumn" msprop:Generator_UserColumnName="PermiteAlocarRecursosEmTarefasResumo" type="xs:boolean" default="false" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Predecessoras" msprop:Generator_UserTableName="Predecessoras" msprop:Generator_RowEvArgName="PredecessorasRowChangeEvent" msprop:Generator_TableVarName="tablePredecessoras" msprop:Generator_TablePropName="Predecessoras" msprop:Generator_RowDeletingName="PredecessorasRowDeleting" msprop:Generator_RowChangingName="PredecessorasRowChanging" msprop:Generator_RowDeletedName="PredecessorasRowDeleted" msprop:Generator_RowEvHandlerName="PredecessorasRowChangeEventHandler" msprop:Generator_TableClassName="PredecessorasDataTable" msprop:Generator_RowChangedName="PredecessorasRowChanged" msprop:Generator_RowClassName="PredecessorasRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoTarefa" msprop:Generator_ColumnVarNameInTable="columncodigoTarefa" msprop:Generator_ColumnPropNameInRow="codigoTarefa" msprop:Generator_ColumnPropNameInTable="codigoTarefaColumn" msprop:Generator_UserColumnName="codigoTarefa" type="xs:int" />
+              <xs:element name="codigoTarefaPredecessora" msprop:Generator_ColumnVarNameInTable="columncodigoTarefaPredecessora" msprop:Generator_ColumnPropNameInRow="codigoTarefaPredecessora" msprop:Generator_ColumnPropNameInTable="codigoTarefaPredecessoraColumn" msprop:Generator_UserColumnName="codigoTarefaPredecessora" type="xs:int" />
+              <xs:element name="indiceTarefaPredecessora" msprop:Generator_ColumnVarNameInTable="columnindiceTarefaPredecessora" msprop:Generator_ColumnPropNameInRow="indiceTarefaPredecessora" msprop:Generator_ColumnPropNameInTable="indiceTarefaPredecessoraColumn" msprop:Generator_UserColumnName="indiceTarefaPredecessora" type="xs:int" />
+              <xs:element name="tipoLatencia" msprop:Generator_ColumnVarNameInTable="columntipoLatencia" msprop:Generator_ColumnPropNameInRow="tipoLatencia" msprop:Generator_ColumnPropNameInTable="tipoLatenciaColumn" msprop:Generator_UserColumnName="tipoLatencia" type="xs:string" minOccurs="0" />
+              <xs:element name="latencia" msprop:Generator_ColumnVarNameInTable="columnlatencia" msprop:Generator_ColumnPropNameInRow="latencia" msprop:Generator_ColumnPropNameInTable="latenciaColumn" msprop:Generator_UserColumnName="latencia" type="xs:string" minOccurs="0" />
+              <xs:element name="formatoDuracaoLatencia" msprop:Generator_ColumnVarNameInTable="columnformatoDuracaoLatencia" msprop:Generator_ColumnPropNameInRow="formatoDuracaoLatencia" msprop:Generator_ColumnPropNameInTable="formatoDuracaoLatenciaColumn" msprop:Generator_UserColumnName="formatoDuracaoLatencia" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Calendarios" msprop:Generator_UserTableName="Calendarios" msprop:Generator_RowEvArgName="CalendariosRowChangeEvent" msprop:Generator_TableVarName="tableCalendarios" msprop:Generator_TablePropName="Calendarios" msprop:Generator_RowDeletingName="CalendariosRowDeleting" msprop:Generator_RowChangingName="CalendariosRowChanging" msprop:Generator_RowDeletedName="CalendariosRowDeleted" msprop:Generator_RowEvHandlerName="CalendariosRowChangeEventHandler" msprop:Generator_TableClassName="CalendariosDataTable" msprop:Generator_RowChangedName="CalendariosRowChanged" msprop:Generator_RowClassName="CalendariosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoCalendario" msprop:Generator_ColumnVarNameInTable="columncodigoCalendario" msprop:Generator_ColumnPropNameInRow="codigoCalendario" msprop:Generator_ColumnPropNameInTable="codigoCalendarioColumn" msprop:Generator_UserColumnName="codigoCalendario" type="xs:int" />
+              <xs:element name="descricaoCalendario" msprop:Generator_ColumnVarNameInTable="columndescricaoCalendario" msprop:Generator_ColumnPropNameInRow="descricaoCalendario" msprop:Generator_ColumnPropNameInTable="descricaoCalendarioColumn" msprop:Generator_UserColumnName="descricaoCalendario" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="indicaCalendarioPadrao" msprop:Generator_ColumnVarNameInTable="columnindicaCalendarioPadrao" msprop:Generator_ColumnPropNameInRow="indicaCalendarioPadrao" msprop:Generator_ColumnPropNameInTable="indicaCalendarioPadraoColumn" msprop:Generator_UserColumnName="indicaCalendarioPadrao" type="xs:boolean" default="false" />
+              <xs:element name="codigoCalendarioPadrao" msprop:Generator_ColumnVarNameInTable="columncodigoCalendarioPadrao" msprop:Generator_ColumnPropNameInRow="codigoCalendarioPadrao" msprop:Generator_ColumnPropNameInTable="codigoCalendarioPadraoColumn" msprop:Generator_UserColumnName="codigoCalendarioPadrao" type="xs:int" minOccurs="0" />
+              <xs:element name="indicaCalendarioRecursoPessoa" msprop:Generator_ColumnVarNameInTable="columnindicaCalendarioRecursoPessoa" msprop:Generator_ColumnPropNameInRow="indicaCalendarioRecursoPessoa" msprop:Generator_ColumnPropNameInTable="indicaCalendarioRecursoPessoaColumn" msprop:Generator_UserColumnName="indicaCalendarioRecursoPessoa" type="xs:string" default="true" />
+              <xs:element name="horasDia" msprop:Generator_ColumnVarNameInTable="columnhorasDia" msprop:Generator_ColumnPropNameInRow="horasDia" msprop:Generator_ColumnPropNameInTable="horasDiaColumn" msprop:Generator_UserColumnName="horasDia" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="horasSemana" msprop:Generator_ColumnVarNameInTable="columnhorasSemana" msprop:Generator_ColumnPropNameInRow="horasSemana" msprop:Generator_ColumnPropNameInTable="horasSemanaColumn" msprop:Generator_UserColumnName="horasSemana" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="diasMes" msprop:Generator_ColumnVarNameInTable="columndiasMes" msprop:Generator_ColumnPropNameInRow="diasMes" msprop:Generator_ColumnPropNameInTable="diasMesColumn" msprop:Generator_UserColumnName="diasMes" type="xs:unsignedByte" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CalendarioDiaSemana" msprop:Generator_UserTableName="CalendarioDiaSemana" msprop:Generator_RowEvArgName="CalendarioDiaSemanaRowChangeEvent" msprop:Generator_TableVarName="tableCalendarioDiaSemana" msprop:Generator_TablePropName="CalendarioDiaSemana" msprop:Generator_RowDeletingName="CalendarioDiaSemanaRowDeleting" msprop:Generator_RowChangingName="CalendarioDiaSemanaRowChanging" msprop:Generator_RowDeletedName="CalendarioDiaSemanaRowDeleted" msprop:Generator_RowEvHandlerName="CalendarioDiaSemanaRowChangeEventHandler" msprop:Generator_TableClassName="CalendarioDiaSemanaDataTable" msprop:Generator_RowChangedName="CalendarioDiaSemanaRowChanged" msprop:Generator_RowClassName="CalendarioDiaSemanaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoCalendario" msprop:Generator_ColumnVarNameInTable="columncodigoCalendario" msprop:Generator_ColumnPropNameInRow="codigoCalendario" msprop:Generator_ColumnPropNameInTable="codigoCalendarioColumn" msprop:Generator_UserColumnName="codigoCalendario" type="xs:int" minOccurs="0" />
+              <xs:element name="diaSemana" msprop:Generator_ColumnVarNameInTable="columndiaSemana" msprop:Generator_ColumnPropNameInRow="diaSemana" msprop:Generator_ColumnPropNameInTable="diaSemanaColumn" msprop:Generator_UserColumnName="diaSemana" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="indicaDiaUtil" msprop:Generator_ColumnVarNameInTable="columnindicaDiaUtil" msprop:Generator_ColumnPropNameInRow="indicaDiaUtil" msprop:Generator_ColumnPropNameInTable="indicaDiaUtilColumn" msprop:Generator_UserColumnName="indicaDiaUtil" type="xs:string" minOccurs="0" />
+              <xs:element name="turno1" msprop:Generator_ColumnVarNameInTable="columnturno1" msprop:Generator_ColumnPropNameInRow="turno1" msprop:Generator_ColumnPropNameInTable="turno1Column" msprop:Generator_UserColumnName="turno1" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="17" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="turno2" msprop:Generator_ColumnVarNameInTable="columnturno2" msprop:Generator_ColumnPropNameInRow="turno2" msprop:Generator_ColumnPropNameInTable="turno2Column" msprop:Generator_UserColumnName="turno2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="17" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="turno3" msprop:Generator_ColumnVarNameInTable="columnturno3" msprop:Generator_ColumnPropNameInRow="turno3" msprop:Generator_ColumnPropNameInTable="turno3Column" msprop:Generator_UserColumnName="turno3" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="17" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="turno4" msprop:Generator_ColumnVarNameInTable="columnturno4" msprop:Generator_ColumnPropNameInRow="turno4" msprop:Generator_ColumnPropNameInTable="turno4Column" msprop:Generator_UserColumnName="turno4" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="17" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="inicioPeriodo" msprop:Generator_ColumnVarNameInTable="columninicioPeriodo" msprop:Generator_ColumnPropNameInRow="inicioPeriodo" msprop:Generator_ColumnPropNameInTable="inicioPeriodoColumn" msprop:Generator_UserColumnName="inicioPeriodo" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="terminoPeriodo" msprop:Generator_ColumnVarNameInTable="columnterminoPeriodo" msprop:Generator_ColumnPropNameInRow="terminoPeriodo" msprop:Generator_ColumnPropNameInTable="terminoPeriodoColumn" msprop:Generator_UserColumnName="terminoPeriodo" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="minutosDisponiveis" msprop:Generator_ColumnVarNameInTable="columnminutosDisponiveis" msprop:Generator_ColumnPropNameInRow="minutosDisponiveis" msprop:Generator_ColumnPropNameInTable="minutosDisponiveisColumn" msprop:Generator_UserColumnName="minutosDisponiveis" type="xs:short" default="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Recursos" msprop:Generator_UserTableName="Recursos" msprop:Generator_RowEvArgName="RecursosRowChangeEvent" msprop:Generator_TableVarName="tableRecursos" msprop:Generator_TablePropName="Recursos" msprop:Generator_RowDeletingName="RecursosRowDeleting" msprop:Generator_RowChangingName="RecursosRowChanging" msprop:Generator_RowDeletedName="RecursosRowDeleted" msprop:Generator_RowEvHandlerName="RecursosRowChangeEventHandler" msprop:Generator_TableClassName="RecursosDataTable" msprop:Generator_RowChangedName="RecursosRowChanged" msprop:Generator_RowClassName="RecursosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoRecurso" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnVarNameInTable="columncodigoRecurso" msprop:Generator_ColumnPropNameInRow="codigoRecurso" msprop:Generator_ColumnPropNameInTable="codigoRecursoColumn" msprop:Generator_UserColumnName="codigoRecurso" type="xs:int" />
+              <xs:element name="nomeRecurso" msprop:Generator_ColumnVarNameInTable="columnnomeRecurso" msprop:Generator_ColumnPropNameInRow="nomeRecurso" msprop:Generator_ColumnPropNameInTable="nomeRecursoColumn" msprop:Generator_UserColumnName="nomeRecurso">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="iniciais" msprop:Generator_ColumnVarNameInTable="columniniciais" msprop:Generator_ColumnPropNameInRow="iniciais" msprop:Generator_ColumnPropNameInTable="iniciaisColumn" msprop:Generator_UserColumnName="iniciais" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="custoHora" msprop:Generator_ColumnVarNameInTable="columncustoHora" msprop:Generator_ColumnPropNameInRow="custoHora" msprop:Generator_ColumnPropNameInTable="custoHoraColumn" msprop:Generator_UserColumnName="custoHora" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoUso" msprop:Generator_ColumnVarNameInTable="columncustoUso" msprop:Generator_ColumnPropNameInRow="custoUso" msprop:Generator_ColumnPropNameInTable="custoUsoColumn" msprop:Generator_UserColumnName="custoUso" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoHoraExtra" msprop:Generator_ColumnVarNameInTable="columncustoHoraExtra" msprop:Generator_ColumnPropNameInRow="custoHoraExtra" msprop:Generator_ColumnPropNameInTable="custoHoraExtraColumn" msprop:Generator_UserColumnName="custoHoraExtra" type="xs:decimal" minOccurs="0" />
+              <xs:element name="codigoTipoRecurso" msprop:Generator_ColumnVarNameInTable="columncodigoTipoRecurso" msprop:Generator_ColumnPropNameInRow="codigoTipoRecurso" msprop:Generator_ColumnPropNameInTable="codigoTipoRecursoColumn" msprop:Generator_UserColumnName="codigoTipoRecurso" type="xs:short" minOccurs="0" />
+              <xs:element name="codigoGrupoRecurso" msprop:Generator_ColumnVarNameInTable="columncodigoGrupoRecurso" msprop:Generator_ColumnPropNameInRow="codigoGrupoRecurso" msprop:Generator_ColumnPropNameInTable="codigoGrupoRecursoColumn" msprop:Generator_UserColumnName="codigoGrupoRecurso" type="xs:int" minOccurs="0" />
+              <xs:element name="codigoUnidadeMedidaRecurso" msprop:Generator_ColumnVarNameInTable="columncodigoUnidadeMedidaRecurso" msprop:Generator_ColumnPropNameInRow="codigoUnidadeMedidaRecurso" msprop:Generator_ColumnPropNameInTable="codigoUnidadeMedidaRecursoColumn" msprop:Generator_UserColumnName="codigoUnidadeMedidaRecurso" type="xs:short" minOccurs="0" />
+              <xs:element name="codigoCalendarioBase" msprop:Generator_ColumnVarNameInTable="columncodigoCalendarioBase" msprop:Generator_ColumnPropNameInRow="codigoCalendarioBase" msprop:Generator_ColumnPropNameInTable="codigoCalendarioBaseColumn" msprop:Generator_UserColumnName="codigoCalendarioBase" type="xs:int" minOccurs="0" />
+              <xs:element name="recursoCorporativo" msprop:Generator_ColumnVarNameInTable="columnrecursoCorporativo" msprop:Generator_ColumnPropNameInRow="recursoCorporativo" msprop:Generator_ColumnPropNameInTable="recursoCorporativoColumn" msprop:Generator_UserColumnName="recursoCorporativo" type="xs:boolean" default="false" />
+              <xs:element name="codigoRecursoCorporativo" msprop:Generator_ColumnVarNameInTable="columncodigoRecursoCorporativo" msprop:Generator_ColumnPropNameInRow="codigoRecursoCorporativo" msprop:Generator_ColumnPropNameInTable="codigoRecursoCorporativoColumn" msprop:Generator_UserColumnName="codigoRecursoCorporativo" type="xs:int" minOccurs="0" />
+              <xs:element name="codigoCalendarioRecurso" msprop:Generator_ColumnVarNameInTable="columncodigoCalendarioRecurso" msprop:Generator_ColumnPropNameInRow="codigoCalendarioRecurso" msprop:Generator_ColumnPropNameInTable="codigoCalendarioRecursoColumn" msprop:Generator_UserColumnName="codigoCalendarioRecurso" type="xs:string" minOccurs="0" />
+              <xs:element name="dataInclusao" msprop:Generator_ColumnVarNameInTable="columndataInclusao" msprop:Generator_ColumnPropNameInRow="dataInclusao" msprop:Generator_ColumnPropNameInTable="dataInclusaoColumn" msprop:Generator_UserColumnName="dataInclusao" type="xs:dateTime" />
+              <xs:element name="anotacao" msprop:Generator_ColumnVarNameInTable="columnanotacao" msprop:Generator_ColumnPropNameInRow="anotacao" msprop:Generator_ColumnPropNameInTable="anotacaoColumn" msprop:Generator_UserColumnName="anotacao" type="xs:string" minOccurs="0" />
+              <xs:element name="codigoRecursoOrigem" msprop:Generator_ColumnVarNameInTable="columncodigoRecursoOrigem" msprop:Generator_ColumnPropNameInRow="codigoRecursoOrigem" msprop:Generator_ColumnPropNameInTable="codigoRecursoOrigemColumn" msprop:Generator_UserColumnName="codigoRecursoOrigem" type="xs:int" minOccurs="0" />
+              <xs:element name="Disponibilidade" msprop:Generator_ColumnVarNameInTable="columnDisponibilidade" msprop:Generator_ColumnPropNameInRow="Disponibilidade" msprop:Generator_ColumnPropNameInTable="DisponibilidadeColumn" msprop:Generator_UserColumnName="Disponibilidade" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TipoRecurso" msprop:Generator_UserTableName="TipoRecurso" msprop:Generator_RowEvArgName="TipoRecursoRowChangeEvent" msprop:Generator_TableVarName="tableTipoRecurso" msprop:Generator_TablePropName="TipoRecurso" msprop:Generator_RowDeletingName="TipoRecursoRowDeleting" msprop:Generator_RowChangingName="TipoRecursoRowChanging" msprop:Generator_RowDeletedName="TipoRecursoRowDeleted" msprop:Generator_RowEvHandlerName="TipoRecursoRowChangeEventHandler" msprop:Generator_TableClassName="TipoRecursoDataTable" msprop:Generator_RowChangedName="TipoRecursoRowChanged" msprop:Generator_RowClassName="TipoRecursoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoTipoRecurso" msprop:Generator_ColumnVarNameInTable="columncodigoTipoRecurso" msprop:Generator_ColumnPropNameInRow="codigoTipoRecurso" msprop:Generator_ColumnPropNameInTable="codigoTipoRecursoColumn" msprop:Generator_UserColumnName="codigoTipoRecurso" type="xs:short" />
+              <xs:element name="nomeTipoRecurso" msprop:Generator_ColumnVarNameInTable="columnnomeTipoRecurso" msprop:Generator_ColumnPropNameInRow="nomeTipoRecurso" msprop:Generator_ColumnPropNameInTable="nomeTipoRecursoColumn" msprop:Generator_UserColumnName="nomeTipoRecurso">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="GrupoRecurso" msprop:Generator_UserTableName="GrupoRecurso" msprop:Generator_RowEvArgName="GrupoRecursoRowChangeEvent" msprop:Generator_TableVarName="tableGrupoRecurso" msprop:Generator_TablePropName="GrupoRecurso" msprop:Generator_RowDeletingName="GrupoRecursoRowDeleting" msprop:Generator_RowChangingName="GrupoRecursoRowChanging" msprop:Generator_RowDeletedName="GrupoRecursoRowDeleted" msprop:Generator_RowEvHandlerName="GrupoRecursoRowChangeEventHandler" msprop:Generator_TableClassName="GrupoRecursoDataTable" msprop:Generator_RowChangedName="GrupoRecursoRowChanged" msprop:Generator_RowClassName="GrupoRecursoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoGrupoRecurso" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnVarNameInTable="columncodigoGrupoRecurso" msprop:Generator_ColumnPropNameInRow="codigoGrupoRecurso" msprop:Generator_ColumnPropNameInTable="codigoGrupoRecursoColumn" msprop:Generator_UserColumnName="codigoGrupoRecurso" type="xs:int" />
+              <xs:element name="nomeGrupoRecurso" msprop:Generator_ColumnVarNameInTable="columnnomeGrupoRecurso" msprop:Generator_ColumnPropNameInRow="nomeGrupoRecurso" msprop:Generator_ColumnPropNameInTable="nomeGrupoRecursoColumn" msprop:Generator_UserColumnName="nomeGrupoRecurso">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="codigoTipoRecurso" msprop:Generator_ColumnVarNameInTable="columncodigoTipoRecurso" msprop:Generator_ColumnPropNameInRow="codigoTipoRecurso" msprop:Generator_ColumnPropNameInTable="codigoTipoRecursoColumn" msprop:Generator_UserColumnName="codigoTipoRecurso" type="xs:short" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="UnidadeMedidaRecurso" msprop:Generator_UserTableName="UnidadeMedidaRecurso" msprop:Generator_RowEvArgName="UnidadeMedidaRecursoRowChangeEvent" msprop:Generator_TableVarName="tableUnidadeMedidaRecurso" msprop:Generator_TablePropName="UnidadeMedidaRecurso" msprop:Generator_RowDeletingName="UnidadeMedidaRecursoRowDeleting" msprop:Generator_RowChangingName="UnidadeMedidaRecursoRowChanging" msprop:Generator_RowDeletedName="UnidadeMedidaRecursoRowDeleted" msprop:Generator_RowEvHandlerName="UnidadeMedidaRecursoRowChangeEventHandler" msprop:Generator_TableClassName="UnidadeMedidaRecursoDataTable" msprop:Generator_RowChangedName="UnidadeMedidaRecursoRowChanged" msprop:Generator_RowClassName="UnidadeMedidaRecursoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoUnidadeMedida" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnVarNameInTable="columncodigoUnidadeMedida" msprop:Generator_ColumnPropNameInRow="codigoUnidadeMedida" msprop:Generator_ColumnPropNameInTable="codigoUnidadeMedidaColumn" msprop:Generator_UserColumnName="codigoUnidadeMedida" type="xs:short" />
+              <xs:element name="nomeUnidadeMedida" msprop:Generator_ColumnVarNameInTable="columnnomeUnidadeMedida" msprop:Generator_ColumnPropNameInRow="nomeUnidadeMedida" msprop:Generator_ColumnPropNameInTable="nomeUnidadeMedidaColumn" msprop:Generator_UserColumnName="nomeUnidadeMedida">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Atribuicoes" msprop:Generator_UserTableName="Atribuicoes" msprop:Generator_RowEvArgName="AtribuicoesRowChangeEvent" msprop:Generator_TableVarName="tableAtribuicoes" msprop:Generator_TablePropName="Atribuicoes" msprop:Generator_RowDeletingName="AtribuicoesRowDeleting" msprop:Generator_RowChangingName="AtribuicoesRowChanging" msprop:Generator_RowDeletedName="AtribuicoesRowDeleted" msprop:Generator_RowEvHandlerName="AtribuicoesRowChangeEventHandler" msprop:Generator_TableClassName="AtribuicoesDataTable" msprop:Generator_RowChangedName="AtribuicoesRowChanged" msprop:Generator_RowClassName="AtribuicoesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoTarefa" msprop:Generator_ColumnVarNameInTable="columncodigoTarefa" msprop:Generator_ColumnPropNameInRow="codigoTarefa" msprop:Generator_ColumnPropNameInTable="codigoTarefaColumn" msprop:Generator_UserColumnName="codigoTarefa" type="xs:int" />
+              <xs:element name="codigoRecurso" msprop:Generator_ColumnVarNameInTable="columncodigoRecurso" msprop:Generator_ColumnPropNameInRow="codigoRecurso" msprop:Generator_ColumnPropNameInTable="codigoRecursoColumn" msprop:Generator_UserColumnName="codigoRecurso" type="xs:int" />
+              <xs:element name="qtdeUnidadesAtribuida" msprop:Generator_ColumnVarNameInTable="columnqtdeUnidadesAtribuida" msprop:Generator_ColumnPropNameInRow="qtdeUnidadesAtribuida" msprop:Generator_ColumnPropNameInTable="qtdeUnidadesAtribuidaColumn" msprop:Generator_UserColumnName="qtdeUnidadesAtribuida" type="xs:decimal" />
+              <xs:element name="trabalhoAtribuicao" msprop:Generator_ColumnVarNameInTable="columntrabalhoAtribuicao" msprop:Generator_ColumnPropNameInRow="trabalhoAtribuicao" msprop:Generator_ColumnPropNameInTable="trabalhoAtribuicaoColumn" msprop:Generator_UserColumnName="trabalhoAtribuicao" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoNormalAtribuicao" msprop:Generator_ColumnVarNameInTable="columncustoNormalAtribuicao" msprop:Generator_ColumnPropNameInRow="custoNormalAtribuicao" msprop:Generator_ColumnPropNameInTable="custoNormalAtribuicaoColumn" msprop:Generator_UserColumnName="custoNormalAtribuicao" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoUsoAtribuicao" msprop:Generator_ColumnVarNameInTable="columncustoUsoAtribuicao" msprop:Generator_ColumnPropNameInRow="custoUsoAtribuicao" msprop:Generator_ColumnPropNameInTable="custoUsoAtribuicaoColumn" msprop:Generator_UserColumnName="custoUsoAtribuicao" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoExtraAtribuicao" msprop:Generator_ColumnVarNameInTable="columncustoExtraAtribuicao" msprop:Generator_ColumnPropNameInRow="custoExtraAtribuicao" msprop:Generator_ColumnPropNameInTable="custoExtraAtribuicaoColumn" msprop:Generator_UserColumnName="custoExtraAtribuicao" type="xs:decimal" default="0" />
+              <xs:element name="percentualConcluido" msprop:Generator_ColumnVarNameInTable="columnpercentualConcluido" msprop:Generator_ColumnPropNameInRow="percentualConcluido" msprop:Generator_ColumnPropNameInTable="percentualConcluidoColumn" msprop:Generator_UserColumnName="percentualConcluido" type="xs:short" default="0" />
+              <xs:element name="custoReal" msprop:Generator_ColumnVarNameInTable="columncustoReal" msprop:Generator_ColumnPropNameInRow="custoReal" msprop:Generator_ColumnPropNameInTable="custoRealColumn" msprop:Generator_UserColumnName="custoReal" type="xs:decimal" default="0" />
+              <xs:element name="trabalhoReal" msprop:Generator_ColumnVarNameInTable="columntrabalhoReal" msprop:Generator_ColumnPropNameInRow="trabalhoReal" msprop:Generator_ColumnPropNameInTable="trabalhoRealColumn" msprop:Generator_UserColumnName="trabalhoReal" type="xs:decimal" default="0" />
+              <xs:element name="dataAtribuicao" msprop:Generator_ColumnVarNameInTable="columndataAtribuicao" msprop:Generator_ColumnPropNameInRow="dataAtribuicao" msprop:Generator_ColumnPropNameInTable="dataAtribuicaoColumn" msprop:Generator_UserColumnName="dataAtribuicao" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DataInicio" msprop:Generator_ColumnVarNameInTable="columnDataInicio" msprop:Generator_ColumnPropNameInRow="DataInicio" msprop:Generator_ColumnPropNameInTable="DataInicioColumn" msprop:Generator_UserColumnName="DataInicio" type="xs:dateTime" />
+              <xs:element name="DataTermino" msprop:Generator_ColumnVarNameInTable="columnDataTermino" msprop:Generator_ColumnPropNameInRow="DataTermino" msprop:Generator_ColumnPropNameInTable="DataTerminoColumn" msprop:Generator_UserColumnName="DataTermino" type="xs:dateTime" />
+              <xs:element name="trabalhoAtribuicaoDia" msprop:Generator_ColumnVarNameInTable="columntrabalhoAtribuicaoDia" msprop:Generator_ColumnPropNameInRow="trabalhoAtribuicaoDia" msprop:Generator_ColumnPropNameInTable="trabalhoAtribuicaoDiaColumn" msprop:Generator_UserColumnName="trabalhoAtribuicaoDia" type="xs:decimal" />
+              <xs:element name="custoHoraRecurso" msprop:Generator_ColumnVarNameInTable="columncustoHoraRecurso" msprop:Generator_ColumnPropNameInRow="custoHoraRecurso" msprop:Generator_ColumnPropNameInTable="custoHoraRecursoColumn" msprop:Generator_UserColumnName="custoHoraRecurso" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoUsoRecurso" msprop:Generator_ColumnVarNameInTable="columncustoUsoRecurso" msprop:Generator_ColumnPropNameInRow="custoUsoRecurso" msprop:Generator_ColumnPropNameInTable="custoUsoRecursoColumn" msprop:Generator_UserColumnName="custoUsoRecurso" type="xs:decimal" minOccurs="0" />
+              <xs:element name="custoHoraExtraRecurso" msprop:Generator_ColumnVarNameInTable="columncustoHoraExtraRecurso" msprop:Generator_ColumnPropNameInRow="custoHoraExtraRecurso" msprop:Generator_ColumnPropNameInTable="custoHoraExtraRecursoColumn" msprop:Generator_UserColumnName="custoHoraExtraRecurso" type="xs:decimal" minOccurs="0" />
+              <xs:element name="qtdeUnidadesAtribuidaReal" msprop:Generator_ColumnVarNameInTable="columnqtdeUnidadesAtribuidaReal" msprop:Generator_ColumnPropNameInRow="qtdeUnidadesAtribuidaReal" msprop:Generator_ColumnPropNameInTable="qtdeUnidadesAtribuidaRealColumn" msprop:Generator_UserColumnName="qtdeUnidadesAtribuidaReal" type="xs:decimal" default="0" minOccurs="0" />
+              <xs:element name="CustoUnitarioReal" msprop:Generator_ColumnVarNameInTable="columnCustoUnitarioReal" msprop:Generator_ColumnPropNameInRow="CustoUnitarioReal" msprop:Generator_ColumnPropNameInTable="CustoUnitarioRealColumn" msprop:Generator_UserColumnName="CustoUnitarioReal" type="xs:decimal" default="0" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TarefasLinhasDeBase" msprop:Generator_UserTableName="TarefasLinhasDeBase" msprop:Generator_RowEvArgName="TarefasLinhasDeBaseRowChangeEvent" msprop:Generator_TableVarName="tableTarefasLinhasDeBase" msprop:Generator_TablePropName="TarefasLinhasDeBase" msprop:Generator_RowDeletingName="TarefasLinhasDeBaseRowDeleting" msprop:Generator_RowChangingName="TarefasLinhasDeBaseRowChanging" msprop:Generator_RowDeletedName="TarefasLinhasDeBaseRowDeleted" msprop:Generator_RowEvHandlerName="TarefasLinhasDeBaseRowChangeEventHandler" msprop:Generator_TableClassName="TarefasLinhasDeBaseDataTable" msprop:Generator_RowChangedName="TarefasLinhasDeBaseRowChanged" msprop:Generator_RowClassName="TarefasLinhasDeBaseRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dataVersao" msprop:Generator_ColumnVarNameInTable="columndataVersao" msprop:Generator_ColumnPropNameInRow="dataVersao" msprop:Generator_ColumnPropNameInTable="dataVersaoColumn" msprop:Generator_UserColumnName="dataVersao" type="xs:dateTime" />
+              <xs:element name="codigoTarefa" msprop:Generator_ColumnVarNameInTable="columncodigoTarefa" msprop:Generator_ColumnPropNameInRow="codigoTarefa" msprop:Generator_ColumnPropNameInTable="codigoTarefaColumn" msprop:Generator_UserColumnName="codigoTarefa" type="xs:int" />
+              <xs:element name="inicioLB" msprop:Generator_ColumnVarNameInTable="columninicioLB" msprop:Generator_ColumnPropNameInRow="inicioLB" msprop:Generator_ColumnPropNameInTable="inicioLBColumn" msprop:Generator_UserColumnName="inicioLB" type="xs:dateTime" />
+              <xs:element name="terminoLB" msprop:Generator_ColumnVarNameInTable="columnterminoLB" msprop:Generator_ColumnPropNameInRow="terminoLB" msprop:Generator_ColumnPropNameInTable="terminoLBColumn" msprop:Generator_UserColumnName="terminoLB" type="xs:dateTime" />
+              <xs:element name="duracaoLB" msprop:Generator_ColumnVarNameInTable="columnduracaoLB" msprop:Generator_ColumnPropNameInRow="duracaoLB" msprop:Generator_ColumnPropNameInTable="duracaoLBColumn" msprop:Generator_UserColumnName="duracaoLB" type="xs:string" />
+              <xs:element name="duracaoLBMinutos" msprop:Generator_ColumnVarNameInTable="columnduracaoLBMinutos" msprop:Generator_ColumnPropNameInRow="duracaoLBMinutos" msprop:Generator_ColumnPropNameInTable="duracaoLBMinutosColumn" msprop:Generator_UserColumnName="duracaoLBMinutos" type="xs:int" />
+              <xs:element name="trabalhoLB" msprop:Generator_ColumnVarNameInTable="columntrabalhoLB" msprop:Generator_ColumnPropNameInRow="trabalhoLB" msprop:Generator_ColumnPropNameInTable="trabalhoLBColumn" msprop:Generator_UserColumnName="trabalhoLB" type="xs:decimal" />
+              <xs:element name="custoLB" msprop:Generator_ColumnVarNameInTable="columncustoLB" msprop:Generator_ColumnPropNameInRow="custoLB" msprop:Generator_ColumnPropNameInTable="custoLBColumn" msprop:Generator_UserColumnName="custoLB" type="xs:decimal" />
+              <xs:element name="Publicada" msprop:Generator_ColumnVarNameInTable="columnPublicada" msprop:Generator_ColumnPropNameInRow="Publicada" msprop:Generator_ColumnPropNameInTable="PublicadaColumn" msprop:Generator_UserColumnName="Publicada" type="xs:boolean" default="false" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LinhasDeBase" msprop:Generator_UserTableName="LinhasDeBase" msprop:Generator_RowEvArgName="LinhasDeBaseRowChangeEvent" msprop:Generator_TableVarName="tableLinhasDeBase" msprop:Generator_TablePropName="LinhasDeBase" msprop:Generator_RowDeletingName="LinhasDeBaseRowDeleting" msprop:Generator_RowChangingName="LinhasDeBaseRowChanging" msprop:Generator_RowDeletedName="LinhasDeBaseRowDeleted" msprop:Generator_RowEvHandlerName="LinhasDeBaseRowChangeEventHandler" msprop:Generator_TableClassName="LinhasDeBaseDataTable" msprop:Generator_RowChangedName="LinhasDeBaseRowChanged" msprop:Generator_RowClassName="LinhasDeBaseRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dataVersao" msprop:Generator_ColumnVarNameInTable="columndataVersao" msprop:Generator_ColumnPropNameInRow="dataVersao" msprop:Generator_ColumnPropNameInTable="dataVersaoColumn" msprop:Generator_UserColumnName="dataVersao" type="xs:dateTime" />
+              <xs:element name="listaCodigoTarefas" msdata:Caption="codigoTarefa" msprop:Generator_ColumnVarNameInTable="columnlistaCodigoTarefas" msprop:Generator_ColumnPropNameInRow="listaCodigoTarefas" msprop:Generator_ColumnPropNameInTable="listaCodigoTarefasColumn" msprop:Generator_UserColumnName="listaCodigoTarefas" type="xs:string" minOccurs="0" />
+              <xs:element name="anotacao" msprop:Generator_ColumnVarNameInTable="columnanotacao" msprop:Generator_ColumnPropNameInRow="anotacao" msprop:Generator_ColumnPropNameInTable="anotacaoColumn" msprop:Generator_UserColumnName="anotacao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TipoTarefaCronograma" msprop:Generator_UserTableName="TipoTarefaCronograma" msprop:Generator_RowEvArgName="TipoTarefaCronogramaRowChangeEvent" msprop:Generator_TableVarName="tableTipoTarefaCronograma" msprop:Generator_TablePropName="TipoTarefaCronograma" msprop:Generator_RowDeletingName="TipoTarefaCronogramaRowDeleting" msprop:Generator_RowChangingName="TipoTarefaCronogramaRowChanging" msprop:Generator_RowDeletedName="TipoTarefaCronogramaRowDeleted" msprop:Generator_RowEvHandlerName="TipoTarefaCronogramaRowChangeEventHandler" msprop:Generator_TableClassName="TipoTarefaCronogramaDataTable" msprop:Generator_RowChangedName="TipoTarefaCronogramaRowChanged" msprop:Generator_RowClassName="TipoTarefaCronogramaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigoTipoTarefaCronograma" msprop:Generator_ColumnVarNameInTable="columncodigoTipoTarefaCronograma" msprop:Generator_ColumnPropNameInRow="codigoTipoTarefaCronograma" msprop:Generator_ColumnPropNameInTable="codigoTipoTarefaCronogramaColumn" msprop:Generator_UserColumnName="codigoTipoTarefaCronograma" type="xs:short" />
+              <xs:element name="descricaoTipoTarefaCronograma" msprop:Generator_ColumnVarNameInTable="columndescricaoTipoTarefaCronograma" msprop:Generator_ColumnPropNameInRow="descricaoTipoTarefaCronograma" msprop:Generator_ColumnPropNameInTable="descricaoTipoTarefaCronogramaColumn" msprop:Generator_UserColumnName="descricaoTipoTarefaCronograma">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="iniciaisTipoControladoSistema" msprop:Generator_ColumnVarNameInTable="columniniciaisTipoControladoSistema" msprop:Generator_ColumnPropNameInRow="iniciaisTipoControladoSistema" msprop:Generator_ColumnPropNameInTable="iniciaisTipoControladoSistemaColumn" msprop:Generator_UserColumnName="iniciaisTipoControladoSistema" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TarefaCronogramaProjetoTipoTarefa" msprop:Generator_TableClassName="TarefaCronogramaProjetoTipoTarefaDataTable" msprop:Generator_TableVarName="tableTarefaCronogramaProjetoTipoTarefa" msprop:Generator_TablePropName="TarefaCronogramaProjetoTipoTarefa" msprop:Generator_RowDeletingName="TarefaCronogramaProjetoTipoTarefaRowDeleting" msprop:Generator_RowChangingName="TarefaCronogramaProjetoTipoTarefaRowChanging" msprop:Generator_RowEvHandlerName="TarefaCronogramaProjetoTipoTarefaRowChangeEventHandler" msprop:Generator_RowDeletedName="TarefaCronogramaProjetoTipoTarefaRowDeleted" msprop:Generator_UserTableName="TarefaCronogramaProjetoTipoTarefa" msprop:Generator_RowChangedName="TarefaCronogramaProjetoTipoTarefaRowChanged" msprop:Generator_RowEvArgName="TarefaCronogramaProjetoTipoTarefaRowChangeEvent" msprop:Generator_RowClassName="TarefaCronogramaProjetoTipoTarefaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoTarefa" msprop:Generator_ColumnVarNameInTable="columnCodigoTarefa" msprop:Generator_ColumnPropNameInRow="CodigoTarefa" msprop:Generator_ColumnPropNameInTable="CodigoTarefaColumn" msprop:Generator_UserColumnName="CodigoTarefa" type="xs:int" />
+              <xs:element name="codigoTipoTarefaCronograma" msprop:Generator_ColumnVarNameInTable="columncodigoTipoTarefaCronograma" msprop:Generator_ColumnPropNameInRow="codigoTipoTarefaCronograma" msprop:Generator_ColumnPropNameInTable="codigoTipoTarefaCronogramaColumn" msprop:Generator_UserColumnName="codigoTipoTarefaCronograma" type="xs:short" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="pkProjeto" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Projeto" />
+      <xs:field xpath="mstns:codigoProjeto" />
+    </xs:unique>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Tarefas" />
+      <xs:field xpath="mstns:codigoTarefa" />
+    </xs:unique>
+    <xs:unique name="pkPredecessora" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Predecessoras" />
+      <xs:field xpath="mstns:codigoTarefa" />
+      <xs:field xpath="mstns:codigoTarefaPredecessora" />
+    </xs:unique>
+    <xs:unique name="Calendarios_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Calendarios" />
+      <xs:field xpath="mstns:codigoCalendario" />
+    </xs:unique>
+    <xs:unique name="Recursos_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Recursos" />
+      <xs:field xpath="mstns:codigoRecurso" />
+    </xs:unique>
+    <xs:unique name="TipoRecurso_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TipoRecurso" />
+      <xs:field xpath="mstns:codigoTipoRecurso" />
+    </xs:unique>
+    <xs:unique name="GrupoRecurso_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:GrupoRecurso" />
+      <xs:field xpath="mstns:codigoGrupoRecurso" />
+    </xs:unique>
+    <xs:unique name="UnidadeMedidaRecurso_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:UnidadeMedidaRecurso" />
+      <xs:field xpath="mstns:codigoUnidadeMedida" />
+    </xs:unique>
+    <xs:unique name="Atribuicoes_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Atribuicoes" />
+      <xs:field xpath="mstns:codigoTarefa" />
+      <xs:field xpath="mstns:codigoRecurso" />
+    </xs:unique>
+    <xs:unique name="TarefasLinhasDeBase_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TarefasLinhasDeBase" />
+      <xs:field xpath="mstns:dataVersao" />
+      <xs:field xpath="mstns:codigoTarefa" />
+    </xs:unique>
+    <xs:unique name="LinhasDeBase_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:LinhasDeBase" />
+      <xs:field xpath="mstns:dataVersao" />
+    </xs:unique>
+    <xs:unique name="TipoTarefaCronograma_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TipoTarefaCronograma" />
+      <xs:field xpath="mstns:codigoTipoTarefaCronograma" />
+    </xs:unique>
+    <xs:unique name="TarefaCronogramaProjetoTipoTarefa_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TarefaCronogramaProjetoTipoTarefa" />
+      <xs:field xpath="mstns:CodigoTarefa" />
+      <xs:field xpath="mstns:codigoTipoTarefaCronograma" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Projeto_Tarefas" msdata:parent="Projeto" msdata:child="Tarefas" msdata:parentkey="codigoProjeto" msdata:childkey="codigoProjeto" msprop:Generator_UserChildTable="Tarefas" msprop:Generator_ChildPropName="GetTarefasRows" msprop:Generator_UserRelationName="Projeto_Tarefas" msprop:Generator_ParentPropName="ProjetoRow" msprop:Generator_RelationVarName="relationProjeto_Tarefas" msprop:Generator_UserParentTable="Projeto" />
+      <msdata:Relationship name="Tarefas_Predecessoras" msdata:parent="Tarefas" msdata:child="Predecessoras" msdata:parentkey="codigoTarefa" msdata:childkey="codigoTarefa" msprop:Generator_UserChildTable="Predecessoras" msprop:Generator_ChildPropName="GetPredecessorasRows" msprop:Generator_UserRelationName="Tarefas_Predecessoras" msprop:Generator_ParentPropName="TarefasRow" msprop:Generator_RelationVarName="relationTarefas_Predecessoras" msprop:Generator_UserParentTable="Tarefas" />
+      <msdata:Relationship name="TipoRecurso_Recursos" msdata:parent="TipoRecurso" msdata:child="Recursos" msdata:parentkey="codigoTipoRecurso" msdata:childkey="codigoTipoRecurso" msprop:Generator_UserChildTable="Recursos" msprop:Generator_ChildPropName="GetRecursosRows" msprop:Generator_UserRelationName="TipoRecurso_Recursos" msprop:Generator_ParentPropName="TipoRecursoRow" msprop:Generator_RelationVarName="relationTipoRecurso_Recursos" msprop:Generator_UserParentTable="TipoRecurso" />
+      <msdata:Relationship name="UnidadeMedidaRecurso_Recursos" msdata:parent="UnidadeMedidaRecurso" msdata:child="Recursos" msdata:parentkey="codigoUnidadeMedida" msdata:childkey="codigoUnidadeMedidaRecurso" msprop:Generator_UserChildTable="Recursos" msprop:Generator_ChildPropName="GetRecursosRows" msprop:Generator_UserRelationName="UnidadeMedidaRecurso_Recursos" msprop:Generator_ParentPropName="UnidadeMedidaRecursoRow" msprop:Generator_RelationVarName="relationUnidadeMedidaRecurso_Recursos" msprop:Generator_UserParentTable="UnidadeMedidaRecurso" />
+      <msdata:Relationship name="Recursos_Atribuicoes" msdata:parent="Recursos" msdata:child="Atribuicoes" msdata:parentkey="codigoRecurso" msdata:childkey="codigoRecurso" msprop:Generator_UserChildTable="Atribuicoes" msprop:Generator_ChildPropName="GetAtribuicoesRows" msprop:Generator_UserRelationName="Recursos_Atribuicoes" msprop:Generator_ParentPropName="RecursosRow" msprop:Generator_RelationVarName="relationRecursos_Atribuicoes" msprop:Generator_UserParentTable="Recursos" />
+      <msdata:Relationship name="Tarefas_Atribuicoes" msdata:parent="Tarefas" msdata:child="Atribuicoes" msdata:parentkey="codigoTarefa" msdata:childkey="codigoTarefa" msprop:Generator_UserChildTable="Atribuicoes" msprop:Generator_ChildPropName="GetAtribuicoesRows" msprop:Generator_UserRelationName="Tarefas_Atribuicoes" msprop:Generator_ParentPropName="TarefasRow" msprop:Generator_RelationVarName="relationTarefas_Atribuicoes" msprop:Generator_UserParentTable="Tarefas" />
+      <msdata:Relationship name="LinhasDeBase_TarefasLinhasDeBase" msdata:parent="LinhasDeBase" msdata:child="TarefasLinhasDeBase" msdata:parentkey="dataVersao" msdata:childkey="dataVersao" msprop:Generator_UserChildTable="TarefasLinhasDeBase" msprop:Generator_ChildPropName="GetTarefasLinhasDeBaseRows" msprop:Generator_UserRelationName="LinhasDeBase_TarefasLinhasDeBase" msprop:Generator_ParentPropName="LinhasDeBaseRow" msprop:Generator_RelationVarName="relationLinhasDeBase_TarefasLinhasDeBase" msprop:Generator_UserParentTable="LinhasDeBase" />
+      <msdata:Relationship name="Tarefas_TarefasLinhasDeBase" msdata:parent="Tarefas" msdata:child="TarefasLinhasDeBase" msdata:parentkey="codigoTarefa" msdata:childkey="codigoTarefa" msprop:Generator_UserChildTable="TarefasLinhasDeBase" msprop:Generator_ChildPropName="GetTarefasLinhasDeBaseRows" msprop:Generator_UserRelationName="Tarefas_TarefasLinhasDeBase" msprop:Generator_ParentPropName="TarefasRow" msprop:Generator_RelationVarName="relationTarefas_TarefasLinhasDeBase" msprop:Generator_UserParentTable="Tarefas" />
+      <msdata:Relationship name="GrupoRecurso_Recursos" msdata:parent="GrupoRecurso" msdata:child="Recursos" msdata:parentkey="codigoGrupoRecurso" msdata:childkey="codigoGrupoRecurso" msprop:Generator_UserChildTable="Recursos" msprop:Generator_ChildPropName="GetRecursosRows" msprop:Generator_UserRelationName="GrupoRecurso_Recursos" msprop:Generator_ParentPropName="GrupoRecursoRow" msprop:Generator_RelationVarName="relationGrupoRecurso_Recursos" msprop:Generator_UserParentTable="GrupoRecurso" />
+      <msdata:Relationship name="TipoTarefaCronograma_TarefaCronogramaProjetoTipoTarefa" msdata:parent="TipoTarefaCronograma" msdata:child="TarefaCronogramaProjetoTipoTarefa" msdata:parentkey="codigoTipoTarefaCronograma" msdata:childkey="codigoTipoTarefaCronograma" msprop:Generator_UserChildTable="TarefaCronogramaProjetoTipoTarefa" msprop:Generator_ChildPropName="GetTarefaCronogramaProjetoTipoTarefaRows" msprop:Generator_UserRelationName="TipoTarefaCronograma_TarefaCronogramaProjetoTipoTarefa" msprop:Generator_ParentPropName="TipoTarefaCronogramaRow" msprop:Generator_RelationVarName="relationTipoTarefaCronograma_TarefaCronogramaProjetoTipoTarefa" msprop:Generator_UserParentTable="TipoTarefaCronograma" />
+      <msdata:Relationship name="Tarefas_TarefaCronogramaProjetoTipoTarefa" msdata:parent="Tarefas" msdata:child="TarefaCronogramaProjetoTipoTarefa" msdata:parentkey="codigoTarefa" msdata:childkey="CodigoTarefa" msprop:Generator_UserChildTable="TarefaCronogramaProjetoTipoTarefa" msprop:Generator_ChildPropName="GetTarefaCronogramaProjetoTipoTarefaRows" msprop:Generator_UserRelationName="Tarefas_TarefaCronogramaProjetoTipoTarefa" msprop:Generator_ParentPropName="TarefasRow" msprop:Generator_RelationVarName="relationTarefas_TarefaCronogramaProjetoTipoTarefa" msprop:Generator_UserParentTable="Tarefas" />
+      <msdata:Relationship name="Calendarios_Projeto" msdata:parent="Calendarios" msdata:child="Projeto" msdata:parentkey="codigoCalendario" msdata:childkey="codigoCalendario" msprop:Generator_UserChildTable="Projeto" msprop:Generator_ChildPropName="GetProjetoRows" msprop:Generator_UserRelationName="Calendarios_Projeto" msprop:Generator_ParentPropName="CalendariosRow" msprop:Generator_RelationVarName="relationCalendarios_Projeto" msprop:Generator_UserParentTable="Calendarios" />
+      <msdata:Relationship name="Calendarios_CalendarioDiaSemana" msdata:parent="Calendarios" msdata:child="CalendarioDiaSemana" msdata:parentkey="codigoCalendario" msdata:childkey="codigoCalendario" msprop:Generator_UserChildTable="CalendarioDiaSemana" msprop:Generator_ChildPropName="GetCalendarioDiaSemanaRows" msprop:Generator_UserRelationName="Calendarios_CalendarioDiaSemana" msprop:Generator_RelationVarName="relationCalendarios_CalendarioDiaSemana" msprop:Generator_UserParentTable="Calendarios" msprop:Generator_ParentPropName="CalendariosRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

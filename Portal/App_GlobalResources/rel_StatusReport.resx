@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="A" xml:space="preserve">
+    <value> a </value>
+  </data>
+  <data name="AbaixoDaMetaAlerta" xml:space="preserve">
+    <value>Abaixo da Meta (Alerta)</value>
+  </data>
+  <data name="AnáliseCrítica" xml:space="preserve">
+    <value>Análise Crítica</value>
+  </data>
+  <data name="AnáliseDoValorAgregado" xml:space="preserve">
+    <value>Análise do Valor Agregado</value>
+  </data>
+  <data name="ArtigoDefinidoFeminino" xml:space="preserve">
+    <value>a</value>
+  </data>
+  <data name="ArtigoDefinidoMasculino" xml:space="preserve">
+    <value>o</value>
+  </data>
+  <data name="Atrasado" xml:space="preserve">
+    <value>Atrasado </value>
+  </data>
+  <data name="AtualizaçãoPendente" xml:space="preserve">
+    <value>Atualização Pendente</value>
+  </data>
+  <data name="ComentárioSobreAsMetasEResultadosDoProjeto" xml:space="preserve">
+    <value>Comentário sobre as metas e resultados do projeto</value>
+  </data>
+  <data name="ComentárioSobreODesempenhoFinanceiroDoProj" xml:space="preserve">
+    <value>Comentário sobre o desempenho financeiro do projeto</value>
+  </data>
+  <data name="ComentárioSobreODesempenhoFísicoDoProjeto" xml:space="preserve">
+    <value>Comentário sobre o desempenho físico do projeto</value>
+  </data>
+  <data name="ComentárioSobreOsRiscosDoProjeto" xml:space="preserve">
+    <value>Comentário sobre os riscos do projeto</value>
+  </data>
+  <data name="ComentárioSobreX0DoProjeto" xml:space="preserve">
+    <value>Comentário sobre {0} do projeto</value>
+  </data>
+  <data name="ComentáriosSobreX1SX0DoProjeto" xml:space="preserve">
+    <value>Comentários sobre {1}s {0} do projeto</value>
+  </data>
+  <data name="Concluído" xml:space="preserve">
+    <value>% Concluído</value>
+  </data>
+  <data name="Concluído1" xml:space="preserve">
+    <value>% Concluído</value>
+  </data>
+  <data name="ConcluídoComAtraso" xml:space="preserve">
+    <value>Concluído com Atraso</value>
+  </data>
+  <data name="ConcluídoNoPrazo" xml:space="preserve">
+    <value>Concluído no Prazo </value>
+  </data>
+  <data name="Contratos" xml:space="preserve">
+    <value>Contratos</value>
+  </data>
+  <data name="CustoRealizadoRCR" xml:space="preserve">
+    <value>Custo Realizado  R$(CR)</value>
+  </data>
+  <data name="DataDestaAnáliseCríticaX0DdMMYyyy" xml:space="preserve">
+    <value>Data desta Análise Crítica: {0:dd/MM/yyyy}</value>
+  </data>
+  <data name="DescriçãoDaMeta" xml:space="preserve">
+    <value>Descrição da Meta</value>
+  </data>
+  <data name="DesempenhoFinanceiro" xml:space="preserve">
+    <value>Desempenho Financeiro</value>
+  </data>
+  <data name="DesempenhoFísico" xml:space="preserve">
+    <value>Desempenho Físico</value>
+  </data>
+  <data name="DespesaPrevAtéAData" xml:space="preserve">
+    <value>Despesa Prev. até a Data</value>
+  </data>
+  <data name="DespesaPrevAtéAData1" xml:space="preserve">
+    <value>Despesa Prev. até a Data</value>
+  </data>
+  <data name="DespesaPrevistaTOTAL" xml:space="preserve">
+    <value>Despesa Prevista TOTAL</value>
+  </data>
+  <data name="DespesaPrevistaTOTAL1" xml:space="preserve">
+    <value>Despesa Prevista TOTAL</value>
+  </data>
+  <data name="DespesaRealizada" xml:space="preserve">
+    <value>Despesa Realizada</value>
+  </data>
+  <data name="DespesaRealizada1" xml:space="preserve">
+    <value>Despesa Realizada</value>
+  </data>
+  <data name="DespesaRestante" xml:space="preserve">
+    <value>Despesa Restante</value>
+  </data>
+  <data name="Desvio" xml:space="preserve">
+    <value>Desvio</value>
+  </data>
+  <data name="Desvio1" xml:space="preserve">
+    <value>Desvio</value>
+  </data>
+  <data name="Desvio2" xml:space="preserve">
+    <value>Desvio</value>
+  </data>
+  <data name="DesvioD" xml:space="preserve">
+    <value>Desvio (d)</value>
+  </data>
+  <data name="DesvioDespesaPrevistaAtéADataDespesaRealiz" xml:space="preserve">
+    <value>*Desvio = Despesa Prevista até a Data - Despesa Realizada
+**Despesa Restante = Despesa Prevista TOTAL - Despesa Realizada</value>
+  </data>
+  <data name="DetalhesDosItensDeDespesaValoresEmR" xml:space="preserve">
+    <value>Detalhes dos Itens de Despesa (Valores em R$)</value>
+  </data>
+  <data name="DetalhesDosItensDeDespesaValoresEmR1" xml:space="preserve">
+    <value>Detalhes dos Itens de Despesa (Valores em R$)</value>
+  </data>
+  <data name="DetalhesDosItensDeReceitasValoresEmR" xml:space="preserve">
+    <value>Detalhes dos Itens de Receitas (Valores em R$)</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ds.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>17, 17</value>
+  </data>
+  <data name="EstimativaAoConcluirEAC" xml:space="preserve">
+    <value>Estimativa ao Concluir (EAC)</value>
+  </data>
+  <data name="Fornecedor" xml:space="preserve">
+    <value>Fornecedor</value>
+  </data>
+  <data name="GeradoEm" xml:space="preserve">
+    <value>Gerado em:</value>
+  </data>
+  <data name="Gerente" xml:space="preserve">
+    <value>Gerente:</value>
+  </data>
+  <data name="Impacto" xml:space="preserve">
+    <value>Impacto</value>
+  </data>
+  <data name="Indicador" xml:space="preserve">
+    <value>Indicador</value>
+  </data>
+  <data name="InícioPrevisto" xml:space="preserve">
+    <value>Início Previsto</value>
+  </data>
+  <data name="InícioPrevisto1" xml:space="preserve">
+    <value>Início Previsto</value>
+  </data>
+  <data name="InícioPrevisto2" xml:space="preserve">
+    <value>Início Previsto</value>
+  </data>
+  <data name="InícioPrevisto3" xml:space="preserve">
+    <value>Início Previsto</value>
+  </data>
+  <data name="InícioPrevisto4" xml:space="preserve">
+    <value>Início Previsto</value>
+  </data>
+  <data name="InícioReal" xml:space="preserve">
+    <value>Início Real</value>
+  </data>
+  <data name="ItemDeDespesa" xml:space="preserve">
+    <value>Item de Despesa</value>
+  </data>
+  <data name="ItemDeDespesa1" xml:space="preserve">
+    <value>Item de Despesa</value>
+  </data>
+  <data name="ItemDeReceita" xml:space="preserve">
+    <value>Item de Receita</value>
+  </data>
+  <data name="ItemDeReceita1" xml:space="preserve">
+    <value>Item de Receita</value>
+  </data>
+  <data name="LimiteEliminação" xml:space="preserve">
+    <value>Limite Eliminação</value>
+  </data>
+  <data name="LimiteResolução" xml:space="preserve">
+    <value>Limite Resolução</value>
+  </data>
+  <data name="Marco" xml:space="preserve">
+    <value>Marco</value>
+  </data>
+  <data name="Marcos" xml:space="preserve">
+    <value>Marcos</value>
+  </data>
+  <data name="MetaAtingida" xml:space="preserve">
+    <value>Meta Atingida </value>
+  </data>
+  <data name="MetaNº" xml:space="preserve">
+    <value>Meta (Nº)</value>
+  </data>
+  <data name="MetasEResultados" xml:space="preserve">
+    <value>Metas e Resultados</value>
+  </data>
+  <data name="MetaSuperada" xml:space="preserve">
+    <value>Meta Superada</value>
+  </data>
+  <data name="MuitoAbaixoDaMeta" xml:space="preserve">
+    <value>Muito Abaixo da Meta</value>
+  </data>
+  <data name="NoPrazoAdiantado" xml:space="preserve">
+    <value>No Prazo/ Adiantado</value>
+  </data>
+  <data name="NºDoContrato" xml:space="preserve">
+    <value>Nº do Contrato</value>
+  </data>
+  <data name="PendênciasDeToDoList" xml:space="preserve">
+    <value>Pendências de To Do List</value>
+  </data>
+  <data name="Período" xml:space="preserve">
+    <value>Período:</value>
+  </data>
+  <data name="Período1" xml:space="preserve">
+    <value>Período</value>
+  </data>
+  <data name="PlanoDeAçãoProposto" xml:space="preserve">
+    <value>Plano de ação proposto</value>
+  </data>
+  <data name="PrevistoAtéAData" xml:space="preserve">
+    <value>Previsto Até a Data: </value>
+  </data>
+  <data name="PrevistoAtéAData1" xml:space="preserve">
+    <value>Previsto Até a Data: </value>
+  </data>
+  <data name="Prioridade" xml:space="preserve">
+    <value>Prioridade</value>
+  </data>
+  <data name="Probabilidade" xml:space="preserve">
+    <value>Probabilidade</value>
+  </data>
+  <data name="Projeto" xml:space="preserve">
+    <value>Projeto:</value>
+  </data>
+  <data name="PágX0DeX1" xml:space="preserve">
+    <value>Pág: {0} de {1}</value>
+  </data>
+  <data name="Questão" xml:space="preserve">
+    <value>Questão</value>
+  </data>
+  <data name="Questão1" xml:space="preserve">
+    <value>Questão</value>
+  </data>
+  <data name="Questões" xml:space="preserve">
+    <value>Questões</value>
+  </data>
+  <data name="Realizado" xml:space="preserve">
+    <value>Realizado: </value>
+  </data>
+  <data name="Realizado1" xml:space="preserve">
+    <value>Realizado: </value>
+  </data>
+  <data name="ReceitaPrevAtéAData" xml:space="preserve">
+    <value>Receita Prev. até a Data</value>
+  </data>
+  <data name="ReceitaPrevista" xml:space="preserve">
+    <value>Receita Prevista</value>
+  </data>
+  <data name="ReceitaPrevistaTOTAL" xml:space="preserve">
+    <value>Receita Prevista TOTAL</value>
+  </data>
+  <data name="ReceitaReal" xml:space="preserve">
+    <value>Receita Real</value>
+  </data>
+  <data name="ReceitaRealizada" xml:space="preserve">
+    <value>Receita Realizada</value>
+  </data>
+  <data name="ReceitaRestante" xml:space="preserve">
+    <value>Receita Restante</value>
+  </data>
+  <data name="ReceitaRestante1" xml:space="preserve">
+    <value>Receita Restante</value>
+  </data>
+  <data name="RelatórioDeStatusDeProjeto" xml:space="preserve">
+    <value>Relatório de Status de Projeto </value>
+  </data>
+  <data name="Responsavel" xml:space="preserve">
+    <value>Responsavel</value>
+  </data>
+  <data name="Responsavel1" xml:space="preserve">
+    <value>Responsavel</value>
+  </data>
+  <data name="Responsável" xml:space="preserve">
+    <value>Responsável</value>
+  </data>
+  <data name="Responsável1" xml:space="preserve">
+    <value>Responsável</value>
+  </data>
+  <data name="Responsável2" xml:space="preserve">
+    <value>Responsável</value>
+  </data>
+  <data name="Responsável3" xml:space="preserve">
+    <value>Responsável</value>
+  </data>
+  <data name="Responsável4" xml:space="preserve">
+    <value>Responsável</value>
+  </data>
+  <data name="ResultadoNº" xml:space="preserve">
+    <value>Resultado (Nº)</value>
+  </data>
+  <data name="Risco" xml:space="preserve">
+    <value>Risco</value>
+  </data>
+  <data name="Riscos" xml:space="preserve">
+    <value>Riscos</value>
+  </data>
+  <data name="SemAnáliseCríticaParaOPeríodo" xml:space="preserve">
+    <value>[Sem análise crítica para o período]</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Status1" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Status2" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Status3" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Status4" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Status5" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Tarefa" xml:space="preserve">
+    <value>Tarefa</value>
+  </data>
+  <data name="Tarefa1" xml:space="preserve">
+    <value>Tarefa</value>
+  </data>
+  <data name="Tarefa2" xml:space="preserve">
+    <value>Tarefa</value>
+  </data>
+  <data name="Tarefa3" xml:space="preserve">
+    <value>Tarefa</value>
+  </data>
+  <data name="TarefaDeToDoList" xml:space="preserve">
+    <value>Tarefa de To Do List</value>
+  </data>
+  <data name="TarefasAtrasadas" xml:space="preserve">
+    <value>Tarefas Atrasadas</value>
+  </data>
+  <data name="TarefasConcluídas" xml:space="preserve">
+    <value>Tarefas Concluídas</value>
+  </data>
+  <data name="TarefasParaOPróximoPeríodo" xml:space="preserve">
+    <value>Tarefas para o Próximo Período</value>
+  </data>
+  <data name="TendênciaDeAtraso" xml:space="preserve">
+    <value>Tendência de Atraso </value>
+  </data>
+  <data name="TOTAL" xml:space="preserve">
+    <value>TOTAL</value>
+  </data>
+  <data name="TOTAL1" xml:space="preserve">
+    <value>TOTAL</value>
+  </data>
+  <data name="TOTAL2" xml:space="preserve">
+    <value>TOTAL</value>
+  </data>
+  <data name="TOTAL3" xml:space="preserve">
+    <value>TOTAL</value>
+  </data>
+  <data name="TérminoPrevisto" xml:space="preserve">
+    <value>Término Previsto</value>
+  </data>
+  <data name="TérminoPrevisto1" xml:space="preserve">
+    <value>Término Previsto</value>
+  </data>
+  <data name="TérminoPrevisto2" xml:space="preserve">
+    <value>Término Previsto</value>
+  </data>
+  <data name="TérminoPrevisto3" xml:space="preserve">
+    <value>Término Previsto</value>
+  </data>
+  <data name="TérminoPrevisto4" xml:space="preserve">
+    <value>Término Previsto</value>
+  </data>
+  <data name="TérminoPrevisto5" xml:space="preserve">
+    <value>Término Previsto</value>
+  </data>
+  <data name="TérminoReal" xml:space="preserve">
+    <value>Término Real</value>
+  </data>
+  <data name="TérminoReal1" xml:space="preserve">
+    <value>Término Real</value>
+  </data>
+  <data name="TérminoReprogr" xml:space="preserve">
+    <value>Término Reprogr.</value>
+  </data>
+  <data name="TérminoVigência" xml:space="preserve">
+    <value>Término Vigência</value>
+  </data>
+  <data name="Unidade" xml:space="preserve">
+    <value>Unidade:</value>
+  </data>
+  <data name="Urgência" xml:space="preserve">
+    <value>Urgência</value>
+  </data>
+  <data name="ValorAgregadoRVA" xml:space="preserve">
+    <value>Valor Agregado  R$ (VA)</value>
+  </data>
+  <data name="ValorPagoR" xml:space="preserve">
+    <value>Valor Pago (R$)</value>
+  </data>
+  <data name="ValorPlanejadoRVP" xml:space="preserve">
+    <value>Valor Planejado R$ (VP)</value>
+  </data>
+  <data name="ValorRestanteR" xml:space="preserve">
+    <value>Valor Restante (R$)</value>
+  </data>
+  <data name="ValorTotalR" xml:space="preserve">
+    <value>Valor Total (R$)</value>
+  </data>
+  <data name="xrLabel38.SerializableRtfString" xml:space="preserve">
+    <value>ewBcAHIAdABmADEAXABhAG4AcwBpAGMAcABnADEAMgA1ADIADQAKAHsADQAKAFwAZgBvAG4AdAB0AGIAbAANAAoAewBcAGYAMAAgAFQAaQBtAGUAcwAgAE4AZQB3ACAAUgBvAG0AYQBuADsAfQANAAoAfQANAAoAewANAAoAXABjAG8AbABvAHIAdABiAGwADQAKADsADQAKAFwAcgBlAGQAMABcAGcAcgBlAGUAbgAwAFwAYgBsAHUAZQAwADsADQAKAFwAcgBlAGQAMABcAGcAcgBlAGUAbgAwAFwAYgBsAHUAZQAyADUANQA7AA0ACgB9AA0ACgBcAG4AbwB1AGkAYwBvAG0AcABhAHQAXABzAHAAbAB5AHQAdwBuAGkAbgBlAFwAaAB0AG0AYQB1AHQAcwBwAHsAXABzAGUAYwB0AGQAXABwAGEAcgBkAFwAcABsAGEAaQBuAFwAcQBsAFwAcABhAHIAfQANAAoAfQANAAoA</value>
+  </data>
+  <data name="ÍndiceDeDesempenhoDoCustoIDC" xml:space="preserve">
+    <value>Índice de Desempenho do Custo (IDC)</value>
+  </data>
+  <data name="ÍndiceDeDesempenhoDoPrazoIDP" xml:space="preserve">
+    <value>Índice de Desempenho do Prazo (IDP)</value>
+  </data>
+</root>

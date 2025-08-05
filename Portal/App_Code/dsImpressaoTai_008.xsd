@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsImpressaoTai_008" targetNamespace="http://tempuri.org/dsImpressaoTai_008.xsd" xmlns:mstns="http://tempuri.org/dsImpressaoTai_008.xsd" xmlns="http://tempuri.org/dsImpressaoTai_008.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="desenv_portalEstrategiaConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="desenv_portalEstrategiaConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.desenv_portalEstrategiaConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsImpressaoTai_008" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msdata:EnforceConstraints="False" msprop:Generator_DataSetName="dsImpressaoTai_008" msprop:Generator_UserDSName="dsImpressaoTai_008">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TermoAbertura04" msprop:Generator_TableClassName="TermoAbertura04DataTable" msprop:Generator_TableVarName="tableTermoAbertura04" msprop:Generator_TablePropName="TermoAbertura04" msprop:Generator_RowDeletingName="TermoAbertura04RowDeleting" msprop:Generator_RowChangingName="TermoAbertura04RowChanging" msprop:Generator_RowEvHandlerName="TermoAbertura04RowChangeEventHandler" msprop:Generator_RowDeletedName="TermoAbertura04RowDeleted" msprop:Generator_UserTableName="TermoAbertura04" msprop:Generator_RowChangedName="TermoAbertura04RowChanged" msprop:Generator_RowEvArgName="TermoAbertura04RowChangeEvent" msprop:Generator_RowClassName="TermoAbertura04Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="NomeIniciativa" msprop:Generator_ColumnVarNameInTable="columnNomeIniciativa" msprop:Generator_ColumnPropNameInRow="NomeIniciativa" msprop:Generator_ColumnPropNameInTable="NomeIniciativaColumn" msprop:Generator_UserColumnName="NomeIniciativa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoGerenteIniciativa" msprop:Generator_ColumnVarNameInTable="columnCodigoGerenteIniciativa" msprop:Generator_ColumnPropNameInRow="CodigoGerenteIniciativa" msprop:Generator_ColumnPropNameInTable="CodigoGerenteIniciativaColumn" msprop:Generator_UserColumnName="CodigoGerenteIniciativa" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeGerenteIniciativa" msprop:Generator_ColumnVarNameInTable="columnNomeGerenteIniciativa" msprop:Generator_ColumnPropNameInRow="NomeGerenteIniciativa" msprop:Generator_ColumnPropNameInTable="NomeGerenteIniciativaColumn" msprop:Generator_UserColumnName="NomeGerenteIniciativa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoUnidadeNegocio" msprop:Generator_ColumnVarNameInTable="columnCodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInRow="CodigoUnidadeNegocio" msprop:Generator_ColumnPropNameInTable="CodigoUnidadeNegocioColumn" msprop:Generator_UserColumnName="CodigoUnidadeNegocio" type="xs:int" />
+              <xs:element name="NomeUnidadeNegocio" msprop:Generator_ColumnVarNameInTable="columnNomeUnidadeNegocio" msprop:Generator_ColumnPropNameInRow="NomeUnidadeNegocio" msprop:Generator_ColumnPropNameInTable="NomeUnidadeNegocioColumn" msprop:Generator_UserColumnName="NomeUnidadeNegocio">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ValorEstimado" msprop:Generator_ColumnVarNameInTable="columnValorEstimado" msprop:Generator_ColumnPropNameInRow="ValorEstimado" msprop:Generator_ColumnPropNameInTable="ValorEstimadoColumn" msprop:Generator_UserColumnName="ValorEstimado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ObjetivoGeral" msprop:Generator_ColumnVarNameInTable="columnObjetivoGeral" msprop:Generator_ColumnPropNameInRow="ObjetivoGeral" msprop:Generator_ColumnPropNameInTable="ObjetivoGeralColumn" msprop:Generator_UserColumnName="ObjetivoGeral" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Justificativa" msprop:Generator_ColumnVarNameInTable="columnJustificativa" msprop:Generator_ColumnPropNameInRow="Justificativa" msprop:Generator_ColumnPropNameInTable="JustificativaColumn" msprop:Generator_UserColumnName="Justificativa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Escopo" msprop:Generator_ColumnVarNameInTable="columnEscopo" msprop:Generator_ColumnPropNameInRow="Escopo" msprop:Generator_ColumnPropNameInTable="EscopoColumn" msprop:Generator_UserColumnName="Escopo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CronogramaBasico" msprop:Generator_ColumnVarNameInTable="columnCronogramaBasico" msprop:Generator_ColumnPropNameInRow="CronogramaBasico" msprop:Generator_ColumnPropNameInTable="CronogramaBasicoColumn" msprop:Generator_UserColumnName="CronogramaBasico" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Observacoes" msprop:Generator_ColumnVarNameInTable="columnObservacoes" msprop:Generator_ColumnPropNameInRow="Observacoes" msprop:Generator_ColumnPropNameInTable="ObservacoesColumn" msprop:Generator_UserColumnName="Observacoes" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ValorEstimadoOrcamento" msprop:Generator_ColumnVarNameInTable="columnValorEstimadoOrcamento" msprop:Generator_ColumnPropNameInRow="ValorEstimadoOrcamento" msprop:Generator_ColumnPropNameInTable="ValorEstimadoOrcamentoColumn" msprop:Generator_UserColumnName="ValorEstimadoOrcamento" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ServicosCompartilhados" msprop:Generator_ColumnVarNameInTable="columnServicosCompartilhados" msprop:Generator_ColumnPropNameInRow="ServicosCompartilhados" msprop:Generator_ColumnPropNameInTable="ServicosCompartilhadosColumn" msprop:Generator_UserColumnName="ServicosCompartilhados" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaModeloTAI007" msprop:Generator_ColumnVarNameInTable="columnIndicaModeloTAI007" msprop:Generator_ColumnPropNameInRow="IndicaModeloTAI007" msprop:Generator_ColumnPropNameInTable="IndicaModeloTAI007Column" msprop:Generator_UserColumnName="IndicaModeloTAI007" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PublicoAlvo" msprop:Generator_ColumnVarNameInTable="columnPublicoAlvo" msprop:Generator_ColumnPropNameInRow="PublicoAlvo" msprop:Generator_ColumnPropNameInTable="PublicoAlvoColumn" msprop:Generator_UserColumnName="PublicoAlvo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ProdutoFinal" msprop:Generator_ColumnVarNameInTable="columnProdutoFinal" msprop:Generator_ColumnPropNameInRow="ProdutoFinal" msprop:Generator_ColumnPropNameInTable="ProdutoFinalColumn" msprop:Generator_UserColumnName="ProdutoFinal" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaModeloTAI008" msprop:Generator_ColumnVarNameInTable="columnIndicaModeloTAI008" msprop:Generator_ColumnPropNameInRow="IndicaModeloTAI008" msprop:Generator_ColumnPropNameInTable="IndicaModeloTAI008Column" msprop:Generator_UserColumnName="IndicaModeloTAI008" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DataInicioProjeto" msprop:Generator_ColumnVarNameInTable="columnDataInicioProjeto" msprop:Generator_ColumnPropNameInRow="DataInicioProjeto" msprop:Generator_ColumnPropNameInTable="DataInicioProjetoColumn" msprop:Generator_UserColumnName="DataInicioProjeto" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DataTerminoProjeto" msprop:Generator_ColumnVarNameInTable="columnDataTerminoProjeto" msprop:Generator_ColumnPropNameInRow="DataTerminoProjeto" msprop:Generator_ColumnPropNameInTable="DataTerminoProjetoColumn" msprop:Generator_UserColumnName="DataTerminoProjeto" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tai04_ProdutoIntermediario" msprop:Generator_TableClassName="tai04_ProdutoIntermediarioDataTable" msprop:Generator_TableVarName="tabletai04_ProdutoIntermediario" msprop:Generator_RowChangedName="tai04_ProdutoIntermediarioRowChanged" msprop:Generator_TablePropName="tai04_ProdutoIntermediario" msprop:Generator_RowDeletingName="tai04_ProdutoIntermediarioRowDeleting" msprop:Generator_RowChangingName="tai04_ProdutoIntermediarioRowChanging" msprop:Generator_RowEvHandlerName="tai04_ProdutoIntermediarioRowChangeEventHandler" msprop:Generator_RowDeletedName="tai04_ProdutoIntermediarioRowDeleted" msprop:Generator_RowClassName="tai04_ProdutoIntermediarioRow" msprop:Generator_UserTableName="tai04_ProdutoIntermediario" msprop:Generator_RowEvArgName="tai04_ProdutoIntermediarioRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProdutoIntermediario" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoProdutoIntermediario" msprop:Generator_ColumnPropNameInRow="CodigoProdutoIntermediario" msprop:Generator_ColumnPropNameInTable="CodigoProdutoIntermediarioColumn" msprop:Generator_UserColumnName="CodigoProdutoIntermediario" type="xs:int" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="DescricaoProdutoIntermediario" msprop:Generator_ColumnVarNameInTable="columnDescricaoProdutoIntermediario" msprop:Generator_ColumnPropNameInRow="DescricaoProdutoIntermediario" msprop:Generator_ColumnPropNameInTable="DescricaoProdutoIntermediarioColumn" msprop:Generator_UserColumnName="DescricaoProdutoIntermediario" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="512" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tai04_Premissa" msprop:Generator_TableClassName="tai04_PremissaDataTable" msprop:Generator_TableVarName="tabletai04_Premissa" msprop:Generator_RowChangedName="tai04_PremissaRowChanged" msprop:Generator_TablePropName="tai04_Premissa" msprop:Generator_RowDeletingName="tai04_PremissaRowDeleting" msprop:Generator_RowChangingName="tai04_PremissaRowChanging" msprop:Generator_RowEvHandlerName="tai04_PremissaRowChangeEventHandler" msprop:Generator_RowDeletedName="tai04_PremissaRowDeleted" msprop:Generator_RowClassName="tai04_PremissaRow" msprop:Generator_UserTableName="tai04_Premissa" msprop:Generator_RowEvArgName="tai04_PremissaRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoPremissa" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoPremissa" msprop:Generator_ColumnPropNameInRow="CodigoPremissa" msprop:Generator_ColumnPropNameInTable="CodigoPremissaColumn" msprop:Generator_UserColumnName="CodigoPremissa" type="xs:int" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="DescricaoPremissa" msprop:Generator_ColumnVarNameInTable="columnDescricaoPremissa" msprop:Generator_ColumnPropNameInRow="DescricaoPremissa" msprop:Generator_ColumnPropNameInTable="DescricaoPremissaColumn" msprop:Generator_UserColumnName="DescricaoPremissa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="512" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tai04_Restricao" msprop:Generator_TableClassName="tai04_RestricaoDataTable" msprop:Generator_TableVarName="tabletai04_Restricao" msprop:Generator_RowChangedName="tai04_RestricaoRowChanged" msprop:Generator_TablePropName="tai04_Restricao" msprop:Generator_RowDeletingName="tai04_RestricaoRowDeleting" msprop:Generator_RowChangingName="tai04_RestricaoRowChanging" msprop:Generator_RowEvHandlerName="tai04_RestricaoRowChangeEventHandler" msprop:Generator_RowDeletedName="tai04_RestricaoRowDeleted" msprop:Generator_RowClassName="tai04_RestricaoRow" msprop:Generator_UserTableName="tai04_Restricao" msprop:Generator_RowEvArgName="tai04_RestricaoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoRestricao" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoRestricao" msprop:Generator_ColumnPropNameInRow="CodigoRestricao" msprop:Generator_ColumnPropNameInTable="CodigoRestricaoColumn" msprop:Generator_UserColumnName="CodigoRestricao" type="xs:int" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="DescricaoRestricao" msprop:Generator_ColumnVarNameInTable="columnDescricaoRestricao" msprop:Generator_ColumnPropNameInRow="DescricaoRestricao" msprop:Generator_ColumnPropNameInTable="DescricaoRestricaoColumn" msprop:Generator_UserColumnName="DescricaoRestricao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="512" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tai04_Parceiro" msprop:Generator_TableClassName="tai04_ParceiroDataTable" msprop:Generator_TableVarName="tabletai04_Parceiro" msprop:Generator_RowChangedName="tai04_ParceiroRowChanged" msprop:Generator_TablePropName="tai04_Parceiro" msprop:Generator_RowDeletingName="tai04_ParceiroRowDeleting" msprop:Generator_RowChangingName="tai04_ParceiroRowChanging" msprop:Generator_RowEvHandlerName="tai04_ParceiroRowChangeEventHandler" msprop:Generator_RowDeletedName="tai04_ParceiroRowDeleted" msprop:Generator_RowClassName="tai04_ParceiroRow" msprop:Generator_UserTableName="tai04_Parceiro" msprop:Generator_RowEvArgName="tai04_ParceiroRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoParceiro" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoParceiro" msprop:Generator_ColumnPropNameInRow="CodigoParceiro" msprop:Generator_ColumnPropNameInTable="CodigoParceiroColumn" msprop:Generator_UserColumnName="CodigoParceiro" type="xs:int" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="DescricaoParceiro" msprop:Generator_ColumnVarNameInTable="columnDescricaoParceiro" msprop:Generator_ColumnPropNameInRow="DescricaoParceiro" msprop:Generator_ColumnPropNameInTable="DescricaoParceiroColumn" msprop:Generator_UserColumnName="DescricaoParceiro" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="512" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tai04_AcoesIniciativa" msprop:Generator_TableClassName="tai04_AcoesIniciativaDataTable" msprop:Generator_TableVarName="tabletai04_AcoesIniciativa" msprop:Generator_TablePropName="tai04_AcoesIniciativa" msprop:Generator_RowDeletingName="tai04_AcoesIniciativaRowDeleting" msprop:Generator_RowChangingName="tai04_AcoesIniciativaRowChanging" msprop:Generator_RowEvHandlerName="tai04_AcoesIniciativaRowChangeEventHandler" msprop:Generator_RowDeletedName="tai04_AcoesIniciativaRowDeleted" msprop:Generator_UserTableName="tai04_AcoesIniciativa" msprop:Generator_RowChangedName="tai04_AcoesIniciativaRowChanged" msprop:Generator_RowEvArgName="tai04_AcoesIniciativaRowChangeEvent" msprop:Generator_RowClassName="tai04_AcoesIniciativaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoAcaoIniciativa" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoAcaoIniciativa" msprop:Generator_ColumnPropNameInRow="CodigoAcaoIniciativa" msprop:Generator_ColumnPropNameInTable="CodigoAcaoIniciativaColumn" msprop:Generator_UserColumnName="CodigoAcaoIniciativa" type="xs:int" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="NomeAcao" msprop:Generator_ColumnVarNameInTable="columnNomeAcao" msprop:Generator_ColumnPropNameInRow="NomeAcao" msprop:Generator_ColumnPropNameInTable="NomeAcaoColumn" msprop:Generator_UserColumnName="NomeAcao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="512" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoUsuarioResponsavel" msprop:Generator_ColumnVarNameInTable="columnCodigoUsuarioResponsavel" msprop:Generator_ColumnPropNameInRow="CodigoUsuarioResponsavel" msprop:Generator_ColumnPropNameInTable="CodigoUsuarioResponsavelColumn" msprop:Generator_UserColumnName="CodigoUsuarioResponsavel" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeUsuarioResponsavel" msprop:Generator_ColumnVarNameInTable="columnNomeUsuarioResponsavel" msprop:Generator_ColumnPropNameInRow="NomeUsuarioResponsavel" msprop:Generator_ColumnPropNameInTable="NomeUsuarioResponsavelColumn" msprop:Generator_UserColumnName="NomeUsuarioResponsavel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DataInicio" msprop:Generator_ColumnVarNameInTable="columnDataInicio" msprop:Generator_ColumnPropNameInRow="DataInicio" msprop:Generator_ColumnPropNameInTable="DataInicioColumn" msprop:Generator_UserColumnName="DataInicio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DataTermino" msprop:Generator_ColumnVarNameInTable="columnDataTermino" msprop:Generator_ColumnPropNameInRow="DataTermino" msprop:Generator_ColumnPropNameInTable="DataTerminoColumn" msprop:Generator_UserColumnName="DataTermino" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ValorPrevisto" msprop:Generator_ColumnVarNameInTable="columnValorPrevisto" msprop:Generator_ColumnPropNameInRow="ValorPrevisto" msprop:Generator_ColumnPropNameInTable="ValorPrevistoColumn" msprop:Generator_UserColumnName="ValorPrevisto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ServicoCompartilhado" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServicoCompartilhado" msprop:Generator_ColumnPropNameInRow="ServicoCompartilhado" msprop:Generator_ColumnPropNameInTable="ServicoCompartilhadoColumn" msprop:Generator_UserColumnName="ServicoCompartilhado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Usuario" msprop:Generator_TableClassName="UsuarioDataTable" msprop:Generator_TableVarName="tableUsuario" msprop:Generator_TablePropName="Usuario" msprop:Generator_RowDeletingName="UsuarioRowDeleting" msprop:Generator_RowChangingName="UsuarioRowChanging" msprop:Generator_RowEvHandlerName="UsuarioRowChangeEventHandler" msprop:Generator_RowDeletedName="UsuarioRowDeleted" msprop:Generator_UserTableName="Usuario" msprop:Generator_RowChangedName="UsuarioRowChanged" msprop:Generator_RowEvArgName="UsuarioRowChangeEvent" msprop:Generator_RowClassName="UsuarioRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoUsuario" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoUsuario" msprop:Generator_ColumnPropNameInRow="CodigoUsuario" msprop:Generator_ColumnPropNameInTable="CodigoUsuarioColumn" msprop:Generator_UserColumnName="CodigoUsuario" type="xs:int" />
+              <xs:element name="NomeUsuario" msprop:Generator_ColumnVarNameInTable="columnNomeUsuario" msprop:Generator_ColumnPropNameInRow="NomeUsuario" msprop:Generator_ColumnPropNameInTable="NomeUsuarioColumn" msprop:Generator_UserColumnName="NomeUsuario">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tai04_ProdutoFinal" msprop:Generator_TableClassName="tai04_ProdutoFinalDataTable" msprop:Generator_TableVarName="tabletai04_ProdutoFinal" msprop:Generator_TablePropName="tai04_ProdutoFinal" msprop:Generator_RowDeletingName="tai04_ProdutoFinalRowDeleting" msprop:Generator_RowChangingName="tai04_ProdutoFinalRowChanging" msprop:Generator_RowEvHandlerName="tai04_ProdutoFinalRowChangeEventHandler" msprop:Generator_RowDeletedName="tai04_ProdutoFinalRowDeleted" msprop:Generator_UserTableName="tai04_ProdutoFinal" msprop:Generator_RowChangedName="tai04_ProdutoFinalRowChanged" msprop:Generator_RowEvArgName="tai04_ProdutoFinalRowChangeEvent" msprop:Generator_RowClassName="tai04_ProdutoFinalRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProdutoFinal" msprop:Generator_ColumnVarNameInTable="columnCodigoProdutoFinal" msprop:Generator_ColumnPropNameInRow="CodigoProdutoFinal" msprop:Generator_ColumnPropNameInTable="CodigoProdutoFinalColumn" msprop:Generator_UserColumnName="CodigoProdutoFinal" type="xs:int" minOccurs="0" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" minOccurs="0" />
+              <xs:element name="DescricaoProdutoFinal" msprop:Generator_ColumnVarNameInTable="columnDescricaoProdutoFinal" msprop:Generator_ColumnPropNameInRow="DescricaoProdutoFinal" msprop:Generator_ColumnPropNameInTable="DescricaoProdutoFinalColumn" msprop:Generator_UserColumnName="DescricaoProdutoFinal" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TermoAbertura04" />
+      <xs:field xpath="mstns:CodigoProjeto" />
+    </xs:unique>
+    <xs:unique name="tai04_ProdutoIntermediario_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tai04_ProdutoIntermediario" />
+      <xs:field xpath="mstns:CodigoProdutoIntermediario" />
+    </xs:unique>
+    <xs:unique name="tai04_Premissa_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tai04_Premissa" />
+      <xs:field xpath="mstns:CodigoPremissa" />
+    </xs:unique>
+    <xs:unique name="tai04_Restricao_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tai04_Restricao" />
+      <xs:field xpath="mstns:CodigoRestricao" />
+    </xs:unique>
+    <xs:unique name="tai04_Parceiro_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tai04_Parceiro" />
+      <xs:field xpath="mstns:CodigoParceiro" />
+      <xs:field xpath="mstns:CodigoProjeto" />
+    </xs:unique>
+    <xs:unique name="tai04_AcoesIniciativa_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tai04_AcoesIniciativa" />
+      <xs:field xpath="mstns:CodigoAcaoIniciativa" />
+      <xs:field xpath="mstns:CodigoProjeto" />
+    </xs:unique>
+    <xs:unique name="Usuario_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Usuario" />
+      <xs:field xpath="mstns:CodigoUsuario" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="TermoAbertura04_tai04_Parceiro" msdata:parent="TermoAbertura04" msdata:child="tai04_Parceiro" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="tai04_Parceiro" msprop:Generator_ChildPropName="Gettai04_ParceiroRows" msprop:Generator_UserRelationName="TermoAbertura04_tai04_Parceiro" msprop:Generator_RelationVarName="relationTermoAbertura04_tai04_Parceiro" msprop:Generator_UserParentTable="TermoAbertura04" msprop:Generator_ParentPropName="TermoAbertura04Row" />
+      <msdata:Relationship name="TermoAbertura04_tai04_ProdutoIntermediario" msdata:parent="TermoAbertura04" msdata:child="tai04_ProdutoIntermediario" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="tai04_ProdutoIntermediario" msprop:Generator_ChildPropName="Gettai04_ProdutoIntermediarioRows" msprop:Generator_UserRelationName="TermoAbertura04_tai04_ProdutoIntermediario" msprop:Generator_RelationVarName="relationTermoAbertura04_tai04_ProdutoIntermediario" msprop:Generator_UserParentTable="TermoAbertura04" msprop:Generator_ParentPropName="TermoAbertura04Row" />
+      <msdata:Relationship name="TermoAbertura04_tai04_Premissa" msdata:parent="TermoAbertura04" msdata:child="tai04_Premissa" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="tai04_Premissa" msprop:Generator_ChildPropName="Gettai04_PremissaRows" msprop:Generator_UserRelationName="TermoAbertura04_tai04_Premissa" msprop:Generator_RelationVarName="relationTermoAbertura04_tai04_Premissa" msprop:Generator_UserParentTable="TermoAbertura04" msprop:Generator_ParentPropName="TermoAbertura04Row" />
+      <msdata:Relationship name="TermoAbertura04_tai04_Restricao" msdata:parent="TermoAbertura04" msdata:child="tai04_Restricao" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="tai04_Restricao" msprop:Generator_ChildPropName="Gettai04_RestricaoRows" msprop:Generator_UserRelationName="TermoAbertura04_tai04_Restricao" msprop:Generator_RelationVarName="relationTermoAbertura04_tai04_Restricao" msprop:Generator_UserParentTable="TermoAbertura04" msprop:Generator_ParentPropName="TermoAbertura04Row" />
+      <msdata:Relationship name="TermoAbertura04_tai04_AcoesIniciativa1" msdata:parent="TermoAbertura04" msdata:child="tai04_AcoesIniciativa" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="tai04_AcoesIniciativa" msprop:Generator_ChildPropName="Gettai04_AcoesIniciativaRows" msprop:Generator_UserRelationName="TermoAbertura04_tai04_AcoesIniciativa1" msprop:Generator_ParentPropName="TermoAbertura04Row" msprop:Generator_RelationVarName="relationTermoAbertura04_tai04_AcoesIniciativa1" msprop:Generator_UserParentTable="TermoAbertura04" />
+      <msdata:Relationship name="TermoAbertura04_tai04_ProdutoFinal" msdata:parent="TermoAbertura04" msdata:child="tai04_ProdutoFinal" msdata:parentkey="CodigoProjeto" msdata:childkey="CodigoProjeto" msprop:Generator_UserChildTable="tai04_ProdutoFinal" msprop:Generator_ChildPropName="Gettai04_ProdutoFinalRows" msprop:Generator_UserRelationName="TermoAbertura04_tai04_ProdutoFinal" msprop:Generator_ParentPropName="TermoAbertura04Row" msprop:Generator_RelationVarName="relationTermoAbertura04_tai04_ProdutoFinal" msprop:Generator_UserParentTable="TermoAbertura04" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

@@ -1,0 +1,327 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Web.Script.Serialization;
+using System.Text;
+
+public partial class Reunioes_ItensPauta_DadosFinanceiros : System.Web.UI.Page
+{
+    dados cDados;
+
+    DataSet ds;
+    DataTable dtFinanceiro;
+    DataTable dtLegendas;
+    DataTable dtCurvaS;
+
+    protected int codigoReuniao;
+    protected int alturaPrincipal;
+
+    protected int codigoUsuario;
+    protected int codigoEntidade;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        codigoReuniao = int.Parse(Request.QueryString["cr"]);
+        alturaPrincipal = int.Parse(Request.QueryString["al"]);
+
+        cDados = CdadosUtil.GetCdados(null);
+        cDados.aplicaEstiloVisual(this);
+
+        codigoUsuario = Convert.ToInt32(cDados.getInfoSistema("IDUsuarioLogado"));
+        codigoEntidade = Convert.ToInt32(cDados.getInfoSistema("CodigoEntidade"));
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        InicializaDados();
+        //if (!IsCallback)
+        //    ExibeInformacoes();
+        dataView.DataSource = dtFinanceiro;
+        dataView.DataBind();
+    }
+
+    private void ExibeInformacoes()
+    {
+        if (dtFinanceiro.Rows.Count > 0)
+        {
+            DataRow dr = dtFinanceiro.AsEnumerable().First();
+            //lblOrcamento.Value = string.Format("{0:c2}", dr["ValorCustoPrevisto"]);
+            //lblInicio.Value = string.Format("{0:dd/MM/yyyy}", dr["DataInicioProjeto"]);
+            //lblTermino.Value = string.Format("{0:dd/MM/yyyy}", dr["DataTerminoPrevistoProjeto"]);
+            //memoDescricao.Value = dr["descricaoObjetivoPrincipal"];
+        }
+    }
+
+    private string ObtemCor(string cor)
+    {
+        if (string.IsNullOrWhiteSpace(cor))
+            return null;
+
+        Dictionary<string, string> cores =
+            new Dictionary<string, string>();
+        cores["azul"] = "#0000FF";
+        cores["vermelho"] = "#FF0000";
+        cores["branco"] = "#FFFFFF";
+        cores["verde"] = "#00FF00";
+        cores["amarelo"] = "#FFFF00";
+        cores["laranja"] = "#FFA500";
+
+        string hex = cores[cor.ToLower()];
+
+        return hex;
+    }
+
+    protected void callback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
+    {
+        if (dtFinanceiro.Rows.Count == 1)
+        {
+            DataRow dr = dtFinanceiro.AsEnumerable().Single();
+
+            #region Variáveis
+            decimal? percentFisicoPrev = dr.Field<decimal?>("percentualPrevistoRealizacao");
+            decimal? percentFisicoReal = dr.Field<decimal?>("percentualRealizacao");
+            string corDesempenhoFisco = dr["corDesempenhoFisico"].ToString();
+            decimal? percentDespesaPrev = dr.Field<decimal?>("PercentualFinanceiroPrevisto");
+            decimal? percentDespesaReal = dr.Field<decimal?>("PercentualFinanceiroRealizado");
+            decimal? valorDespesaPrev = dr.Field<decimal?>("valorCustoPrevisto");
+            decimal? valorDespesaReal = dr.Field<decimal?>("valorCustoRealizado");
+            string corDesempenhoDespesa = dr["corDesempenhoCusto"].ToString();
+            decimal? percentReceitaPrev = dr.Field<decimal?>("percentualReceitaPrevisto");
+            decimal? percentReceitaReal = dr.Field<decimal?>("percentualReceitaRealizado");
+            decimal? valorReceitaPrev = dr.Field<decimal?>("valorReceitaPrevisto");
+            decimal? valorReceitaReal = dr.Field<decimal?>("valorReceitaRealizado");
+            string corDesempenhoReceita = dr["corDesempenhoReceita"].ToString();
+            #endregion
+
+            #region Configuraçoes Legenda
+            List<string> legendasFisico = new List<string>();
+            List<string> legendasReceita = new List<string>();
+            List<string> legendasDespesa = new List<string>();
+
+            foreach (DataRow drLegenda in dtLegendas.Rows)
+            {
+                legendasFisico.Add(string.Format("{0}|{1}",
+                    ObtemCor(drLegenda["CorFaixaFisico"].ToString()),
+                    drLegenda["DescricaoFaixaFisico"]));
+                legendasDespesa.Add(string.Format("{0}|{1}",
+                    ObtemCor(drLegenda["CorFaixaFinanceiro"].ToString()),
+                    drLegenda["DescricaoFaixaFinanceiro"]));
+                legendasReceita.Add(string.Format("{0}|{1}",
+                    ObtemCor(drLegenda["CorFaixaReceita"].ToString()),
+                    drLegenda["DescricaoFaixaReceita"]));
+            }
+            Predicate<string> predicate = leg => leg.Trim().Equals("|");
+            legendasFisico.RemoveAll(predicate);
+            legendasReceita.RemoveAll(predicate);
+            legendasDespesa.RemoveAll(predicate);
+            #endregion
+
+            #region Dados Gráfico
+
+            /*var dadosGraficos = new[] 
+            { 
+                #region Físico
+                new 
+                {
+                    IdDivGrafico = "#divFisico",
+                    Titulo = "Físico",
+                    DataSource = new []
+                    {
+                        new 
+                        {
+                            PercentualPrevisto = percentFisicoPrev,
+                            PercentualRealizado = percentFisicoReal,
+                            ValorPrevisto = (decimal?)null,
+                            ValorRealizado = (decimal?)null
+                        }
+                    },
+                    Series = new[]
+                    { 
+                        new 
+                        {
+                            valueField = "PercentualPrevisto",
+                            name = "Previsto",
+                            color = "#a5a5a5",
+                            tagField = "ValorPrevisto"
+                        },
+                        new 
+                        {
+                            valueField = "PercentualRealizado",
+                            name = "Realizado",
+                            color = ObtemCor(corDesempenhoFisco),
+                            tagField = "ValorRealizado"
+                        }
+                    },
+                    Legendas = legendasFisico.ToArray(),
+                    MostraValorAbsoluto = false,
+                    ExibirGrafico = percentFisicoPrev.HasValue || percentFisicoReal.HasValue
+                }, 
+                #endregion
+                #region Despesa
+                new 
+                {
+                    IdDivGrafico = "#divDespesa",
+                    Titulo = "Despesa",
+                    DataSource = new []
+                    {
+                        new 
+                        {
+                            PercentualPrevisto = percentDespesaPrev,
+                            PercentualRealizado = percentDespesaReal,
+                            ValorPrevisto = valorDespesaPrev,
+                            ValorRealizado = valorDespesaReal
+                        }
+                    },
+                    Series = new[]
+                    { 
+                        new 
+                        {
+                            valueField = "PercentualPrevisto",
+                            name = "Previsto",
+                            color = "#a5a5a5",
+                            tagField = "ValorPrevisto"
+                        },
+                        new 
+                        {
+                            valueField = "PercentualRealizado",
+                            name = "Realizado",
+                            color = ObtemCor(corDesempenhoDespesa),
+                            tagField = "ValorRealizado"
+                        }
+                    },
+                    Legendas = legendasReceita.ToArray(),
+                    MostraValorAbsoluto = true,
+                    ExibirGrafico = percentDespesaPrev.HasValue || percentDespesaReal.HasValue
+                }, 
+                #endregion
+                #region Receita
+                new 
+                { 
+                    IdDivGrafico = "#divReceita", 
+                    Titulo = "Receita", 
+                    DataSource = new []
+                    {
+                        new 
+                        {
+                            PercentualPrevisto = percentReceitaPrev,
+                            PercentualRealizado = percentReceitaReal,
+                            ValorPrevisto = valorReceitaPrev,
+                            ValorRealizado = valorReceitaReal
+                        }
+                    },
+                    Series = new [] 
+                    { 
+                        new 
+                        {
+                            valueField = "PercentualPrevisto",
+                            name = "Previsto",
+                            color = "#a5a5a5",
+                            tagField = "ValorPrevisto"
+                        },
+                        new 
+                        {
+                            valueField = "PercentualRealizado",
+                            name = "Realizado",
+                            color = ObtemCor(corDesempenhoReceita),
+                            tagField = "ValorRealizado"
+                        }
+                    }, 
+                    Legendas = legendasDespesa.ToArray(),
+                    MostraValorAbsoluto = true,
+                    ExibirGrafico = percentReceitaPrev.HasValue || percentReceitaReal.HasValue
+                } 
+                #endregion
+            };*/
+            #endregion
+
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+
+            //StringBuilder sbDadosGrafico = new StringBuilder();
+
+            List<string> dataSource = new List<string>();
+            foreach (DataRow row in dtCurvaS.Rows)
+            {
+                dataSource.Add(jsSerializer.Serialize(new
+                {
+                    Periodo = row["Periodo"].ToString(),
+                    ValorPrevisto = (decimal?)(row.IsNull("ValorPrevisto") ?
+                        (decimal?)null :
+                        row.Field<decimal>("ValorPrevisto")),
+                    ValorReal = (decimal?)(row.IsNull("ValorReal") ?
+                        (decimal?)null :
+                        row.Field<decimal>("ValorReal"))
+                }));
+            }
+            var configGrafico = new
+            {
+                IdDivGrafico = "#divCurvaS",
+                Titulo = "Curva S - Custos",
+                DataSource = string.Format("[{0}]", string.Join(",", dataSource)),
+                Series = new[]
+                {
+                    new 
+                    {
+                        valueField = "ValorPrevisto",
+                        name = "Previsto",
+                        color = "#a5a5a5"
+                    },
+                    new 
+                    {
+                        valueField = "ValorReal",
+                        name = "Realizado",
+                        color = ObtemCor(corDesempenhoFisco)
+                    }
+                },
+                Legendas = legendasFisico.ToArray()
+            };
+
+            e.Result = string.Format("({0})", 
+                jsSerializer.Serialize(configGrafico));
+        }
+    }
+
+    private void InicializaDados()
+    {
+        string comandoSql;
+
+        #region Comando SQL
+
+        comandoSql = string.Format(@"
+DECLARE @CodigoEntidade INT,
+        @CodigoUsuario INT,
+        @CodigoEvento INT,
+        @CodigoObjeto BIGINT,
+        @IniciaisTipoObjeto CHAR(4)
+    SET @CodigoEntidade = {0}
+    SET @CodigoUsuario = {1}
+    SET @CodigoEvento = {2}
+
+ SELECT @CodigoObjeto = e.CodigoObjetoAssociado,
+        @IniciaisTipoObjeto = (CASE ta.IniciaisTipoAssociacao WHEN 'PR' THEN 'PROJ' ELSE '' END)
+   FROM Evento AS e INNER JOIN
+        TipoAssociacao AS ta ON ta.CodigoTipoAssociacao = e.CodigoTipoAssociacao
+  WHERE e.CodigoEvento = @CodigoEvento
+
+EXEC [p_getDadosProjetoReuniao] @CodigoObjeto
+
+ SELECT * FROM dbo.f_getCurvaSFinanceiraGrupoProjeto(@CodigoEntidade, @CodigoUsuario, @CodigoObjeto, @IniciaisTipoObjeto, NULL)
+ 
+ SELECT Valor FROM ParametroConfiguracaoSistema WHERE Parametro LIKE 'corPrevisto' AND CodigoEntidade = @CodigoEntidade
+ 
+ SELECT Valor FROM ParametroConfiguracaoSistema WHERE Parametro LIKE 'corReal' AND CodigoEntidade = @CodigoEntidade"
+            , codigoEntidade
+            , codigoUsuario
+            , codigoReuniao);
+
+        #endregion
+
+        ds = cDados.getDataSet(comandoSql);
+        dtFinanceiro = ds.Tables[0];
+        dtLegendas = ds.Tables[1];
+        dtCurvaS = ds.Tables[2];
+    }
+}

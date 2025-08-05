@@ -1,0 +1,45 @@
+@import '../../variables';
+
+.b-recurrenceeditor {
+    .b-panel {
+        --panel-background-color : inherit;
+    }
+
+    .b-recurrenceeditorpanel-content.b-panel-content {
+        padding    : 0;
+        column-gap : 1em;
+
+        .b-field {
+            label.b-align-start {
+                flex : 1 0 $recurrenceeditor-label-width;
+            }
+        }
+
+        .b-recurrencepositionscombo {
+            @if $field-container-margin-left {
+                flex : 0 0 $recurrenceeditor-label-width - $field-container-margin-left - 0.5em;
+            } @else {
+                flex : 0 0 $recurrenceeditor-label-width - 0.5em;
+            }
+        }
+    }
+
+    .b-bottom-toolbar {
+        .b-label-filler {
+            @if $recurrenceeditor-label-filler-width == null {
+                display : none;
+            }
+            width : $recurrenceeditor-label-filler-width;
+        }
+
+        button {
+            flex : 1;
+        }
+    }
+}
+
+.b-schedulerpro-taskeditor .b-recurrenceeditor {
+    .b-buttongroup {
+        font-size : .8em;
+    }
+}

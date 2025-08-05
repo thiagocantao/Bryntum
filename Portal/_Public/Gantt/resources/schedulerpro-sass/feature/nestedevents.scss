@@ -1,0 +1,109 @@
+@import '../variables';
+
+.b-schedulerprobase {
+    --schedulerpro-nested-event-header-height : 20px;
+}
+
+.b-sch-event-wrap.b-nested-events-parent {
+    > .b-sch-event:not(.b-milestone) {
+        flex-direction : column;
+        width          : 100%; // To not cut 1px away
+
+        // Turn event content into a thin header at top
+        > .b-sch-event-content {
+            padding-block : 0.1em;
+            flex          : 0 0 var(--schedulerpro-nested-event-header-height);
+        }
+
+        // Hide resize handles
+        &::before,
+        &::after {
+            display : none;
+        }
+    }
+
+    &.b-sch-style-plain,
+    &.b-sch-style-colored,
+    &.b-sch-style-rounded {
+        > .b-sch-event:not(.b-milestone) {
+            color            : $nested-events-parent-color;
+            background-color : transparent;
+            border-left      : none;
+            border-radius    : 0;
+
+            &.b-sch-event-selected > .b-sch-event-content,
+            &.b-sch-event-selected > .b-sch-event-content > * {
+                color : $nested-events-parent-selected-color;
+            }
+
+            &.b-sch-event-selected:hover {
+                background-color : $nested-events-parent-hover-background-color;
+            }
+        }
+
+        &.b-sch-event-hover {
+            > .b-sch-event:not(.b-milestone) {
+                background-color : $nested-events-parent-hover-background-color;
+            }
+        }
+
+        .b-nested-events-container {
+            background-color : $nested-events-parent-hover-background-color;
+        }
+    }
+
+    &.b-sch-style-border {
+        > .b-sch-event:not(.b-milestone) {
+            background-image : linear-gradient(#dddddd90, #dddddd90);
+        }
+    }
+
+    &.b-sch-style-hollow:hover > .b-sch-event {
+        background-image : linear-gradient(#ffffff50, #ffffff50);
+    }
+}
+
+.b-nested-events-container {
+    position   : relative;
+    align-self : flex-start;
+    flex       : 1;
+    width      : 100%;
+    overflow   : visible;
+    transition : background .2s;
+
+    .b-sch-event:not(.b-milestone) {
+        width : 100%; // To not cut 1px away
+    }
+
+    .b-sch-style-border {
+        // Compensate for border on the left side
+        transform : translateX(-1px);
+    }
+
+    .b-sch-style-hollow {
+        // Compensate for border on the left side
+        transform : translateX(-2px);
+    }
+
+    &.b-nested-events-layout-stack {
+        overflow-y : auto;
+        overflow-x : hidden;
+    }
+}
+
+// Turn things around for vertical mode
+.b-sch-event-wrap.b-nested-events-parent.b-sch-vertical {
+    > .b-sch-event:not(.b-milestone) {
+        flex-direction : row;
+        padding        : 0;
+
+        > .b-sch-event-content {
+            writing-mode : vertical-rl;
+            transform    : rotate(180deg);
+        }
+    }
+
+    .b-nested-events-container {
+        height : 100%;
+    }
+}

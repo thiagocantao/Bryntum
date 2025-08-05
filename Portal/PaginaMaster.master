@@ -1,0 +1,243 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="PaginaMaster.master.cs" Inherits="PaginaMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .style1
+        {
+            width: 100%;
+        }
+        .style2
+        {
+            width: 150px;
+        }
+    </style>
+</head>
+<body style="margin:0px">
+    <form id="form1" runat="server">
+    <div>       
+        
+            <dxcp:ASPxSplitter ID="splitterMaster" runat="server" FullscreenMode="True" 
+                Height="100%" Orientation="Vertical" Width="100%" AllowResize="False" 
+                PaneMinSize="55px">
+                <Panes>
+                    <dxtv:SplitterPane ShowCollapseBackwardButton="True" 
+                        ShowCollapseForwardButton="True" Size="55px">
+                        <PaneStyle HorizontalAlign="Center">
+                        </PaneStyle>
+                        <ContentCollection>
+<dxcp:SplitterContentControl runat="server" >
+    <table cellpadding="0" cellspacing="0" width="100%" class="style1" 
+        align="center">
+        <tr>
+            <td align="center" height="50px" class="style2">
+                <dxtv:ASPxBinaryImage ID="ASPxBinaryImage1" runat="server" Height="50px">
+                    <EmptyImage Url="~/espacoCliente/LogoPortal.png">
+                    </EmptyImage>
+                </dxtv:ASPxBinaryImage>
+            </td>
+            <td align="left" height="50px" valign="bottom" >
+                <dxtv:ASPxMenu ID="menuPrincipalMasterPage" runat="server" BackColor="Transparent" 
+                    EnableSubMenuFullWidth="True" Font-Bold="False" Font-Names="Verdana" 
+                    Font-Size="8pt" EnableTheming="True" Theme="SoftOrange" Height="100%">
+                    
+                    <ItemStyle BackColor="Transparent" Font-Bold="True" Font-Names="Verdana" 
+                        Font-Size="9pt">
+                    <HoverStyle BackColor="#99CCFF">
+                        <Border BorderStyle="None" />
+                    </HoverStyle>
+                    </ItemStyle>
+                    <LinkStyle>
+                        <Font Bold="False"></Font>
+                    </LinkStyle>
+                    <SubMenuTemplate>
+                        <dxtv:ASPxSiteMapControl ID="smMenu" runat="server" Width="100%" 
+                                    Theme="Moderno" Categorized="True" Font-Names="Verdana" 
+                            RepeatDirection="Horizontal">
+                                    <DefaultLevelProperties Wrap="True">
+                                    </DefaultLevelProperties>
+                                    <Columns>
+                                        <dxtv:SiteMapColumn>
+                                        </dxtv:SiteMapColumn>
+                                        <dxtv:SiteMapColumn>
+                                        </dxtv:SiteMapColumn>
+                                        <dxtv:SiteMapColumn>
+                                        </dxtv:SiteMapColumn>
+                                        <dxtv:SiteMapColumn>
+                                        </dxtv:SiteMapColumn>
+                                    </Columns>
+                                </dxtv:ASPxSiteMapControl>
+                    </SubMenuTemplate>
+                    <Border BorderStyle="None" />
+                    <BorderTop BorderColor="Gray" BorderStyle="None" BorderWidth="1px" />
+                </dxtv:ASPxMenu>
+            </td>
+            <td align="right" height="50px" 
+                style="padding-right: 5px; " valign="bottom">
+                <dxtv:ASPxLabel ID="lblBemVindo" runat="server" 
+                    ClientInstanceName="lblBemVindo" EnableViewState="False" EncodeHtml="False" 
+                    Font-Names="Verdana" Font-Size="7pt">
+                </dxtv:ASPxLabel>
+            </td>
+        </tr>
+    </table>
+                            </dxcp:SplitterContentControl>
+</ContentCollection>
+                    </dxtv:SplitterPane>
+                    <dxtv:SplitterPane AutoHeight="True" AutoWidth="True">
+
+                        <ContentCollection>
+<dxcp:SplitterContentControl runat="server">
+    <table cellpadding="0" cellspacing="0" width="100%" class="dxflInternalEditorTable">
+        <tr>
+            <td>
+                <div style="width:100%">
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%" width="100%">
+                    <tr>
+                        <td style="border-bottom: #a9a9a9 1px solid;
+                            height: 20px; text-align: left">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: right">
+                            <dxe:ASPxImage ID="imgHome" runat="server" Cursor="pointer" ImageUrl="~/imagens/principal/Home_Menu.PNG"
+                                ToolTip="Minha Página Inicial" EnableViewState="False">
+                            </dxe:ASPxImage>
+                                    </td>
+                                    <td style="display: block; padding-left: 5px; text-align: center">
+                           <dxe:ASPxImage ID="imgFavoritos" runat="server" ImageUrl="~/imagens/principal/favoritos.png" 
+                                            ClientInstanceName="imgFavoritos" Cursor="pointer" Width="20px" 
+                                            EnableViewState="False">
+                                <ClientSideEvents Click="function(s, e) {
+	if(window.pcFavoritos)
+	    pcFavoritos.Show();
+}" />
+                            </dxe:ASPxImage>
+                                    </td>
+                                    <td style="padding-left: 5px; text-align: center">
+                            <dxe:ASPxImage ID="imgAcaoFavoritos" runat="server" 
+                                            ImageUrl="~/imagens/principal/favoritos_ADD.png" ClientVisible="False" 
+                                            Cursor="pointer" ToolTip="Adicionar aos Favoritos" Width="20px" 
+                                            EnableViewState="False">
+                            </dxe:ASPxImage>
+                                    </td>
+                                    <td style="padding-left: 10px; text-align: left">
+                            <dxe:ASPxLabel ID="lblCaminho" runat="server" ClientInstanceName="lblCaminho" Font-Names="Verdana"
+                                Font-Size="7pt" EncodeHtml="False">
+                            </dxe:ASPxLabel>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="padding-left: 10px; border-bottom: #a9a9a9 1px solid;
+                            text-align: right; height: 20px;">
+                            &nbsp;</td>
+                        <td style="border-bottom: #a9a9a9 1px solid; height: 20px; " 
+                            align="right">
+                            <table cellspacing="1">
+                                <tr>
+                                    <td>
+                                        <dxe:ASPxLabel ID="lblCarteira" runat="server" ClientVisible="False" 
+                                             Text="Carteira de Projetos:" 
+                                            EnableViewState="False" ClientInstanceName="lblCarteira">
+                                        </dxe:ASPxLabel>
+                                    </td>
+                                    <td>
+                <dxe:ASPxComboBox runat="server" Width="245px" 
+                                            ClientInstanceName="ddlVisaoInicial"  
+                                            ID="ddlVisaoInicial"  ClientVisible="False">
+                    <ClientSideEvents SelectedIndexChanged="function(s, e) {
+	callbackCarteiras.PerformCallback();
+}" />
+                                        </dxe:ASPxComboBox>
+
+
+                                    </td>
+                                    <td>
+                                        <asp:ImageButton ID="imgStatusReport" runat="server" 
+                                            ImageUrl="~/imagens/botoes/btnPDF.png" 
+                                            EnableViewState="True" />
+
+
+                                    </td>
+                                    <td>
+                                        <dxe:ASPxImage ID="imgHistoricoStatusReport" runat="server" 
+                                            ClientInstanceName="imgHistoricoStatusReport" Cursor="pointer" 
+                                            ImageUrl="~/imagens/botoes/btnBoletim.PNG" EnableViewState="False" 
+                                            ToolTip="Visualizar Histórico de Boletins de Status">
+                                            <ClientSideEvents Click="function(s, e) { 
+    var frame = document.getElementById('Frame_SR');
+	var w = screen.width - 300;
+	var h = screen.height - 300;
+	//frame.onload = new Function(&quot;atualizaSessao()&quot;);
+	frame.src = imgHistoricoStatusReport.cp_RelativePath + '&amp;Altura=' + (h - 110);
+	pcStatusReportCarteira.SetWidth(w);
+    frame.style.width = &quot;100%&quot;;
+    frame.style.height = h + &quot;px&quot;;
+	pcStatusReportCarteira.Show();
+
+	//var height = screen.height - 300;
+	//var varOpener = this;
+	//var modal = window.top.showModal(imgHistoricoStatusReport.cp_RelativePath, &quot;Boletim de Status&quot;, 750, height, null, varOpener);
+}" />
+                                        </dxe:ASPxImage>
+                                        
+                                    </td>
+                                    <td style="padding-right: 2px" valign="middle" id="tdContadorSessao">
+                                        &nbsp;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <dxcp:ASPxCallbackPanel ID="callbackPanel" runat="server" Height="100%" 
+                Width="100%" ClientInstanceName="callbackPanel" 
+                    OnCallback="callbackPanel_Callback">
+                <ClientSideEvents BeginCallback="function(s, e) {
+	callbackPanel.SetVisible(true);
+}" />
+                <PanelCollection>
+<dxcp:PanelContent ID="PanelContent1" runat="server"><asp:ContentPlaceHolder id="AreaTrabalho" runat="server" >
+                 </asp:ContentPlaceHolder></dxcp:PanelContent>
+</PanelCollection>
+            </dxcp:ASPxCallbackPanel>
+            </td>
+        </tr>
+    </table>
+                            </dxcp:SplitterContentControl>
+</ContentCollection>
+                    </dxtv:SplitterPane>
+                </Panes>
+                <ClientSideEvents PaneCollapsed="function(s, e) {
+	callbackResolucao.PerformCallback(s.GetPane(1).size + ';S');
+}" PaneExpanded="function(s, e) {
+	callbackResolucao.PerformCallback(s.GetPane(1).size + ';N');
+}" />
+                <Styles>
+                    <Pane HorizontalAlign="Center">
+                        <Paddings Padding="0px" />
+                    </Pane>
+                </Styles>
+            </dxcp:ASPxSplitter>
+    </div>
+    <dxcp:ASPxCallback ID="callbackResolucao" runat="server" 
+        ClientInstanceName="callbackResolucao" oncallback="callbackResolucao_Callback">
+        <ClientSideEvents BeginCallback="function(s, e) {
+	callbackPanel.SetVisible(false);
+}" EndCallback="function(s, e) {
+	
+	callbackPanel.PerformCallback();
+}" />
+    </dxcp:ASPxCallback>
+    </form>
+</body>
+</html>

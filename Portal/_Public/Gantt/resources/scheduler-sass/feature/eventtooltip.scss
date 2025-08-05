@@ -1,0 +1,15 @@
+@import '../variables';
+
+.b-popup.b-sch-event-tooltip {
+    max-width      : 30em;
+    display        : flex;
+    flex-direction : column;
+
+    .b-sch-event-title {
+        font-weight : $event-tooltip-title-weight;
+    }
+}
+
+.b-eventtip-content {
+    gap : 0.5em;
+}

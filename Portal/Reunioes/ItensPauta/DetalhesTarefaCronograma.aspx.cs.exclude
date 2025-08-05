@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+
+public partial class Reunioes_ItensPauta_DetalhesTarefaCronograma : System.Web.UI.Page
+{
+    dados cDados;
+
+    protected int codigoReuniao;
+    protected int alturaPrincipal;
+    protected int codigoTarefaCronograma;
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        codigoReuniao = int.Parse(Request.QueryString["cr"]);
+        alturaPrincipal = int.Parse(Request.QueryString["al"]);
+        codigoTarefaCronograma = int.Parse(Request.QueryString["co"]);
+
+        cDados = CdadosUtil.GetCdados(null);
+        cDados.aplicaEstiloVisual(this);
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        CarregaDadosGrid();
+    }
+
+    private void CarregaDadosGrid()
+    {
+        string dbName = cDados.getDbName();
+        string dbOwner = cDados.getDbOwner();
+        string comandoSql =
+            string.Format("EXEC {0}.{1}.p_getDadosTarefaCronograma {2}, {3}",
+            dbName, dbOwner, codigoReuniao, codigoTarefaCronograma);
+        DataSet ds = cDados.getDataSet(comandoSql);
+        DataTable dtDadosTarefa = ds.Tables[0];
+        DataTable dtRecursosTarefa = ds.Tables[1];
+
+        gvTarefas.DataSource = dtDadosTarefa;
+        gvTarefas.DataBind();
+
+        gvRecursosTarefa.DataSource = dtRecursosTarefa;
+        gvRecursosTarefa.DataBind();
+
+        bool indicaMostraCusto = dtDadosTarefa.AsEnumerable()
+            .Any(dr => dr["IndicaMostraCusto"].ToString().Equals("S"));
+        gvTarefas.Columns["colGrupoCustos"].Visible = indicaMostraCusto;
+    }
+}

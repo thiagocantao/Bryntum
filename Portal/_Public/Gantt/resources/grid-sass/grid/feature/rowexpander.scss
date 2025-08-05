@@ -1,0 +1,59 @@
+@import '../../variables';
+
+.b-rowexpander-row-expanded {
+
+    .b-rowexpander-body {
+        display     : flex;
+        border-top  : 1px solid $grid-cell-border-color;
+        position    : absolute;
+        left        : 0;
+        right       : 0;
+        color       : $grid-cell-color;
+        font-weight : $grid-cell-font-weight;
+    }
+
+    .b-rowexpander-loading {
+        justify-content : center;
+        align-items     : center;
+        font-size       : 1.2em;
+
+        .b-icon-spinner {
+            margin-inline-end : .5em;
+        }
+    }
+}
+
+.b-gridbase .b-grid-row [data-column="expanderActionColumn"] .b-icon.b-icon-collapse-down {
+    transition : transform 0.15s ease-in-out;
+    font-size  : 1em;
+}
+
+.b-rowexpander-disabled [data-column="expanderActionColumn"] {
+    opacity        : 0.2;
+    pointer-events : none;
+}
+
+.b-rowexpander.b-gridbase.b-animating.b-rowexpander-animating {
+
+    &.b-autoheight {
+        // When autoHeight, resize of these 2 elements clips collapsing animation when using nested grids
+        .b-grid-body-container, .b-grid-vertical-scroller {
+            transition : height .3s; // Animate these as well
+            overflow-y : hidden !important; // Scrollbar will appear and disappear otherwise
+        }
+
+        // Scrollbar header pad till appear and disappear otherwise
+        .b-yscroll-pad {
+            display : none;
+        }
+    }
+
+    .b-grid-row {
+        transition : height .3s, transform .3s;
+    }
+}
+
+
+.b-rowexpander-row-expanded:not(.b-row-is-collapsing) [data-column="expanderActionColumn"] .b-icon-collapse-down {
+    transform : rotate(180deg);
+}

@@ -1,0 +1,177 @@
+﻿body
+{
+    margin:0px !important;
+            
+}
+.styleTitulo
+{
+    font-size: 14px;
+    text-decoration:none;
+    text-align:left;
+    color:Black;
+    margin-top:10px;
+}
+a.styleTitulo:active, a.styleTitulo:hover, a.styleTitulo:link, a.styleTitulo:visited
+{
+    font-size: 14px;
+    text-decoration:none;
+    color:inherit;
+}
+.fundoTitulo
+{
+    overflow:hidden;
+    padding:10px;
+}
+.style4
+{
+    height: 19px;
+}
+.fundoQuadrosTitulos
+{
+    overflow:hidden;
+    height:32px;
+    width:100%;
+    background-color:#3CB371; /*#006600;*/
+    color:White;
+    vertical-align:middle;
+    border-radius: 35px;
+    padding-top:14px;
+}
+.botaoStatusItem
+{
+    float: left; 
+    border-radius: 35px; 
+    height: 25px; 
+    width:50px;
+    margin-right:10px;
+}
+.botaoStatusItemLegenda
+{
+    float: left; 
+    border-radius: 35px; 
+    height: 15px; 
+    width:50px;
+    margin-right:10px;
+}
+.objetoCalendario
+{
+    height:128px;
+    width:128px;
+    background-image:url(../imagens/Reuniao/calendario.png);
+    text-align:left;
+    overflow:hidden; 
+}
+.objetoCalendarioAno
+{
+    margin-top:22px;
+    margin-left:10px;
+}
+.objetoCalendarioMes
+{
+    text-align:center;
+    margin-top:2px;
+}
+.objetoCalendarioDia
+{
+    margin-top:-4px;
+    text-align:center;
+}
+.objetoPorcentagem
+{
+    width:250px;
+    height:25px;
+    border-radius:20px;
+    border:2px solid Black;
+    overflow:hidden;
+    text-align:left;
+}
+.objetoPorcentagem div
+{
+    height:25px;
+    width:100px;
+    background-image:url(../imagens/Reuniao/fundoPorcentagem.png);
+    text-align:center;
+    border-right:1px solid Black;
+}
+
+.tamanhoFontePadrao
+{
+    
+}
+
+.quadrosDadosItens
+{
+    min-height:300px;
+}
+.tabelaItem11 td
+{
+    padding-bottom:20px;
+}
+.fundoDescricaoItem
+{
+    overflow:hidden;
+    
+    width:100%;
+    background-color:#3CB371; /*#006600;*/
+    color:White;
+    vertical-align:middle;
+    border-radius: 15px;
+    padding-top:14px;
+}
+.fundoDescricaoItem label
+{
+    margin-left: 10px;
+    color:White !important;   
+}
+
+.descricaoMetaItemIndicadores
+{
+    margin-left:10px;
+    color: Black !important;
+}
+
+.tabelaPlanosPendentes
+{
+    margin:15px;
+    border-radius: 15px;
+    overflow:hidden;
+    border: 3px solid #006666;
+}
+
+.componenteMenuPrincipal
+{
+    border-radius: 18px 0px 0px 0px;
+    overflow:hidden;
+}
+
+.deliberacaoAtual
+{
+    padding-top:20px !important;
+    padding-bottom:20px !important;
+}
+
+.quadrosTdDestaque
+{
+    padding: 5px; 
+    border-width: 2px;
+    border-style: solid;
+    border-color: #669999; 
+    margin-right: 5px;
+}
+
+.fundoDatas
+{
+    overflow:hidden;
+    background-color:#3CB371; /*#006600;*/
+    color:White;
+    vertical-align:middle;
+    border-radius:20px;
+    padding-left:10px;
+}
+
+.ui-tooltip 
+{
+    font-size:14px;
+    padding:2px;
+    margin:5px;
+}

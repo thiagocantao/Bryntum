@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Brisk PPM - Kanban</title>
+
+
+    <link href="Content/taskboard.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" />
+
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    
+    <div class="row" id="kanban">
+
+        <div class="col coluna">
+                                                      
+            <h2 class="verde">A Fazer<span class="list-items-count"></span></h2>
+
+            <ul class="lista ui-sortable" id="todo-list">
+                <li class="item">
+                    <div class="titulo"><i class="fas fa-cog"></i>Projeto EAD</div>
+                    <div class="subtitulo">Nova tela Kanban - Analise de objetos do banco</div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Previsto:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Real:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="titulo"><i class="fas fa-cog"></i>Projeto EAD</div>
+                    <div class="subtitulo">Nova tela Kanban - Analise de objetos do banco</div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Previsto:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Real:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="titulo"><i class="fas fa-cog"></i>Projeto EAD</div>
+                    <div class="subtitulo">Nova tela Kanban - Analise de objetos do banco</div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Previsto:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Real:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                </li>
+                
+            </ul>
+
+        </div>
+
+        <div class="col coluna">
+
+            <h2 class="laranja">Fazendo<span class="list-items-count"></span></h2>
+
+            <ul class="lista ui-sortable" id="doing-list">
+                <li class="item">
+                    <div class="titulo"><i class="fas fa-cog"></i>Projeto EAD</div>
+                    <div class="subtitulo">Nova tela Kanban - Analise de objetos do banco</div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Previsto:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Real:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="titulo"><i class="fas fa-cog"></i>Projeto EAD</div>
+                    <div class="subtitulo">Nova tela Kanban - Analise de objetos do banco</div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Previsto:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Real:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="titulo"><i class="fas fa-cog"></i>Projeto EAD</div>
+                    <div class="subtitulo">Nova tela Kanban - Analise de objetos do banco</div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Previsto:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Real:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                </li>
+                
+            </ul>
+
+
+
+        </div>
+
+        <div class="col coluna">
+
+           <h2 class="azul">Pronto<span class="list-items-count"></span></h2>
+
+            <ul class="lista ui-sortable" id="done-list">
+                <li class="item">
+                    <div class="titulo"><i class="fas fa-cog"></i>Projeto EAD</div>
+                    <div class="subtitulo">Nova tela Kanban - Analise de objetos do banco</div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Previsto:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Real:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="titulo"><i class="fas fa-cog"></i>Projeto EAD</div>
+                    <div class="subtitulo">Nova tela Kanban - Analise de objetos do banco</div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Previsto:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Real:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="titulo"><i class="fas fa-cog"></i>Projeto EAD</div>
+                    <div class="subtitulo">Nova tela Kanban - Analise de objetos do banco</div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Previsto:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                    <div class="row texto">
+                        <div class="col-xs-3 legenda direita">Real:</div>
+                        <div class="col-xs-9">12/05/2018</div>
+                    </div>
+                </li>
+                
+            </ul>
+
+        </div>
+
+    </div>
+    <!-- End of lists container -->
+
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="Scripts/taskboard.js"></script>
+
+    <script>
+        $(function () {
+            $(".lista").sortable({
+                connectWith: ".lista",
+                placeholder: 'sombra',
+                opacity: 0.7,
+                sort: function (event, ui) {
+                    $(".sombra").height(ui.item.outerHeight());
+                },
+                receive: function (event, ui) {
+                    // Ocorre quando a coluna é solta no novo Kanban
+                }
+            }).disableSelection();
+        });
+    </script>
+    
+</body>
+</html>
+

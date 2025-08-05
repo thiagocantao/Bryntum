@@ -1,0 +1,82 @@
+@import '../../variables';
+@import '../../../core-sass/functions';
+
+$horizontal-padding : 0.5em !default;
+
+@if right($field-border-width) > 0 {
+    $horizontal-padding : calc(0.5em - #{right($field-border-width)});
+}
+
+.b-editor.b-cell-editor {
+    position         : absolute;
+    background-color : $celledit-background-color;
+    border-width     : $celledit-border-width;
+    border-color     : $celledit-border-color;
+    border-style     : solid;
+    box-shadow       : none !important;
+
+    .b-grid-cell:not(.b-tree-cell) & {
+        width : 100% !important;
+    }
+
+    // Must stay on top when rows are cleared and rerendered
+    // and are after it in the subgrid's DOM.
+    z-index          : 1;
+
+    // Field labels must be present for A11Y purposes, but are clipped out of visibility.
+    // Screen readers will be able to access them and announce them.
+    .b-field > .b-label {
+        clip-path : inset(0 100% 100% 0);
+        position  : absolute;
+        contain   : strict;
+    }
+
+    .b-numberfield,
+    .b-textfield {
+        // Cell editor controls the padding on the input below to exactly position
+        // input text over cell text, so there must no extra padding on inner.
+        // If there's an opening trigger, exact input text overlay on the source cannot be maintained.
+        &:not(.b-has-start-trigger) .b-field-inner {
+            padding-inline-start : 0;
+        }
+
+        // Cell editors fit the cell height. The input does not have to "support"
+        // the field height so does not need block padding.
+        input {
+            padding : 0 #{$horizontal-padding};
+        }
+    }
+
+    .b-combo.b-uses-chipview {
+        .b-chipview {
+            margin : 0.3em;
+        }
+    }
+}
+
+.b-gridbase .b-editing {
+    // Row and cell gets the b-editing class.
+    // Editors may want to exceed size due to matchSize config
+    // This allows overflowing Editors to be visible.
+    // Also overflowing editors must be above the surrounding cells
+    overflow : visible;
+    contain  : unset;
+    z-index  : 1;
+
+    // Never show focus outline while cell editing
+    outline  : none !important;
+
+    // Because we need to show overflowing editors, cell textual content must be invisible
+    // during editing in case it overflows.
+    .b-grid-cell.b-editing {
+        color : transparent;
+    }
+}
+
+// As soon as the editor stop editing, when focus is moved back to the cell, GridNavigation
+// must not see the editor as an actionable target
+.b-grid-cell:not(.b-editing) {
+    .b-cell-editor {
+        display : none;
+    }
+}

@@ -1,0 +1,55 @@
+.b-sticky-headers {
+    .b-grid-header, .b-timeaxis, .b-sticky-header, .b-sch-header-timeaxis-cell {
+        overflow : visible;
+    }
+
+    .b-sch-header-text.b-sticky-header {
+        position : sticky;
+    }
+
+    .b-horizontaltimeaxis {
+        .b-sch-header-text.b-sticky-header {
+            left                 : 0;
+            padding-inline-start : left($event-bar-content-margin);
+            padding-inline-end   : right($event-bar-content-margin);
+        }
+    }
+
+    .b-verticaltimeaxis {
+        .b-sch-header-text {
+            &.b-sticky-header {
+                top : .15em;
+            }
+        }
+
+        .b-sch-header-row-0 {
+            // When being moved by stickiness, don't allow the text to touch the bottom.
+            // top=right because the element is rotated by 180 degrees.
+            .b-sch-header-text.b-sticky-header {
+                padding-top : right($event-bar-content-margin);
+            }
+        }
+
+        .b-sch-header-row.b-lowest {
+            // When being moved by stickiness, don't allow the text to touch the top or bottom.
+            .b-sch-header-text.b-sticky-header {
+                padding-bottom : right($event-bar-content-margin);
+            }
+        }
+    }
+}
+
+body:not(.b-using-keyboard) .b-sch-timeaxis-cell {
+    &:focus, &:focus-within {
+        outline : none !important;
+    }
+}
+
+.b-sch-header-timeaxis-cell {
+    align-items : center;
+}
+
+// Override default grid style
+.b-gridbase:not(.b-column-resizing):not(.b-row-reordering) .b-grid-header-container:not(.b-dragging-header) .b-depth-0:hover, .b-gridbase:not(.b-column-resizing):not(.b-row-reordering) .b-grid-header-container:not(.b-dragging-header) .b-depth-0:focus {
+    background: transparent;
+}

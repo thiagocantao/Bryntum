@@ -1,0 +1,11 @@
+{  
+  "[data-index='1'] .b-grid-cell": {
+    "title": "Tarefas",
+    "content": "As tarefas sгo exibidas nas colunas а esquerda",
+    "align": "l0-r0"
+  },
+  "#b-scheduler-3-_dirtyEventModel16-r2-x": {
+    "title": "Barra de tarefas",
+    "content": "Apresentada na seзгo а direita"
+  }
+}

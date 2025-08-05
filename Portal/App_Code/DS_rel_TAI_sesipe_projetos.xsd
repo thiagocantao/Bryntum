@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS_rel_TAI_sesipe_projetos" targetNamespace="http://tempuri.org/DS_rel_TAI_sesipe_projetos.xsd" xmlns:mstns="http://tempuri.org/DS_rel_TAI_sesipe_projetos.xsd" xmlns="http://tempuri.org/DS_rel_TAI_sesipe_projetos.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS_rel_TAI_sesipe_projetos" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DS_rel_TAI_sesipe_projetos" msprop:Generator_UserDSName="DS_rel_TAI_sesipe_projetos">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tbProjetosTAI" msprop:Generator_TableClassName="tbProjetosTAIDataTable" msprop:Generator_TableVarName="tabletbProjetosTAI" msprop:Generator_RowChangedName="tbProjetosTAIRowChanged" msprop:Generator_TablePropName="tbProjetosTAI" msprop:Generator_RowDeletingName="tbProjetosTAIRowDeleting" msprop:Generator_RowChangingName="tbProjetosTAIRowChanging" msprop:Generator_RowEvHandlerName="tbProjetosTAIRowChangeEventHandler" msprop:Generator_RowDeletedName="tbProjetosTAIRowDeleted" msprop:Generator_RowClassName="tbProjetosTAIRow" msprop:Generator_UserTableName="tbProjetosTAI" msprop:Generator_RowEvArgName="tbProjetosTAIRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NumeroIniciativa" msprop:Generator_ColumnVarNameInTable="columnNumeroIniciativa" msprop:Generator_ColumnPropNameInRow="NumeroIniciativa" msprop:Generator_ColumnPropNameInTable="NumeroIniciativaColumn" msprop:Generator_UserColumnName="NumeroIniciativa" type="xs:string" minOccurs="0" />
+              <xs:element name="GestorResponsavel" msprop:Generator_ColumnVarNameInTable="columnGestorResponsavel" msprop:Generator_ColumnPropNameInRow="GestorResponsavel" msprop:Generator_ColumnPropNameInTable="GestorResponsavelColumn" msprop:Generator_UserColumnName="GestorResponsavel" type="xs:string" minOccurs="0" />
+              <xs:element name="AreaUnidade" msprop:Generator_ColumnVarNameInTable="columnAreaUnidade" msprop:Generator_ColumnPropNameInRow="AreaUnidade" msprop:Generator_ColumnPropNameInTable="AreaUnidadeColumn" msprop:Generator_UserColumnName="AreaUnidade" type="xs:string" minOccurs="0" />
+              <xs:element name="VigenciaInicio" msprop:Generator_ColumnVarNameInTable="columnVigenciaInicio" msprop:Generator_ColumnPropNameInRow="VigenciaInicio" msprop:Generator_ColumnPropNameInTable="VigenciaInicioColumn" msprop:Generator_UserColumnName="VigenciaInicio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="VigenciaFim" msprop:Generator_ColumnVarNameInTable="columnVigenciaFim" msprop:Generator_ColumnPropNameInRow="VigenciaFim" msprop:Generator_ColumnPropNameInTable="VigenciaFimColumn" msprop:Generator_UserColumnName="VigenciaFim" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ValorTotal" msprop:Generator_ColumnVarNameInTable="columnValorTotal" msprop:Generator_ColumnPropNameInRow="ValorTotal" msprop:Generator_ColumnPropNameInTable="ValorTotalColumn" msprop:Generator_UserColumnName="ValorTotal" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorRecursosAno1" msprop:Generator_ColumnVarNameInTable="columnValorRecursosAno1" msprop:Generator_ColumnPropNameInRow="ValorRecursosAno1" msprop:Generator_ColumnPropNameInTable="ValorRecursosAno1Column" msprop:Generator_UserColumnName="ValorRecursosAno1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValorRecursosAno2" msprop:Generator_ColumnVarNameInTable="columnValorRecursosAno2" msprop:Generator_ColumnPropNameInRow="ValorRecursosAno2" msprop:Generator_ColumnPropNameInTable="ValorRecursosAno2Column" msprop:Generator_UserColumnName="ValorRecursosAno2" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AlinhamentoEstrategico" msprop:Generator_ColumnVarNameInTable="columnAlinhamentoEstrategico" msprop:Generator_ColumnPropNameInRow="AlinhamentoEstrategico" msprop:Generator_ColumnPropNameInTable="AlinhamentoEstrategicoColumn" msprop:Generator_UserColumnName="AlinhamentoEstrategico" type="xs:string" minOccurs="0" />
+              <xs:element name="ObjetivoGeral" msprop:Generator_ColumnVarNameInTable="columnObjetivoGeral" msprop:Generator_ColumnPropNameInRow="ObjetivoGeral" msprop:Generator_ColumnPropNameInTable="ObjetivoGeralColumn" msprop:Generator_UserColumnName="ObjetivoGeral" type="xs:string" minOccurs="0" />
+              <xs:element name="ObjetivosEspecificos" msprop:Generator_ColumnVarNameInTable="columnObjetivosEspecificos" msprop:Generator_ColumnPropNameInRow="ObjetivosEspecificos" msprop:Generator_ColumnPropNameInTable="ObjetivosEspecificosColumn" msprop:Generator_UserColumnName="ObjetivosEspecificos" type="xs:string" minOccurs="0" />
+              <xs:element name="Justificativa" msprop:Generator_ColumnVarNameInTable="columnJustificativa" msprop:Generator_ColumnPropNameInRow="Justificativa" msprop:Generator_ColumnPropNameInTable="JustificativaColumn" msprop:Generator_UserColumnName="Justificativa" type="xs:string" minOccurs="0" />
+              <xs:element name="Escopo" msprop:Generator_ColumnVarNameInTable="columnEscopo" msprop:Generator_ColumnPropNameInRow="Escopo" msprop:Generator_ColumnPropNameInTable="EscopoColumn" msprop:Generator_UserColumnName="Escopo" type="xs:string" minOccurs="0" />
+              <xs:element name="NaoEscopo" msprop:Generator_ColumnVarNameInTable="columnNaoEscopo" msprop:Generator_ColumnPropNameInRow="NaoEscopo" msprop:Generator_ColumnPropNameInTable="NaoEscopoColumn" msprop:Generator_UserColumnName="NaoEscopo" type="xs:string" minOccurs="0" />
+              <xs:element name="RiscosRestricoes" msprop:Generator_ColumnVarNameInTable="columnRiscosRestricoes" msprop:Generator_ColumnPropNameInRow="RiscosRestricoes" msprop:Generator_ColumnPropNameInTable="RiscosRestricoesColumn" msprop:Generator_UserColumnName="RiscosRestricoes" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicadoresEMetas" msprop:Generator_ColumnVarNameInTable="columnIndicadoresEMetas" msprop:Generator_ColumnPropNameInRow="IndicadoresEMetas" msprop:Generator_ColumnPropNameInTable="IndicadoresEMetasColumn" msprop:Generator_UserColumnName="IndicadoresEMetas" type="xs:string" minOccurs="0" />
+              <xs:element name="InfraEstruturaEquipe" msprop:Generator_ColumnVarNameInTable="columnInfraEstruturaEquipe" msprop:Generator_ColumnPropNameInRow="InfraEstruturaEquipe" msprop:Generator_ColumnPropNameInTable="InfraEstruturaEquipeColumn" msprop:Generator_UserColumnName="InfraEstruturaEquipe" type="xs:string" minOccurs="0" />
+              <xs:element name="DataAprovacao" msprop:Generator_ColumnVarNameInTable="columnDataAprovacao" msprop:Generator_ColumnPropNameInRow="DataAprovacao" msprop:Generator_ColumnPropNameInTable="DataAprovacaoColumn" msprop:Generator_UserColumnName="DataAprovacao" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="FonteRecursosAno1" msprop:Generator_ColumnVarNameInTable="columnFonteRecursosAno1" msprop:Generator_ColumnPropNameInRow="FonteRecursosAno1" msprop:Generator_ColumnPropNameInTable="FonteRecursosAno1Column" msprop:Generator_UserColumnName="FonteRecursosAno1" type="xs:string" minOccurs="0" />
+              <xs:element name="FonteRecursosAno2" msprop:Generator_ColumnVarNameInTable="columnFonteRecursosAno2" msprop:Generator_ColumnPropNameInRow="FonteRecursosAno2" msprop:Generator_ColumnPropNameInTable="FonteRecursosAno2Column" msprop:Generator_UserColumnName="FonteRecursosAno2" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

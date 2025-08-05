@@ -1,0 +1,75 @@
+﻿body, form
+        {
+            margin: 0px;
+        }
+        #palco, #galeriaImagens
+        {
+            overflow: hidden;
+        }
+        #palco #galeriaImagens img
+        {
+            float: left;
+            position: absolute;
+            z-index: 0;
+            opacity: 0.1;
+            -moz-opacity: 0.1;
+            filter: alpha(opacity=1);
+        }
+        #galeriaImagens
+        {
+            float: left;
+            position: absolute;
+            z-index: 999;
+        }
+        .menuGaleria
+        {
+            overflow: hidden;
+            float: left;
+            position: absolute;
+            z-index: 9999;
+        }
+        .menuGaleria img
+        {
+            width: 48px !important;
+            height: 48px !important;
+            cursor: pointer;
+            z-index: 9999 !important;
+            display:none;
+        }
+        #direitaGaleria, #esquerdaGaleria, #centroGaleria
+        {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        #rodapeGaleria, #topoGaleria
+        {
+            width: 100% !important;
+            background-color: Black;
+            overflow: hidden;
+            opacity: 0.0;
+            -moz-opacity: 0.0;
+            filter: alpha(opacity=0);
+        }
+        #topoGaleria
+        {
+            border-radius: 0px 0px 20px 20px;
+        }
+        #rodapeGaleria
+        {
+            border-radius: 20px 20px 0px 0px;
+        }
+        #conteudoRodapeGaleria
+        {
+            width: auto !important;
+            margin: 10px;
+            font-size: 14px;
+            color: White;
+        }
+        #conteudoTopoGaleria
+        {
+            width: 100% !important;
+            margin: 15px;
+            font-size: 22px;
+            color: White;
+            text-align: center;
+        }

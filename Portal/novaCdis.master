@@ -1,0 +1,2286 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="novaCdis.master.cs" Inherits="cdis" %>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head id="Head1" runat="server">
+    <title>Brisk PPM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="msapplication-TileColor" content="#123456" />
+    <meta name="msapplication-TileImage" content="espacoCliente/LogoPortal.png" />
+    <asp:ContentPlaceHolder ID="HeaderContent" ClientIDMode="Static" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ID="HeadContentScriptsShowModal" ClientIDMode="Static" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="estilos/style.css" rel="stylesheet" type="text/css" />
+    <link href="./estilos/cdisEstilos.css" rel="stylesheet" type="text/css" />
+    <link href="./estilos/custom.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript">
+        function isMobile() {
+            if (window.innerWidth <= 800) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        function SetBotaoSalvarVisivel(isVisible) {
+            if (document.getElementById('pcModalComFooter_TPCFm1_btnSalvarPcModal') != null &&
+                document.getElementById('pcModalComFooter_TPCFm1_btnSalvarPcModal') != undefined)
+                document.getElementById('pcModalComFooter_TPCFm1_btnSalvarPcModal').parentElement.style.display = (isVisible == true) ? 'block' : 'none';
+        }
+
+        function SetBotaoAdicionarComentariosVisivel(isVisible) {
+            if (document.getElementById('pcModalComFooter_TPCFm1_btnAdicionarComentarioPcModal') != null &&
+                document.getElementById('pcModalComFooter_TPCFm1_btnAdicionarComentarioPcModal') != undefined)
+                document.getElementById('pcModalComFooter_TPCFm1_btnAdicionarComentarioPcModal').parentElement.style.display = (isVisible == true) ? 'block' : 'none';
+        }
+
+        function SetBotaoSalvarVisivel2(isVisible) {
+            if (document.getElementById('pcModalComFooter2_TPCFm1_btnSalvarPcModal') != null &&
+                document.getElementById('pcModalComFooter2_TPCFm1_btnSalvarPcModal') != undefined)
+                document.getElementById('pcModalComFooter2_TPCFm1_btnSalvarPcModal').parentElement.style.display = (isVisible == true) ? 'block' : 'none';
+        }
+
+        var myObject = null;
+
+        var urlModal = "";
+        var cancelaFechamentoPopUp = 'N';
+        var linkImg = "";
+
+        var refreshinterval = 540;
+        var starttime;
+        var nowtime;
+        var reloadseconds = 0;
+        var secondssinceloaded = 0;
+
+
+        var posExecutarFormularioDinamico = null;
+
+
+
+        var returnValueFormulario_cs = 'OK';
+        var dadosAlteradosNoPopup = false;
+        var statusSalvarFormularioDinamico = 0;
+
+
+        function starttime() {
+            starttime = new Date();
+            starttime = starttime.getTime();
+            countdown();
+        }
+        function countdown() {
+            nowtime = new Date();
+            nowtime = nowtime.getTime();
+            secondssinceloaded = (nowtime - starttime) / 1000;
+            reloadseconds = Math.round(refreshinterval - secondssinceloaded);
+            if (refreshinterval >= secondssinceloaded) {
+                var timer = setTimeout("countdown()", 10);
+
+            }
+            else {
+                clearTimeout(timer);
+                callbackSession.PerformCallback();
+            }
+        }
+        //window.onload = starttime;
+        function encerraSessao() {
+
+        }
+        function inicializaSessao() {
+
+        }
+        function replaceAll(origem, antigo, novo) {
+            var teste = 0;
+            while (teste == 0) {
+                if (origem.indexOf(antigo) >= 0) {
+                    origem = origem.replace(antigo, novo);
+                }
+                else
+                    teste = 1;
+            }
+            return origem;
+        }
+
+
+        function getPathUrl() {
+            return pcModal.cp_Path;
+        }
+        function gotoURL(url, target) {
+            if (pcModal.cp_Path != null && pcModal.cp_Path != "" && pcModal.cp_Path != 'undefined') {
+                var fakeLink = document.createElement("a");
+
+                fakeLink.target = target;
+
+                if (typeof (fakeLink.click) == 'undefined')
+                    location.href = pcModal.cp_Path + url; // sends referrer in FF, not in IE 
+                else {
+                    fakeLink.href = pcModal.cp_Path + url;
+                    document.body.appendChild(fakeLink);
+                    fakeLink.click(); // click() method defined in IE only 
+                }
+            }
+        }
+        function atualizaTela() {
+            window.location.reload();
+        }
+        function mostraSobre(caminho) {
+            showModal(caminho, "About", 532, 330, "", null);
+        }
+
+        function atualizaURLModal(sUrl) {
+            urlModal = sUrl;
+            pcModal.SetContentUrl(sUrl);
+        }
+
+
+        function fechaModalStatusReport() {
+            pcStatusReportCarteira.Hide();
+        }
+
+
+
+        function mudaLogoLD(urlLogo) {
+            if (urlLogo != '') {
+                linkImg = "S";
+                imgLogoUnidade.mainElement.src = pcModal.cp_Path + urlLogo;
+                imgLogoUnidade.SetVisible(true);
+            } else {
+                document.getElementById('tdImgLD').style.cursor = '';
+                imgLogoUnidade.mainElement.title = '';
+                linkImg = "N";
+                imgLogoUnidade.SetVisible(false);
+                imgLogoUnidade.mainElement.src = '';
+
+            }
+        }
+
+        var painelAtual;
+
+
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+
+        function getClientWidth(offset = null) {
+            if (offset == null) {
+                offset = 0;
+            }
+            sWidth = Math.max(0, document.documentElement.clientWidth) + offset;
+            return sWidth;
+        }
+
+        function getClientHeight(offset = null) {
+            if (offset == null) {
+                offset = 0;
+            }
+            sHeight = Math.max(0, document.documentElement.clientHeight) + offset;
+            return sHeight;
+        }
+
+        var painelAtual;
+        function showModal3(sUrl, sHeaderTitulo, sWidth, sHeight, sFuncaoPosModal, objParam) {
+
+            if (sWidth == null) {
+                sWidth = Math.max(0, document.documentElement.clientWidth) - 100;
+            }
+            if (sHeight == null) {
+                sHeight = Math.max(0, document.documentElement.clientHeight) - 155;
+            }
+
+            if (pcModal.GetVisible()) {
+                showModal2(sUrl, sHeaderTitulo, sWidth, sHeight, sFuncaoPosModal);
+                painelAtual = pcModal2;
+            }
+            else {
+                showModal(sUrl, sHeaderTitulo, sWidth, sHeight, sFuncaoPosModal, objParam);
+                painelAtual = pcModal;
+            }
+
+        }
+        function fechaModal3() {
+            //painelAtual.SetContentUrl(pcModal.cp_Path + "branco.htm");
+            painelAtual.Hide();
+        }
+
+    </script>
+    <asp:ContentPlaceHolder ID="HeadContent" ClientIDMode="Static" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <style type="text/css">
+        .auto-style1 {
+            width: 100%;
+        }
+
+        .btn_inicialMaiuscula {
+            text-transform: capitalize !important;
+        }
+    </style>
+    <link rel="icon" href="imagens/Brisk-Ico.ico" />
+    <!--[if IE]>
+    <style type="text/css">
+
+        input[type='text'] {
+            min-height: 22px !important;
+        }
+
+    </style>
+<![endif]-->
+
+    <style type="text/css">
+        input[type='text'],
+        input[type='password'],
+        input[type='number'],
+        select {
+            min-height: 22px !important;
+        }
+    </style>
+</head>
+<body data-baseurl="<%=Html(baseUrl)%>" id="telaPrincipal" style="margin: 0px; height: 100%; -webkit-overflow-scrolling: touch;">
+
+    <!-- Novo menu responsivo, funcional em todas as resoluções e dispositivos -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menuPrincipalSuperior" runat="server" style="z-index: 100000;">
+            <a class="navbar-brand mr-5" href="<%=baseUrl%>/index.aspx">
+                <img height="30" src="<%=logo%>" /></a>
+            <button aria-controls="menuPrincipal" aria-expanded="false" aria-label="Menu" class="navbar-toggler" data-target="#menuPrincipal" data-toggle="collapse" type="button" onclick="startComSignalR()" runat="server">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="nav navbar-nav brisk-top-menu" id="menuPrincipalEsquerda">
+                    <li class="nav-item dropdown brisk-modulos" id="menuPrincipalModulos">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link" data-toggle="dropdown" href="#" role="button" title="<%= this.T("menu_modulos") %>">
+                            <i class="fas fa-bars"></i><span class="nav-label m-0 p-0"><%= this.T("menu_modulos") %></span>
+                        </a>
+                        <div class="dropdown-menu p-3">
+                            <div class="nav-background">
+                                <img src="<%=banner%>" />
+                            </div>
+                            <div class="form-group nav-search brisk-search">
+                                <span class="fa fa-search form-control-icon"></span>
+                                <input class="form-control" id="pesquisaModulos" name="pesquisaModulos" placeholder="<%= this.T("digite_o_texto_para_filtrar") %>" type="text" value="" />
+                            </div>
+                            <div class="nav-search-results brisk-search-results">
+                                <div class="nav-search-results-title"><%= this.T("menu_pesquisa_resultado") %> <i class="far fa-times-circle"></i></div>
+                                <ul class="nav-search-results-content">
+                                </ul>
+                            </div>
+                            <ul class="nav-submenu list-unstyled">
+                                <%=novoMenu%>
+                                <li class="dropdown-submenu brisk-menu-grey">
+                                    <a class="nav-link" href="#" onclick="DesconectaUsuarioSignalR();window.top.gotoURL('selecionaOpcao.aspx?op=sa', '_self')" title="<%= this.T("menu_sair") %>"><%= this.T("menu_sair") %></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown brisk-favoritos" id="menuPrincipalFavoritos">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link" data-toggle="dropdown" href="#" role="button" title="<%= this.T("menu_favoritos") %>">
+                            <i class="fas fa-star"></i><span class="nav-label m-0 p-0"><%= this.T("menu_favoritos") %></span>
+                        </a>
+                        <div class="dropdown-menu p-3">
+                            <a class="dropdown-item dropdown-button hidden" id="menuPrincipalFavoritosOpcoes" runat="server">
+                                <button class="dropdown-item btn hidden" id="menuPrincipalFavoritosAdicionar" runat="server"><i class="fas fa-star"></i><%=this.T("menu_favoritos_adicionar_pagina")%></button>
+                                <button class="dropdown-item btn hidden" id="menuPrincipalFavoritosRemover" runat="server"><i class="fas fa-star"></i><%=this.T("menu_favoritos_remover_pagina")%></button>
+                            </a>
+                            <%=novoFavoritos%><% Response.Write(((novoFavoritos != "") ? @"" : @"<span>" + Resources.traducao.novaCdis_n_o_existe_favoritos_registrados_ + "</span>"));  %>
+                        </div>
+                    </li>
+                    <li class="nav-item brisk-passo-fluxo" id="menuPrincipalPassoFluxo" runat="server"><a class="nav-link" href="<%=baseUrl + "/espacoTrabalho/FrmListaPendenciasMobileWf2.aspx" %>" title="<%=this.T("menu_passo_no_fluxo")%>"><i class="fas fa-step-forward"></i><span class="nav-label m-0 p-0"><%=this.T("menu_passo_no_fluxo")%></span></a></li>
+                </ul>
+                <ul class="navbar-nav ml-auto brisk-top-menu" id="menuPrincipalDireita">
+                    <li class="nav-item dropdown brisk-mensagens" id="menuPrincipalMensagens">
+                        <span class="nav-position-circle">
+                        <span class="nav-notification-gray" id="menuPrincipalExistemMensagens" runat="server">
+                            <span id="bolinhaNotificacaoMensagem" class="estiloBolinhasDeNotificacoes"></span></span></span>
+                        <a id="iconeMensagens" runat="server" aria-expanded="false" aria-haspopup="true" class="nav-link"  role="button">
+                            <i class="fas fa-envelope"></i><span class="nav-label m-0 p-0"><%= this.T("menu_mensagens") %></span>
+                        </a>
+                        <div class="dropdown-menu <% Response.Write(((novoMenuAdministracao != "") ? @"" : @" dropdown-menu-right"));  %>" role="menu">
+                            <div class="card">
+                                <div title="<%= hintMensagens %>" class="card-header text-white bg-dark"><%= this.T("menu_mensagens") %></div>
+                                <div class="card-body">
+                                    <ul id="idULMenssage">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown brisk-notificacoes" id="menuPrincipalNotificacoes">
+                        <span class="nav-position-circle">
+                        <span class="nav-notification-gray" id="menuPrincipalExistemNotificacoes" runat="server">
+                            <span id="bolinhaNotificacaoNotificacoes" class="estiloBolinhasDeNotificacoes"></span></span></span>
+                        <a id="iconeNotificacoes" runat="server" aria-expanded="false" aria-haspopup="true" style="display: block;padding: 0.5rem 0.8rem;" role="button">
+                            <i class="fas fa-bell"></i><span class="nav-label m-0 p-0"><%= this.T("menu_notificacoes") %></span>
+                        </a>
+                        <div class="dropdown-menu<% Response.Write(((novoMenuAdministracao != "") ? @"" : @" dropdown-menu-right"));  %> p-0" role="menu">
+                            <div class="card">
+                                <div title="<%= hintNotificacoes %>" class="card-header text-white bg-dark"><%= this.T("menu_notificacoes") %></div>
+                                <div class="card-body">
+                                    <ul id="idULNotificacoes">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown brisk-tarefas" id="menuPrincipalTarefas">
+                        <span class="nav-position-circle">
+                        <span class="nav-notification-gray" id="menuPrincipalExistemTarefas" runat="server">
+                            <span runat="server" id="bolinhaNotificacaoTarefas" class="estiloBolinhasDeNotificacoes">
+                            </span>
+                        </span></span>
+                        <a id="iconeTarefas" runat="server" aria-expanded="false" aria-haspopup="true" class="nav-link" role="button">
+                            <i class="fas fa-flag"></i><span class="nav-label m-0 p-0"><%= this.T("menu_tarefas") %></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right p-0" role="menu">
+                            <div class="card">
+                                <div title="<%= hintTarefas %>" class="card-header text-white bg-dark"><%= this.T("menu_tarefas") %></div>
+                                <div class="card-body">
+                                    <ul id="idULTarefas">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown brisk-administracao" id="menuPrincipalAdministracao" <% Response.Write(((novoMenuAdministracao != "") ? @" style=""display: inline !important;""" : @" style=""display: none !important;"""));  %>>
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link" data-toggle="dropdown" href="#" role="button" title="Administração">
+                            <i class="fas fa-cog"></i><span class="nav-label m-0 p-0"><%=this.T("administra__o")%></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right p-3">
+                            <div class="form-group nav-search brisk-search">
+                                <span class="fa fa-search form-control-icon"></span>
+                                <input class="form-control" id="pesquisaAdministracao" name="pesquisaAdministracao" placeholder="<%= this.T("digite_o_texto_para_filtrar") %>" type="text" value="" />
+                            </div>
+                            <div class="nav-search-results brisk-search-results">
+                                <div class="nav-search-results-title"><%= this.T("menu_pesquisa_resultado") %> <i class="far fa-times-circle"></i></div>
+                                <ul class="nav-search-results-content">
+                                </ul>
+                            </div>
+                            <div class="nav-submenu brisk-menu-yellow">
+                                <div class="card-columns">
+                                    <%=novoMenuAdministracao%>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown brisk-usuario" id="menuPrincipalUsuario" style="list-style-type: none;">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link text-nowrap text-truncate" data-toggle="dropdown" href="#" role="button" title="<%=StripHTML(usuario)%>">
+                            <i class="fas fa-user"></i><%=usuario%>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right p-3">
+                            <ul id="menuPrincipalOpcoes">
+                                <%=menuAlterarEntidade%><%=menuAlterarSenha%><%=menuGerenciarPreferencias%><%=menuOrganizarFavoritos%>
+                                <li><a href="#" onclick="DesconectaUsuarioSignalR();window.top.gotoURL('selecionaOpcao.aspx?op=sa', '_self')"><%= this.T("menu_sair") %></a></li>
+                            </ul>
+                            <div id="menuPrincipalVersao">
+                                <img height="30" src="<%=logo%>" />
+                                <%=sobre%>
+                                <p>&nbsp;</p>
+                                <p><a class="btn btn-secondary" href="#" onclick="mostraSobre('<%=Link("/sobre.aspx") %>');"><%=this.T("menu_mais_informacoes") %></a></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <form id="formMaster" runat="server" style="-webkit-overflow-scrolling: touch;">
+        <dxhf:ASPxHiddenField ID="hfFavoritos" runat="server">
+        </dxhf:ASPxHiddenField>
+
+        <dxhf:ASPxHiddenField ID="hfSignalR" runat="server" ClientInstanceName="hfSignalR">
+        </dxhf:ASPxHiddenField>
+
+        <div class="container-fluid" id="rastroPrincipal" runat="server">
+            <div class="row">
+                <div class="col-md-9 col-lg-9">
+                    <div class="text-nowrap text-truncate brisk-rastro">
+                        <%=rastro%>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <div style="display: flex; justify-content: flex-end; margin-left: auto; align-items: center;">
+                        <div id="divDDLVisaoInicial" runat="server" class="form-group">
+                            <dxe:ASPxComboBox runat="server" Width="100%" ClientInstanceName="ddlVisaoInicial"
+                                ID="ddlVisaoInicial" ClientVisible="True" CssClass="text-truncate">
+                                <ClientSideEvents SelectedIndexChanged="function(s, e) {
+                        callbackCarteiras.PerformCallback();
+                    }" />
+                            </dxe:ASPxComboBox>
+                        </div>
+                        <div style="display: flex; padding-right: 0.5rem; vertical-align: middle;">
+                            <asp:ImageButton ID="imgStatusReport" runat="server" ImageUrl="~/imagens/botoes/btnPDF.png"
+                                OnClick="imgStatusReport_Click" EnableViewState="True" />
+                            <dxe:ASPxImage ID="imgHistoricoStatusReport" runat="server" ClientInstanceName="imgHistoricoStatusReport"
+                                Cursor="pointer" ImageUrl="~/imagens/botoes/btnBoletim.PNG" EnableViewState="False"
+                                ToolTip="Visualizar Histórico de Boletins de Status">
+                                <ClientSideEvents Click="function(s, e) { 
+    var frame = document.getElementById('Frame_SR');
+	var w = screen.width - 300;
+	var h = screen.height - 300;
+	//frame.onload = new Function(&quot;atualizaSessao()&quot;);
+	frame.src = imgHistoricoStatusReport.cp_RelativePath + '&amp;Altura=' + (h - 110);
+	pcStatusReportCarteira.SetWidth(w);
+    frame.style.width = &quot;100%&quot;;
+    frame.style.height = h + &quot;px&quot;;
+	pcStatusReportCarteira.Show();
+
+	//var height = screen.height - 300;
+	//var varOpener = this;
+	//var modal = window.top.showModal(imgHistoricoStatusReport.cp_RelativePath, &quot;Boletim de Status&quot;, 750, height, null, varOpener);
+}" />
+                            </dxe:ASPxImage>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div id="dvBarraTopo"></div>
+        <asp:ContentPlaceHolder ID="AreaTrabalho" ClientIDMode="Static" runat="server">
+        </asp:ContentPlaceHolder>
+        <dxcp:ASPxCallbackPanel ID="ASPxCallbackPanel1" runat="server" ClientVisible="false"
+            Width="200px" ClientInstanceName="ASPxCallbackPanel1">
+            <PanelCollection>
+                <dxp:PanelContent ID="PanelContent1" runat="server">
+                </dxp:PanelContent>
+            </PanelCollection>
+        </dxcp:ASPxCallbackPanel>
+        <dxpc:ASPxPopupControl ID="pcEstrategia" runat="server" CloseAction="MouseOut" PopupAction="MouseOver"
+            PopupElementID="tdEstrategia" ShowHeader="False" PopupHorizontalAlign="Center"
+            PopupVerticalOffset="20" ClientInstanceName="pcEstrategia" AutoUpdatePosition="True">
+            <ContentStyle HorizontalAlign="Center">
+                <Paddings Padding="0px" />
+            </ContentStyle>
+            <ClientSideEvents CloseUp="function(s, e) {
+	document.getElementById('tdEstrategia').style.color = '#000000';
+}"
+                PopUp="function(s, e) {
+	document.getElementById('tdEstrategia').style.color = 'orange';
+}"></ClientSideEvents>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl1" runat="server">
+                    <table cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        EncodeHtml="False" Width="320px" Height="520"
+                                        ID="estrategia_Nav001" EnableViewState="False">
+                                        <ClientSideEvents ItemClick="function(s, e) {
+	
+}"></ClientSideEvents>
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td style="padding-right: 5px; padding-left: 5px"
+                                    valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        EncodeHtml="False" Width="320px" Height="520px"
+                                        ID="estrategia_Nav002" EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ItemLinkMode="TextOnly" ShowExpandButtons="False" SyncSelectionMode="None"
+                                        GroupSpacing="15px" EncodeHtml="False" Width="320px" Height="520px" ID="estrategia_Nav003" EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcProjetos" runat="server" CloseAction="MouseOut" PopupAction="MouseOver"
+            PopupElementID="tdProjetos" ShowHeader="False" PopupHorizontalAlign="Center"
+            PopupVerticalOffset="20" ClientInstanceName="pcProjetos">
+            <ContentStyle HorizontalAlign="Center">
+                <Paddings Padding="0px" />
+            </ContentStyle>
+            <ClientSideEvents CloseUp="function(s, e) {
+	document.getElementById('tdProjetos').style.color = '#000000';
+}"
+                PopUp="function(s, e) {
+	document.getElementById('tdProjetos').style.color = 'orange';
+}"></ClientSideEvents>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl2" runat="server">
+                    <table cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" ShowExpandButtons="False"
+                                        SyncSelectionMode="None" GroupSpacing="15px" EncodeHtml="False" Width="320px"
+                                        Height="520px" ID="projetos_Nav001" EnableViewState="False"
+                                        Border-BorderStyle="None" Paddings-Padding="0px">
+                                        <Paddings Padding="0px"></Paddings>
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+
+                                            <BorderBottom BorderColor="#EBEBEB" BorderStyle="Solid" BorderWidth="1px"></BorderBottom>
+                                        </ItemStyle>
+                                        <Border BorderStyle="None" BorderWidth="1px"></Border>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td style="padding-right: 5px; padding-left: 5px"
+                                    valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" ShowExpandButtons="False"
+                                        SyncSelectionMode="None" GroupSpacing="15px" EncodeHtml="False" Width="320px"
+                                        Height="520px" ID="projetos_Nav002" EnableViewState="False"
+                                        Border-BorderStyle="None" Paddings-Padding="0px">
+                                        <Paddings Padding="0px"></Paddings>
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+
+                                            <BorderBottom BorderColor="#EBEBEB" BorderStyle="Solid" BorderWidth="1px"></BorderBottom>
+                                        </ItemStyle>
+                                        <Border BorderStyle="None" BorderWidth="1px"></Border>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ItemLinkMode="TextOnly" ShowExpandButtons="False" SyncSelectionMode="None"
+                                        GroupSpacing="15px" EncodeHtml="False" Width="320px" Height="520px" ID="projetos_Nav003" EnableViewState="False">
+                                        <Paddings Padding="0px"></Paddings>
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+
+                                            <BorderBottom BorderColor="#EBEBEB" BorderStyle="Solid" BorderWidth="1px"></BorderBottom>
+                                        </ItemStyle>
+                                        <Border BorderStyle="None" BorderWidth="1px"></Border>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcAdministracao" runat="server" CloseAction="MouseOut"
+            PopupAction="MouseOver" PopupElementID="tdAdministracao" ShowHeader="False"
+            PopupHorizontalAlign="Center" PopupVerticalOffset="30" ClientInstanceName="pcAdministracao">
+            <ContentStyle HorizontalAlign="Center">
+                <Paddings Padding="0px" />
+            </ContentStyle>
+            <ClientSideEvents CloseUp="function(s, e) {
+	document.getElementById('tdAdministracao').style.color = '#000000';
+}"
+                PopUp="function(s, e) {
+	document.getElementById('tdAdministracao').style.color = 'orange';
+}"></ClientSideEvents>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl3" runat="server">
+                    <table cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        Width="320px" Height="520px" ID="administracao_Nav001"
+                                        EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                        <ItemStyle>
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td style="padding-right: 5px; padding-left: 5px"
+                                    valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        Width="320px" Height="520px" ID="administracao_Nav002"
+                                        EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ItemLinkMode="TextOnly" ShowExpandButtons="False" SyncSelectionMode="None"
+                                        GroupSpacing="15px" Width="320px" Height="520px"
+                                        ID="administracao_Nav003" EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcEspacoTrabalho" runat="server" CloseAction="MouseOut"
+            PopupAction="MouseOver" PopupElementID="tdEspacoTrabalho" ShowHeader="False"
+            PopupHorizontalAlign="Center" PopupVerticalOffset="30" ClientInstanceName="pcEspacoTrabalho">
+            <ContentStyle HorizontalAlign="Center">
+                <Paddings Padding="0px" />
+            </ContentStyle>
+            <ClientSideEvents CloseUp="function(s, e) {
+	document.getElementById('tdEspacoTrabalho').style.color = '#000000';
+}"
+                PopUp="function(s, e) {
+	document.getElementById('tdEspacoTrabalho').style.color = 'orange';
+}"></ClientSideEvents>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl4" runat="server">
+                    <table cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        Width="320px" Height="520px" ID="espacoTrabalho_Nav001"
+                                        EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td style="padding-right: 5px; padding-left: 5px"
+                                    valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        Width="320px" Height="520px" ID="espacoTrabalho_Nav002"
+                                        EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ItemLinkMode="TextOnly" ShowExpandButtons="False" SyncSelectionMode="None"
+                                        GroupSpacing="15px" Width="320px" Height="520px"
+                                        ID="espacoTrabalho_Nav003" EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcDemandas" runat="server" CloseAction="MouseOut" PopupAction="MouseOver"
+            PopupElementID="tdDemandas" ShowHeader="False" PopupHorizontalAlign="Center"
+            PopupVerticalOffset="30" ClientInstanceName="pcDemandas">
+            <ContentStyle HorizontalAlign="Center">
+                <Paddings Padding="0px" />
+            </ContentStyle>
+            <ClientSideEvents CloseUp="function(s, e) {
+	document.getElementById('tdDemandas').style.color = '#000000';
+}"
+                PopUp="function(s, e) {
+	document.getElementById('tdDemandas').style.color = 'orange';
+}"></ClientSideEvents>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl5" runat="server">
+                    <table cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        Width="320px" Height="520px" ID="demandas_Nav001"
+                                        EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td style="padding-right: 5px; padding-left: 5px"
+                                    valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        Width="320px" Height="520px" ID="demandas_Nav002"
+                                        EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ItemLinkMode="TextOnly" ShowExpandButtons="False" SyncSelectionMode="None"
+                                        GroupSpacing="15px" Width="320px" Height="520px"
+                                        ID="demandas_Nav003" EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcFinanceiro" runat="server" CloseAction="MouseOut" PopupAction="MouseOver"
+            PopupElementID="imgFinanceiro" ShowHeader="False" PopupHorizontalAlign="Center"
+            PopupVerticalOffset="28" ClientInstanceName="pcFinanceiro" AutoUpdatePosition="True">
+            <ContentStyle HorizontalAlign="Center">
+                <Paddings Padding="0px" />
+            </ContentStyle>
+            <ClientSideEvents CloseUp="function(s, e) {
+	document.getElementById('tdFinanceiro').style.color = '#000000';
+}"
+                PopUp="function(s, e) {
+	document.getElementById('tdFinanceiro').style.color = 'orange';
+}"></ClientSideEvents>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl10" runat="server">
+                    <table cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        EncodeHtml="False" Width="320px" Height="520px"
+                                        ID="financeiro_Nav001" EnableViewState="False">
+                                        <ClientSideEvents ItemClick="function(s, e) {
+	
+}"></ClientSideEvents>
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td style="padding-right: 5px; padding-left: 5px"
+                                    valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ItemLinkMode="TextOnly" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ShowExpandButtons="False" SyncSelectionMode="None" GroupSpacing="15px"
+                                        EncodeHtml="False" Width="320px" Height="520px"
+                                        ID="financeiro_Nav002" EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                                <td valign="top">
+                                    <dxnb:ASPxNavBar runat="server" AllowExpanding="False" Border-BorderStyle="None"
+                                        Paddings-Padding="0px" ItemLinkMode="TextOnly" ShowExpandButtons="False" SyncSelectionMode="None"
+                                        GroupSpacing="15px" EncodeHtml="False" Width="320px" Height="520px" ID="financeiro_Nav003" EnableViewState="False">
+                                        <GroupHeaderStyle Font-Bold="True">
+                                        </GroupHeaderStyle>
+                                        <GroupContentStyle BackColor="Transparent">
+                                            <border borderstyle="None"></border>
+                                        </GroupContentStyle>
+                                        <ItemStyle BackColor="Transparent" BorderBottom-BorderColor="#EBEBEB" BorderBottom-BorderStyle="Solid"
+                                            BorderBottom-BorderWidth="1px">
+                                            <SelectedStyle Font-Bold="True">
+                                            </SelectedStyle>
+                                        </ItemStyle>
+                                    </dxnb:ASPxNavBar>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcFavoritos" runat="server" CloseAction="MouseOut" PopupAction="MouseOver"
+            PopupElementID="imgFavoritos" ShowHeader="False" ClientInstanceName="pcFavoritos"
+            BackColor="Transparent" ShowShadow="False" PopupHorizontalOffset="5"
+            ScrollBars="None" MinWidth="120px">
+            <ContentStyle HorizontalAlign="Left" BackColor="Transparent">
+                <Paddings Padding="0px" />
+            </ContentStyle>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl6" runat="server">
+                    <dxcp:ASPxCallbackPanel ID="pnCallbackFavoritos" runat="server" ClientInstanceName="callbackFavoritos"
+                        OnCallback="pnCallbackFavoritos_Callback" ScrollBars="Auto">
+                        <SettingsLoadingPanel Enabled="False" ShowImage="False"></SettingsLoadingPanel>
+                        <ClientSideEvents EndCallback="function(s, e) {
+	gotoURL(s.cp_URL, '_self');
+	pcNovoFavorito.Hide();
+}" />
+                        <Paddings Padding="0px" />
+                        <PanelCollection>
+                            <dxp:PanelContent ID="PanelContent2" runat="server">
+                                <dxnb:ASPxNavBar runat="server" AllowExpanding="False" ShowExpandButtons="False"
+                                    GroupSpacing="15px" ID="nbFavoritos" SyncSelectionMode="None"
+                                    EnableTheming="True" EnableViewState="False" Width="200px">
+                                    <Groups>
+                                        <dxnb:NavBarGroup Name="gFavoritos" Text="Favoritos">
+                                            <HeaderImage Url="~/imagens/principal/Favoritos.png">
+                                            </HeaderImage>
+                                        </dxnb:NavBarGroup>
+                                    </Groups>
+                                    <GroupHeaderStyle Font-Bold="True">
+                                    </GroupHeaderStyle>
+                                    <GroupContentStyle>
+                                        <border borderstyle="None" />
+                                    </GroupContentStyle>
+                                    <Border BorderColor="Gray" BorderStyle="Solid" BorderWidth="1px" />
+                                </dxnb:ASPxNavBar>
+                            </dxp:PanelContent>
+                        </PanelCollection>
+                    </dxcp:ASPxCallbackPanel>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+            <Border BorderStyle="None" />
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="ASPxPopupControl1" runat="server" ClientInstanceName="pcNovoFavorito"
+            HeaderText="Adicionar Favorito" Modal="True"
+            PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Width="500px"
+            EnableViewState="False">
+            <ClientSideEvents Shown="function(s, e) {
+	txtNomeFavorito.SetFocus();
+}" />
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl7" runat="server">
+                    <table cellpadding="0" cellspacing="0" style="width: 100%">
+                        <tr>
+                            <td>
+                                <dxe:ASPxLabel ID="ASPxLabel2" runat="server"
+                                    Text="Nome do Favorito:">
+                                </dxe:ASPxLabel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <dxe:ASPxTextBox ID="txtNomeFavorito" runat="server" ClientInstanceName="txtNomeFavorito"
+                                    MaxLength="99" Width="100%">
+                                </dxe:ASPxTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height: 5px"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td align="right">
+                                            <dxe:ASPxButton ID="ASPxButton1" runat="server" AutoPostBack="False" Text="Salvar" Width="90px">
+                                                <ClientSideEvents Click="function(s, e) {
+	if(txtNomeFavorito.GetText() == &quot;&quot;)
+		window.top.mostraMensagem(traducao.novaCdis_nome_do_favorito___obrigat_rio_, 'Atencao', true, false, null);
+	else
+		callbackFavoritos.PerformCallback();
+}" />
+                                                <Paddings Padding="0px" />
+                                            </dxe:ASPxButton>
+                                        </td>
+                                        <td style="padding-left: 10px;" align="right">
+                                            <dxe:ASPxButton ID="ASPxButton2" runat="server" AutoPostBack="False" Text="Fechar" Width="90px">
+                                                <ClientSideEvents Click="function(s, e) {
+	pcNovoFavorito.Hide();
+}" />
+                                                <Paddings Padding="0px" />
+                                            </dxe:ASPxButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+            <HeaderImage Url="~/imagens/principal/Favoritos_ADD.png">
+            </HeaderImage>
+            <ContentStyle>
+                <Paddings Padding="8px" />
+            </ContentStyle>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcPeriodo" runat="server" CloseAction="MouseOut" PopupAction="MouseOver"
+            PopupElementID="imgPeriodo" ShowHeader="False" ClientInstanceName="pcPeriodo"
+            BackColor="White" ShowShadow="False" PopupHorizontalOffset="5" MaxHeight="500px"
+            ScrollBars="Auto" Width="300px">
+            <ContentStyle HorizontalAlign="Left" BackColor="White">
+                <Paddings Padding="0px" />
+            </ContentStyle>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl12" runat="server">
+                    <div style="margin: 5px;">
+                        <table style="width: 100%" id="tblPeriodo">
+                            <tr>
+                                <td colspan="2">
+                                    <dxtv:ASPxLabel ID="lblPeriodo" runat="server" ClientInstanceName="lblPeriodo" Font-Bold="True"
+                                        Text="Período">
+                                    </dxtv:ASPxLabel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 90px">
+                                    <dxtv:ASPxLabel ID="lblDataInicial" runat="server" ClientInstanceName="lblDataInicial"
+                                        Text="Data inicial: ">
+                                    </dxtv:ASPxLabel>
+                                </td>
+                                <td>
+                                    <dxtv:ASPxDateEdit ID="deDataInicial" runat="server" ClientInstanceName="deDataInicial"
+                                        Width="100%">
+                                    </dxtv:ASPxDateEdit>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <dxtv:ASPxLabel ID="lblDataFinal" runat="server" ClientInstanceName="lblDataFinal"
+                                        Text="Data final: ">
+                                    </dxtv:ASPxLabel>
+                                </td>
+                                <td>
+                                    <dxtv:ASPxDateEdit ID="deDataFinal" runat="server" ClientInstanceName="deDataFinal"
+                                        Width="100%">
+                                    </dxtv:ASPxDateEdit>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table style="margin-left: auto">
+                                        <tr>
+                                            <td style="padding: 5px">
+                                                <dxtv:ASPxButton ID="btnLimpar" runat="server" ClientInstanceName="btnLimpar" Text="Limpar" AutoPostBack="False">
+                                                    <ClientSideEvents Click="function(s, e) {
+    deDataFinal.SetValue(null);
+    deDataInicial.SetValue(null);
+	callbackPeriodo.PerformCallback('limpar');
+}" />
+                                                </dxtv:ASPxButton>
+                                            </td>
+                                            <td>
+                                                <dxtv:ASPxButton ID="btnSalvar" runat="server" ClientInstanceName="btnSalvar" Text="Filtrar" AutoPostBack="False">
+                                                    <ClientSideEvents Click="function(s, e) {
+	callbackPeriodo.PerformCallback('salvar');
+}" />
+                                                </dxtv:ASPxButton>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <dxcp:ASPxCallback ID="callbackPeriodo" ClientInstanceName="callbackPeriodo"
+                            runat="server" OnCallback="callbackPeriodo_Callback">
+                            <ClientSideEvents CallbackComplete="function(s, e) {
+	pcPeriodo.Hide();
+location.reload();
+}" />
+                        </dxcp:ASPxCallback>
+                        <dxcp:ASPxCallback ID="callbackNotificacoes" ClientInstanceName="callbackNotificacoes"
+                            runat="server" OnCallback="callbackNotificacoes_Callback">
+                        </dxcp:ASPxCallback>
+                        <dxtv:ASPxCallback ID="callbackLimpaSessao" runat="server" ClientInstanceName="callbackLimpaSessao" OnCallback="callbackLimpaSessao_Callback">
+                        </dxtv:ASPxCallback>
+                    </div>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcModal" runat="server" ClientInstanceName="pcModal" HeaderText="" Modal="True" PopupHorizontalAlign="WindowCenter"
+            PopupVerticalAlign="WindowCenter" AllowDragging="True" AllowResize="True" CloseAction="CloseButton" PopupVerticalOffset="20">
+            <HeaderTemplate>
+                <div style="display: flex; flex-direction: row; width: 100%">
+                    <div style="width: 50%" id="divTextoCabecalho"></div>
+                    <div style="width: 50%">
+                        <div id="divBotaoFechar" style="float: right;">
+                            <i class="fas fa-times-circle" style="color: gainsboro; cursor: pointer"
+                                onclick="trataClickBotaoFecharPopupModal()"></i>
+                        </div>
+                    </div>
+                </div>
+            </HeaderTemplate>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl8" runat="server">
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+            <ClientSideEvents PopUp="function(s, e) {
+    pcModal.GetContentIFrame().dialogArguments = myObject;
+}"
+                Closing="function(s, e) {
+
+                if(returnValueFormulario_cs == 'OK')
+                {
+                           var retorno_popup = pcModal.GetContentIFrame().contentDocument.getElementById('retorno_popup');
+                
+                           if (retorno_popup != null)
+                           {
+                                       retorno_popup = retorno_popup.value;
+                           }
+                           else
+                           {
+                                       retorno_popup = '';
+                           }
+
+                            var retorno = '';
+            
+                            if(retornoModal != null)
+                            {   
+                                       retorno = retornoModal;
+                            }
+                            if(posExecutar != null &amp;&amp; retorno_popup != '')
+                            {
+                                       posExecutar(retorno_popup);
+                            }
+                            else  if(posExecutar != null)
+                            {
+                                       posExecutar(retornoModal);
+                            }
+                            if(cancelaFechamentoPopUp == 'S')
+                            {
+                                       e.cancel = true;
+                            }
+                            else
+                           {
+                                       resetaModal();
+                           }	
+                }
+                else
+                {
+                            resetaModal();
+                }
+}" />
+            <ContentStyle>
+                <Paddings Padding="5px" />
+            </ContentStyle>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcModalComFooter" runat="server" ClientInstanceName="pcModalComFooter" HeaderText="" Modal="True" PopupHorizontalAlign="WindowCenter"
+            PopupVerticalAlign="WindowCenter" AllowDragging="True" AllowResize="True" CloseAction="CloseButton" PopupVerticalOffset="20" ShowFooter="True">
+            <FooterTemplate>
+                <table style="width: 100%">
+                    <tr>
+                        <td align="right">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="right">
+                                        <dxtv:ASPxButton ID="btnAdicionarComentarioPcModal" runat="server" AutoPostBack="False" Text="Adicionar comentários" Width="90px" ClientInstanceName="btnAdicionarComentarioPcModal" Theme="MaterialCompact">
+                                            <ClientSideEvents Click="function(s, e) {
+                                    pcModalComFooter.GetContentIFrameWindow().funcaoCallbackAdicionarComentario();
+}" />
+                                            <Paddings Padding="0px" />
+                                        </dxtv:ASPxButton>
+                                    </td>
+                                    <td align="right" style="padding-left: 10px;">
+                            <dxtv:ASPxButton ID="btnSalvarPcModal" runat="server" AutoPostBack="False" Text="<%$ Resources:traducao, salvar %>" Width="90px" ClientInstanceName="btnSalvarPcModal" Theme="MaterialCompact">
+                                            <ClientSideEvents Click="function(s, e) {
+                                    pcModalComFooter.GetContentIFrameWindow().funcaoCallbackSalvar();
+}" />
+                                            <Paddings Padding="0px" />
+                                        </dxtv:ASPxButton>
+                                    </td>
+                                    <td align="right" style="padding-left: 10px;">
+                            <dxtv:ASPxButton ID="btnFecharPcModal" runat="server" AutoPostBack="False" Text="<%$ Resources:traducao, fechar %>" Width="90px" ClientInstanceName="btnFecharPcModal" Theme="MaterialCompact">
+                                            <ClientSideEvents Click="function(s, e) {
+	                                pcModalComFooter.GetContentIFrameWindow().funcaoCallbackFechar();
+
+}" />
+                                            <Paddings Padding="0px" />
+                                        </dxtv:ASPxButton>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </FooterTemplate>
+            <HeaderTemplate>
+                <div style="display: flex; flex-direction: row; width: 100%">
+                    <div style="width: 50%" id="divTextoCabecalhoComFooter"></div>
+                    <div style="width: 50%">
+                        <div id="divBotaoFechar0" style="float: right;">
+                            <i class="fas fa-times-circle" style="color: gainsboro; cursor: pointer"
+                                onclick="pcModalComFooter.GetContentIFrameWindow().funcaoCallbackFechar();"></i>
+                        </div>
+                    </div>
+                </div>
+            </HeaderTemplate>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl13" runat="server">
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+            <ClientSideEvents PopUp="function(s, e) {
+    SetBotaoAdicionarComentariosVisivel(false);
+    s.GetContentIFrame().dialogArguments = myObject;
+}"
+                Closing="function(s, e) {
+
+                if(returnValueFormulario_cs == 'OK')
+                {
+                           var retorno_popup = s.GetContentIFrame().contentDocument.getElementById('retorno_popup');
+                
+                           if (retorno_popup != null)
+                           {
+                                       retorno_popup = retorno_popup.value;
+                           }
+                           else
+                           {
+                                       retorno_popup = '';
+                           }
+
+                            var retorno = '';
+            
+                            if(retornoModalComFooter != null)
+                            {   
+                                       retorno = retornoModalComFooter;
+                            }
+                            if(posExecutarComFooter != null &amp;&amp; retorno_popup != '')
+                            {
+                                       posExecutarComFooter(retorno_popup);
+                            }
+                            else  if(posExecutarComFooter != null)
+                            {
+                                       posExecutarComFooter(retornoModalComFooter);
+                            }
+                            if(cancelaFechamentoPopUp == 'S')
+                            {
+                                       e.cancel = true;
+                            }
+                            else
+                           {
+                                       resetaModalComFooter();
+                           }	
+                }
+                else
+                {
+                            resetaModalComFooter();
+                }
+}" />
+            <ContentStyle>
+                <Paddings Padding="5px" />
+            </ContentStyle>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcModalComFooter2" runat="server" ClientInstanceName="pcModalComFooter2" HeaderText="" Modal="True" PopupHorizontalAlign="WindowCenter"
+            PopupVerticalAlign="WindowCenter" AllowDragging="True" AllowResize="True" CloseAction="CloseButton" PopupVerticalOffset="20" ShowFooter="True">
+            <FooterTemplate>
+                <table style="width: 100%">
+                    <tr>
+                        <td align="right">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="right">
+                                        <dxtv:ASPxButton ID="btnSalvarPcModal" runat="server" AutoPostBack="False" Text="Salvar" Width="90px" ClientInstanceName="btnSalvarPcModal" Theme="MaterialCompact">
+                                            <ClientSideEvents Click="function(s, e) {
+                                    pcModalComFooter2.GetContentIFrameWindow().funcaoCallbackSalvar();
+}" />
+                                            <Paddings Padding="0px" />
+                                        </dxtv:ASPxButton>
+                                    </td>
+                                    <td align="right" style="padding-left: 10px;">
+                                        <dxtv:ASPxButton ID="btnFecharPcModal" runat="server" AutoPostBack="False" Text="Fechar" Width="90px" ClientInstanceName="btnFecharPcModal" Theme="MaterialCompact">
+                                            <ClientSideEvents Click="function(s, e) {
+	                                pcModalComFooter2.GetContentIFrameWindow().funcaoCallbackFechar();
+
+}" />
+                                            <Paddings Padding="0px" />
+                                        </dxtv:ASPxButton>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </FooterTemplate>
+            <HeaderTemplate>
+                <div style="display: flex; flex-direction: row; width: 100%">
+                    <div style="width: 50%" id="divTextoCabecalhoComFooter2"></div>
+                    <div style="width: 50%">
+                        <div id="divBotaoFechar0" style="float: right;">
+                            <i class="fas fa-times-circle" style="color: gainsboro; cursor: pointer"
+                                onclick="pcModalComFooter2.GetContentIFrameWindow().funcaoCallbackFechar();"></i>
+                        </div>
+                    </div>
+                </div>
+            </HeaderTemplate>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl15" runat="server">
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+            <ClientSideEvents PopUp="function(s, e) {
+    s.GetContentIFrame().dialogArguments = myObject;
+}"
+                Closing="function(s, e) {
+
+                if(returnValueFormulario_cs == 'OK')
+                {
+                           var retorno_popup = s.GetContentIFrame().contentDocument.getElementById('retorno_popup');
+                
+                           if (retorno_popup != null)
+                           {
+                                       retorno_popup = retorno_popup.value;
+                           }
+                           else
+                           {
+                                       retorno_popup = '';
+                           }
+
+                            var retorno = '';
+            
+                            if(retornoModalComFooter2 != null)
+                            {   
+                                       retorno = retornoModalComFooter2;
+                            }
+                            if(posExecutarComFooter2 != null &amp;&amp; retorno_popup != '')
+                            {
+                                       posExecutarComFooter2(retorno_popup);
+                            }
+                            else  if(posExecutarComFooter2 != null)
+                            {
+                                       posExecutarComFooter2(retornoModalComFooter2);
+                            }
+                            if(cancelaFechamentoPopUp == 'S')
+                            {
+                                       e.cancel = true;
+                            }
+                            else
+                           {
+                                       resetaModalComFooter2();
+                           }	
+                }
+                else
+                {
+                            resetaModalComFooter2();
+                }
+}" />
+            <ContentStyle>
+                <Paddings Padding="5px" />
+            </ContentStyle>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcFormularioDinamico" runat="server" ClientInstanceName="pcFormularioDinamico" HeaderText="" Modal="True" PopupHorizontalAlign="WindowCenter"
+            PopupVerticalAlign="WindowCenter" AllowDragging="True" AllowResize="True" CloseAction="CloseButton" PopupVerticalOffset="20">
+            <HeaderTemplate>
+                <div style="display: flex; flex-direction: row; width: 100%">
+                    <div style="width: 50%" id="divTextoCabecalho0"></div>
+                    <div style="width: 50%">
+                        <div id="divBotaoFechar1" style="float: right;">
+                            <i class="fas fa-times-circle" style="color: gainsboro; cursor: pointer"
+                                onclick="processa_fechaModalFormularioDinamico()"></i>
+                        </div>
+                    </div>
+                </div>
+            </HeaderTemplate>
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl14" runat="server">
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+            <ClientSideEvents PopUp="function(s, e) {
+    s.GetContentIFrame().dialogArguments = myObject;
+}"
+                Closing="function(s, e) {
+      if(statusSalvarFormularioDinamico == 1)
+      {
+                posExecutarFormularioDinamico(retornoModal);
+                statusSalvarFormularioDinamico = 0;
+      }
+      if(cancelaFechamentoPopUp == 'S')
+      {
+                 e.cancel = true;
+      }
+      else
+      {
+                resetaModalFormularioDinamico();
+      }	
+                
+}" />
+            <ContentStyle>
+                <Paddings Padding="5px" />
+            </ContentStyle>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcStatusReportCarteira" runat="server" AllowDragging="True"
+            AllowResize="True" ClientInstanceName="pcStatusReportCarteira" CloseAction="CloseButton"
+            HeaderText="Boletim de Ações Estratégicas"
+            Modal="True" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter">
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl9" runat="server">
+                    <iframe id="Frame_SR" name="Frame_SR" frameborder="0" style="overflow: auto; padding: 0px; margin: 0px;"></iframe>
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+        </dxpc:ASPxPopupControl>
+        <dxpc:ASPxPopupControl ID="pcModal2" runat="server" ClientInstanceName="pcModal2"
+            HeaderText="" Modal="True" PopupHorizontalAlign="WindowCenter"
+            PopupVerticalAlign="WindowCenter" AllowDragging="True" AllowResize="True" CloseAction="CloseButton" PopupVerticalOffset="20">
+            <ContentCollection>
+                <dxpc:PopupControlContentControl ID="PopupControlContentControl11" runat="server">
+                </dxpc:PopupControlContentControl>
+            </ContentCollection>
+            <ClientSideEvents PopUp="function(s, e) {
+    pcModal2.GetContentIFrame().dialogArguments = myObject;
+}"
+                Closing="function(s, e) {
+
+                var retorno_popup = pcModal2.GetContentIFrame().contentDocument.getElementById('retorno_popup');
+                if (retorno_popup != null)
+                {
+                    retorno_popup = retorno_popup.value;
+                }
+                else
+                {
+                retorno_popup = '';
+                }
+            var retorno = '';
+            
+            if(retornoModal2 != null)
+            {   
+                retorno = retornoModal2;
+            }
+            
+            if(posExecutar2 != null)
+               posExecutar2(retorno_popup);
+            
+			if(cancelaFechamentoPopUp2 == 'S')
+				e.cancel = true;
+    		else
+            	resetaModal2();
+}" />
+            <ContentStyle>
+                <Paddings Padding="5px" />
+            </ContentStyle>
+        </dxpc:ASPxPopupControl>
+        <dxcp:ASPxLoadingPanel ID="lpAguardeMasterPage" runat="server" ClientInstanceName="lpAguardeMasterPage"
+            Font-Bold="True" Height="80px" HorizontalAlign="Center"
+            Modal="True" Text="Aguarde&amp;hellip;" VerticalAlign="Middle" Width="200px">
+        </dxcp:ASPxLoadingPanel>
+        <dxcb:ASPxCallback ID="callbackCarteiras" runat="server" ClientInstanceName="callbackCarteiras"
+            OnCallback="callbackCarteiras_Callback">
+            <ClientSideEvents EndCallback="function(s, e) {
+	atualizaTela();
+}" />
+        </dxcb:ASPxCallback>
+        <dxcb:ASPxCallback ID="callbackSession" runat="server" ClientInstanceName="callbackSession">
+            <ClientSideEvents EndCallback="function(s, e) {
+	            starttime = new Date();
+                starttime = starttime.getTime();
+                countdown();
+}" />
+        </dxcb:ASPxCallback>
+        <dxtv:ASPxPopupControl ID="pcApresentacaoAcao" runat="server" ClientInstanceName="pcApresentacaoAcao" HeaderText="Incluir a Entidad Atual" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ShowCloseButton="False" ShowHeader="False" MaxWidth="650px" MinWidth="70px" Modal="True" CloseAction="None">
+            <ClientSideEvents Closing="function(s, e) {
+	lblMensagemApresentacaoAcao.SetText('');
+}"
+                Shown="function(s, e) {
+	lpAguardeMasterPage.Hide();               
+}"
+                PopUp="function(s, e) {
+                if(isMobile() == true)
+            {
+                
+                var width = Math.max(0, window.innerWidth) - 50;
+                 var height = Math.max(0, s.GetHeight());
+                 s.SetWidth(width);
+                 s.SetHeight(150); 
+                s.UpdatePosition();
+                //alert('Shown');
+            }
+}" />
+            <ContentCollection>
+                <dxtv:PopupControlContentControl runat="server">
+                    <table cellspacing="0" class="auto-style1">
+                        <tr>
+                            <td>
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" style="width: 70px" valign="middle">
+                                                <dxtv:ASPxImage ID="imgApresentacaoAcao" runat="server" ClientInstanceName="imgApresentacaoAcao" ImageAlign="TextTop" ImageUrl="~/imagens/Workflow/salvarBanco.png" Height="40px">
+                                                </dxtv:ASPxImage>
+                                            </td>
+                                            <td align="left" style="padding: 10px" valign="middle">
+                                                <dxtv:ASPxLabel ID="lblMensagemApresentacaoAcao" runat="server" ClientInstanceName="lblMensagemApresentacaoAcao" EncodeHtml="False" Wrap="True">
+                                                </dxtv:ASPxLabel>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="padding-top: 2px">
+                                <table cellspacing="0">
+                                    <tr>
+                                        <td style="padding-right: 3px">
+                                            <dxtv:ASPxButton ID="btnOkApresentacaoAcao" runat="server" AutoPostBack="False" ClientInstanceName="btnOkApresentacaoAcao" Text="OK" Width="70px">
+                                                <ClientSideEvents Click="function(s, e) {
+                                                        fechaMensagem();
+	if(eventoOKMsg != null &amp;&amp; eventoOKMsg != '')
+		eventoOKMsg();
+	
+}" />
+                                                <Paddings Padding="0px" />
+                                            </dxtv:ASPxButton>
+                                        </td>
+                                        <td style="padding-left: 3px">
+                                            <dxtv:ASPxButton ID="btnCancelarApresentacaoAcao" runat="server" AutoPostBack="False" Text="Cancelar" Width="70px" ClientInstanceName="btnCancelarApresentacaoAcao">
+                                                <ClientSideEvents Click="function(s, e) {
+                                                        
+	fechaMensagem();
+	if(eventoCancelarMsg != null &amp;&amp; eventoCancelarMsg != '')
+		eventoCancelarMsg();
+}" />
+                                                <Paddings Padding="0px" />
+                                            </dxtv:ASPxButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </dxtv:PopupControlContentControl>
+            </ContentCollection>
+        </dxtv:ASPxPopupControl>
+        <dxcp:ASPxCallback ID="callbackDesbloqueio" runat="server" ClientInstanceName="callbackDesbloqueio" OnCallback="callbackDesbloqueio_Callback">
+        </dxcp:ASPxCallback>
+    
+        <dxcp:ASPxHiddenField ID="hfLinkAprovacoes" runat="server" ClientInstanceName="hfLinkAprovacoes">
+        </dxcp:ASPxHiddenField>
+    </form>
+    <asp:ContentPlaceHolder ID="FooterContent" ClientIDMode="Static" runat="server">
+    </asp:ContentPlaceHolder>
+    <script type="text/javascript">
+
+        var urlWSnewBriskBase = hfSignalR.Get("urlWSnewBriskBase");
+
+        function atualizaNotificacoesTela(objetoJson) {
+
+            var indicaIconeRiscoLigado = objetoJson.indicaIconeRiscoS1Ligado;
+            var indicaIconeIndicadorLigado = objetoJson.indicaIconeIndicadorLigado;
+            var indicaIconeReuniaoLigado = objetoJson.indicaIconeReuniaoLigado;
+            var indicaIconeTarefaLigado = objetoJson.indicaIconeTarefaS1Ligado;
+            var indicaIconeContratoLigado = objetoJson.indicaIconeContratoLigado;
+            var indicaIconePndFinLigado = objetoJson.indicaIconePndFinLigado;
+            var indicaIconeAprovTrfLigado = objetoJson.indicaIconeAprovTrfLigado;
+            var indicaIconePndWfLigado = objetoJson.indicaIconePndWfLigado;
+            var indicaIconeMensagemLigado = objetoJson.indicaIconeMensagemLigado;
+
+
+            var somaMensagens = 0;
+            somaMensagens = somaMensagens + objetoJson.qtdMensagem;
+            $('#idULMenssage').empty();
+            var myli0 = document.createElement('li');
+            myli0.innerHTML = configuraNotificacaoMensagem(objetoJson);
+            document.querySelector('#idULMenssage').appendChild(myli0);
+
+
+            var somaNotificacoes = 0;
+            somaNotificacoes = somaNotificacoes + objetoJson.qtdPndWf;
+            $('#idULNotificacoes').empty();
+            var myli = document.createElement('li');
+            myli.innerHTML = configuraNotificacaoPendenciaWf(objetoJson);
+            document.querySelector('#idULNotificacoes').appendChild(myli);
+
+            somaNotificacoes = somaNotificacoes + objetoJson.qtdRiscoS1;
+            var myli1 = document.createElement('li');
+            myli1.innerHTML = configuraNotificacaoRisco(objetoJson);
+            document.querySelector('#idULNotificacoes').appendChild(myli1);
+
+            somaNotificacoes = somaNotificacoes + objetoJson.qtdContrato;
+            var myli2 = document.createElement('li');
+            myli2.innerHTML = configuraNotificacaoContrato(objetoJson);
+            document.querySelector('#idULNotificacoes').appendChild(myli2);
+
+            somaNotificacoes = somaNotificacoes + objetoJson.qtdQuestaoS1;
+            var myli3 = document.createElement('li');
+            myli3.innerHTML = configuraNotificacaoQuestao(objetoJson);
+            document.querySelector('#idULNotificacoes').appendChild(myli3);
+
+            somaNotificacoes = somaNotificacoes + objetoJson.qtdReuniao;
+            var myli4 = document.createElement('li');
+            myli4.innerHTML = configuraNotificacaoReuniao(objetoJson);
+            document.querySelector('#idULNotificacoes').appendChild(myli4);
+
+            somaNotificacoes = somaNotificacoes + objetoJson.qtdIndicador;
+            var myli5 = document.createElement('li');
+            myli5.innerHTML = configuraNotificacaoIndicador(objetoJson);
+            document.querySelector('#idULNotificacoes').appendChild(myli5);
+
+            somaNotificacoes = somaNotificacoes + objetoJson.qtdAprovTrf;
+            var myli6 = document.createElement('li');
+            myli6.innerHTML = configuraAprovacoesTarefas(objetoJson)
+            document.querySelector('#idULNotificacoes').appendChild(myli6);
+
+            var somaTarefas = 0;
+            somaTarefas = somaTarefas + objetoJson.qtdTarefaS1;
+            $('#idULTarefas').empty();
+            var myli7 = document.createElement('li');
+            myli7.innerHTML = configuraNotificacaoTarefa(objetoJson);
+            document.querySelector('#idULTarefas').appendChild(myli7);
+
+
+            if (indicaIconeRiscoLigado == true ||
+                indicaIconePndWfLigado == true ||
+                indicaIconeReuniaoLigado == true ||
+                indicaIconeContratoLigado == true ||
+                indicaIconeIndicadorLigado == true ||
+                indicaIconeAprovTrfLigado == true) {
+                $("#menuPrincipalExistemNotificacoes").removeClass('nav-notification-gray');
+                //Verifica se a classe já esta no objeto
+                if ($("#menuPrincipalExistemNotificacoes").hasClass('nav-notification')) {
+                    //Obtem a quantidade atual de Notificações plotada na bolinha
+                    var objBolinhaNotificacoes = document.getElementById('bolinhaNotificacaoNotificacoes').attributes.qtdNotificacoes;
+                    var qtdNotificacoesAtuais = 0;
+                    if (objBolinhaNotificacoes != null || objBolinhaNotificacoes != undefined) {
+                        qtdNotificacoesAtuais = objBolinhaNotificacoes.value;
+                    }
+                    //Se a quantidade atual de notificações for menor que a quantidade que veio no json 
+                    //então remove a classe para ser reconstruida com a animação
+                    if (qtdNotificacoesAtuais < somaNotificacoes) {
+                        $("#menuPrincipalExistemNotificacoes").removeClass('animation');
+                        $("#menuPrincipalExistemNotificacoes").removeClass('nav-notification');
+
+                    }
+
+                }
+                //foi add essa condição para inibir a animação duranta a transição de tela interna
+                if (qtdNotificacoesAtuais == 0 || qtdNotificacoesAtuais == somaNotificacoes) {
+                    $("#menuPrincipalExistemNotificacoes").addClass('nav-notification');
+                } else {
+                    setTimeout(function () {
+                        $("#menuPrincipalExistemNotificacoes").addClass('nav-notification animation');
+                    }, 10);
+                }
+            }
+            else {
+                $("#menuPrincipalExistemNotificacoes").removeClass('animation');
+                $("#menuPrincipalExistemNotificacoes").removeClass('nav-notification');
+                $("#menuPrincipalExistemNotificacoes").addClass('nav-notification-gray');
+            }
+
+            if (indicaIconeMensagemLigado == true) {
+                $("#menuPrincipalExistemMensagens").show(800);
+            }
+            else {
+                $("#menuPrincipalExistemMensagens").removeClass('animation');
+                $("#menuPrincipalExistemMensagens").removeClass('nav-notification');
+                $("#menuPrincipalExistemMensagens").addClass('nav-notification-gray');
+            }
+            if (indicaIconeTarefaLigado == true) {
+                $("#menuPrincipalExistemTarefas").removeClass('nav-notification-gray');
+                //Verifica se a classe já esta no objeto
+                if ($("#menuPrincipalExistemTarefas").hasClass('nav-notification')) {
+                    //Obtem a quantidade atual de Tarefas plotada na bolinha
+                    var objBolinhaTarefa = document.getElementById('bolinhaNotificacaoTarefas').attributes.qtdTarefas;
+                    var qtdTarefasAtuais = 0;
+                    if (objBolinhaTarefa != null || objBolinhaTarefa != undefined) {
+                        qtdTarefasAtuais = objBolinhaTarefa.value;
+                    }
+                    //Se a quantidade atual de Tarefas for menor que a quantidade que veio no json 
+                    //então remove a classe para ser reconstruida com a animação
+                    if (qtdTarefasAtuais < somaTarefas) {
+                        $("#menuPrincipalExistemTarefas").removeClass('animation');
+                        $("#menuPrincipalExistemTarefas").removeClass('nav-notification');
+
+                    }
+                }
+                if (qtdTarefasAtuais == 0 || qtdTarefasAtuais == somaTarefas) {
+                    $("#menuPrincipalExistemTarefas").addClass('nav-notification');
+                } else {
+                    setTimeout(function () {
+                        $("#menuPrincipalExistemTarefas").addClass('nav-notification animation');
+                    }, 10);
+                }
+            }
+            else {
+                $("#menuPrincipalExistemTarefas").removeClass('animation');
+                $("#menuPrincipalExistemTarefas").removeClass('nav-notification');
+                $("#menuPrincipalExistemTarefas").addClass('nav-notification-gray');
+            }
+            $("#bolinhaNotificacaoMensagem").attr("qtdMensagens", somaMensagens);
+            $("#bolinhaNotificacaoNotificacoes").attr("qtdNotificacoes", somaNotificacoes);
+            $("#bolinhaNotificacaoTarefas").attr("qtdTarefas", somaTarefas);
+            document.getElementById('bolinhaNotificacaoMensagem').innerHTML = somaMensagens > 99 ? "+99" : somaMensagens;
+            document.getElementById('bolinhaNotificacaoNotificacoes').innerHTML = somaNotificacoes > 99 ? "+99" : somaNotificacoes;
+            document.getElementById('bolinhaNotificacaoTarefas').innerHTML = somaTarefas > 99 ? "+99" : somaTarefas;
+
+            $("#iconeTarefas").attr("data-toggle", "dropdown");
+            $("#iconeNotificacoes").attr("data-toggle", "dropdown");
+            $("#iconeMensagens").attr("data-toggle", "dropdown");
+
+            $("#iconeTarefas").attr("href", "#");
+            $("#iconeNotificacoes").attr("href", "#");
+            $("#iconeMensagens").attr("href", "#");
+        }
+
+        function configuraNotificacaoTarefa(objetoJson) {
+            var qtdTarefa = objetoJson.qtdTarefaS1;
+            var qtdTarefaDestaque = objetoJson.qtdTarefaS1Destaque;
+
+
+            var fraseTarefa = '';
+
+            if (qtdTarefa == 0) {
+                fraseTarefa = traducao.menu_tarefas_nao_existem_tarefas;
+            }
+            else {
+
+                if ((qtdTarefa == 1) && (qtdTarefaDestaque == 0)) {
+                    fraseTarefa = traducao.menu_tarefas_voce_tem_n_tarefa;
+                }
+                else if ((qtdTarefa == 1) && (qtdTarefaDestaque == 1)) {
+                    fraseTarefa = traducao.menu_tarefas_voce_tem_n_tarefa_sendo_n_atrasado;
+                }
+                else if ((qtdTarefa == 1) && (qtdTarefaDestaque > 1)) {
+                    fraseTarefa = traducao.menu_tarefas_voce_tem_n_tarefa_sendo_n_atrasados;
+                }
+                else if ((qtdTarefa > 1) && (qtdTarefaDestaque == 0)) {
+                    fraseTarefa = traducao.menu_tarefas_voce_tem_n_tarefas;
+                }
+                else if ((qtdTarefa > 1) && (qtdTarefaDestaque == 1)) {
+                    fraseTarefa = traducao.menu_tarefas_voce_tem_n_tarefas_sendo_n_atrasado;
+                }
+                else if ((qtdTarefa > 1) && (qtdTarefaDestaque > 1)) {
+                    fraseTarefa = traducao.menu_tarefas_voce_tem_n_tarefas_sendo_n_atrasados;
+                }
+            }
+            if (fraseTarefa != '') {
+                fraseTarefa = fraseTarefa.replaceAll('{0}', qtdTarefa).replaceAll('{1}', qtdTarefaDestaque);
+            }
+
+            return fraseTarefa;
+        }
+
+        function configuraNotificacaoRisco(objetoJson) {
+
+            var qtdRisco = objetoJson.qtdRiscoS1;
+            var qtdRiscoDestaque = objetoJson.qtdRiscoS1Destaque;
+            var indicaIconeRiscoLigado = objetoJson.indicaIconeRiscoS1Ligado;
+
+
+            var fraseRisco = '';
+
+            if (qtdRisco == 0) {
+                fraseRisco = traducao.menu_notificacoes_nao_existem_riscos;
+            }
+            else {
+
+                if ((qtdRisco == 1) && (qtdRiscoDestaque == 0)) {
+                    fraseRisco = traducao.menu_notificacoes_voce_tem_n_risco;
+                }
+                else if ((qtdRisco == 1) && (qtdRiscoDestaque == 1)) {
+                    fraseRisco = traducao.menu_notificacoes_voce_tem_n_risco_sendo_n_atrasado;
+                }
+                else if ((qtdRisco == 1) && (qtdRiscoDestaque > 1)) {
+                    fraseRisco = traducao.menu_notificacoes_voce_tem_n_risco_sendo_n_atrasados;
+                }
+                else if ((qtdRisco > 1) && (qtdRiscoDestaque == 0)) {
+                    fraseRisco = traducao.menu_notificacoes_voce_tem_n_riscos;
+                }
+                else if ((qtdRisco > 1) && (qtdRiscoDestaque == 1)) {
+                    fraseRisco = traducao.menu_notificacoes_voce_tem_n_riscos_sendo_n_atrasado;
+                }
+                else if ((qtdRisco > 1) && (qtdRiscoDestaque > 1)) {
+                    fraseRisco = traducao.menu_notificacoes_voce_tem_n_riscos_sendo_n_atrasados;
+                }
+            }
+
+
+            if (fraseRisco != '') {
+                fraseRisco = fraseRisco.replaceAll('{0}', qtdRisco).replaceAll('{1}', qtdRiscoDestaque);
+            }
+
+            return fraseRisco;
+        }
+
+        function configuraNotificacaoContrato(objetoJson) {
+
+            var qtdContrato = objetoJson.qtdContrato;
+            var qtdContratoDestaque = objetoJson.qtdContratoDestaque;
+
+
+            var fraseContrato = '';
+
+            if (qtdContrato == 0) {
+                fraseContrato = traducao.menu_notificacoes_nao_existem_contratos;
+            }
+            else {
+                if ((qtdContrato == 1) && (qtdContratoDestaque == 0)) {
+                    fraseContrato = traducao.menu_notificacoes_voce_tem_n_contrato;
+                }
+                else if ((qtdContrato == 1) && (qtdContratoDestaque == 1)) {
+                    fraseContrato = traducao.menu_notificacoes_voce_tem_n_contrato_sendo_n_atrasado;
+                }
+                else if ((qtdContrato == 1) && (qtdContratoDestaque > 1)) {
+                    fraseContrato = traducao.menu_notificacoes_voce_tem_n_contrato_sendo_n_atrasados;
+                }
+                else if ((qtdContrato > 1) && (qtdContratoDestaque == 0)) {
+                    fraseContrato = traducao.menu_notificacoes_voce_tem_n_contratos;
+                }
+                else if ((qtdContrato > 1) && (qtdContratoDestaque == 1)) {
+                    fraseContrato = traducao.menu_notificacoes_voce_tem_n_contratos_sendo_n_atrasado;
+                }
+                else if ((qtdContrato > 1) && (qtdContratoDestaque > 1)) {
+                    fraseContrato = traducao.menu_notificacoes_voce_tem_n_contratos_sendo_n_atrasados;
+                }
+            }
+
+            if (fraseContrato != '') {
+                fraseContrato = fraseContrato.replaceAll('{0}', qtdContrato).replaceAll('{1}', qtdContratoDestaque).replaceAll('{2}', hfSignalR.Get("QuantidadeDiasAlertaContratosVencimento"));
+            }
+
+            return fraseContrato;
+        }
+
+        function configuraNotificacaoPendenciaWf(objetoJson) {
+
+            var qtdPndWf = objetoJson.qtdPndWf;
+            var qtdPndWfDestaque = objetoJson.qtdPndWfDestaque;
+
+            var frasePendenciaWf = "";
+
+
+            if (qtdPndWf == 0) {
+                frasePendenciaWf = traducao.menu_notificacoes_nao_existem_pendencias_workflow;
+            }
+            else {
+                if ((qtdPndWf == 1) && (qtdPndWfDestaque == 0)) {
+                    frasePendenciaWf = traducao.menu_notificacoes_voce_tem_n_pendencia_workflow;
+                }
+                else if ((qtdPndWf == 1) && (qtdPndWfDestaque == 1)) {
+                    frasePendenciaWf = traducao.menu_notificacoes_voce_tem_n_pendencia_workflow_sendo_n_atrasado;
+                }
+                else if ((qtdPndWf == 1) && (qtdPndWfDestaque > 1)) {
+                    frasePendenciaWf = traducao.menu_notificacoes_voce_tem_n_pendencia_workflow_sendo_n_atrasados;
+                }
+                else if ((qtdPndWf > 1) && (qtdPndWfDestaque == 0)) {
+                    frasePendenciaWf = traducao.menu_notificacoes_voce_tem_n_pendencias_workflow;
+                }
+                else if ((qtdPndWf > 1) && (qtdPndWfDestaque == 1)) {
+                    frasePendenciaWf = traducao.menu_notificacoes_voce_tem_n_pendencias_workflow_sendo_n_atrasado;
+                }
+                else if ((qtdPndWf > 1) && (qtdPndWfDestaque > 1)) {
+                    frasePendenciaWf = traducao.menu_notificacoes_voce_tem_n_pendencias_workflow_sendo_n_atrasados;
+                }
+
+                if (frasePendenciaWf != '') {
+                    frasePendenciaWf = frasePendenciaWf.replaceAll('{0}', qtdPndWf).replaceAll('{1}', qtdPndWfDestaque);
+                }
+            }
+            return frasePendenciaWf;
+        }
+
+        function configuraNotificacaoReuniao(objetoJson) {
+
+            var qtdReuniao = objetoJson.qtdReuniao;
+            var qtdReuniaoDestaque = objetoJson.qtdReuniaoDestaque;
+
+            var fraseReuniao = "";
+
+
+            if (qtdReuniao == 0) {
+                fraseReuniao = traducao.menu_notificacoes_nao_existem_compromissos;
+            }
+            else {
+                if ((qtdReuniao == 1) && (qtdReuniaoDestaque == 0)) {
+                    fraseReuniao = traducao.menu_notificacoes_voce_tem_n_compromisso;
+                }
+                else if ((qtdReuniao == 1) && (qtdReuniaoDestaque == 1)) {
+                    fraseReuniao = traducao.menu_notificacoes_voce_tem_n_compromisso_sendo_n_atrasado;
+                }
+                else if ((qtdReuniao == 1) && (qtdReuniaoDestaque > 1)) {
+                    fraseReuniao = traducao.menu_notificacoes_voce_tem_n_compromisso_sendo_n_atrasados;
+                }
+                else if ((qtdReuniao > 1) && (qtdReuniaoDestaque == 0)) {
+                    fraseReuniao = traducao.menu_notificacoes_voce_tem_n_compromissos;
+                }
+                else if ((qtdReuniao > 1) && (qtdReuniaoDestaque == 1)) {
+                    fraseReuniao = traducao.menu_notificacoes_voce_tem_n_compromissos_sendo_n_atrasado;
+                }
+                else if ((qtdReuniao > 1) && (qtdReuniaoDestaque > 1)) {
+                    fraseReuniao = traducao.menu_notificacoes_voce_tem_n_compromissos_sendo_n_atrasados;
+                }
+            }
+
+
+            if (fraseReuniao != '') {
+                fraseReuniao = fraseReuniao.replaceAll('{0}', qtdReuniao).replaceAll('{1}', qtdReuniaoDestaque).replaceAll('{2}', 3);//As reuniões em destaque serão as dos próximos 3 dias fixos. (by Géter)
+            }
+            return fraseReuniao;
+        }
+
+        function configuraNotificacaoQuestao(objetoJson) {
+
+            var fraseQuestoes = '';
+
+            var qtdQuestoes = objetoJson.qtdQuestaoS1;
+            var qtdQuestoesDestaque = objetoJson.qtdQuestaoS1Destaque;
+
+            if (qtdQuestoes == 0) {
+                fraseQuestoes = traducao.menu_notificacoes_nao_existem_questoes;
+            }
+            else {
+                if ((qtdQuestoes == 1) && (qtdQuestoesDestaque == 0)) {
+                    fraseQuestoes = traducao.menu_notificacoes_voce_tem_n_questao;
+                }
+                else if ((qtdQuestoes == 1) && (qtdQuestoesDestaque == 1)) {
+                    fraseQuestoes = traducao.menu_notificacoes_voce_tem_n_questao_sendo_n_atrasado;
+                }
+                else if ((qtdQuestoes == 1) && (qtdQuestoesDestaque > 1)) {
+                    fraseQuestoes = traducao.menu_notificacoes_voce_tem_n_questao_sendo_n_atrasados;
+                }
+                else if ((qtdQuestoes > 1) && (qtdQuestoesDestaque == 0)) {
+                    fraseQuestoes = traducao.menu_notificacoes_voce_tem_n_questoes;
+                }
+                else if ((qtdQuestoes > 1) && (qtdQuestoesDestaque == 1)) {
+                    fraseQuestoes = traducao.menu_notificacoes_voce_tem_n_questoes_sendo_n_atrasado;
+                }
+                else if ((qtdQuestoes > 1) && (qtdQuestoesDestaque > 1)) {
+                    fraseQuestoes = traducao.menu_notificacoes_voce_tem_n_questoes_sendo_n_atrasados;
+                }
+            }
+
+            if (fraseQuestoes != '') {
+                fraseQuestoes = fraseQuestoes.replaceAll('{0}', qtdQuestoes).replaceAll('{1}', qtdQuestoesDestaque);
+            }
+
+            return fraseQuestoes;
+        }
+
+        function configuraNotificacaoMensagem(objetoJson) {
+
+            var qtdMensagem = objetoJson.qtdMensagem;
+            var qtdMensagemDestaque = objetoJson.qtdMensagemDestaque;
+
+            var fraseMensagem = "";
+
+            if (qtdMensagem == 0) {
+                //texto = Resources.traducao.menu_mensagens_nao_existem_mensagens;
+
+                fraseMensagem = traducao.menu_mensagens_nao_existem_mensagens;
+            }
+            else {
+
+                if ((qtdMensagem == 1) && (qtdMensagemDestaque == 0)) {
+                    fraseMensagem = traducao.menu_mensagens_voce_tem_n_mensagem;
+                }
+                else if ((qtdMensagem == 1) && (qtdMensagemDestaque == 1)) {
+                    fraseMensagem = traducao.menu_mensagens_voce_tem_n_mensagem_sendo_n_atrasado;
+                }
+                else if ((qtdMensagem == 1) && (qtdMensagemDestaque > 1)) {
+                    fraseMensagem = traducao.menu_mensagens_voce_tem_n_mensagem_sendo_n_atrasados;
+                }
+                else if ((qtdMensagem > 1) && (qtdMensagemDestaque == 0)) {
+                    fraseMensagem = traducao.menu_mensagens_voce_tem_n_mensagens;
+                }
+                else if ((qtdMensagem > 1) && (qtdMensagemDestaque == 1)) {
+                    fraseMensagem = traducao.menu_mensagens_voce_tem_n_mensagens_sendo_n_atrasado;
+                }
+                else if ((qtdMensagem > 1) && (qtdMensagemDestaque > 1)) {
+                    fraseMensagem = traducao.menu_mensagens_voce_tem_n_mensagens_sendo_n_atrasados;
+                }
+            }
+
+            if (fraseMensagem != '') {
+                fraseMensagem = fraseMensagem.replaceAll('{0}', qtdMensagem).replaceAll('{1}', qtdMensagemDestaque);
+            }
+
+
+
+            return fraseMensagem;
+        }
+
+        function configuraNotificacaoIndicador(objetoJson) {
+
+            var fraseIndicador;
+            var qtdIndicador = objetoJson.qtdIndicador;
+            var qtdIndicadorDestaque = objetoJson.qtdIndicadorDestaque;
+
+
+            if (qtdIndicador == 0) {
+                fraseIndicador = traducao.menu_notificacoes_nao_existem_indicadores;
+            }
+            else {
+
+                if ((qtdIndicador == 1) && (qtdIndicadorDestaque == 0)) {
+                    fraseIndicador = traducao.menu_notificacoes_voce_tem_n_indicador;
+                }
+                else if ((qtdIndicador == 1) && (qtdIndicadorDestaque == 1)) {
+                    fraseIndicador = traducao.menu_notificacoes_voce_tem_n_indicador_sendo_n_atrasado;
+                }
+                else if ((qtdIndicador == 1) && (qtdIndicadorDestaque > 1)) {
+                    fraseIndicador = traducao.menu_notificacoes_voce_tem_n_indicador_sendo_n_atrasados;
+                }
+                else if ((qtdIndicador > 1) && (qtdIndicadorDestaque == 0)) {
+                    fraseIndicador = traducao.menu_notificacoes_voce_tem_n_indicadores;
+                }
+                else if ((qtdIndicador > 1) && (qtdIndicadorDestaque == 1)) {
+                    fraseIndicador = traducao.menu_notificacoes_voce_tem_n_indicadores_sendo_n_atrasado;
+                }
+                else if ((qtdIndicador > 1) && (qtdIndicadorDestaque > 1)) {
+                    fraseIndicador = traducao.menu_notificacoes_voce_tem_n_indicadores_sendo_n_atrasados;
+                }
+            }
+            if (fraseIndicador != '') {
+                fraseIndicador = fraseIndicador.replaceAll('{0}', qtdIndicador).replaceAll('{1}', qtdIndicadorDestaque);
+            }
+
+            return fraseIndicador;
+        }
+
+        function configuraAprovacoesTarefas(objetoJson) {
+
+            var qtdAprovTrf = objetoJson.qtdAprovTrf;
+
+            var fraseAprovacoes = '';
+
+            if (qtdAprovTrf == 0) {
+                fraseAprovacoes = traducao.menu_tarefas_nao_existem_tarefas_recursos;
+            }
+            else {
+
+                if (qtdAprovTrf == 1) {
+                    fraseAprovacoes = traducao.menu_tarefas_voce_tem_n_tarefa_recurso;
+                }
+                else if (qtdAprovTrf > 1) {
+                    fraseAprovacoes = traducao.menu_tarefas_voce_tem_n_tarefas_recursos;
+                }
+            }
+            if (fraseAprovacoes != '') {
+                fraseAprovacoes = fraseAprovacoes.replaceAll('{0}', qtdAprovTrf);
+            }
+            return fraseAprovacoes;
+        }
+
+        async function getNotificationsFromApi(token) {
+
+            var authorization = "Bearer " + token;
+
+            var primPressIconNotif = "false";
+            var nbrJustAccessed = sessionStorage.getItem('nbr_justAccessed');
+            if (nbrJustAccessed != null && nbrJustAccessed != undefined) {
+                primPressIconNotif = sessionStorage.getItem('nbr_justAccessed');
+            }
+            
+            var listaNotificacoes = sessionStorage.getItem('listaNotificacoes');
+
+            if (listaNotificacoes == "null" || listaNotificacoes == null || listaNotificacoes == undefined) {
+               $.ajax({
+                   "url": urlWSnewBriskBase + "/api/v1/plano-acao/info-notificao-usuario?IndicaLoginUsuario=S" + (primPressIconNotif == "true" ? "S" : "N"),
+                   "method": "GET",
+                   "timeout": 0,
+                   "headers": {
+                       "Content-Type": "application/json; charset=utf-8",
+                       "Authorization": authorization,
+                       "cod-entidade-contexto": hfSignalR.Get("CodigoEntidade")
+                   },
+               }).done(function (data) {
+                   if (data != null) {
+                       var arrayJSON = data.data;
+                       atualizaNotificacoesTela(arrayJSON[0]);
+                       sessionStorage.setItem('listaNotificacoes', JSON.stringify(arrayJSON[0]));
+                       sessionStorage.setItem('nbr_justAccessed', false);
+                       callbackNotificacoes.PerformCallback(JSON.stringify(arrayJSON[0]));
+                   }
+               }).fail(function (jqXHR) {
+                   console.log(jqXHR);
+               });
+           }
+            else {
+                atualizaNotificacoesTela(JSON.parse(listaNotificacoes));
+           }
+
+
+        }
+
+        ///Pega o token da localstorage e se o token não estiver lá
+        ///ele autentica na api fazendo uma requisição ajax e finalmente pega o token.
+        ///Com o token na memória, ele chama a função getNotificationsFromApi
+        ///que neste momento ja tem condicoes de atualizar as notificações.
+        async function atualizacaoInicialNotificacoesTela() {
+            var token = getTokenNBRFromMemory(hfSignalR.Get("TokenAcessoNewBrisk"));
+            
+            if (token != null) {
+                getNotificationsFromApi(token);
+            }
+        }
+
+        $(document).ready(function () {
+
+            document.querySelector('#menuPrincipalMensagens > a > i').addEventListener('click', function (e) {
+
+                $("#menuPrincipalExistemMensagens").removeClass('nav-notification');
+                $("#menuPrincipalexistemMensagens").addClass('nav-notification-gray');
+
+                var listaNotificacoes = sessionStorage.getItem('listaNotificacoes');
+                var objetoJSONTemp = null;
+                if (listaNotificacoes) {
+                    objetoJSONTemp = JSON.parse(listaNotificacoes);
+                    objetoJSONTemp.indicaIconeMensagemLigado = false;
+                    sessionStorage.setItem('listaNotificacoes', JSON.stringify(objetoJSONTemp));
+                    listaNotificacoes = JSON.stringify(objetoJSONTemp);
+                }
+
+
+                if (!$("#menuPrincipalExistemMensagens").is(":hidden")) {
+                    $.ajax({
+                        "url": urlWSnewBriskBase + "/api/v1/plano-acao/registrar-visualizacao-notificao?indicaGrupoNotificacao=MG1",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json; charset=utf-8",
+                            "Authorization": "Bearer " + getTokenNBRFromMemory(),
+                            "cod-entidade-contexto": hfSignalR.Get("CodigoEntidade")
+                        },
+                    }).done(function (response) {
+                        if (response.success) {
+                            //$("#menuPrincipalExistemNotificacoes").hide();
+                            $("#menuPrincipalExistemMensagens").removeClass('nav-notification');
+                            $("#menuPrincipalExistemMensagens").addClass('nav-notification-gray');
+                            callbackNotificacoes.PerformCallback(listaNotificacoes);
+                        }
+                    });
+                }
+
+            });
+
+            document.querySelector('#menuPrincipalNotificacoes > a > i').addEventListener('click', function (e) {
+
+                $("#menuPrincipalExistemNotificacoes").removeClass('nav-notification');
+                $("#menuPrincipalExistemNotificacoes").addClass('nav-notification-gray');
+
+                var listaNotificacoes = sessionStorage.getItem('listaNotificacoes');
+                var objetoJSONTemp = null;
+                if (listaNotificacoes) {
+                    objetoJSONTemp = JSON.parse(listaNotificacoes);
+
+                    objetoJSONTemp.indicaIconeRiscoLigado = false;
+                    objetoJSONTemp.indicaIconePndWfLigado = false;
+                    objetoJSONTemp.indicaIconeReuniaoLigado = false;
+                    objetoJSONTemp.indicaIconeContratoLigado = false;
+                    objetoJSONTemp.indicaIconeIndicadorLigado = false;
+                    objetoJSONTemp.indicaIconeAprovTrfLigado = false;
+
+                    sessionStorage.setItem('listaNotificacoes', JSON.stringify(objetoJSONTemp));
+                    listaNotificacoes = JSON.stringify(objetoJSONTemp);
+                }
+
+                if (!$("#menuPrincipalExistemNotificacoes").is(":hidden")) {
+                    $.ajax({
+                        "url": urlWSnewBriskBase + "/api/v1/plano-acao/registrar-visualizacao-notificao?indicaGrupoNotificacao=ND1",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json; charset=utf-8",
+                            "Authorization": "Bearer " + getTokenNBRFromMemory(),
+                            "cod-entidade-contexto": hfSignalR.Get("CodigoEntidade")
+                        },
+                    }).done(function (response) {
+                        if (response.success) {
+                            //$("#menuPrincipalExistemNotificacoes").hide();
+                            $("#menuPrincipalExistemNotificacoes").removeClass('nav-notification');
+                            $("#menuPrincipalExistemNotificacoes").addClass('nav-notification-gray');
+                            callbackNotificacoes.PerformCallback(listaNotificacoes);
+                        }
+                    });
+                }
+
+            });
+
+            document.querySelector('#menuPrincipalTarefas > a > i').addEventListener('click', function (e) {
+                 var objul = $("idULTarefas");
+
+                $("#menuPrincipalExistemTarefas").removeClass('nav-notification');
+                $("#menuPrincipalExistemTarefas").addClass('nav-notification-gray');
+                var listaNotificacoes = sessionStorage.getItem('listaNotificacoes');
+                var objetoJSONTemp = null;
+                if (listaNotificacoes) {
+                    objetoJSONTemp = JSON.parse(listaNotificacoes);
+                    objetoJSONTemp.indicaIconeTarefaS1Ligado = false;
+                    sessionStorage.setItem('listaNotificacoes', JSON.stringify(objetoJSONTemp));
+                    listaNotificacoes = JSON.stringify(objetoJSONTemp);
+                }
+
+                if (!$("#menuPrincipalExistemTarefas").is(":hidden")) {
+                    $.ajax({
+                        "url": urlWSnewBriskBase + "/api/v1/plano-acao/registrar-visualizacao-notificao?indicaGrupoNotificacao=TR1",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json; charset=utf-8",
+                            "Authorization": "Bearer " + getTokenNBRFromMemory(),
+                            "cod-entidade-contexto": hfSignalR.Get("CodigoEntidade")
+                        },
+                    }).done(function (response) {
+                        if (response.success) {
+                            $("#menuPrincipalExistemTarefas").removeClass('nav-notification');
+                            $("#menuPrincipalExistemTarefas").addClass('nav-notification-gray');
+                            callbackNotificacoes.PerformCallback(listaNotificacoes);
+                        }
+                    });
+                }
+
+            });
+
+            window.onresize = function (event) {
+                //soma o tamanho da tela e subtrai pelos itens do menu, totalizando o tamanho da tela.
+                var tamanhoFrame = 'height:' + ($("body").innerHeight() - ($("#menuPrincipalUsuario").height() + $("#rastroPrincipal").height() + $("#lblTituloTela").height())) + 'px';
+                $('#frameMaster').removeAttr("style");
+                $('#frameMaster').attr({ 'style': tamanhoFrame });
+            };
+
+            $('#ddlVisaoInicial_I').addClass("text-truncate");
+            atualizacaoInicialNotificacoesTela();
+            conectaSignalR(hfSignalR.Get("TokenAcessoNewBrisk"));
+        });
+
+        function RemoveTodasConexoesUsuario(pUserName) {
+            connSignalRnewBrisk.invoke("removeConexoesUsuario", pUserName).then(function () {
+                console.log("Solicitado a remoção de todas as conexões do usuario: ", userName);
+            }).catch(function (err) {
+                console.error(err.toString());
+            });
+        }
+
+/*
+        function checkSessionValidity() {
+            $.ajax({
+                url: hfSignalR.Get("baseUrl") + '/SessionEnd.aspx',
+                type: 'GET'
+            }).done(function (data) {
+            if(data.includes("False")){
+                    window.location.href = hfSignalR.Get("baseUrl") + "/erros/erroInatividade.aspx";
+                }
+            });
+        }
+*/
+        // Verificar a sessão a cada 45 segundos ... comentado por conta da implementação da notificação no Session_End da global.asax
+        // setInterval(checkSessionValidity, 45000);
+    </script>
+</body>
+</html>

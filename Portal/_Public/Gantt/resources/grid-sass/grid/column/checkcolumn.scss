@@ -1,0 +1,22 @@
+.b-check-header-with-checkbox {
+    .b-grid-header-text {
+        display : none;
+    }
+
+    .b-field-inner {
+        justify-content : center;
+    }
+}
+
+.b-check-header-with-checkbox,
+.b-check-cell {
+    .b-checkbox-label{
+        display     : flex;
+        gap         : .4em;
+        align-items : center;
+
+        &:before {
+            margin : 0 !important;
+        }
+    }
+}

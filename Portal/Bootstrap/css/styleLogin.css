@@ -1,0 +1,1334 @@
+
+/* Style Customizer */
+html .container-fluid {
+	padding-left: 0px !important;
+}
+
+/* Style Siderbar */
+
+#sidebar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-size: cover;
+	width: 100%;
+	height: 100vh;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	padding-top: 5rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.sidebar-green {
+	background-image: url(../images/tela-01.png);
+	background-size: cover;
+	height: 100vh;
+	padding-top: 5rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.sidebar-orange {
+	background-image: url(../images/tela-02.png);
+	background-size: cover;
+	height: 100vh;
+	padding-top: 5rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.sidebar-blue {
+	background-image: url(../images/tela-03.png);
+	background-size: cover;
+	height: 100vh;
+	padding-top: 5rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.sidebar-yellow {
+	background-image: url(../images/tela-04.png);
+	background-size: cover;
+	height: 100vh;
+	padding-top: 5rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.sidebar-grey {
+	background-image: url(../images/tela-06.png);
+	background-size: cover;
+	height: 100vh;
+	padding-top: 5rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* Style Form and itens*/
+
+.box-form {
+	width: 100%;
+	margin-top: 9rem;
+}
+
+.svgFont {
+	height: 16px;
+	width: 16px;
+	color: #343a40;
+}
+
+.login {
+	width: 35rem;
+	height: auto;
+	border-top: 4px solid #79ACA5;
+	background: #fff;
+	box-shadow: 0 1rem 3rem rgba(0,0,0,.105);
+	margin: 0 auto;
+	/*padding-bottom: .5rem;*/
+	border-right: none;
+	border-bottom: none;
+	border-left: none;
+	margin-top: -48px;
+}
+
+.btn-center {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.login-error {
+	width: 35rem;
+	height: auto;
+	background: #fff;
+	box-shadow: 0 1rem 3rem rgba(0,0,0,.105);
+	margin: 0 auto;
+	padding-bottom: 1rem;
+}
+
+.btn-customized-green {
+	color: #fff;
+	font-family: 'Roboto', sans-serif;
+	background: #9DAA69;
+	border: 1px solid #889555;
+	width: 20rem;
+	height: 3.5rem;
+	text-align: left;
+	border-radius: .25rem;
+	font-weight: 400;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	line-height: 1.5;
+	font-size: 1rem;
+	user-select: none;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.btn-customized-out-grey {
+	color: #585255;
+	font-family: 'Roboto', sans-serif;
+	background: #fff;
+	border: 1px solid #bbbbbb;
+	width: 20rem;
+	height: 3.5rem;
+	text-align: left;
+	border-radius: .25rem;
+	font-weight: 400;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	line-height: 1.5;
+	font-size: 1rem;
+	user-select: none;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.text-question {
+	text-align: right;
+	padding: .8rem 7.5rem 0 0rem;
+}
+
+	.text-question a {
+		font-size: .8rem;
+		color: #585255;
+		font-family: 'Roboto', sans-serif;
+	}
+
+		.text-question a:hover {
+			color: #9DAA69;
+			text-decoration: none;
+		}
+
+
+.text-sub-title {
+	text-align: right;
+	padding: 1.5rem 2.5rem 0 0rem;
+}
+
+	.text-sub-title a {
+		font-size: .8rem;
+		color: #fff;
+		font-family: 'Roboto', sans-serif;
+	}
+
+		.text-sub-title a:hover {
+			color: #fff;
+			text-decoration: none;
+		}
+
+.text-green {
+	font-size: .82rem;
+	color: #9daa69 !important;
+	font-family: 'Roboto', sans-serif;
+	border-radius: 5px;
+	padding: 3px 8px;
+}
+
+	.text-green a {
+		font-size: .82rem;
+		color: #9daa69 !important;
+		font-family: 'Roboto', sans-serif;
+		text-decoration: none;
+	}
+
+		.text-green a:hover {
+			font-size: .82rem;
+			color: #9daa69 !important;
+			font-family: 'Roboto', sans-serif;
+			text-decoration: none;
+		}
+
+.text-grey {
+	font-size: .82rem;
+	color: #585255 !important;
+	font-family: 'Roboto', sans-serif;
+	border-radius: 5px;
+	padding: 3px 8px;
+}
+
+	.text-grey a {
+		font-size: .82rem;
+		color: #585255 !important;
+		font-family: 'Roboto', sans-serif;
+		text-decoration: none;
+	}
+
+		.text-grey a:hover {
+			font-size: .82rem;
+			color: #938C8F !important;
+			font-family: 'Roboto', sans-serif;
+			text-decoration: none;
+		}
+
+.returnIcon {
+	font-size: 1.3rem;
+	margin-top: 1.5rem;
+	margin-left: 1rem;
+}
+
+	.returnIcon a {
+		color: #585255;
+		text-decoration: none;
+	}
+
+		.returnIcon a:hover {
+			color: #8A8286;
+			text-decoration: none;
+		}
+
+.inputEmail {
+	width: 24rem !important;
+	height: 2rem !important;	
+	margin: 0 auto !important;
+	font-family: 'Roboto', sans-serif !important;
+	
+}
+
+.inputPassword {
+	width: 24rem !important;
+	height: 2rem !important;	
+	margin: 0 auto !important;
+	margin-top: .5rem !important;
+	font-family: 'Roboto', sans-serif !important;	
+}
+
+.captcha {
+	display: block;
+	margin: 0 auto;
+}
+
+.btnEnter {
+	color: #fff;
+	font-family: 'Roboto', sans-serif;
+	background: #9DAA69;
+	border: 1px solid #889555;
+	width: 24rem;
+	height: 2rem;
+	text-align: center;	
+	font-weight: 400;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	line-height: 1.5;
+	font-size: 1rem;
+	user-select: none;
+	cursor: pointer;
+	margin-left: 5.5rem;
+}
+
+.btnEnterLogin {
+	color: #fff;
+	font-family: 'Roboto', sans-serif;
+	background: #9DAA69;
+	border: 1px solid #889555;
+	width: 24rem !important;
+	height: 2rem !important;
+	text-align: center !important;	
+	font-weight: 400 !important;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	line-height: 1.5;
+	font-size: 1rem !important;
+	user-select: none;
+	cursor: pointer;
+	margin-left: 1.8rem !important;
+}
+
+.btnLoginCancelarCor {
+    background: #888a81 !important;
+    border: 0px solid !important;
+}
+
+
+.btnEnterLoginAlterar {
+        color: #fff;
+        font-family: 'Roboto', sans-serif;
+        background: #9DAA69;
+        border: 1px solid #889555;
+        width: 24rem !important;
+        height: 2.5rem !important;
+        text-align: center !important;
+        font-weight: 400 !important;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        line-height: 1.5;
+        font-size: 1rem !important;
+        user-select: none;
+        cursor: pointer;
+        margin-left: 0rem !important;
+        margin-top: 1rem;
+    }
+
+
+.btnEnterLoginSenha {
+	color: #fff;
+	font-family: 'Roboto', sans-serif;
+	background: #9DAA69;
+	border: 1px solid #889555;
+	width: 24rem !important;
+	height: 2.5rem !important;
+	text-align: center !important;	
+	font-weight: 400 !important;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	line-height: 1.5;
+	font-size: 1rem !important;
+	user-select: none;
+	cursor: pointer;
+	margin: 1rem 0 .5rem 0;
+}
+
+.alignPopUp {
+	margin-left: -200px;
+	margin-right: 180px;
+}
+
+.btnAlterarSenha {
+	color: #fff;
+	font-family: 'Roboto', sans-serif;
+	background: #9DAA69;
+	border: 1px solid #889555;
+	width: 24rem !important;
+	height: 2.5rem !important;
+	text-align: center !important;	
+	font-weight: 400 !important;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	line-height: 1.5;
+	font-size: 1rem !important;
+	user-select: none;
+	cursor: pointer;
+	margin-left: 1.8rem !important;
+}
+
+.inputAlterarSenha {
+	font-family: 'Roboto', sans-serif;
+	height: 54px !important;
+	width: 384px !important;	
+	margin: -15px 0px 10px 75px;
+	font-size: 13px;
+}
+
+
+.formText {
+	width: 22rem;
+	margin: 0 auto;
+}
+
+.mr-10 {
+	margin-right: 10px;
+}
+
+.ml-10 {
+	margin-left: 12rem;
+}
+
+.ml-6 {
+    margin-left: 10rem;
+    margin-top: .5rem;
+}
+
+
+.useFontAwesomeFamily::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	font-family: "Font Awesome 5 Free",'Roboto', sans-serif !important;
+}
+
+.useFontAwesomeFamily:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	font-family: "Font Awesome 5 Free",'Roboto', sans-serif !important;
+}
+
+.useFontAwesomeFamily::-moz-placeholder { /* Mozilla Firefox 19+ */
+	font-family: "Font Awesome 5 Free",'Roboto', sans-serif !important;
+}
+
+.useFontAwesomeFamily:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	font-family: "Font Awesome 5 Free",'Roboto', sans-serif !important;
+}
+
+.useFontAwesomeFamily::-ms-input-placeholder { /* Microsoft Edge */
+	font-family: "Font Awesome 5 Free",'Roboto', sans-serif !important;
+}
+
+.useFontAwesomeFamily::placeholder { /* Most modern browsers */
+	font-family: "Font Awesome 5 Free",'Roboto', sans-serif !important;
+}
+
+.loginBloco {
+	display: inline-block;
+	margin-top: .5rem;
+	padding-left: 5px;
+}
+
+.alert-erro {
+	display: block;
+	/*background: #E07569; */
+	color: #E07569;
+	font-size: 14px;
+	padding: 5px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: bold;
+	border-radius: 4px;
+	margin-left: 1.8rem;
+	margin-top: -12px;
+	margin-bottom: 10px;
+}
+
+.loginLock {
+	border: 1px solid #6c757d;
+	border-radius: 50%;
+	height: 34px;
+	width: 34px;
+	line-height: 30px !important;
+	text-align: center;
+	margin-left: 2rem;
+	color: #6c757d;
+}
+
+.loginLockAlt {
+	border: 1px solid #6c757d;
+	border-radius: 50%;
+	height: 34px;
+	width: 34px;
+	line-height: 30px !important;
+	text-align: center;
+	margin-left: 0rem;
+	color: #6c757d;
+}
+
+.loginTextLock {
+	font-size: 16px;
+	font-weight: 500;
+	padding-left: .5rem;
+}
+
+
+.titleLicenciado {
+	font-size: .70rem;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	padding-left: .7rem;
+}
+
+.titlePastaPublica {
+	font-size: .70rem;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	border-right: 1px dotted #eee;
+	cursor: pointer;
+}
+
+.imgPasta {
+	padding-right: .5rem;
+	padding-left: .5rem;
+}
+
+
+/* Style Logo Animation */
+.logo {
+	overflow: hidden;
+	position: relative;
+	/*padding: 1.5rem 20.5rem 1.8rem 2rem !important;*/
+	/*padding: 1.5rem 8.5rem 1.8rem 2rem !important;	*/
+	border: 1px solid #ffffff;
+}
+
+@media only screen and (min-width: 1020px) and (max-width: 1026px) {
+	.logo {
+		padding: 1.5rem 4rem 1.8rem 2rem !important;
+	}
+}
+
+
+@media only screen and (min-width: 1280px) and (max-width: 1370px) {
+	.logo {
+		padding: 1.5rem 9rem 1.8rem 2rem !important;
+	}
+}
+
+
+@media only screen and (min-width: 1436px) and (max-width: 1440px) {
+	.logo {
+		padding: 1.5rem 10rem 1.8rem 2rem !important;
+	}
+}
+
+
+
+.loginFooter {
+	flex-direction: row-reverse;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 5px;
+}
+
+
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+	.inputAlterarSenha {
+		height: 30px !important;
+		width: 280px !important;
+		margin: -15px 0px 10px 5px;
+	}
+}
+
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+	.btnAlterarSenha {
+		width: 280px !important;
+		height: 30px !important;
+		margin-left: 5px !important;
+	}
+}
+
+
+
+@media only screen and (min-width: 320px) and (max-width: 960px) {
+	.loginFooter {
+		color: #fff;
+	}
+}
+
+@media only screen and (min-width: 320px) and (max-width: 960px) {
+	.loginFooter a {
+		color: #fff;
+		text-decoration: none;
+	}
+}
+
+
+@media only screen and (min-width: 320px) and (max-width: 960px) {
+	.loginFooter :hover {
+		color: #6c757d;
+		text-decoration: none;
+	}
+}
+
+
+/* Display none Sidebar Left */
+@media (min-width: 320px) and (max-width: 960px) {
+	.responsive-960 {
+		display: none;
+	}
+}
+
+/* Responsive Medium 512 and 960*/
+@media (min-width: 320px) and (max-width: 960px) {
+	.responsive-medium {
+		width: 100%;
+		height: auto;
+		display: block;
+		margin: 0 auto;
+	}
+}
+
+
+/* Responsive Row*/
+@media (min-width: 481px) and (max-width: 960px) {
+	.responsive-row {
+		height: 40vh;
+		margin-top: 5rem;
+	}
+}
+
+
+@media (min-width: 481px) and (max-width: 960px) {
+	.logoBrisk-responsive {
+		display: block;
+		position: relative;
+		top: -8px;
+		text-align: center;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 511px) {
+	logoBrisk-responsive {
+		display: none;
+	}
+}
+
+@media (min-width: 961px) and (max-width: 3000px) {
+	logoBrisk-responsive {
+		display: none;
+	}
+}
+
+
+
+/* Style Responsive 320 and 480 */
+@media (min-width: 320px) and (max-width: 480px) {
+	.btn-center {
+		display: inherit;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.login {
+		width: 320px;
+		/*box-sizing: border-box;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;*/
+		margin-top: 30px;
+		display: block;
+		margin: 0 auto;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.large-border {
+		padding-right: 10rem;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.text-question {
+		text-align: center;
+		padding: 0rem;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.text-question a {
+		color: #fff;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.text-sub-title {
+		display: none;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.btnEnterLogin {
+		width: 18rem !important;
+		height: 2rem !important;
+		margin-left: 0rem !important;
+		margin: .5rem 0;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.inputEmail {
+		width: 18rem !important;
+		height: 3.5rem;
+		margin-bottom: 1rem;
+		font-family: 'Roboto', sans-serif;
+		margin-left: 1rem;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.text-question-responsive {
+		display: block;
+		width: 318px;
+		text-align: right;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.inputPassword {
+		width: 18rem !important;
+		height: 3.5rem;
+		margin-bottom: 1rem;
+		font-family: 'Roboto', sans-serif;
+		margin-left: 1rem;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.sidebar-orange {
+		background-image: url(../image/tela-02.png);
+		background-size: cover;
+		height: 118vh;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.logoBrisk {
+		margin: 0 auto;
+		display: block;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.logo {
+		border: none;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.box-form {
+		width: 100%;
+		margin-top: 10rem;
+	}
+}
+
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.text-alterarSenha {
+		color: #fff !important;
+		position: absolute;
+		left: 13.8rem;
+		width: 100px;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.returnIcon {
+		font-size: 1.3rem;
+		text-align: center;
+		width: 300px;
+		margin: 1.5rem;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.returnIcon a {
+		color: #6c757d;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.btn-customized-green {
+		width: 19rem;
+		margin-left: 1.2rem;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.btn-customized-out-grey {
+		width: 19rem;
+		margin-left: 1.2rem;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	table#painelLogin td#painelLogin_RPC {
+		padding: 0rem;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.loginBloco {
+		display: inline-block;
+		margin-top: 1rem;
+		padding-left: 0px;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.altSenhaPage {
+		width: 310px;
+		margin-left: -11rem;
+		margin-top: -23rem;
+		position: absolute;
+		z-index: 1000;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.btnEnterLoginAlterar {
+		width: 15rem !important;
+	}
+}
+
+
+
+/* Style 360 and 480 */
+@media only screen and (min-width: 360px) and (max-width: 480px) {
+	.btnEnter {
+		width: 20.3rem;
+		margin-left: 1rem;
+	}
+}
+
+
+
+@media only screen and (min-width: 360px) and (max-width: 480px) {
+	.text-alterarSenha {
+		left: 16rem;
+	}
+}
+
+@media only screen and (min-width: 360px) and (max-width: 480px) {
+	.returnIcon {
+		width: 340px;
+	}
+}
+
+
+@media only screen and (min-width: 360px) and (max-width: 480px) {
+	.btn-customized-green {
+		width: 21rem;
+		margin-left: 1.5rem;
+	}
+}
+
+@media only screen and (min-width: 360px) and (max-width: 480px) {
+	.btn-customized-out-grey {
+		width: 21rem;
+		margin-left: 1.5rem;
+	}
+}
+
+@media only screen and (min-width: 360px) and (max-width: 480px) {
+	.altSenhaPage {
+		width: 310px;
+		margin-left: -11rem;
+		margin-top: -23rem;
+		position: absolute;
+		z-index: 1000;
+	}
+}
+
+
+/* Style 375 and 480 */
+
+@media only screen and (min-width: 370px) and (max-width: 375px) {
+	.login {
+		margin-right: 0.7rem;
+	}
+}
+
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+	.btnEnter {
+		width: 21rem;
+		margin-left: 1rem;
+	}
+}
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+	.text-alterarSenha {
+		left: 16.8rem;
+	}
+}
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+	.returnIcon {
+		width: 340px;
+	}
+}
+
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+	.btn-customized-green {
+		width: 21.6rem;
+		margin-left: 1.7rem;
+	}
+}
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+	.btn-customized-out-grey {
+		width: 21.6rem;
+		margin-left: 1.7rem;
+	}
+}
+
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+	.text-question-responsive {
+		width: 370px;
+	}
+}
+
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+	.altSenhaPage {
+		width: 310px;
+		margin-left: -11rem;
+		margin-top: -23rem;
+		position: absolute;
+		z-index: 1000;
+	}
+}
+/* Style 412 and 480 */
+
+@media only screen and (min-width: 412px) and (max-width: 414px) {
+	.login {
+		margin-right: 28px;
+	}
+}
+
+
+
+@media only screen and (min-width: 412px) and (max-width: 480px) {
+	.btnEnter {
+		width: 23.6rem;
+	}
+}
+
+
+@media only screen and (min-width: 412px) and (max-width: 480px) {
+	.text-alterarSenha {
+		left: 19.5rem;
+	}
+}
+
+@media only screen and (min-width: 412px) and (max-width: 480px) {
+	.returnIcon {
+		width: 380px;
+	}
+}
+
+@media only screen and (min-width: 412px) and (max-width: 480px) {
+	.btn-customized-green {
+		width: 24rem;
+		margin-left: 1.7rem;
+	}
+}
+
+@media only screen and (min-width: 412px) and (max-width: 480px) {
+	.btn-customized-out-grey {
+		width: 24rem;
+		margin-left: 1.7rem;
+	}
+}
+
+@media only screen and (min-width: 412px) and (max-width: 480px) {
+	.text-question-responsive {
+		width: 405px;
+	}
+}
+/* Style 414 and 480 */
+@media only screen and (min-width: 414px) and (max-width: 480px) {
+	.btn-center {
+		display: inherit !important;
+	}
+}
+
+@media only screen and (min-width: 414px) and (max-width: 480px) {
+	.btnEnter {
+		width: 23.6rem;
+	}
+}
+
+
+@media only screen and (min-width: 414px) and (max-width: 480px) {
+	.text-alterarSenha {
+		left: 19.5rem;
+	}
+}
+
+@media only screen and (min-width: 414px) and (max-width: 480px) {
+	.returnIcon {
+		width: 380px;
+	}
+}
+
+@media only screen and (min-width: 414px) and (max-width: 480px) {
+	.btn-customized-green {
+		width: 24.3rem;
+		margin-left: 1.5rem;
+	}
+}
+
+@media only screen and (min-width: 414px) and (max-width: 480px) {
+	.btn-customized-out-grey {
+		width: 24.3rem;
+		margin-left: 1.5rem;
+	}
+}
+
+
+@media only screen and (min-width: 414px) and (max-width: 480px) {
+	.text-question-responsive {
+		width: 400px;
+	}
+}
+
+
+
+/* Style 460 and 480 */
+@media only screen and (min-width: 460px) and (max-width: 480px) {
+	.login {
+		width: 360px;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		margin-right: 35px;
+		margin-top: -15px;
+	}
+}
+
+
+/* Style 481 and 960 */
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.logo {
+		border: none;
+		/*margin: 0px 0px 0px 135px;*/
+		padding: 0px !important;
+	}
+}
+
+
+
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.btn-center {
+		display: inherit !important;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.login {
+		width: 320px;
+		/*margin-left: 4.4rem;*/
+		margin-top: 0rem;
+		/*position: absolute;*/
+		z-index: 1000;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.large-border {
+		padding-right: 18rem;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.text-question {
+		text-align: center;
+		padding: 0rem;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.text-question a {
+		color: #fff;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.text-sub-title {
+		display: none;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.btnEnter {
+		width: 30.6rem !important;
+		margin-left: 1.4rem;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.text-alterarSenha {
+		left: 26.5rem;
+		position: absolute;
+		width: 100px;
+	}
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.returnIcon {
+		width: 510px;
+		font-size: 1.3rem;
+		text-align: center;
+		margin: 1.5rem;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.btn-customized-green {
+		width: 32rem;
+		margin-left: 1.5rem;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.btn-customized-out-grey {
+		width: 32rem;
+		margin-left: 1.5rem;
+	}
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.text-question-responsive {
+		width: 900px;
+	}
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.inputEmail {
+		width: 15rem !important;
+		height: 3.5rem;
+		margin-bottom: 1rem;
+		font-family: 'Roboto', sans-serif;
+		margin-left: 1rem;
+	}
+}
+
+
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.inputPassword {
+		width: 15rem !important;
+		height: 3.5rem;
+		font-family: 'Roboto', sans-serif;
+		margin-left: 1rem;
+	}
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.btnEnterLogin {
+		width: 15rem !important;
+		height: 2rem !important;
+		margin-left: 0rem !important;
+		margin: .5rem 0;
+	}
+}
+
+
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.altSenhaPage {
+		width: 310px;
+		margin-left: -11rem;
+		margin-top: -23rem;
+		position: absolute;
+		z-index: 1000;
+	}
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.btnEnterLoginSenha {
+		width: 15rem !important;
+	}
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+	.btnEnterLoginAlterar {
+		width: 15rem !important;
+	}
+}
+
+
+/* Responsive 961 and 2000*/
+@media only screen and (min-width: 961px) and (max-width: 5500px) {
+	.logoBrisk-responsive {
+		display: none;
+	}
+}
+
+@media only screen and (min-width: 961px) and (max-width: 5500px) {
+	.responsive-larger {
+		margin-top: 8rem;
+	}
+}
+
+@media only screen and (min-width: 961px) and (max-width: 5500px) {
+	.logo {
+		overflow: hidden;
+		position: relative;
+		padding: 1.5rem 1rem 1.8rem 1rem !important;
+	}
+}
+
+@media only screen and (min-width: 961px) and (max-width: 5500px) {
+	.inputPassword {
+		margin-bottom: .5rem !important;
+	}
+}
+
+@media only screen and (min-width: 961px) and (max-width: 5500px) {
+	.loginBloco {
+		padding-left: 12px;
+	}
+}
+
+
+/* Responsive 576 and 767 */
+@media only screen and (min-width: 576px) and (max-width:767px) {
+	.logo {
+		overflow: hidden;
+		position: relative;
+		padding: 1.5rem 34.5rem 1.8rem 5rem;
+	}
+}
+
+
+/* Responsive 599 and 600 */
+@media screen and (min-width: 320px) and (max-width: 960px) {
+	body#login {
+		background-image: url(../images/tela-03.png);
+		background-size: cover;
+		height: 100vh;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		width: 100vw;
+	}
+}
+
+
+
+@media only screen and (min-width: 649px) and (max-width: 767px) {
+	table#painelLogin td#painelLogin_RPC {
+		background-color: transparent;
+	}
+}
+
+
+/* Style 1360 and 1366*/
+
+@media only screen and (min-width: 1360px) and (max-width: 1500px) {
+	.box-form {
+		margin-top: 8rem;
+	}
+}
+
+@media only screen and (min-width: 1360px) and (max-width: 1500px) {
+	.altSenhaPage {
+		margin-top: -250px;
+	}
+}
+
+@media only screen and (min-width: 1360px) and (max-width: 1500px) {
+	.logo {
+		overflow: hidden;
+		position: relative;
+		padding: 1.5rem 10.5rem 1.8rem 2rem !important;
+	}
+}
+
+@media only screen and (min-width: 1880px) and (max-width: 1920px) {
+	.logo {
+		padding: 1.5rem 20.5rem 1.8rem 2rem !important;
+	}
+}
+
+
+@media only screen and (min-width: 940px) and (max-width: 960px) {
+	.responsive-row {
+		height: 58vh !important;
+		margin-top: 5rem;
+	}
+}
+
+
+
+/* Responsive Landscape */
+@media screen and (min-width: 565px) and (max-width: 568px) and (orientation : landscape) {
+	.responsive-row {
+		height: 106vh;
+		margin-top: -40px;
+	}
+}
+
+@media screen and (min-width: 630px) and (max-width: 640px) and (orientation : landscape) {
+	.responsive-row {
+		height: 90vh;
+		margin-top: 15px;
+	}
+}
+
+
+@media screen and (min-width: 630px) and (max-width: 815px) and (orientation : landscape) {
+	html.dxrpControl_MaterialCompact.dxrp-noCollapsing > tbody > tr.dxrpCR > .dxrpcontent, .dxrpControl_MaterialCompact > tbody > tr.dxrpCR > .dxrpcontent > .dxrpAW > .dxrpCW, .dxrpControl_MaterialCompact > tbody > tr.dxrpCR > .dxrpcontent > .dxrpCW {
+		padding: 0px !important;
+	}
+}
+
+
+@media screen and (min-width: 657px) and (max-width: 667px) and (orientation : landscape) {
+	.responsive-row {
+		height: 87vh;
+		margin-top: 15px;
+	}
+}
+
+
+@media screen and (min-width: 700px) and (max-width: 736px) and (orientation : landscape) {
+	.responsive-row {
+		height: 80vh;
+		margin-top: 40px;
+	}
+}
+
+
+@media screen and (min-width: 800px) and (max-width: 814px) and (orientation : landscape) {
+	.responsive-row {
+		height: 88vh;
+		margin-top: 19px;
+	}
+}

@@ -1,0 +1,1249 @@
+﻿
+
+html, body {
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* FontAwesome */
+
+@font-face {
+	font-family: FontAwesome;
+	src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot');
+	src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot') format('embedded-opentype'), url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2') format('woff2'), url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf') format('truetype'), url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css";
+
+/* Fim FontAwesome - */
+
+/* Geral */
+
+
+.hide {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.truncate-text,
+.tres-pontos {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	text-wrap: none;
+}
+
+/* Método para aplicar estilo de botão em link (funcionando na editaMetas.aspx e editaResultados.aspx */
+/*
+        .dxgvCommandColumn_MaterialCompact a,
+        .dxgvCommandColumn_MaterialCompact a:hover
+        {
+            background-color: #35B86B;
+            border: 1px dotted transparent;
+            border-collapse: separate;
+            border-radius: 2px;
+            border-spacing: 0;
+            box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+            -moz-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+            -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #ffffff;
+            cursor: pointer;
+            display: table-cell;
+            font: 14px 'Roboto Medium', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+            letter-spacing: 0.01em;
+            padding: 6px 13px 4px;
+            -webkit-tap-highlight-color: transparent;
+            transition-property: box-shadow, background-color;
+            transition-timing-function: ease-out;
+            text-align: center;
+            vertical-align: middle;
+            width: 90px;
+            white-space: nowrap;
+        }
+
+        .dxgvCommandColumn_MaterialCompact a > span {
+            display: inline-block;
+            line-height: 100%;
+            padding: 2px 0;
+            vertical-align: middle;
+        }
+
+        .dxbDisabled_MaterialCompact,
+        a.dxbDisabled_MaterialCompact,
+        a.dxbDisabled_MaterialCompact:hover,
+        .dxgvCommandColumn_MaterialCompact a.dxbDisabled_MaterialCompact,
+        .dxgvCommandColumn_MaterialCompact a.dxbDisabled_MaterialCompact:hover
+        {
+            background: #cccccc !important;
+            background-color: #cccccc !important;
+            box-shadow: none;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            color: #f0f0f0;
+            cursor: default;
+        }
+*/
+
+/* Esta classe não está completa, precisa ser revista. */
+.titlePage {
+	font-size: 18px;
+	color: #aaaaaa;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-weight: 200 !important;
+}
+
+
+.botao-forcado {
+	color: #ffffff !important;
+	height: 22px;
+	width: 90px;
+	-webkit-user-select: none;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	letter-spacing: 0.01em;
+	box-sizing: border-box;
+	display: inline-table;
+	border-spacing: 0;
+	border-collapse: separate;
+	vertical-align: middle;
+	color: white;
+	background-color: #35B86B;
+	-moz-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+	-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+	-khtml-border-radius: 2px;
+	border-radius: 2px;
+	padding: 1px;
+	font: 14px 'Roboto Medium', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	-webkit-transition-property: box-shadow, background-color;
+	-moz-transition-property: box-shadow, background-color;
+	-o-transition-property: box-shadow, background-color;
+	transition-property: box-shadow, background-color;
+	-webkit-transition-duration: .3s;
+	-moz-transition-duration: .3s;
+	-o-transition-duration: .3s;
+	transition-duration: .3s;
+	-webkit-transition-timing-function: ease-out;
+	-moz-transition-timing-function: ease-out;
+	-o-transition-timing-function: ease-out;
+	transition-timing-function: ease-out;
+	-webkit-tap-highlight-color: transparent;
+	padding: 6px 13px 4px;
+	border: 1px dotted transparent;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	text-decoration: none !important;
+}
+
+/* Fim Geral */
+
+/*
+    Campo
+*/
+
+.campo-label {
+	color: #8E8E8E;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+/*
+    Fim Campo
+*/
+
+/* Grid */
+
+.grid-titulo,
+.grid-titulo > span.dxeBase_MaterialCompact {
+	color: #575757;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+table.grid-legendas {
+    bottom: 0px;
+    position: relative;
+    display: table-cell;
+    width: 90%;
+    height: 25px;
+    margin: 0;
+}
+
+	table.grid-legendas > tbody > tr:not(:first-child) > td {
+		padding-top: 0.5rem;
+	}
+
+td.grid-legendas-icone {
+	height: 16px;
+	width: 16px;
+}
+
+td.grid-legendas-asterisco {
+	height: 16px;
+	width: 16px;
+}
+
+	td.grid-legendas-asterisco > span {
+		font-size: 22px;
+		font-weight: 600;
+		position: relative;
+		top: 3px;
+	}
+
+td.grid-legendas-cor {
+	height: 16px;
+	width: 16px;
+}
+
+	td.grid-legendas-cor > span {
+		border-radius: 50%;
+		display: inline-block;
+		height: 16px;
+		width: 16px;
+	}
+
+td.grid-legendas-cor-inativo > span {
+	background-color: #914800;
+}
+
+td.grid-legendas-cor-controlado-sistema > span {
+	background-color: #619340;
+}
+
+td.grid-legendas-cor-versao-em-uso > span {
+	background-color: green;
+}
+
+td.grid-legendas-cor-em-andamento > span {
+	background-color: #619340;
+}
+
+td.grid-legendas-cor-atrasado > span {
+	background-color: #fc6e51;
+}
+
+td.grid-legendas-cor-concluido > span {
+	background-color: #619340;
+}
+
+td.grid-legendas-cor-criado-em-outra-unidade > span {
+	background-color: #619340;
+}
+
+td.grid-legendas-cor-recursos-corporativos-relacionados > span {
+	background-color: #6a5acd;
+}
+
+td.grid-legendas-cor-unidades-relacionadas > span {
+	background-color: #98fb98;
+}
+
+td.grid-legendas-cor-mapas-estrategicos-relacionados > span {
+	background-color: #b0c4de;
+}
+
+td.grid-legendas-cor-projetos-programas-relacionados > span {
+	background-color: #dcdcdc;
+}
+
+td.grid-legendas-cor-demandas-relacionadas > span {
+	background-color: #d8bfd8;
+}
+
+td.grid-legendas-cor-contratos-relacionados > span {
+	background-color: #eee8aa;
+}
+
+td.grid-legendas-label {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 12px;
+	padding-left: 4px;
+	padding-right: 25px;
+}
+
+	td.grid-legendas-label > span {
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		font-family: Verdana, Geneva, Tahoma, sans-serif;
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		font-size: 12px;
+	}
+
+td.grid-legendas-label-icone,
+td.grid-legendas-label-icone > span {
+	color: #575757;
+}
+
+td.grid-legendas-label-asterisco,
+td.grid-legendas-label-asterisco > span {
+	color: #575757;
+}
+
+td.grid-legendas-label-inativo,
+td.grid-legendas-label-inativo > span {
+	color: #575757;
+}
+
+td.grid-legendas-label-controlado-sistema,
+td.grid-legendas-label-controlado-sistema > span {
+	color: #575757;
+}
+
+td.grid-legendas-label-versao-em-uso,
+td.grid-legendas-label-versao-em-uso > span {
+	color: #575757;
+}
+
+td.grid-legendas-label-atrasado,
+td.grid-legendas-label-atrasado > span {
+	color: #575757;
+}
+
+td.grid-legendas-label-concluido,
+td.grid-legendas-label-concluido > span {
+	color: #575757;
+}
+
+/* Fim Grid */
+
+/* Formulário */
+
+
+table.formulario {
+}
+
+	table.formulario > tbody > tr > td {
+		padding-bottom: 2px;
+		padding-top: 2px;
+	}
+
+		table.formulario > tbody > tr > td > span.dxeBase_MaterialCompact { /* Label */
+		}
+
+		table.formulario > tbody > tr > td > table.dxeTextBoxSys,
+		table.formulario > tbody > tr > td > table.dxeButtonEditSys,
+		table.formulario > tbody > tr > td > table.dxeMemoEditAreaSys { /* Controle */
+		}
+
+	table.formulario td.formulario-label {
+		padding-bottom: 5px;
+	}
+
+		table.formulario td.formulario-label > span {
+		}
+
+	table.formulario td.formulario-controle {
+	}
+
+table.formulario-colunas {
+}
+
+	/* Linhas ímpares geralmente contém labels */
+	table.formulario-colunas > tbody > tr:nth-child(2n+1) > td:not(:last-child) {
+		padding-right: 5px;
+	}
+
+	/* Linhas pares geralmente contém controles */
+	table.formulario-colunas > tbody > tr:nth-child(2n+2) > td:not(:last-child) {
+		padding-right: 5px;
+	}
+
+table.formulario tr.formulario-linha > td {
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+table.formulario-botoes {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+	table.formulario-botoes > tbody > tr > td:not(.formulario-nao-botao) {
+		padding-left: 10px;
+		text-align: right;
+	}
+
+	table.formulario-botoes > tbody > tr > td.formulario-nao-botao {
+	}
+
+table.formulario-botoes-esquerda {
+	margin-top: 10px;
+}
+
+	table.formulario-botoes-esquerda > tbody > tr > td.formulario-botao {
+		padding-right: 10px;
+		text-align: left;
+	}
+
+table.formulario-botoes-direita {
+	margin-top: 10px;
+}
+
+	table.formulario-botoes-direita > tbody > tr > td.formulario-botao {
+		padding-left: 10px;
+		text-align: right;
+	}
+
+table.formulario-lista-botoes {
+}
+
+	table.formulario-lista-botoes > tbody > tr > td {
+		padding: 3px;
+		text-align: center;
+	}
+
+		table.formulario-lista-botoes > tbody > tr > td:first-child {
+			padding: 0 3px 3px 3px;
+		}
+
+		table.formulario-lista-botoes > tbody > tr > td:not(:first-child) {
+			padding: 3px;
+		}
+
+/* Fim Formulário */
+
+/* Popup */
+
+div.popup {
+}
+
+	div.popup .dxpc-header {
+	}
+
+		div.popup .dxpc-header .dxpc-headerContent {
+			border-bottom: 1px;
+			padding: 0;
+		}
+
+			/* Ícone ao lado do título da Popup */
+			div.popup .dxpc-header .dxpc-headerContent .dxpc-headerImg {
+			}
+
+			/* Título da Popup */
+			div.popup .dxpc-header .dxpc-headerContent .dxpc-headerText {
+				color: #484848;
+				background-color: white;
+				font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+				font-size: 1.07em;
+				font-weight: 600;
+				white-space: nowrap;
+			}
+
+	div.popup .dxpc-contentWrapper {
+	}
+
+		/* Conteúdo da Popup */
+		div.popup .dxpc-contentWrapper .dxpc-content,
+		div.popup .dxpc-contentWrapper .dxpc-content table > tbody > tr > td,
+		div.popup .dxpc-contentWrapper .dxpc-content table > tbody > tr > td span {
+			font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		}
+
+/* Fim Popup */
+
+/* DevExpress */
+
+/* ASPxTextBox campo de hora */
+table.dx_Hora {
+	width: 53px;
+}
+
+.dxgvTitlePanel_MaterialCompact > span {
+	color: #575757;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 10px;
+}
+
+.dxpgRowGrandTotalFieldValue_MaterialCompact {
+	border-right-style: none;
+	border-top-style: none;
+}
+
+/* Botão Verde DevExpress */
+.dxbButton_MaterialCompact.dxbButtonSys > div.dxb > span.dx-vam {
+	color: #ffffff;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: 300;
+}
+
+/* Atenção: esta classe abaixo deverá ser substituída por outra que alinhe de uma só vez todos os ícones clicáveis da primeira célula do grid
+    utilizando o vertical-align: middle ou o flexbox.
+*/
+table.dxgvTable_MaterialCompact > tbody > tr > td.dxgvHeader_MaterialCompact img[src*="incluirReg02"] {
+	margin-top: 3px;
+}
+
+
+
+/* Fim DevExpress */
+
+/* Classes Genéricas */
+
+.centralizar {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%)
+}
+
+/* Fim Classes Genéricas */
+
+
+/*
+    IMPORTANTE: DAQUI PARA BAIXO TUDO PRECISA SER REVISADO.
+    MUITAS DAS CLASSES ESTÃO MAL APLICADAS.
+    ALGUMAS CLASSES DEVERÃO SER REAVALIADAS, OUTRAS MELHORADAS E OUTRAS REMOVIDAS.
+    TODOS OS !important (TODOS) DEVERÃO SER REMOVIDOS.
+*/
+.dxpnlControl_MaterialCompact {
+}
+
+.dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedRow_MaterialCompact,
+.dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedRow_MaterialCompact.dxgvDataRowHover_MaterialCompact {
+	background-color: #A4D08A;
+}
+
+	.dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedRow_MaterialCompact td.dxgv,
+	.dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedRow_MaterialCompact.dxgvDataRowHover_MaterialCompact td.dxgv {
+	}
+
+/* Fim Grid */
+
+/* Login */
+
+body#login {
+	background-size: cover;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	height: 100vh;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	width: 100vw;
+}
+
+body.altera-senha {
+	background-size: cover;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	height: 100vh;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	width: 100vw;
+}
+
+body#login > form {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	height: 100vh;
+	width: 100vw;
+}
+
+table#conteudLogin {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	margin: 0;
+}
+
+table#conteudoLogin > tbody > tr:nth-child(1) > td {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	height: 100%;
+}
+
+table#painelLogin {
+	/* border: 1pt solid #86cca7; */
+	border-radius: 0;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+}
+
+	table#painelLogin td#painelLogin_HC {
+		background-color: #ffffff;
+		border: none;
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		text-align: center;
+	}
+
+		table#painelLogin td#painelLogin_HC > img.dxrpHI.dxrp.dx-vam {
+			font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+			margin: 1.5rem 1.5rem 0 1.5rem;
+		}
+
+	table#painelLogin td#painelLogin_RPC {
+		background-color: #ffffff;
+		border: none;
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		padding: 0rem 3rem;
+		position: relative;
+		top: -24px;
+	}
+
+table#painelLogin div#cadeadoLogin {
+    display: table-cell;
+    font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    padding-bottom: .5rem;
+    vertical-align: middle;
+}
+
+		table#painelLogin div#cadeadoLogin > img {
+			height: 15px;
+			padding-left: 7px;
+			width: 12px;
+		}
+
+		table#painelLogin div#cadeadoLogin > span {
+			color: #575757;
+			display: inline-block;
+			font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+			font-size: 0.85rem;
+			padding-left: 5px;
+		}
+
+	table#painelLogin div#painelLogin_CRC table table > tbody > tr:nth-child(3) > td {
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		padding-bottom: 0.5rem;
+	}
+
+	table#painelLogin table#formularioLogin > tbody > tr > td {
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		padding: 0.25rem;
+	}
+
+	table#painelLogin table#esqueciSenhaLogin {
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		margin: 0;
+		padding: 0;
+	}
+
+		table#painelLogin table#esqueciSenhaLogin > tbody > tr > td:nth-child(2) {
+			font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+			text-align: right;
+		}
+
+		table#painelLogin table#esqueciSenhaLogin a {
+			color: #575757;
+			font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		}
+
+			table#painelLogin table#esqueciSenhaLogin a:hover {
+				font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+				font-size: .82rem;
+				color: #9daa69;
+			}
+
+	table#painelLogin div.dxbButton_MaterialCompact.dxbButtonSys.dxbTSys {
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		font-size: 14px;
+		font-weight: 100;
+		margin-left: 0.25rem;
+		margin-right: 0.25rem;
+		text-transform: none;
+	}
+
+	table#painelLogin span#painelLogin_lblLicenciado {
+		color: #575757;
+		display: inline-block;
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		font-size: 14px;
+		font-weight: 100;
+		padding-left: 8px;
+		padding-top: 1rem;
+	}
+
+	table#painelLogin td.rodape {
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		padding-top: 2rem;
+		text-align: center;
+		width: 100%;
+	}
+
+img#painelLogin_imgHelpUsuario {
+	margin-left: 12px;
+	margin-top: -10px;
+	position: absolute;
+}
+
+
+/* Fim Login */
+/* Topo */
+#dvCliente {
+	border-top: 2px solid #95c477;
+}
+
+	#dvCliente > table > tbody > tr > td {
+		vertical-align: middle;
+	}
+
+	#dvCliente > table td,
+	#dvCliente > table td table td,
+	#dvCliente > table td table td table td {
+		height: 90px !important;
+		vertical-align: middle;
+	}
+
+/* Fim Topo */
+
+
+/* Logo */
+
+#imgLogo {
+	height: 40px !important;
+	margin: 15px 0 15px 40px !important;
+	width: auto !important;
+}
+
+/* Fim Logo */
+
+
+/* Menu */
+
+#spanMenu > table > tbody > tr:nth-child(1) {
+	display: none !important;
+}
+
+#spanMenu {
+	display: table-cell;
+	height: 75px !important;
+	vertical-align: middle;
+}
+
+	#spanMenu > table > tbody > tr:nth-child(2) > td {
+		color: #575757;
+		cursor: pointer;
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+		font-size: 0.8rem !important;
+		font-weight: 400 !important;
+		height: 35px !important;
+		padding-left: 15px;
+		padding-right: 15px;
+		text-transform: uppercase;
+		width: auto !important;
+	}
+
+		#spanMenu > table > tbody > tr:nth-child(2) > td:hover {
+			border-bottom: 2px solid #95c477;
+			color: #95c477;
+		}
+
+/* Fim Menu */
+
+
+/* Submenu */
+
+div[id^=pc].dxpcLite_MaterialCompact.dxpclW {
+}
+
+	div[id^=pc].dxpcLite_MaterialCompact.dxpclW li[id^=pc] {
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+		font-size: 14px !important;
+	}
+
+	div[id^=pc].dxpcLite_MaterialCompact.dxpclW li[id^=pc] {
+		border-bottom-width: 0px !important;
+		/* padding: 7px 33px 8px 0 !important; */
+	}
+
+		div[id^=pc].dxpcLite_MaterialCompact.dxpclW li[id^=pc] > a {
+			color: #35B86B;
+			font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+			font-size: 14px !important;
+			/* padding-left: 20px; */
+		}
+
+	div[id^=pc].dxpcLite_MaterialCompact.dxpclW div[id^=pc] {
+		border: 0 !important;
+	}
+
+	div[id^=pc].dxpcLite_MaterialCompact.dxpclW div.dxnb-header {
+		background-color: transparent !important;
+		color: #aaaaaa !important;
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+		font-size: 11px !important;
+		font-weight: 400 !important;
+		letter-spacing: 0.2pt !important;
+		text-transform: uppercase;
+	}
+
+/* Fim Submenu */
+
+/* Breadcrumb */
+
+span .sep-breadcrumb:before {
+	font-family: "FontAwesome";
+	font-size: 14px;
+	font-weight: 100;
+	color: #95c477;
+	content: "\f054";
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+span.sep-breadcrumb {
+}
+
+div[id=dvCliente] + div > table > tbody > tr > td {
+	background-color: #f2f2f2 !important;
+	border-top: 1px solid #cccccc !important;
+	border-bottom: none !important;
+	color: #555555 !important;
+	font-size: 14px !important;
+	height: 45px !important;
+}
+
+	div[id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact,
+	div[id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact a,
+	div [id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact a span,
+	div [id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact span {
+		color: #555555 !important;
+		font-size: 14px !important;
+	}
+
+		div[id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact#lblCaminho,
+		div[id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact#lblCaminho a,
+		div [id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact#lblCaminho a span,
+		div [id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact#lblCaminho span {
+			color: #555555 !important;
+			font-size: 14px !important;
+			text-decoration: none;
+		}
+
+			div[id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact#lblCaminho a:hover,
+			div[id=dvCliente] + div > table > tbody > tr > td span.dxeBase_MaterialCompact a:hover {
+				color: #888888 !important;
+			}
+
+
+/* Fim Breadcrumb */
+
+/* Projetos */
+
+a.LinkGrid {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+	font-size: 14px !important;
+	font-weight: 400 !important;
+	letter-spacing: 0.2pt !important;
+	text-decoration: none !important;
+}
+
+/* Fim Projetos */
+
+/* Panels */
+#dvBarraTopo + script + table {
+	margin-top: 10px !important;
+}
+
+	#dvBarraTopo + script + table > tbody > tr > td:nth-child(1) > table {
+		background: none !important;
+	}
+
+
+	span#lblTituloTela.TituloTela,
+	#dvBarraTopo + table td span#lblTituloTela,
+	#dvBarraTopo + table td table td span#lblTituloTela,
+	#dvBarraTopo + script + table td span#lblTituloTela,
+	#dvBarraTopo + script + table td table td span#lblTituloTela,
+	#dvBarraTopo + div > table td span#lblTituloTela,
+	#dvBarraTopo + div > table td table td span#lblTituloTela {
+		color: #aaaaaa !important;
+		font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+		font-size: 18px;
+		font-weight: 200 !important;
+		display: inline-block !important;
+		padding: 10px 10px 10px 10px !important;
+	}
+
+.lblTituloTela {
+	color: #484848;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-size: 18px !important;
+	/*font-weight: 600 !important;*/
+	display: inline-block !important;
+	padding-bottom: 10px;
+	padding-left: 3px;
+	padding-top: 5px;
+}
+
+table#ASPxRoundPanel1 {
+	/*margin: 2rem !important;*/
+}
+
+/* Fim Panels */
+
+
+/* ConteudoPrincipal */
+
+#ConteudoPrincipal {
+	padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+#ConteudoPrincipalFrame {
+	padding: 0.5rem 0.75rem 0.75rem 0.75rem;
+}
+
+#ConteudoPrincipalPopup {
+	padding: 0;
+}
+
+/* Fim ConteudoPrincipal */
+
+
+/* Estilos unidades */
+
+/*feita alteração para exibir botão de exportar para excel nos formularios do portal*/
+html .dxgvHeader_MaterialCompact {
+	padding: 8px 0px 8px 0px !important;
+}
+
+html .dxgvFilterRow_MaterialCompact td.dxgv {
+	padding: 2px 10px !important;
+}
+
+
+html .dxgvFooter_MaterialCompact td.dxgv {
+	padding: 6px 10px 5px 10px !important;
+}
+
+html .dxpLite_MaterialCompact {
+	padding: 0px 8px !important;
+}
+
+	html .dxpLite_MaterialCompact .dxp-button.dxp-bi {
+		padding: 8px 3px !important;
+	}
+
+
+html .dxgvFooter_MaterialCompact td.dxgv {
+	padding: 5px 10px 3px 25px !important;
+}
+
+html .dxgvHeader_MaterialCompact td {
+	padding-left: 10px !important;
+	color: #484848 !important;
+}
+
+html .dxeBase_MaterialCompact {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+	font-size: 12px;
+	color: #484848;
+}
+
+html .dxgvControl_MaterialCompact, .dxgvDisabled_MaterialCompact {
+	border-style: none !important;
+}
+
+/*
+html .dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedRow_MaterialCompact, .dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedRow_MaterialCompact.dxgvDataRowHover_MaterialCompact {
+    background-color: #BBCADB;
+}
+
+
+html .dxpLite_MaterialCompact .dxp-current {
+    background-color: #8192A7;
+
+}
+*/
+
+table.dxgvTable_MaterialCompact,
+table.dxgvTable_MaterialCompact td,
+table.dxgvTable_MaterialCompact td a {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+	font-size: 14px;
+}
+
+td.dxgvCommandColumn_MaterialCompact,
+td.dxgvCommandColumn_MaterialCompact a {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+	font-size: 14px;
+}
+
+td.dxgvDataRow_MaterialCompact {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+	font-size: 14px;
+}
+
+td.dxgv {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif !important;
+	font-size: 14px;
+}
+
+/* indexResumoProjeto.aspx */
+
+/* Fim indexResumoProjeto.aspx */
+
+/* mapaEstrategico.aspx */
+
+body[data-pagina=mapaEstrategico] span#lblVisualizacao {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	margin-right: 5px !important;
+}
+
+body[data-pagina=mapaEstrategico] span#ASPxLabel4 {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	margin-right: 5px !important;
+}
+
+/* Fim mapaEstrategico.aspx */
+
+/* frameSelecaoBalanceamento.aspx */
+
+body[data-pagina=frameSelecaoBalanceamento] span#ASPxLabel1 {
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	margin-right: 5px !important;
+}
+
+/*Bug #3806: [F021636] - BRISK - [PV] Erro em Análise, Seleção e Balanceamento de Portfólios -> Detalhamento do valor "Recurso (h)" - Apresenta o link do registro em branco na edição*/
+.dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedRow_MaterialCompact a, .dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedGroupRow_MaterialCompact a {
+    color: #35B86B !important;
+}
+
+/* Fim frameSelecaoBalanceamento.aspx */
+
+
+/* Padding em Formulários */
+
+html .dxpcLite_MaterialCompact .dxpc-mainDiv,
+.dxpcLite_MaterialCompact.dxpc-mainDiv,
+.dxdpLite_MaterialCompact .dxpc-mainDiv,
+.dxdpLite_MaterialCompact.dxpc-mainDiv {
+	padding: 8px !important;
+}
+
+html .titleCopiarPerfil {
+	font-size: 13px !important;
+	margin: 0 0 5px 5px;
+}
+
+html .titleCopiarPerfilDanger {
+	display: inline-block;
+	color: #484848 !important;
+	font-weight: normal !important;
+	background: #E3EAF4 !important;
+	padding: 10px !important;
+	border-radius: 2px !important;
+	width: 97% !important;
+}
+
+html .dxrpControlGB_MaterialCompact span.dxrpHeader_MaterialCompact {
+	font-weight: normal !important;
+	color: #484848;
+	font-size: 12px !important;
+}
+
+
+.excecoesCalendar {
+	width: 150px;
+}
+
+
+.labelEmail {
+	color: #575757;
+	display: inline-block;
+	font-family: 'Roboto Regular', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	font-size: 0.80rem;
+	padding: 0px 0px 10px 0px;
+}
+
+.adjustInput {
+	width: 400px;
+}
+
+.spacingBtn {
+	margin: 0px;
+}
+
+.resizable textarea {
+	resize: vertical;
+}
+
+html .dxpcLite .dxpc-header, .dxdpLite .dxpc-header {
+	color: #404040;
+	background-color: #DCDCDC;
+	border-bottom: 1px solid #C9C9C9;
+	padding: 12px;
+}
+
+
+html .dxbButton_MaterialCompact.dxbTSys {
+	text-transform: capitalize !important;
+}
+
+.spacingBTN {
+	margin-bottom: 2px;
+}
+
+
+html .dxeCalendarSelected_MaterialCompact, .dxeCalendarToday_MaterialCompact {
+	background-repeat: no-repeat;
+	background-position: center !important;
+	background-size: auto !important;
+}
+
+html .dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedRow_MaterialCompact, .dxgvControl_MaterialCompact .dxgvTable_MaterialCompact .dxgvFocusedRow_MaterialCompact.dxgvDataRowHover_MaterialCompact {
+	color: #fff !important;
+}
+
+html .dxtlNode_MaterialCompact td.dxtl,
+.dxtlAltNode_MaterialCompact td.dxtl,
+.dxtlSelectedNode_MaterialCompact td.dxtl,
+.dxtlFocusedNode_MaterialCompact td.dxtl,
+.dxtlEditFormDisplayNode_MaterialCompact td.dxtl,
+.dxtlCommandCell_MaterialCompact {
+	padding: 3px 5px 4px !important;
+}
+
+
+
+
+/* Responsive 320 and 480 */
+@media screen and (min-width: 320px) and (max-width: 480px) {
+	body#login {
+		background-image: url(../images/tela-06.png);
+		background-size: cover;
+		height: 100vh;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		width: 100vw;
+	}
+}
+
+
+/* Responsive 599 and 600*/
+@media screen and (min-width: 599px) and (max-width: 600px) {
+	body#login {
+		background-image: url(../images/tela-06.png);
+		background-size: cover;
+		height: 100vh;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		width: 100vw;
+	}
+}
+
+
+/* Responsive 320 and 480 */
+@media screen and (min-width: 320px) and (max-width: 480px) {
+	body#login {
+		background-image: url(../images/tela-06.png);
+		background-size: cover;
+		height: 100vh;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		width: 100vw;
+	}
+}
+
+
+/* Responsive 599 and 600*/
+@media screen and (min-width: 599px) and (max-width: 600px) {
+	body#login {
+		background-image: url(../images/tela-06.png);
+		background-size: cover;
+		height: 100vh;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		width: 100vw;
+	}
+}
+
+/* Responsive 480 and 640 */
+@media screen and (min-width: 480px) and (max-width: 640px) {
+	#dvBarraTopo + table td span#lblTituloTela,
+	#dvBarraTopo + table td table td span#lblTituloTela,
+	#dvBarraTopo + script + table td span#lblTituloTela,
+	#dvBarraTopo + script + table td table td span#lblTituloTela,
+	#dvBarraTopo + div > table td span#lblTituloTela,
+	#dvBarraTopo + div > table td table td span#lblTituloTela {
+		white-space: nowrap;
+		width: 90%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+
+/* Responsive 768 and 960 */
+@media screen and (min-width: 768px) and (max-width: 960px) {
+	#dvBarraTopo + table td span#lblTituloTela,
+	#dvBarraTopo + table td table td span#lblTituloTela,
+	#dvBarraTopo + script + table td span#lblTituloTela,
+	#dvBarraTopo + script + table td table td span#lblTituloTela,
+	#dvBarraTopo + div > table td span#lblTituloTela,
+	#dvBarraTopo + div > table td table td span#lblTituloTela {
+		white-space: nowrap;
+		width: 90%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+
+/* Responsive 1024 and 1360*/
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+	#dvBarraTopo + table td span#lblTituloTela,
+	#dvBarraTopo + table td table td span#lblTituloTela,
+	#dvBarraTopo + script + table td span#lblTituloTela,
+	#dvBarraTopo + script + table td table td span#lblTituloTela,
+	#dvBarraTopo + div > table td span#lblTituloTela,
+	#dvBarraTopo + div > table td table td span#lblTituloTela {
+		white-space: nowrap;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+/* Responsive 1280 and 1024*/
+@media screen and (min-width: 1270px) and (max-width: 1290px) {
+    #dvBarraTopo + table td span#lblTituloTela,
+    #dvBarraTopo + table td table td span#lblTituloTela,
+    #dvBarraTopo + script + table td span#lblTituloTela,
+    #dvBarraTopo + script + table td table td span#lblTituloTela,
+    #dvBarraTopo + div > table td span#lblTituloTela,
+    #dvBarraTopo + div > table td table td span#lblTituloTela {
+        white-space:pre-line;
+        width: 100%;
+        overflow: visible;
+        text-overflow: ellipsis;
+    }
+}
+
+@media screen and (min-width: 1367px) and (max-width: 1960px) {
+	#dvBarraTopo + table td span#lblTituloTela, 
+    #dvBarraTopo + table td table td span#lblTituloTela, 
+    #dvBarraTopo + script + table td span#lblTituloTela, 
+    #dvBarraTopo + script + table td table td span#lblTituloTela, 
+    #dvBarraTopo + div > table td span#lblTituloTela, 
+    #dvBarraTopo + div > table td table td span#lblTituloTela {
+		white-space: nowrap;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}

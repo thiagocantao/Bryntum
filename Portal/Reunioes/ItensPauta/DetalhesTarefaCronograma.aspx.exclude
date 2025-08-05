@@ -1,0 +1,213 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DetalhesTarefaCronograma.aspx.cs"
+    Inherits="Reunioes_ItensPauta_DetalhesTarefaCronograma" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script src="../../scripts/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="../../scripts/UtilReuniao.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        
+    </script>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td align="center">
+                    <dxwgv:ASPxGridView ID="gvTarefas" runat="server" AutoGenerateColumns="False"
+                        Font-Size="12pt" Width="98%">
+                        <Columns>
+                            <dxwgv:GridViewBandColumn Caption="Previsto" VisibleIndex="19">
+                                <Columns>
+                                    <dxwgv:GridViewDataDateColumn Caption="Término" FieldName="colTerminoPrevisto" UnboundExpression="IsNull(TerminoLB,Termino)"
+                                        UnboundType="DateTime" VisibleIndex="1" Width="60px">
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataDateColumn>
+                                    <dxwgv:GridViewDataDateColumn Caption="Início" FieldName="colInicioPrevisto" UnboundExpression="IsNull(InicioLB,Inicio)"
+                                        UnboundType="DateTime" VisibleIndex="0" Width="60px">
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataDateColumn>
+                                    <dxwgv:GridViewDataProgressBarColumn Caption="% Previsto" FieldName="colPercentualPrevisto"
+                                        UnboundExpression="IsNull(PercentualFisicoPrevistoLB,PercentualFisicoPrevisto)"
+                                        UnboundType="Integer" VisibleIndex="2">
+                                        <PropertiesProgressBar CustomDisplayFormat="" Height="" Width="">
+                                        </PropertiesProgressBar>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataProgressBarColumn>
+                                    <%--<dxwgv:GridViewDataProgressBarColumn Caption="% Previsto" FieldName="colPercentualPrevisto"
+                                         VisibleIndex="2">
+                                        <PropertiesProgressBar CustomDisplayFormat="" Height="" Width="">
+                                        </PropertiesProgressBar>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataProgressBarColumn>--%>
+                                </Columns>
+                                <HeaderStyle HorizontalAlign="Center" />
+                            </dxwgv:GridViewBandColumn>
+                            <dxwgv:GridViewBandColumn Caption="Real" VisibleIndex="21">
+                                <Columns>
+                                    <dxwgv:GridViewDataDateColumn Caption="Início" FieldName="InicioReal" VisibleIndex="0"
+                                        Width="60px">
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataDateColumn>
+                                    <dxwgv:GridViewDataDateColumn Caption="Término" FieldName="TerminoReal" VisibleIndex="1"
+                                        Width="60px">
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataDateColumn>
+                                    <dxwgv:GridViewDataProgressBarColumn Caption="% Concluído" FieldName="colPercentualConcluido"
+                                        UnboundExpression="IsNull(PercentualFisicoConcluidoLB,PercentualFisicoConcluido)"
+                                        UnboundType="Integer" VisibleIndex="2">
+                                        <PropertiesProgressBar CustomDisplayFormat="" Height="" Width="">
+                                        </PropertiesProgressBar>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataProgressBarColumn>
+                                    <%--<dxwgv:GridViewDataProgressBarColumn Caption="% Concluído" FieldName="colPercentualConcluido"
+                                         VisibleIndex="2">
+                                        <PropertiesProgressBar CustomDisplayFormat="" Height="" Width="">
+                                        </PropertiesProgressBar>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataProgressBarColumn>--%>
+                                </Columns>
+                                <HeaderStyle HorizontalAlign="Center" />
+                            </dxwgv:GridViewBandColumn>
+                            <dxwgv:GridViewDataTextColumn Caption="Anotações" FieldName="Anotacoes" 
+                                VisibleIndex="24">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewBandColumn Caption="Trabalhos" VisibleIndex="23">
+                                <Columns>
+                                    <dxwgv:GridViewDataTextColumn Caption="Trabalho" FieldName="Trabalho" VisibleIndex="0"
+                                        Width="50px">
+                                        <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                        </PropertiesTextEdit>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataTextColumn>
+                                    <dxwgv:GridViewDataTextColumn Caption="LB" FieldName="TrabalhoLB" VisibleIndex="1"
+                                        Width="50px">
+                                        <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                        </PropertiesTextEdit>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataTextColumn>
+                                    <dxwgv:GridViewDataTextColumn Caption="Real" FieldName="TrabalhoReal" VisibleIndex="2"
+                                        Width="50px">
+                                        <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                        </PropertiesTextEdit>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataTextColumn>
+                                    <dxwgv:GridViewDataTextColumn Caption="Variação" FieldName="VariacaoTrabalho" VisibleIndex="3"
+                                        Width="50px">
+                                        <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                        </PropertiesTextEdit>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataTextColumn>
+                                </Columns>
+                                <HeaderStyle HorizontalAlign="Center" />
+                            </dxwgv:GridViewBandColumn>
+                            <dxwgv:GridViewBandColumn Caption="Custos" VisibleIndex="26" Name="colGrupoCustos">
+                                <Columns>
+                                    <dxwgv:GridViewDataTextColumn Caption="Custo" FieldName="Custo" VisibleIndex="0"
+                                        Width="90px">
+                                        <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                        </PropertiesTextEdit>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataTextColumn>
+                                    <dxwgv:GridViewDataTextColumn Caption="LB" FieldName="CustoLB" VisibleIndex="1" Width="90px">
+                                        <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                        </PropertiesTextEdit>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataTextColumn>
+                                    <dxwgv:GridViewDataTextColumn Caption="Real" FieldName="CustoReal" VisibleIndex="2"
+                                        Width="90px">
+                                        <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                        </PropertiesTextEdit>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataTextColumn>
+                                    <dxwgv:GridViewDataTextColumn Caption="Variação" FieldName="VariacaoCusto" VisibleIndex="3"
+                                        Width="50px">
+                                        <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                        </PropertiesTextEdit>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </dxwgv:GridViewDataTextColumn>
+                                </Columns>
+                                <HeaderStyle HorizontalAlign="Center" />
+                            </dxwgv:GridViewBandColumn>
+                        </Columns>
+                        <SettingsPager Mode="ShowAllRecords">
+                        </SettingsPager>
+                        <Styles>
+                            <Header Font-Size="12pt">
+                            </Header>
+                            <Cell Font-Size="12pt">
+                            </Cell>
+                            <TitlePanel Font-Bold="True" Font-Size="14pt">
+                            </TitlePanel>
+                        </Styles>
+                    </dxwgv:ASPxGridView>
+                </td>
+            </tr>
+            <tr style="padding-top: 20px">
+                <td align="center" style="padding-top: 20px">
+                    <dxwgv:ASPxGridView ID="gvRecursosTarefa" runat="server" AutoGenerateColumns="False"
+                        Font-Size="12pt" Width="98%" DataMember="DefaultView1">
+                        <Columns>
+                            <dxwgv:GridViewDataTextColumn Caption="Nome Recurso Corporativo" FieldName="NomeRecursoCorporativo"
+                                VisibleIndex="0">
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn Caption="Trabalho LB" FieldName="TrabalhoLB" VisibleIndex="2"
+                                Width="90px">
+                                <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                </PropertiesTextEdit>
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <CellStyle HorizontalAlign="Center">
+                                </CellStyle>
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn Caption="Custo LB" FieldName="CustoLB" VisibleIndex="5"
+                                Width="75px" Visible="False">
+                                <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                </PropertiesTextEdit>
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn Caption="Trabalho" FieldName="Trabalho" 
+                                VisibleIndex="1" Width="90px">
+                                <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                </PropertiesTextEdit>
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <CellStyle HorizontalAlign="Center">
+                                </CellStyle>
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataTextColumn Caption="Trabalho Real" FieldName="TrabalhoReal" 
+                                VisibleIndex="3" Width="90px">
+                                <PropertiesTextEdit DisplayFormatString="{0:n2}">
+                                </PropertiesTextEdit>
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <CellStyle HorizontalAlign="Center">
+                                </CellStyle>
+                            </dxwgv:GridViewDataTextColumn>
+                            <dxwgv:GridViewDataProgressBarColumn Caption="% Concluído" 
+                                FieldName="PercentualFisicoConcluido" VisibleIndex="4" Width="150px">
+                                <PropertiesProgressBar CustomDisplayFormat="" DisplayFormatString="" Height="" 
+                                    Width="">
+                                </PropertiesProgressBar>
+                                <HeaderStyle HorizontalAlign="Center" />
+                            </dxwgv:GridViewDataProgressBarColumn>
+                        </Columns>
+                        <SettingsPager Mode="ShowAllRecords">
+                        </SettingsPager>
+                        <Settings ShowTitlePanel="True" />
+                        <SettingsText Title="Recursos" />
+                        <Styles>
+                            <Header Font-Size="12pt">
+                            </Header>
+                            <Cell Font-Bold="False" Font-Size="12pt">
+                            </Cell>
+                            <TitlePanel Font-Bold="True" Font-Size="14pt">
+                            </TitlePanel>
+                        </Styles>
+                    </dxwgv:ASPxGridView>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</body>
+</html>

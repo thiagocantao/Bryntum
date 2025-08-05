@@ -1,0 +1,749 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsRelatorioAcompanhamento" targetNamespace="http://tempuri.org/dsRelatorioAcompanhamento.xsd" xmlns:mstns="http://tempuri.org/dsRelatorioAcompanhamento.xsd" xmlns="http://tempuri.org/dsRelatorioAcompanhamento.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="desenv_portalEstrategiaConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="desenv_portalEstrategiaConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.desenv_portalEstrategiaConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="desenv_portalEstrategiaConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="desenv_portalEstrategiaConnectionString1 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.desenv_portalEstrategiaConnectionString1.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="pbh_RelatorioAcompanhamentoTableAdapter" GeneratorDataComponentClassName="pbh_RelatorioAcompanhamentoTableAdapter" Name="pbh_RelatorioAcompanhamento" UserDataComponentName="pbh_RelatorioAcompanhamentoTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>
+                      SELECT        ra.CodigoRelatorio,  p.CodigoProjeto, p.NomeProjeto, g.NomeUsuario AS NomeGerente, ra.DataElaboracao, e.NomeUsuario AS NomeElaborador,
+                      un.SiglaUnidadeNegocio, ra.DataInicioPlanejada, ra.DataInicioReal, ra.TerminoPlanejado, ra.ProgressoFisico, ra.TendenciaTermino, ra.StatusTermino,
+                      ra.PontoFuncaoPlanejado, ra.PontoFuncaoProgresso, ra.PontoFuncaoTendencia, ra.PontoFuncaoStatus, ra.InvestimentoPlanejado, ra.InvestimentoProgresso,
+                      ra.InvestimentoTendencia, ra.InvestimentoStatus, ra.CusteioPlanejado, ra.CusteioProgresso, ra.CusteioTendencia, ra.CusteioStatus, ra.ComentarioPrazo,
+                      ra.ComentarioAtraso, ra.ComentarioEscopo, ra.ComentarioCusto, ra.ComentarioRH, ra.ComentarioComunicacoes, ra.ComentarioAquisicoesRealizar,
+                      ra.ComentarioGarantiaQualidade, ra.ComentarioGerenciaConfiguracao, ra.IndicaDefinicaoAreaSustentacao, ra.JustificativaAreaSustentacao,
+                      ra.IndicaEmissaoDocumentoRepasse, ra.QuantMudancaEscopo, ra.QuantMudancaCronograma, ra.QuantMudancaCusto, ra.QuantParalisacao, ra.QuantReativacao, ra.VariacaoTermino,
+                      ra.VariacaoPontoFuncao, ra.VaricaoInvestimento, ra.VariacaoCusteio, us.SiglaUnidadeNegocio AS SiglaUnidadeSustentacao
+                      , ra.ProgressoFisicoAnterior, ra.CodigoReservado FROM            pbh_RelatorioAcompanhamento AS ra INNER JOIN
+                      Projeto AS p ON ra.CodigoProjeto = p.CodigoProjeto INNER JOIN
+                      UnidadeNegocio AS un ON un.CodigoUnidadeNegocio = p.CodigoUnidadeNegocio LEFT OUTER JOIN
+                      UnidadeNegocio AS us ON us.CodigoUnidadeNegocio = ra.CodigoUnidadeSustentacao LEFT OUTER JOIN
+                      Usuario AS g ON g.CodigoUsuario = p.CodigoGerenteProjeto LEFT OUTER JOIN
+                      Usuario AS e ON e.CodigoUsuario = ra.CodigoUsuarioInclusao
+                      WHERE        (ra.CodigoRelatorio = @CodigoRelatorio)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoRelatorio" ColumnName="CodigoRelatorio" DataSourceName="desenv_portalEstrategia.dbo.pbh_RelatorioAcompanhamento" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoRelatorio" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoRelatorio" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoRelatorio" DataSetColumn="CodigoRelatorio" />
+              <Mapping SourceColumn="CodigoProjeto" DataSetColumn="CodigoProjeto" />
+              <Mapping SourceColumn="DataElaboracao" DataSetColumn="DataElaboracao" />
+              <Mapping SourceColumn="DataInicioPlanejada" DataSetColumn="DataInicioPlanejada" />
+              <Mapping SourceColumn="DataInicioReal" DataSetColumn="DataInicioReal" />
+              <Mapping SourceColumn="TerminoPlanejado" DataSetColumn="TerminoPlanejado" />
+              <Mapping SourceColumn="TendenciaTermino" DataSetColumn="TendenciaTermino" />
+              <Mapping SourceColumn="StatusTermino" DataSetColumn="StatusTermino" />
+              <Mapping SourceColumn="PontoFuncaoPlanejado" DataSetColumn="PontoFuncaoPlanejado" />
+              <Mapping SourceColumn="PontoFuncaoProgresso" DataSetColumn="PontoFuncaoProgresso" />
+              <Mapping SourceColumn="PontoFuncaoTendencia" DataSetColumn="PontoFuncaoTendencia" />
+              <Mapping SourceColumn="PontoFuncaoStatus" DataSetColumn="PontoFuncaoStatus" />
+              <Mapping SourceColumn="InvestimentoPlanejado" DataSetColumn="InvestimentoPlanejado" />
+              <Mapping SourceColumn="InvestimentoProgresso" DataSetColumn="InvestimentoProgresso" />
+              <Mapping SourceColumn="InvestimentoTendencia" DataSetColumn="InvestimentoTendencia" />
+              <Mapping SourceColumn="InvestimentoStatus" DataSetColumn="InvestimentoStatus" />
+              <Mapping SourceColumn="CusteioPlanejado" DataSetColumn="CusteioPlanejado" />
+              <Mapping SourceColumn="CusteioProgresso" DataSetColumn="CusteioProgresso" />
+              <Mapping SourceColumn="CusteioTendencia" DataSetColumn="CusteioTendencia" />
+              <Mapping SourceColumn="CusteioStatus" DataSetColumn="CusteioStatus" />
+              <Mapping SourceColumn="ComentarioPrazo" DataSetColumn="ComentarioPrazo" />
+              <Mapping SourceColumn="ComentarioAtraso" DataSetColumn="ComentarioAtraso" />
+              <Mapping SourceColumn="ComentarioEscopo" DataSetColumn="ComentarioEscopo" />
+              <Mapping SourceColumn="ComentarioCusto" DataSetColumn="ComentarioCusto" />
+              <Mapping SourceColumn="ComentarioRH" DataSetColumn="ComentarioRH" />
+              <Mapping SourceColumn="ComentarioComunicacoes" DataSetColumn="ComentarioComunicacoes" />
+              <Mapping SourceColumn="ComentarioAquisicoesRealizar" DataSetColumn="ComentarioAquisicoesRealizar" />
+              <Mapping SourceColumn="ComentarioGarantiaQualidade" DataSetColumn="ComentarioGarantiaQualidade" />
+              <Mapping SourceColumn="ComentarioGerenciaConfiguracao" DataSetColumn="ComentarioGerenciaConfiguracao" />
+              <Mapping SourceColumn="IndicaDefinicaoAreaSustentacao" DataSetColumn="IndicaDefinicaoAreaSustentacao" />
+              <Mapping SourceColumn="JustificativaAreaSustentacao" DataSetColumn="JustificativaAreaSustentacao" />
+              <Mapping SourceColumn="IndicaEmissaoDocumentoRepasse" DataSetColumn="IndicaEmissaoDocumentoRepasse" />
+              <Mapping SourceColumn="QuantMudancaEscopo" DataSetColumn="QuantMudancaEscopo" />
+              <Mapping SourceColumn="QuantMudancaCronograma" DataSetColumn="QuantMudancaCronograma" />
+              <Mapping SourceColumn="QuantMudancaCusto" DataSetColumn="QuantMudancaCusto" />
+              <Mapping SourceColumn="QuantParalisacao" DataSetColumn="QuantParalisacao" />
+              <Mapping SourceColumn="QuantReativacao" DataSetColumn="QuantReativacao" />
+              <Mapping SourceColumn="NomeProjeto" DataSetColumn="NomeProjeto" />
+              <Mapping SourceColumn="NomeGerente" DataSetColumn="NomeGerente" />
+              <Mapping SourceColumn="NomeElaborador" DataSetColumn="NomeElaborador" />
+              <Mapping SourceColumn="SiglaUnidadeNegocio" DataSetColumn="SiglaUnidadeNegocio" />
+              <Mapping SourceColumn="VariacaoTermino" DataSetColumn="VariacaoTermino" />
+              <Mapping SourceColumn="VariacaoPontoFuncao" DataSetColumn="VariacaoPontoFuncao" />
+              <Mapping SourceColumn="VaricaoInvestimento" DataSetColumn="VaricaoInvestimento" />
+              <Mapping SourceColumn="VariacaoCusteio" DataSetColumn="VariacaoCusteio" />
+              <Mapping SourceColumn="SiglaUnidadeSustentacao" DataSetColumn="SiglaUnidadeSustentacao" />
+              <Mapping SourceColumn="ProgressoFisico" DataSetColumn="ProgressoFisico" />
+              <Mapping SourceColumn="ProgressoFisicoAnterior" DataSetColumn="ProgressoFisicoAnterior" />
+              <Mapping SourceColumn="CodigoReservado" DataSetColumn="CodigoReservado" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="pbh_RelatorioAcompanhamentoRiscosTableAdapter" GeneratorDataComponentClassName="pbh_RelatorioAcompanhamentoRiscosTableAdapter" Name="pbh_RelatorioAcompanhamentoRiscos" UserDataComponentName="pbh_RelatorioAcompanhamentoRiscosTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString (Web.config)" DbObjectName="pbh_RelatorioAcompanhamentoRiscos" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CodigoRiscoRelatorio, CodigoRelatorio, Risco, Impacto, Acao, Responsavel, CodigoRisco FROM dbo.pbh_RelatorioAcompanhamentoRiscos
+WHERE        (CodigoRelatorio = @CodigoRelatorio)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoRelatorio" ColumnName="CodigoRelatorio" DataSourceName="pbh_RelatorioAcompanhamentoRiscos" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoRelatorio" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoRelatorio" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoRiscoRelatorio" DataSetColumn="CodigoRiscoRelatorio" />
+              <Mapping SourceColumn="CodigoRelatorio" DataSetColumn="CodigoRelatorio" />
+              <Mapping SourceColumn="Risco" DataSetColumn="Risco" />
+              <Mapping SourceColumn="Impacto" DataSetColumn="Impacto" />
+              <Mapping SourceColumn="Acao" DataSetColumn="Acao" />
+              <Mapping SourceColumn="Responsavel" DataSetColumn="Responsavel" />
+              <Mapping SourceColumn="CodigoRisco" DataSetColumn="CodigoRisco" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="pbh_RelatorioAcompanhamentoAquisicoesTableAdapter" GeneratorDataComponentClassName="pbh_RelatorioAcompanhamentoAquisicoesTableAdapter" Name="pbh_RelatorioAcompanhamentoAquisicoes" UserDataComponentName="pbh_RelatorioAcompanhamentoAquisicoesTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString (Web.config)" DbObjectName="desenv_portalEstrategia.dbo.pbh_RelatorioAcompanhamentoAquisicoes" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT CodigoAquisicaoRelatorio, CodigoRelatorio, Aquisicao, ValorAquisicao, IndicaAquisicaoPendente FROM dbo.pbh_RelatorioAcompanhamentoAquisicoes
+WHERE        (CodigoRelatorio = @CodigoRelatorio)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoRelatorio" ColumnName="CodigoRelatorio" DataSourceName="desenv_portalEstrategia.dbo.pbh_RelatorioAcompanhamentoAquisicoes" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoRelatorio" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoRelatorio" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoAquisicaoRelatorio" DataSetColumn="CodigoAquisicaoRelatorio" />
+              <Mapping SourceColumn="CodigoRelatorio" DataSetColumn="CodigoRelatorio" />
+              <Mapping SourceColumn="Aquisicao" DataSetColumn="Aquisicao" />
+              <Mapping SourceColumn="ValorAquisicao" DataSetColumn="ValorAquisicao" />
+              <Mapping SourceColumn="IndicaAquisicaoPendente" DataSetColumn="IndicaAquisicaoPendente" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="pbh_RelatorioAcompanhamentoDestinatariosTableAdapter" GeneratorDataComponentClassName="pbh_RelatorioAcompanhamentoDestinatariosTableAdapter" Name="pbh_RelatorioAcompanhamentoDestinatarios" UserDataComponentName="pbh_RelatorioAcompanhamentoDestinatariosTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString (Web.config)" DbObjectName="pbh_RelatorioAcompanhamentoDestinatarios" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CodigoDestinatarioRelatorio, CodigoRelatorio, Destinatario, Unidade, EmailDestinatario FROM dbo.pbh_RelatorioAcompanhamentoDestinatarios
+WHERE        (CodigoRelatorio = @CodigoRelatorio)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoRelatorio" ColumnName="CodigoRelatorio" DataSourceName="pbh_RelatorioAcompanhamentoDestinatarios" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoRelatorio" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoRelatorio" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoDestinatarioRelatorio" DataSetColumn="CodigoDestinatarioRelatorio" />
+              <Mapping SourceColumn="CodigoRelatorio" DataSetColumn="CodigoRelatorio" />
+              <Mapping SourceColumn="Destinatario" DataSetColumn="Destinatario" />
+              <Mapping SourceColumn="Unidade" DataSetColumn="Unidade" />
+              <Mapping SourceColumn="EmailDestinatario" DataSetColumn="EmailDestinatario" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="pbh_RelatorioAcompanhamentoEntregasTableAdapter" GeneratorDataComponentClassName="pbh_RelatorioAcompanhamentoEntregasTableAdapter" Name="pbh_RelatorioAcompanhamentoEntregas" UserDataComponentName="pbh_RelatorioAcompanhamentoEntregasTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString (Web.config)" DbObjectName="pbh_RelatorioAcompanhamentoEntregas" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CodigoEntregaRelatorio, CodigoRelatorio, Produto, TipoEntrega, DescricaoEntrega FROM dbo.pbh_RelatorioAcompanhamentoEntregas
+WHERE        (CodigoRelatorio = @CodigoRelatorio)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoRelatorio" ColumnName="CodigoRelatorio" DataSourceName="pbh_RelatorioAcompanhamentoEntregas" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoRelatorio" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoRelatorio" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoEntregaRelatorio" DataSetColumn="CodigoEntregaRelatorio" />
+              <Mapping SourceColumn="CodigoRelatorio" DataSetColumn="CodigoRelatorio" />
+              <Mapping SourceColumn="Produto" DataSetColumn="Produto" />
+              <Mapping SourceColumn="TipoEntrega" DataSetColumn="TipoEntrega" />
+              <Mapping SourceColumn="DescricaoEntrega" DataSetColumn="DescricaoEntrega" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="pbh_RelatorioAcompanhamentoIndicadoresTableAdapter" GeneratorDataComponentClassName="pbh_RelatorioAcompanhamentoIndicadoresTableAdapter" Name="pbh_RelatorioAcompanhamentoIndicadores" UserDataComponentName="pbh_RelatorioAcompanhamentoIndicadoresTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString (Web.config)" DbObjectName="pbh_RelatorioAcompanhamentoIndicadores" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CodigoIndicadorRelatorio, CodigoRelatorio, NomeIndicador, Previsto, Realizado, Comentarios, CodigoTarefa FROM dbo.pbh_RelatorioAcompanhamentoIndicadores
+WHERE        (CodigoRelatorio = @CodigoRelatorio)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoRelatorio" ColumnName="CodigoRelatorio" DataSourceName="pbh_RelatorioAcompanhamentoIndicadores" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoRelatorio" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoRelatorio" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoIndicadorRelatorio" DataSetColumn="CodigoIndicadorRelatorio" />
+              <Mapping SourceColumn="CodigoRelatorio" DataSetColumn="CodigoRelatorio" />
+              <Mapping SourceColumn="NomeIndicador" DataSetColumn="NomeIndicador" />
+              <Mapping SourceColumn="Previsto" DataSetColumn="Previsto" />
+              <Mapping SourceColumn="Realizado" DataSetColumn="Realizado" />
+              <Mapping SourceColumn="Comentarios" DataSetColumn="Comentarios" />
+              <Mapping SourceColumn="CodigoTarefa" DataSetColumn="CodigoTarefa" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="pbh_RelatorioAcompanhamentoProblemasTableAdapter" GeneratorDataComponentClassName="pbh_RelatorioAcompanhamentoProblemasTableAdapter" Name="pbh_RelatorioAcompanhamentoProblemas" UserDataComponentName="pbh_RelatorioAcompanhamentoProblemasTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_portalEstrategiaConnectionString (Web.config)" DbObjectName="pbh_RelatorioAcompanhamentoProblemas" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CodigoProblemaRelatorio, CodigoRelatorio, Problema, Acao, Responsavel, Prazo, Status, CodigoProblema FROM dbo.pbh_RelatorioAcompanhamentoProblemas
+WHERE        (CodigoRelatorio = @CodigoRelatorio)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="CodigoRelatorio" ColumnName="CodigoRelatorio" DataSourceName="pbh_RelatorioAcompanhamentoProblemas" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoRelatorio" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoRelatorio" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoProblemaRelatorio" DataSetColumn="CodigoProblemaRelatorio" />
+              <Mapping SourceColumn="CodigoRelatorio" DataSetColumn="CodigoRelatorio" />
+              <Mapping SourceColumn="Problema" DataSetColumn="Problema" />
+              <Mapping SourceColumn="Acao" DataSetColumn="Acao" />
+              <Mapping SourceColumn="Responsavel" DataSetColumn="Responsavel" />
+              <Mapping SourceColumn="Prazo" DataSetColumn="Prazo" />
+              <Mapping SourceColumn="Status" DataSetColumn="Status" />
+              <Mapping SourceColumn="CodigoProblema" DataSetColumn="CodigoProblema" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsRelatorioAcompanhamento" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsRelatorioAcompanhamento" msprop:Generator_UserDSName="dsRelatorioAcompanhamento">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="pbh_RelatorioAcompanhamento" msprop:Generator_TableClassName="pbh_RelatorioAcompanhamentoDataTable" msprop:Generator_TableVarName="tablepbh_RelatorioAcompanhamento" msprop:Generator_TablePropName="pbh_RelatorioAcompanhamento" msprop:Generator_RowDeletingName="pbh_RelatorioAcompanhamentoRowDeleting" msprop:Generator_UserTableName="pbh_RelatorioAcompanhamento" msprop:Generator_RowChangingName="pbh_RelatorioAcompanhamentoRowChanging" msprop:Generator_RowEvHandlerName="pbh_RelatorioAcompanhamentoRowChangeEventHandler" msprop:Generator_RowDeletedName="pbh_RelatorioAcompanhamentoRowDeleted" msprop:Generator_RowEvArgName="pbh_RelatorioAcompanhamentoRowChangeEvent" msprop:Generator_RowChangedName="pbh_RelatorioAcompanhamentoRowChanged" msprop:Generator_RowClassName="pbh_RelatorioAcompanhamentoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoRelatorio" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoRelatorioColumn" msprop:Generator_UserColumnName="CodigoRelatorio" type="xs:int" />
+              <xs:element name="CodigoProjeto" msprop:Generator_ColumnVarNameInTable="columnCodigoProjeto" msprop:Generator_ColumnPropNameInRow="CodigoProjeto" msprop:Generator_ColumnPropNameInTable="CodigoProjetoColumn" msprop:Generator_UserColumnName="CodigoProjeto" type="xs:int" />
+              <xs:element name="DataElaboracao" msprop:Generator_ColumnVarNameInTable="columnDataElaboracao" msprop:Generator_ColumnPropNameInRow="DataElaboracao" msprop:Generator_ColumnPropNameInTable="DataElaboracaoColumn" msprop:Generator_UserColumnName="DataElaboracao" type="xs:dateTime" />
+              <xs:element name="DataInicioPlanejada" msprop:Generator_ColumnVarNameInTable="columnDataInicioPlanejada" msprop:Generator_ColumnPropNameInRow="DataInicioPlanejada" msprop:Generator_ColumnPropNameInTable="DataInicioPlanejadaColumn" msprop:Generator_UserColumnName="DataInicioPlanejada" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DataInicioReal" msprop:Generator_ColumnVarNameInTable="columnDataInicioReal" msprop:Generator_ColumnPropNameInRow="DataInicioReal" msprop:Generator_ColumnPropNameInTable="DataInicioRealColumn" msprop:Generator_UserColumnName="DataInicioReal" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TerminoPlanejado" msprop:Generator_ColumnVarNameInTable="columnTerminoPlanejado" msprop:Generator_ColumnPropNameInRow="TerminoPlanejado" msprop:Generator_ColumnPropNameInTable="TerminoPlanejadoColumn" msprop:Generator_UserColumnName="TerminoPlanejado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ProgressoFisico" msprop:Generator_ColumnVarNameInTable="columnProgressoFisico" msprop:Generator_ColumnPropNameInRow="ProgressoFisico" msprop:Generator_ColumnPropNameInTable="ProgressoFisicoColumn" msprop:Generator_UserColumnName="ProgressoFisico" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TendenciaTermino" msprop:Generator_ColumnVarNameInTable="columnTendenciaTermino" msprop:Generator_ColumnPropNameInRow="TendenciaTermino" msprop:Generator_ColumnPropNameInTable="TendenciaTerminoColumn" msprop:Generator_UserColumnName="TendenciaTermino" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:dateTime" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StatusTermino" msprop:Generator_ColumnVarNameInTable="columnStatusTermino" msprop:Generator_ColumnPropNameInRow="StatusTermino" msprop:Generator_ColumnPropNameInTable="StatusTerminoColumn" msprop:Generator_UserColumnName="StatusTermino" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PontoFuncaoPlanejado" msprop:Generator_ColumnVarNameInTable="columnPontoFuncaoPlanejado" msprop:Generator_ColumnPropNameInRow="PontoFuncaoPlanejado" msprop:Generator_ColumnPropNameInTable="PontoFuncaoPlanejadoColumn" msprop:Generator_UserColumnName="PontoFuncaoPlanejado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PontoFuncaoProgresso" msprop:Generator_ColumnVarNameInTable="columnPontoFuncaoProgresso" msprop:Generator_ColumnPropNameInRow="PontoFuncaoProgresso" msprop:Generator_ColumnPropNameInTable="PontoFuncaoProgressoColumn" msprop:Generator_UserColumnName="PontoFuncaoProgresso" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PontoFuncaoTendencia" msprop:Generator_ColumnVarNameInTable="columnPontoFuncaoTendencia" msprop:Generator_ColumnPropNameInRow="PontoFuncaoTendencia" msprop:Generator_ColumnPropNameInTable="PontoFuncaoTendenciaColumn" msprop:Generator_UserColumnName="PontoFuncaoTendencia" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PontoFuncaoStatus" msprop:Generator_ColumnVarNameInTable="columnPontoFuncaoStatus" msprop:Generator_ColumnPropNameInRow="PontoFuncaoStatus" msprop:Generator_ColumnPropNameInTable="PontoFuncaoStatusColumn" msprop:Generator_UserColumnName="PontoFuncaoStatus" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="InvestimentoPlanejado" msprop:Generator_ColumnVarNameInTable="columnInvestimentoPlanejado" msprop:Generator_ColumnPropNameInRow="InvestimentoPlanejado" msprop:Generator_ColumnPropNameInTable="InvestimentoPlanejadoColumn" msprop:Generator_UserColumnName="InvestimentoPlanejado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="InvestimentoProgresso" msprop:Generator_ColumnVarNameInTable="columnInvestimentoProgresso" msprop:Generator_ColumnPropNameInRow="InvestimentoProgresso" msprop:Generator_ColumnPropNameInTable="InvestimentoProgressoColumn" msprop:Generator_UserColumnName="InvestimentoProgresso" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="InvestimentoTendencia" msprop:Generator_ColumnVarNameInTable="columnInvestimentoTendencia" msprop:Generator_ColumnPropNameInRow="InvestimentoTendencia" msprop:Generator_ColumnPropNameInTable="InvestimentoTendenciaColumn" msprop:Generator_UserColumnName="InvestimentoTendencia" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="InvestimentoStatus" msprop:Generator_ColumnVarNameInTable="columnInvestimentoStatus" msprop:Generator_ColumnPropNameInRow="InvestimentoStatus" msprop:Generator_ColumnPropNameInTable="InvestimentoStatusColumn" msprop:Generator_UserColumnName="InvestimentoStatus" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CusteioPlanejado" msprop:Generator_ColumnVarNameInTable="columnCusteioPlanejado" msprop:Generator_ColumnPropNameInRow="CusteioPlanejado" msprop:Generator_ColumnPropNameInTable="CusteioPlanejadoColumn" msprop:Generator_UserColumnName="CusteioPlanejado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CusteioProgresso" msprop:Generator_ColumnVarNameInTable="columnCusteioProgresso" msprop:Generator_ColumnPropNameInRow="CusteioProgresso" msprop:Generator_ColumnPropNameInTable="CusteioProgressoColumn" msprop:Generator_UserColumnName="CusteioProgresso" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CusteioTendencia" msprop:Generator_ColumnVarNameInTable="columnCusteioTendencia" msprop:Generator_ColumnPropNameInRow="CusteioTendencia" msprop:Generator_ColumnPropNameInTable="CusteioTendenciaColumn" msprop:Generator_UserColumnName="CusteioTendencia" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CusteioStatus" msprop:Generator_ColumnVarNameInTable="columnCusteioStatus" msprop:Generator_ColumnPropNameInRow="CusteioStatus" msprop:Generator_ColumnPropNameInTable="CusteioStatusColumn" msprop:Generator_UserColumnName="CusteioStatus" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioPrazo" msprop:Generator_ColumnVarNameInTable="columnComentarioPrazo" msprop:Generator_ColumnPropNameInRow="ComentarioPrazo" msprop:Generator_ColumnPropNameInTable="ComentarioPrazoColumn" msprop:Generator_UserColumnName="ComentarioPrazo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioAtraso" msprop:Generator_ColumnVarNameInTable="columnComentarioAtraso" msprop:Generator_ColumnPropNameInRow="ComentarioAtraso" msprop:Generator_ColumnPropNameInTable="ComentarioAtrasoColumn" msprop:Generator_UserColumnName="ComentarioAtraso" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioEscopo" msprop:Generator_ColumnVarNameInTable="columnComentarioEscopo" msprop:Generator_ColumnPropNameInRow="ComentarioEscopo" msprop:Generator_ColumnPropNameInTable="ComentarioEscopoColumn" msprop:Generator_UserColumnName="ComentarioEscopo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioCusto" msprop:Generator_ColumnVarNameInTable="columnComentarioCusto" msprop:Generator_ColumnPropNameInRow="ComentarioCusto" msprop:Generator_ColumnPropNameInTable="ComentarioCustoColumn" msprop:Generator_UserColumnName="ComentarioCusto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioRH" msprop:Generator_ColumnVarNameInTable="columnComentarioRH" msprop:Generator_ColumnPropNameInRow="ComentarioRH" msprop:Generator_ColumnPropNameInTable="ComentarioRHColumn" msprop:Generator_UserColumnName="ComentarioRH" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioComunicacoes" msprop:Generator_ColumnVarNameInTable="columnComentarioComunicacoes" msprop:Generator_ColumnPropNameInRow="ComentarioComunicacoes" msprop:Generator_ColumnPropNameInTable="ComentarioComunicacoesColumn" msprop:Generator_UserColumnName="ComentarioComunicacoes" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioAquisicoesRealizar" msprop:Generator_ColumnVarNameInTable="columnComentarioAquisicoesRealizar" msprop:Generator_ColumnPropNameInRow="ComentarioAquisicoesRealizar" msprop:Generator_ColumnPropNameInTable="ComentarioAquisicoesRealizarColumn" msprop:Generator_UserColumnName="ComentarioAquisicoesRealizar" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioGarantiaQualidade" msprop:Generator_ColumnVarNameInTable="columnComentarioGarantiaQualidade" msprop:Generator_ColumnPropNameInRow="ComentarioGarantiaQualidade" msprop:Generator_ColumnPropNameInTable="ComentarioGarantiaQualidadeColumn" msprop:Generator_UserColumnName="ComentarioGarantiaQualidade" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComentarioGerenciaConfiguracao" msprop:Generator_ColumnVarNameInTable="columnComentarioGerenciaConfiguracao" msprop:Generator_ColumnPropNameInRow="ComentarioGerenciaConfiguracao" msprop:Generator_ColumnPropNameInTable="ComentarioGerenciaConfiguracaoColumn" msprop:Generator_UserColumnName="ComentarioGerenciaConfiguracao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaDefinicaoAreaSustentacao" msprop:Generator_ColumnVarNameInTable="columnIndicaDefinicaoAreaSustentacao" msprop:Generator_ColumnPropNameInRow="IndicaDefinicaoAreaSustentacao" msprop:Generator_ColumnPropNameInTable="IndicaDefinicaoAreaSustentacaoColumn" msprop:Generator_UserColumnName="IndicaDefinicaoAreaSustentacao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="JustificativaAreaSustentacao" msprop:Generator_ColumnVarNameInTable="columnJustificativaAreaSustentacao" msprop:Generator_ColumnPropNameInRow="JustificativaAreaSustentacao" msprop:Generator_ColumnPropNameInTable="JustificativaAreaSustentacaoColumn" msprop:Generator_UserColumnName="JustificativaAreaSustentacao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaEmissaoDocumentoRepasse" msprop:Generator_ColumnVarNameInTable="columnIndicaEmissaoDocumentoRepasse" msprop:Generator_ColumnPropNameInRow="IndicaEmissaoDocumentoRepasse" msprop:Generator_ColumnPropNameInTable="IndicaEmissaoDocumentoRepasseColumn" msprop:Generator_UserColumnName="IndicaEmissaoDocumentoRepasse" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="QuantMudancaEscopo" msprop:Generator_ColumnVarNameInTable="columnQuantMudancaEscopo" msprop:Generator_ColumnPropNameInRow="QuantMudancaEscopo" msprop:Generator_ColumnPropNameInTable="QuantMudancaEscopoColumn" msprop:Generator_UserColumnName="QuantMudancaEscopo" type="xs:short" minOccurs="0" />
+              <xs:element name="QuantMudancaCronograma" msprop:Generator_ColumnVarNameInTable="columnQuantMudancaCronograma" msprop:Generator_ColumnPropNameInRow="QuantMudancaCronograma" msprop:Generator_ColumnPropNameInTable="QuantMudancaCronogramaColumn" msprop:Generator_UserColumnName="QuantMudancaCronograma" type="xs:short" minOccurs="0" />
+              <xs:element name="QuantMudancaCusto" msprop:Generator_ColumnVarNameInTable="columnQuantMudancaCusto" msprop:Generator_ColumnPropNameInRow="QuantMudancaCusto" msprop:Generator_ColumnPropNameInTable="QuantMudancaCustoColumn" msprop:Generator_UserColumnName="QuantMudancaCusto" type="xs:short" minOccurs="0" />
+              <xs:element name="QuantParalisacao" msprop:Generator_ColumnVarNameInTable="columnQuantParalisacao" msprop:Generator_ColumnPropNameInRow="QuantParalisacao" msprop:Generator_ColumnPropNameInTable="QuantParalisacaoColumn" msprop:Generator_UserColumnName="QuantParalisacao" type="xs:short" minOccurs="0" />
+              <xs:element name="QuantReativacao" msprop:Generator_ColumnVarNameInTable="columnQuantReativacao" msprop:Generator_ColumnPropNameInRow="QuantReativacao" msprop:Generator_ColumnPropNameInTable="QuantReativacaoColumn" msprop:Generator_UserColumnName="QuantReativacao" type="xs:short" minOccurs="0" />
+              <xs:element name="NomeProjeto" msprop:Generator_ColumnVarNameInTable="columnNomeProjeto" msprop:Generator_ColumnPropNameInRow="NomeProjeto" msprop:Generator_ColumnPropNameInTable="NomeProjetoColumn" msprop:Generator_UserColumnName="NomeProjeto">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NomeGerente" msprop:Generator_ColumnVarNameInTable="columnNomeGerente" msprop:Generator_ColumnPropNameInRow="NomeGerente" msprop:Generator_ColumnPropNameInTable="NomeGerenteColumn" msprop:Generator_UserColumnName="NomeGerente" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NomeElaborador" msprop:Generator_ColumnVarNameInTable="columnNomeElaborador" msprop:Generator_ColumnPropNameInRow="NomeElaborador" msprop:Generator_ColumnPropNameInTable="NomeElaboradorColumn" msprop:Generator_UserColumnName="NomeElaborador" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SiglaUnidadeNegocio" msprop:Generator_ColumnVarNameInTable="columnSiglaUnidadeNegocio" msprop:Generator_ColumnPropNameInRow="SiglaUnidadeNegocio" msprop:Generator_ColumnPropNameInTable="SiglaUnidadeNegocioColumn" msprop:Generator_UserColumnName="SiglaUnidadeNegocio">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="VariacaoTermino" msprop:Generator_ColumnVarNameInTable="columnVariacaoTermino" msprop:Generator_ColumnPropNameInRow="VariacaoTermino" msprop:Generator_ColumnPropNameInTable="VariacaoTerminoColumn" msprop:Generator_UserColumnName="VariacaoTermino" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="VariacaoPontoFuncao" msprop:Generator_ColumnVarNameInTable="columnVariacaoPontoFuncao" msprop:Generator_ColumnPropNameInRow="VariacaoPontoFuncao" msprop:Generator_ColumnPropNameInTable="VariacaoPontoFuncaoColumn" msprop:Generator_UserColumnName="VariacaoPontoFuncao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="VaricaoInvestimento" msprop:Generator_ColumnVarNameInTable="columnVaricaoInvestimento" msprop:Generator_ColumnPropNameInRow="VaricaoInvestimento" msprop:Generator_ColumnPropNameInTable="VaricaoInvestimentoColumn" msprop:Generator_UserColumnName="VaricaoInvestimento" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="VariacaoCusteio" msprop:Generator_ColumnVarNameInTable="columnVariacaoCusteio" msprop:Generator_ColumnPropNameInRow="VariacaoCusteio" msprop:Generator_ColumnPropNameInTable="VariacaoCusteioColumn" msprop:Generator_UserColumnName="VariacaoCusteio" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SiglaUnidadeSustentacao" msprop:Generator_ColumnVarNameInTable="columnSiglaUnidadeSustentacao" msprop:Generator_ColumnPropNameInRow="SiglaUnidadeSustentacao" msprop:Generator_ColumnPropNameInTable="SiglaUnidadeSustentacaoColumn" msprop:Generator_UserColumnName="SiglaUnidadeSustentacao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ProgressoFisicoAnterior" msprop:Generator_ColumnVarNameInTable="columnProgressoFisicoAnterior" msprop:Generator_ColumnPropNameInRow="ProgressoFisicoAnterior" msprop:Generator_ColumnPropNameInTable="ProgressoFisicoAnteriorColumn" msprop:Generator_UserColumnName="ProgressoFisicoAnterior" type="xs:short" minOccurs="0" />
+              <xs:element name="CodigoReservado" msprop:Generator_ColumnVarNameInTable="columnCodigoReservado" msprop:Generator_ColumnPropNameInRow="CodigoReservado" msprop:Generator_ColumnPropNameInTable="CodigoReservadoColumn" msprop:Generator_UserColumnName="CodigoReservado" type="xs:string" minOccurs="0" />
+              <xs:element name="ProgressoFisico1" msdata:Caption="ProgressoFisico" msprop:Generator_ColumnVarNameInTable="columnProgressoFisico1" msprop:Generator_ColumnPropNameInRow="ProgressoFisico1" msprop:Generator_ColumnPropNameInTable="ProgressoFisico1Column" msprop:Generator_UserColumnName="ProgressoFisico1" type="xs:short" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="pbh_RelatorioAcompanhamentoRiscos" msprop:Generator_TableClassName="pbh_RelatorioAcompanhamentoRiscosDataTable" msprop:Generator_TableVarName="tablepbh_RelatorioAcompanhamentoRiscos" msprop:Generator_TablePropName="pbh_RelatorioAcompanhamentoRiscos" msprop:Generator_RowDeletingName="pbh_RelatorioAcompanhamentoRiscosRowDeleting" msprop:Generator_UserTableName="pbh_RelatorioAcompanhamentoRiscos" msprop:Generator_RowChangingName="pbh_RelatorioAcompanhamentoRiscosRowChanging" msprop:Generator_RowEvHandlerName="pbh_RelatorioAcompanhamentoRiscosRowChangeEventHandler" msprop:Generator_RowDeletedName="pbh_RelatorioAcompanhamentoRiscosRowDeleted" msprop:Generator_RowEvArgName="pbh_RelatorioAcompanhamentoRiscosRowChangeEvent" msprop:Generator_RowChangedName="pbh_RelatorioAcompanhamentoRiscosRowChanged" msprop:Generator_RowClassName="pbh_RelatorioAcompanhamentoRiscosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoRiscoRelatorio" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoRiscoRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoRiscoRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoRiscoRelatorioColumn" msprop:Generator_UserColumnName="CodigoRiscoRelatorio" type="xs:int" />
+              <xs:element name="CodigoRelatorio" msprop:Generator_ColumnVarNameInTable="columnCodigoRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoRelatorioColumn" msprop:Generator_UserColumnName="CodigoRelatorio" type="xs:int" />
+              <xs:element name="Risco" msprop:Generator_ColumnVarNameInTable="columnRisco" msprop:Generator_ColumnPropNameInRow="Risco" msprop:Generator_ColumnPropNameInTable="RiscoColumn" msprop:Generator_UserColumnName="Risco">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Impacto" msprop:Generator_ColumnVarNameInTable="columnImpacto" msprop:Generator_ColumnPropNameInRow="Impacto" msprop:Generator_ColumnPropNameInTable="ImpactoColumn" msprop:Generator_UserColumnName="Impacto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Acao" msprop:Generator_ColumnVarNameInTable="columnAcao" msprop:Generator_ColumnPropNameInRow="Acao" msprop:Generator_ColumnPropNameInTable="AcaoColumn" msprop:Generator_UserColumnName="Acao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Responsavel" msprop:Generator_ColumnVarNameInTable="columnResponsavel" msprop:Generator_ColumnPropNameInRow="Responsavel" msprop:Generator_ColumnPropNameInTable="ResponsavelColumn" msprop:Generator_UserColumnName="Responsavel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoRisco" msprop:Generator_ColumnVarNameInTable="columnCodigoRisco" msprop:Generator_ColumnPropNameInRow="CodigoRisco" msprop:Generator_ColumnPropNameInTable="CodigoRiscoColumn" msprop:Generator_UserColumnName="CodigoRisco" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="pbh_RelatorioAcompanhamentoAquisicoes" msprop:Generator_TableClassName="pbh_RelatorioAcompanhamentoAquisicoesDataTable" msprop:Generator_TableVarName="tablepbh_RelatorioAcompanhamentoAquisicoes" msprop:Generator_TablePropName="pbh_RelatorioAcompanhamentoAquisicoes" msprop:Generator_RowDeletingName="pbh_RelatorioAcompanhamentoAquisicoesRowDeleting" msprop:Generator_UserTableName="pbh_RelatorioAcompanhamentoAquisicoes" msprop:Generator_RowChangingName="pbh_RelatorioAcompanhamentoAquisicoesRowChanging" msprop:Generator_RowEvHandlerName="pbh_RelatorioAcompanhamentoAquisicoesRowChangeEventHandler" msprop:Generator_RowDeletedName="pbh_RelatorioAcompanhamentoAquisicoesRowDeleted" msprop:Generator_RowEvArgName="pbh_RelatorioAcompanhamentoAquisicoesRowChangeEvent" msprop:Generator_RowChangedName="pbh_RelatorioAcompanhamentoAquisicoesRowChanged" msprop:Generator_RowClassName="pbh_RelatorioAcompanhamentoAquisicoesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoAquisicaoRelatorio" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoAquisicaoRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoAquisicaoRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoAquisicaoRelatorioColumn" msprop:Generator_UserColumnName="CodigoAquisicaoRelatorio" type="xs:int" />
+              <xs:element name="CodigoRelatorio" msprop:Generator_ColumnVarNameInTable="columnCodigoRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoRelatorioColumn" msprop:Generator_UserColumnName="CodigoRelatorio" type="xs:int" />
+              <xs:element name="Aquisicao" msprop:Generator_ColumnVarNameInTable="columnAquisicao" msprop:Generator_ColumnPropNameInRow="Aquisicao" msprop:Generator_ColumnPropNameInTable="AquisicaoColumn" msprop:Generator_UserColumnName="Aquisicao">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ValorAquisicao" msprop:Generator_ColumnVarNameInTable="columnValorAquisicao" msprop:Generator_ColumnPropNameInRow="ValorAquisicao" msprop:Generator_ColumnPropNameInTable="ValorAquisicaoColumn" msprop:Generator_UserColumnName="ValorAquisicao" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IndicaAquisicaoPendente" msprop:Generator_ColumnVarNameInTable="columnIndicaAquisicaoPendente" msprop:Generator_ColumnPropNameInRow="IndicaAquisicaoPendente" msprop:Generator_ColumnPropNameInTable="IndicaAquisicaoPendenteColumn" msprop:Generator_UserColumnName="IndicaAquisicaoPendente" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="pbh_RelatorioAcompanhamentoDestinatarios" msprop:Generator_TableClassName="pbh_RelatorioAcompanhamentoDestinatariosDataTable" msprop:Generator_TableVarName="tablepbh_RelatorioAcompanhamentoDestinatarios" msprop:Generator_TablePropName="pbh_RelatorioAcompanhamentoDestinatarios" msprop:Generator_RowDeletingName="pbh_RelatorioAcompanhamentoDestinatariosRowDeleting" msprop:Generator_UserTableName="pbh_RelatorioAcompanhamentoDestinatarios" msprop:Generator_RowChangingName="pbh_RelatorioAcompanhamentoDestinatariosRowChanging" msprop:Generator_RowEvHandlerName="pbh_RelatorioAcompanhamentoDestinatariosRowChangeEventHandler" msprop:Generator_RowDeletedName="pbh_RelatorioAcompanhamentoDestinatariosRowDeleted" msprop:Generator_RowEvArgName="pbh_RelatorioAcompanhamentoDestinatariosRowChangeEvent" msprop:Generator_RowChangedName="pbh_RelatorioAcompanhamentoDestinatariosRowChanged" msprop:Generator_RowClassName="pbh_RelatorioAcompanhamentoDestinatariosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoDestinatarioRelatorio" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoDestinatarioRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoDestinatarioRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoDestinatarioRelatorioColumn" msprop:Generator_UserColumnName="CodigoDestinatarioRelatorio" type="xs:int" />
+              <xs:element name="CodigoRelatorio" msprop:Generator_ColumnVarNameInTable="columnCodigoRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoRelatorioColumn" msprop:Generator_UserColumnName="CodigoRelatorio" type="xs:int" />
+              <xs:element name="Destinatario" msprop:Generator_ColumnVarNameInTable="columnDestinatario" msprop:Generator_ColumnPropNameInRow="Destinatario" msprop:Generator_ColumnPropNameInTable="DestinatarioColumn" msprop:Generator_UserColumnName="Destinatario" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Unidade" msprop:Generator_ColumnVarNameInTable="columnUnidade" msprop:Generator_ColumnPropNameInRow="Unidade" msprop:Generator_ColumnPropNameInTable="UnidadeColumn" msprop:Generator_UserColumnName="Unidade" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmailDestinatario" msprop:Generator_ColumnVarNameInTable="columnEmailDestinatario" msprop:Generator_ColumnPropNameInRow="EmailDestinatario" msprop:Generator_ColumnPropNameInTable="EmailDestinatarioColumn" msprop:Generator_UserColumnName="EmailDestinatario" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="pbh_RelatorioAcompanhamentoEntregas" msprop:Generator_TableClassName="pbh_RelatorioAcompanhamentoEntregasDataTable" msprop:Generator_TableVarName="tablepbh_RelatorioAcompanhamentoEntregas" msprop:Generator_TablePropName="pbh_RelatorioAcompanhamentoEntregas" msprop:Generator_RowDeletingName="pbh_RelatorioAcompanhamentoEntregasRowDeleting" msprop:Generator_UserTableName="pbh_RelatorioAcompanhamentoEntregas" msprop:Generator_RowChangingName="pbh_RelatorioAcompanhamentoEntregasRowChanging" msprop:Generator_RowEvHandlerName="pbh_RelatorioAcompanhamentoEntregasRowChangeEventHandler" msprop:Generator_RowDeletedName="pbh_RelatorioAcompanhamentoEntregasRowDeleted" msprop:Generator_RowEvArgName="pbh_RelatorioAcompanhamentoEntregasRowChangeEvent" msprop:Generator_RowChangedName="pbh_RelatorioAcompanhamentoEntregasRowChanged" msprop:Generator_RowClassName="pbh_RelatorioAcompanhamentoEntregasRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoEntregaRelatorio" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoEntregaRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoEntregaRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoEntregaRelatorioColumn" msprop:Generator_UserColumnName="CodigoEntregaRelatorio" type="xs:int" />
+              <xs:element name="CodigoRelatorio" msprop:Generator_ColumnVarNameInTable="columnCodigoRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoRelatorioColumn" msprop:Generator_UserColumnName="CodigoRelatorio" type="xs:int" />
+              <xs:element name="Produto" msprop:Generator_ColumnVarNameInTable="columnProduto" msprop:Generator_ColumnPropNameInRow="Produto" msprop:Generator_ColumnPropNameInTable="ProdutoColumn" msprop:Generator_UserColumnName="Produto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TipoEntrega" msprop:Generator_ColumnVarNameInTable="columnTipoEntrega" msprop:Generator_ColumnPropNameInRow="TipoEntrega" msprop:Generator_ColumnPropNameInTable="TipoEntregaColumn" msprop:Generator_UserColumnName="TipoEntrega" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DescricaoEntrega" msprop:Generator_ColumnVarNameInTable="columnDescricaoEntrega" msprop:Generator_ColumnPropNameInRow="DescricaoEntrega" msprop:Generator_ColumnPropNameInTable="DescricaoEntregaColumn" msprop:Generator_UserColumnName="DescricaoEntrega" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="pbh_RelatorioAcompanhamentoIndicadores" msprop:Generator_TableClassName="pbh_RelatorioAcompanhamentoIndicadoresDataTable" msprop:Generator_TableVarName="tablepbh_RelatorioAcompanhamentoIndicadores" msprop:Generator_TablePropName="pbh_RelatorioAcompanhamentoIndicadores" msprop:Generator_RowDeletingName="pbh_RelatorioAcompanhamentoIndicadoresRowDeleting" msprop:Generator_UserTableName="pbh_RelatorioAcompanhamentoIndicadores" msprop:Generator_RowChangingName="pbh_RelatorioAcompanhamentoIndicadoresRowChanging" msprop:Generator_RowEvHandlerName="pbh_RelatorioAcompanhamentoIndicadoresRowChangeEventHandler" msprop:Generator_RowDeletedName="pbh_RelatorioAcompanhamentoIndicadoresRowDeleted" msprop:Generator_RowEvArgName="pbh_RelatorioAcompanhamentoIndicadoresRowChangeEvent" msprop:Generator_RowChangedName="pbh_RelatorioAcompanhamentoIndicadoresRowChanged" msprop:Generator_RowClassName="pbh_RelatorioAcompanhamentoIndicadoresRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoIndicadorRelatorio" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicadorRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoIndicadorRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoIndicadorRelatorioColumn" msprop:Generator_UserColumnName="CodigoIndicadorRelatorio" type="xs:int" />
+              <xs:element name="CodigoRelatorio" msprop:Generator_ColumnVarNameInTable="columnCodigoRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoRelatorioColumn" msprop:Generator_UserColumnName="CodigoRelatorio" type="xs:int" />
+              <xs:element name="NomeIndicador" msprop:Generator_ColumnVarNameInTable="columnNomeIndicador" msprop:Generator_ColumnPropNameInRow="NomeIndicador" msprop:Generator_ColumnPropNameInTable="NomeIndicadorColumn" msprop:Generator_UserColumnName="NomeIndicador">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Previsto" msprop:Generator_ColumnVarNameInTable="columnPrevisto" msprop:Generator_ColumnPropNameInRow="Previsto" msprop:Generator_ColumnPropNameInTable="PrevistoColumn" msprop:Generator_UserColumnName="Previsto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Realizado" msprop:Generator_ColumnVarNameInTable="columnRealizado" msprop:Generator_ColumnPropNameInRow="Realizado" msprop:Generator_ColumnPropNameInTable="RealizadoColumn" msprop:Generator_UserColumnName="Realizado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Comentarios" msprop:Generator_ColumnVarNameInTable="columnComentarios" msprop:Generator_ColumnPropNameInRow="Comentarios" msprop:Generator_ColumnPropNameInTable="ComentariosColumn" msprop:Generator_UserColumnName="Comentarios" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoTarefa" msprop:Generator_ColumnVarNameInTable="columnCodigoTarefa" msprop:Generator_ColumnPropNameInRow="CodigoTarefa" msprop:Generator_ColumnPropNameInTable="CodigoTarefaColumn" msprop:Generator_UserColumnName="CodigoTarefa" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="pbh_RelatorioAcompanhamentoProblemas" msprop:Generator_TableClassName="pbh_RelatorioAcompanhamentoProblemasDataTable" msprop:Generator_TableVarName="tablepbh_RelatorioAcompanhamentoProblemas" msprop:Generator_TablePropName="pbh_RelatorioAcompanhamentoProblemas" msprop:Generator_RowDeletingName="pbh_RelatorioAcompanhamentoProblemasRowDeleting" msprop:Generator_UserTableName="pbh_RelatorioAcompanhamentoProblemas" msprop:Generator_RowChangingName="pbh_RelatorioAcompanhamentoProblemasRowChanging" msprop:Generator_RowEvHandlerName="pbh_RelatorioAcompanhamentoProblemasRowChangeEventHandler" msprop:Generator_RowDeletedName="pbh_RelatorioAcompanhamentoProblemasRowDeleted" msprop:Generator_RowEvArgName="pbh_RelatorioAcompanhamentoProblemasRowChangeEvent" msprop:Generator_RowChangedName="pbh_RelatorioAcompanhamentoProblemasRowChanged" msprop:Generator_RowClassName="pbh_RelatorioAcompanhamentoProblemasRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoProblemaRelatorio" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoProblemaRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoProblemaRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoProblemaRelatorioColumn" msprop:Generator_UserColumnName="CodigoProblemaRelatorio" type="xs:int" />
+              <xs:element name="CodigoRelatorio" msprop:Generator_ColumnVarNameInTable="columnCodigoRelatorio" msprop:Generator_ColumnPropNameInRow="CodigoRelatorio" msprop:Generator_ColumnPropNameInTable="CodigoRelatorioColumn" msprop:Generator_UserColumnName="CodigoRelatorio" type="xs:int" />
+              <xs:element name="Problema" msprop:Generator_ColumnVarNameInTable="columnProblema" msprop:Generator_ColumnPropNameInRow="Problema" msprop:Generator_ColumnPropNameInTable="ProblemaColumn" msprop:Generator_UserColumnName="Problema" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Acao" msprop:Generator_ColumnVarNameInTable="columnAcao" msprop:Generator_ColumnPropNameInRow="Acao" msprop:Generator_ColumnPropNameInTable="AcaoColumn" msprop:Generator_UserColumnName="Acao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Responsavel" msprop:Generator_ColumnVarNameInTable="columnResponsavel" msprop:Generator_ColumnPropNameInRow="Responsavel" msprop:Generator_ColumnPropNameInTable="ResponsavelColumn" msprop:Generator_UserColumnName="Responsavel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Prazo" msprop:Generator_ColumnVarNameInTable="columnPrazo" msprop:Generator_ColumnPropNameInRow="Prazo" msprop:Generator_ColumnPropNameInTable="PrazoColumn" msprop:Generator_UserColumnName="Prazo" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoProblema" msprop:Generator_ColumnVarNameInTable="columnCodigoProblema" msprop:Generator_ColumnPropNameInRow="CodigoProblema" msprop:Generator_ColumnPropNameInTable="CodigoProblemaColumn" msprop:Generator_UserColumnName="CodigoProblema" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:pbh_RelatorioAcompanhamento" />
+      <xs:field xpath="mstns:CodigoRelatorio" />
+    </xs:unique>
+    <xs:unique name="pbh_RelatorioAcompanhamentoRiscos_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:pbh_RelatorioAcompanhamentoRiscos" />
+      <xs:field xpath="mstns:CodigoRiscoRelatorio" />
+    </xs:unique>
+    <xs:unique name="pbh_RelatorioAcompanhamentoAquisicoes_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:pbh_RelatorioAcompanhamentoAquisicoes" />
+      <xs:field xpath="mstns:CodigoAquisicaoRelatorio" />
+    </xs:unique>
+    <xs:unique name="pbh_RelatorioAcompanhamentoDestinatarios_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:pbh_RelatorioAcompanhamentoDestinatarios" />
+      <xs:field xpath="mstns:CodigoDestinatarioRelatorio" />
+    </xs:unique>
+    <xs:unique name="pbh_RelatorioAcompanhamentoEntregas_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:pbh_RelatorioAcompanhamentoEntregas" />
+      <xs:field xpath="mstns:CodigoEntregaRelatorio" />
+    </xs:unique>
+    <xs:unique name="pbh_RelatorioAcompanhamentoIndicadores_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:pbh_RelatorioAcompanhamentoIndicadores" />
+      <xs:field xpath="mstns:CodigoIndicadorRelatorio" />
+    </xs:unique>
+    <xs:unique name="pbh_RelatorioAcompanhamentoProblemas_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:pbh_RelatorioAcompanhamentoProblemas" />
+      <xs:field xpath="mstns:CodigoProblemaRelatorio" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_pbh_RelatorioAcompanhamentoProblemas_pbh_RelatorioAcompanhamento" msdata:parent="pbh_RelatorioAcompanhamento" msdata:child="pbh_RelatorioAcompanhamentoProblemas" msdata:parentkey="CodigoRelatorio" msdata:childkey="CodigoRelatorio" msprop:Generator_UserChildTable="pbh_RelatorioAcompanhamentoProblemas" msprop:Generator_ChildPropName="Getpbh_RelatorioAcompanhamentoProblemasRows" msprop:Generator_ParentPropName="pbh_RelatorioAcompanhamentoRow" msprop:Generator_UserRelationName="FK_pbh_RelatorioAcompanhamentoProblemas_pbh_RelatorioAcompanhamento" msprop:Generator_RelationVarName="relationFK_pbh_RelatorioAcompanhamentoProblemas_pbh_RelatorioAcompanhamento" msprop:Generator_UserParentTable="pbh_RelatorioAcompanhamento" />
+      <msdata:Relationship name="FK_pbh_RelatorioAcompanhamentoIndicadores_pbh_RelatorioAcompanhamento" msdata:parent="pbh_RelatorioAcompanhamento" msdata:child="pbh_RelatorioAcompanhamentoIndicadores" msdata:parentkey="CodigoRelatorio" msdata:childkey="CodigoRelatorio" msprop:Generator_UserChildTable="pbh_RelatorioAcompanhamentoIndicadores" msprop:Generator_ChildPropName="Getpbh_RelatorioAcompanhamentoIndicadoresRows" msprop:Generator_ParentPropName="pbh_RelatorioAcompanhamentoRow" msprop:Generator_UserRelationName="FK_pbh_RelatorioAcompanhamentoIndicadores_pbh_RelatorioAcompanhamento" msprop:Generator_RelationVarName="relationFK_pbh_RelatorioAcompanhamentoIndicadores_pbh_RelatorioAcompanhamento" msprop:Generator_UserParentTable="pbh_RelatorioAcompanhamento" />
+      <msdata:Relationship name="FK_pbh_RelatorioAcompanhamentoEntregas_pbh_RelatorioAcompanhamento" msdata:parent="pbh_RelatorioAcompanhamento" msdata:child="pbh_RelatorioAcompanhamentoEntregas" msdata:parentkey="CodigoRelatorio" msdata:childkey="CodigoRelatorio" msprop:Generator_UserChildTable="pbh_RelatorioAcompanhamentoEntregas" msprop:Generator_ChildPropName="Getpbh_RelatorioAcompanhamentoEntregasRows" msprop:Generator_ParentPropName="pbh_RelatorioAcompanhamentoRow" msprop:Generator_UserRelationName="FK_pbh_RelatorioAcompanhamentoEntregas_pbh_RelatorioAcompanhamento" msprop:Generator_RelationVarName="relationFK_pbh_RelatorioAcompanhamentoEntregas_pbh_RelatorioAcompanhamento" msprop:Generator_UserParentTable="pbh_RelatorioAcompanhamento" />
+      <msdata:Relationship name="FK_pbh_RelatorioAcompanhamentoDestinatarios_pbh_RelatorioAcompanhamento" msdata:parent="pbh_RelatorioAcompanhamento" msdata:child="pbh_RelatorioAcompanhamentoDestinatarios" msdata:parentkey="CodigoRelatorio" msdata:childkey="CodigoRelatorio" msprop:Generator_UserChildTable="pbh_RelatorioAcompanhamentoDestinatarios" msprop:Generator_ChildPropName="Getpbh_RelatorioAcompanhamentoDestinatariosRows" msprop:Generator_ParentPropName="pbh_RelatorioAcompanhamentoRow" msprop:Generator_UserRelationName="FK_pbh_RelatorioAcompanhamentoDestinatarios_pbh_RelatorioAcompanhamento" msprop:Generator_RelationVarName="relationFK_pbh_RelatorioAcompanhamentoDestinatarios_pbh_RelatorioAcompanhamento" msprop:Generator_UserParentTable="pbh_RelatorioAcompanhamento" />
+      <msdata:Relationship name="FK_pbh_RelatorioAcompanhamentoAquisicoes_pbh_RelatorioAcompanhamento" msdata:parent="pbh_RelatorioAcompanhamento" msdata:child="pbh_RelatorioAcompanhamentoAquisicoes" msdata:parentkey="CodigoRelatorio" msdata:childkey="CodigoRelatorio" msprop:Generator_UserChildTable="pbh_RelatorioAcompanhamentoAquisicoes" msprop:Generator_ChildPropName="Getpbh_RelatorioAcompanhamentoAquisicoesRows" msprop:Generator_ParentPropName="pbh_RelatorioAcompanhamentoRow" msprop:Generator_UserRelationName="FK_pbh_RelatorioAcompanhamentoAquisicoes_pbh_RelatorioAcompanhamento" msprop:Generator_RelationVarName="relationFK_pbh_RelatorioAcompanhamentoAquisicoes_pbh_RelatorioAcompanhamento" msprop:Generator_UserParentTable="pbh_RelatorioAcompanhamento" />
+      <msdata:Relationship name="FK_pbh_RelatorioAcompanhamentoRiscos_pbh_RelatorioAcompanhamento" msdata:parent="pbh_RelatorioAcompanhamento" msdata:child="pbh_RelatorioAcompanhamentoRiscos" msdata:parentkey="CodigoRelatorio" msdata:childkey="CodigoRelatorio" msprop:Generator_UserChildTable="pbh_RelatorioAcompanhamentoRiscos" msprop:Generator_ChildPropName="Getpbh_RelatorioAcompanhamentoRiscosRows" msprop:Generator_ParentPropName="pbh_RelatorioAcompanhamentoRow" msprop:Generator_UserRelationName="FK_pbh_RelatorioAcompanhamentoRiscos_pbh_RelatorioAcompanhamento" msprop:Generator_RelationVarName="relationFK_pbh_RelatorioAcompanhamentoRiscos_pbh_RelatorioAcompanhamento" msprop:Generator_UserParentTable="pbh_RelatorioAcompanhamento" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

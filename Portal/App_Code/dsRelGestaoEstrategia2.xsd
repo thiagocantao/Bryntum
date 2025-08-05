@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsRelGestaoEstrategia2" targetNamespace="http://tempuri.org/dsRelGestaoEstrategia2.xsd" xmlns:mstns="http://tempuri.org/dsRelGestaoEstrategia2.xsd" xmlns="http://tempuri.org/dsRelGestaoEstrategia2.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="desenv_PortfolioConnectionString" ConnectionStringObject="" IsAppSettingsProperty="True" Modifier="Assembly" Name="desenv_PortfolioConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.desenv_PortfolioConnectionString.ConnectionString" Provider="System.Data.SqlClient">
+          </Connection>
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Iniciativas2TableAdapter" GeneratorDataComponentClassName="Iniciativas2TableAdapter" Name="Iniciativas2" UserDataComponentName="Iniciativas2TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_PortfolioConnectionString (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="False" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="False" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="True">
+                    <CommandText>SELECT poe.CodigoObjetivoEstrategico, p.NomeProjeto                AS NomeProjeto, 
+       rp.PercentualRealizacao      AS Concluido,
+       u.NomeUsuario                AS Responsavel, 
+       RTRIM(LTRIM(rp.CorGeral))    AS Desempenho,
+      poe.CodigoIndicador,
+     (select NomeUsuario from dbo.Usuario where CodigoUsuario =  p.CodigoGerenteProjeto) as Gestor,
+     (SELECT CodigoIndicador  FROM dbo.IndicadorUnidade WHERE Meta like ' iu.Meta ') as CodigoMeta
+  FROM 
+       dbo.ProjetoObjetivoEstrategico poe   
+       INNER JOIN dbo.ResumoProjeto rp                 on (rp.CodigoProjeto = poe.CodigoProjeto) 
+       INNER JOIN dbo.Projeto p                               on (p.CodigoProjeto = rp.CodigoProjeto)  
+       INNER JOIN dbo.Usuario u                               on (u.CodigoUsuario = p.CodigoGerenteProjeto)
+ORDER BY p.NomeProjeto
+</CommandText>
+                    <Parameters>
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodigoObjetivoEstrategico" DataSetColumn="CodigoObjetivoEstrategico" />
+              <Mapping SourceColumn="NomeProjeto" DataSetColumn="NomeProjeto" />
+              <Mapping SourceColumn="Concluido" DataSetColumn="Concluido" />
+              <Mapping SourceColumn="Responsavel" DataSetColumn="Responsavel" />
+              <Mapping SourceColumn="Desempenho" DataSetColumn="Desempenho" />
+              <Mapping SourceColumn="CodigoIndicador" DataSetColumn="CodigoIndicador" />
+              <Mapping SourceColumn="Gestor" DataSetColumn="Gestor" />
+              <Mapping SourceColumn="CodigoMeta" DataSetColumn="CodigoMeta" />
+            </Mappings>
+            <Sources>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="MetaIndicadorUnidadeTableAdapter" GeneratorDataComponentClassName="MetaIndicadorUnidadeTableAdapter" Name="MetaIndicadorUnidade" UserDataComponentName="MetaIndicadorUnidadeTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_PortfolioConnectionString (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="False" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="False" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="True">
+                    <CommandText>SELECT  i.CodigoIndicador 
+              ,iu.Meta
+              ,persp.[TituloObjetoEstrategia]          AS Perspectiva
+              ,oe.[DescricaoObjetoEstrategia]          AS Objetivo
+              ,oe.[CodigoObjetoEstrategia]       AS CodigoObjetivo
+              ,dbo.f_GetCorObjetivo(iu.CodigoUnidadeNegocio, oe.CodigoObjetoEstrategia, YEAR(GETDATE()), MONTH(GETDATE())) AS CorObjetivo
+              ,i.CodigoIndicador
+              ,i.Polaridade
+              ,i.CodigoIndicador as CodigoMeta
+              ,dbo.f_GetUltimoDesempenhoIndicador(iu.CodigoUnidadeNegocio,iu.CodigoIndicador,YEAR(GETDATE()), MONTH(GETDATE()),'A') as DesempenhoIndicador
+  FROM [dbo].[ObjetoEstrategia]                              AS [oe]
+  INNER JOIN [dbo].[ObjetoEstrategia]          AS [persp] ON   (persp.[CodigoObjetoEstrategia]    =  oe.[CodigoObjetoEstrategiaSuperior])
+  INNER JOIN [dbo].[TipoObjetoEstrategia]                      AS [toe]           ON   (toe.[CodigoTipoObjetoEstrategia]  = oe.[CodigoTipoObjetoEstrategia] AND toe.IniciaisTipoObjeto = 'OBJ')
+  INNER JOIN [dbo].[TipoObjetoEstrategia]                      AS [toepsp]        ON   (toepsp.[CodigoTipoObjetoEstrategia]     = persp.[CodigoTipoObjetoEstrategia] AND toepsp.IniciaisTipoObjeto = 'PSP')
+  INNER JOIN IndicadorObjetivoEstrategico ioe on (ioe.CodigoObjetivoEstrategico = oe.CodigoObjetoEstrategia)
+  INNER JOIN Indicador i on (ioe.CodigoIndicador = i.CodigoIndicador AND i.DataExclusao IS NULL)
+  INNER JOIN IndicadorUnidade iu on (iu.CodigoIndicador = i.CodigoIndicador)
+  WHERE  oe.[CodigoMapaEstrategico]      = @CodigoMapa
+        AND oe.[DataExclusao]            IS  NULL
+    AND iu.CodigoUnidadeNegocio = @CodigoUnidadeNegocio
+    AND iu.Meta is not null
+    AND iu.DataExclusao is null
+UNION
+SELECT  i.CodigoIndicador 
+              ,iu.Meta
+              ,persp.[TituloObjetoEstrategia]          AS Perspectiva
+              ,oe.[DescricaoObjetoEstrategia]          AS Objetivo
+              ,oe.[CodigoObjetoEstrategia]       AS CodigoObjetivo
+              ,dbo.f_GetCorObjetivo(iu.CodigoUnidadeNegocio, oe.CodigoObjetoEstrategia, YEAR(GETDATE()), MONTH(GETDATE())) AS CorObjetivo
+              ,i.CodigoIndicador
+              ,i.Polaridade
+              ,i.CodigoIndicador as CodigoMeta
+              ,dbo.f_GetUltimoDesempenhoIndicador(iu.CodigoUnidadeNegocio,iu.CodigoIndicador,YEAR(GETDATE()), MONTH(GETDATE()),'A') as DesempenhoIndicador
+  FROM [dbo].[ObjetoEstrategia]                              AS [oe]
+  
+  INNER JOIN [dbo].[TipoObjetoEstrategia]                      AS [toe]           ON   (toe.[CodigoTipoObjetoEstrategia]  = oe.[CodigoTipoObjetoEstrategia] AND toe.IniciaisTipoObjeto = 'OBJ')
+  INNER JOIN [dbo].[ObjetoEstrategia] AS [tem] ON (tem.[CodigoObjetoEstrategia] = oe.[CodigoObjetoEstrategiaSuperior])
+  INNER JOIN [dbo].[TipoObjetoEstrategia] AS toeTem ON (toeTem.[CodigoTipoObjetoEstrategia] = tem.[CodigoTipoObjetoEstrategia]
+                                                    AND toeTem.IniciaisTipoObjeto = 'TEM')
+  INNER JOIN [dbo].[ObjetoEstrategia]          AS [persp] ON   (persp.[CodigoObjetoEstrategia]    =  tem.[CodigoObjetoEstrategiaSuperior])
+  INNER JOIN [dbo].[TipoObjetoEstrategia]                      AS [toepsp]        ON   (toepsp.[CodigoTipoObjetoEstrategia]     = persp.[CodigoTipoObjetoEstrategia] AND toepsp.IniciaisTipoObjeto = 'PSP')
+  INNER JOIN IndicadorObjetivoEstrategico ioe on (ioe.CodigoObjetivoEstrategico = oe.CodigoObjetoEstrategia)
+  INNER JOIN Indicador i on (ioe.CodigoIndicador = i.CodigoIndicador AND i.DataExclusao IS NULL)
+  INNER JOIN IndicadorUnidade iu on (iu.CodigoIndicador = i.CodigoIndicador)
+  WHERE  oe.[CodigoMapaEstrategico]      = @CodigoMapa
+        AND oe.[DataExclusao]            IS  NULL
+    AND iu.CodigoUnidadeNegocio = @CodigoUnidadeNegocio
+    AND iu.Meta is not null
+    AND iu.DataExclusao is null   
+   ORDER BY 1,2
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="False" AutogeneratedName="CodigoMapa" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoMapa" Precision="0" Scale="0" Size="4" SourceColumn="" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="False" AutogeneratedName="CodigoUnidadeNegocio" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoUnidadeNegocio" Precision="0" Scale="0" Size="4" SourceColumn="" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Meta" DataSetColumn="Meta" />
+              <Mapping SourceColumn="CodigoIndicador" DataSetColumn="CodigoIndicador" />
+              <Mapping SourceColumn="Perspectiva" DataSetColumn="Perspectiva" />
+              <Mapping SourceColumn="Objetivo" DataSetColumn="Objetivo" />
+              <Mapping SourceColumn="CodigoObjetivo" DataSetColumn="CodigoObjetivo" />
+              <Mapping SourceColumn="CorObjetivo" DataSetColumn="CorObjetivo" />
+              <Mapping SourceColumn="CodigoIndicador1" DataSetColumn="CodigoIndicador1" />
+              <Mapping SourceColumn="Polaridade" DataSetColumn="Polaridade" />
+              <Mapping SourceColumn="CodigoMeta" DataSetColumn="CodigoMeta" />
+              <Mapping SourceColumn="DesempenhoIndicador" DataSetColumn="DesempenhoIndicador" />
+            </Mappings>
+            <Sources>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AnalisePerformanceTableAdapter" GeneratorDataComponentClassName="AnalisePerformanceTableAdapter" Name="AnalisePerformance" UserDataComponentName="AnalisePerformanceTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="desenv_PortfolioConnectionString (Web.config)" DbObjectName="desenv_Portfolio.dbo.AnalisePerformance" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="False" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="False" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="True">
+                    <CommandText>SELECT ap.[CodigoIndicador], ap.[DataAnalisePerformance], ap.[Analise]
+      FROM 
+            [dbo].[AnalisePerformance]                     AS [ap]
+      WHERE 
+                        ap.[CodigoUnidadeNegocio]          =@CodigoUnidadeNegocio
+            AND ap.[CodigoIndicador]                       IS NOT NULL
+            AND ap.[IndicaTipoIndicador]       = 'E'
+            AND ap.[CodigoObjetoAssociado]     IS NULL
+            AND ap.[DataInclusao]                                = (SELECT MAX(ap2.[DataAnalisePerformance]) FROM [dbo].[AnalisePerformance] AS [ap2] WHERE 
+                                                                                                                                       ap2.[CodigoIndicador]              = ap.[CodigoIndicador] 
+                                                                                                                           AND ap2.[IndicaTipoIndicador] = ap.[IndicaTipoIndicador]
+                                                                                                                           AND ap2.[CodigoUnidadeNegocio]= ap.[CodigoUnidadeNegocio]
+                                                                                                                           AND ap2.[CodigoObjetoAssociado] IS NULL )
+      ORDER BY 
+            ap.[CodigoIndicador]
+            
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="True" AutogeneratedName="CodigoUnidadeNegocio" ColumnName="CodigoUnidadeNegocio" DataSourceName="desenv_Portfolio.dbo.AnalisePerformance" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CodigoUnidadeNegocio" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CodigoUnidadeNegocio" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Analise" DataSetColumn="Analise" />
+              <Mapping SourceColumn="CodigoIndicador" DataSetColumn="CodigoIndicador" />
+              <Mapping SourceColumn="DataAnalisePerformance" DataSetColumn="DataAnalisePerformance" />
+            </Mappings>
+            <Sources>
+            </Sources>
+          </TableAdapter>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsRelGestaoEstrategia2" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsRelGestaoEstrategia2" msprop:Generator_DataSetName="dsRelGestaoEstrategia2">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="MetaIndicadorUnidade" msprop:Generator_UserTableName="MetaIndicadorUnidade" msprop:Generator_RowDeletedName="MetaIndicadorUnidadeRowDeleted" msprop:Generator_RowChangedName="MetaIndicadorUnidadeRowChanged" msprop:Generator_RowClassName="MetaIndicadorUnidadeRow" msprop:Generator_RowChangingName="MetaIndicadorUnidadeRowChanging" msprop:Generator_RowEvArgName="MetaIndicadorUnidadeRowChangeEvent" msprop:Generator_RowEvHandlerName="MetaIndicadorUnidadeRowChangeEventHandler" msprop:Generator_TableClassName="MetaIndicadorUnidadeDataTable" msprop:Generator_TableVarName="tableMetaIndicadorUnidade" msprop:Generator_RowDeletingName="MetaIndicadorUnidadeRowDeleting" msprop:Generator_TablePropName="MetaIndicadorUnidade">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Meta" msprop:Generator_UserColumnName="Meta" msprop:Generator_ColumnVarNameInTable="columnMeta" msprop:Generator_ColumnPropNameInRow="Meta" msprop:Generator_ColumnPropNameInTable="MetaColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoIndicador" msprop:Generator_UserColumnName="CodigoIndicador" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicador" msprop:Generator_ColumnPropNameInRow="CodigoIndicador" msprop:Generator_ColumnPropNameInTable="CodigoIndicadorColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="Perspectiva" msprop:Generator_UserColumnName="Perspectiva" msprop:Generator_ColumnPropNameInRow="Perspectiva" msprop:Generator_ColumnVarNameInTable="columnPerspectiva" msprop:Generator_ColumnPropNameInTable="PerspectivaColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Objetivo" msprop:Generator_UserColumnName="Objetivo" msprop:Generator_ColumnPropNameInRow="Objetivo" msprop:Generator_ColumnVarNameInTable="columnObjetivo" msprop:Generator_ColumnPropNameInTable="ObjetivoColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoObjetivo" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_UserColumnName="CodigoObjetivo" msprop:Generator_ColumnPropNameInRow="CodigoObjetivo" msprop:Generator_ColumnVarNameInTable="columnCodigoObjetivo" msprop:Generator_ColumnPropNameInTable="CodigoObjetivoColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="CorObjetivo" msdata:ReadOnly="true" msprop:Generator_UserColumnName="CorObjetivo" msprop:Generator_ColumnPropNameInRow="CorObjetivo" msprop:Generator_ColumnVarNameInTable="columnCorObjetivo" msprop:Generator_ColumnPropNameInTable="CorObjetivoColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoIndicador1" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_UserColumnName="CodigoIndicador1" msprop:Generator_ColumnPropNameInRow="CodigoIndicador1" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicador1" msprop:Generator_ColumnPropNameInTable="CodigoIndicador1Column" type="xs:int" minOccurs="0" />
+              <xs:element name="Polaridade" msprop:Generator_UserColumnName="Polaridade" msprop:Generator_ColumnVarNameInTable="columnPolaridade" msprop:Generator_ColumnPropNameInRow="Polaridade" msprop:Generator_ColumnPropNameInTable="PolaridadeColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoMeta" msdata:ReadOnly="true" msprop:Generator_UserColumnName="CodigoMeta" msprop:Generator_ColumnPropNameInRow="CodigoMeta" msprop:Generator_ColumnVarNameInTable="columnCodigoMeta" msprop:Generator_ColumnPropNameInTable="CodigoMetaColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="DesempenhoIndicador" msdata:ReadOnly="true" msprop:Generator_UserColumnName="DesempenhoIndicador" msprop:Generator_ColumnVarNameInTable="columnDesempenhoIndicador" msprop:Generator_ColumnPropNameInRow="DesempenhoIndicador" msprop:Generator_ColumnPropNameInTable="DesempenhoIndicadorColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="AnalisePerformance" msprop:Generator_UserTableName="AnalisePerformance" msprop:Generator_RowDeletedName="AnalisePerformanceRowDeleted" msprop:Generator_RowChangedName="AnalisePerformanceRowChanged" msprop:Generator_RowClassName="AnalisePerformanceRow" msprop:Generator_RowChangingName="AnalisePerformanceRowChanging" msprop:Generator_RowEvArgName="AnalisePerformanceRowChangeEvent" msprop:Generator_RowEvHandlerName="AnalisePerformanceRowChangeEventHandler" msprop:Generator_TableClassName="AnalisePerformanceDataTable" msprop:Generator_TableVarName="tableAnalisePerformance" msprop:Generator_RowDeletingName="AnalisePerformanceRowDeleting" msprop:Generator_TablePropName="AnalisePerformance">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Analise" msprop:Generator_UserColumnName="Analise" msprop:Generator_ColumnPropNameInRow="Analise" msprop:Generator_ColumnVarNameInTable="columnAnalise" msprop:Generator_ColumnPropNameInTable="AnaliseColumn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoIndicador" msprop:Generator_UserColumnName="CodigoIndicador" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicador" msprop:Generator_ColumnPropNameInRow="CodigoIndicador" msprop:Generator_ColumnPropNameInTable="CodigoIndicadorColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="DataAnalisePerformance" msprop:Generator_UserColumnName="DataAnalisePerformance" msprop:Generator_ColumnVarNameInTable="columnDataAnalisePerformance" msprop:Generator_ColumnPropNameInRow="DataAnalisePerformance" msprop:Generator_ColumnPropNameInTable="DataAnalisePerformanceColumn" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Iniciativas2" msprop:Generator_UserTableName="Iniciativas2" msprop:Generator_RowDeletedName="Iniciativas2RowDeleted" msprop:Generator_RowChangedName="Iniciativas2RowChanged" msprop:Generator_RowClassName="Iniciativas2Row" msprop:Generator_RowChangingName="Iniciativas2RowChanging" msprop:Generator_RowEvArgName="Iniciativas2RowChangeEvent" msprop:Generator_RowEvHandlerName="Iniciativas2RowChangeEventHandler" msprop:Generator_TableClassName="Iniciativas2DataTable" msprop:Generator_TableVarName="tableIniciativas2" msprop:Generator_RowDeletingName="Iniciativas2RowDeleting" msprop:Generator_TablePropName="Iniciativas2">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoObjetivoEstrategico" msprop:Generator_UserColumnName="CodigoObjetivoEstrategico" msprop:Generator_ColumnVarNameInTable="columnCodigoObjetivoEstrategico" msprop:Generator_ColumnPropNameInRow="CodigoObjetivoEstrategico" msprop:Generator_ColumnPropNameInTable="CodigoObjetivoEstrategicoColumn" type="xs:int" />
+              <xs:element name="NomeProjeto" msprop:Generator_UserColumnName="NomeProjeto" msprop:Generator_ColumnVarNameInTable="columnNomeProjeto" msprop:Generator_ColumnPropNameInRow="NomeProjeto" msprop:Generator_ColumnPropNameInTable="NomeProjetoColumn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Concluido" msprop:Generator_UserColumnName="Concluido" msprop:Generator_ColumnVarNameInTable="columnConcluido" msprop:Generator_ColumnPropNameInRow="Concluido" msprop:Generator_ColumnPropNameInTable="ConcluidoColumn" type="xs:decimal" />
+              <xs:element name="Responsavel" msprop:Generator_UserColumnName="Responsavel" msprop:Generator_ColumnVarNameInTable="columnResponsavel" msprop:Generator_ColumnPropNameInRow="Responsavel" msprop:Generator_ColumnPropNameInTable="ResponsavelColumn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Desempenho" msdata:ReadOnly="true" msprop:Generator_UserColumnName="Desempenho" msprop:Generator_ColumnVarNameInTable="columnDesempenho" msprop:Generator_ColumnPropNameInRow="Desempenho" msprop:Generator_ColumnPropNameInTable="DesempenhoColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoIndicador" msprop:Generator_UserColumnName="CodigoIndicador" msprop:Generator_ColumnVarNameInTable="columnCodigoIndicador" msprop:Generator_ColumnPropNameInRow="CodigoIndicador" msprop:Generator_ColumnPropNameInTable="CodigoIndicadorColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="Gestor" msdata:ReadOnly="true" msprop:Generator_UserColumnName="Gestor" msprop:Generator_ColumnPropNameInRow="Gestor" msprop:Generator_ColumnVarNameInTable="columnGestor" msprop:Generator_ColumnPropNameInTable="GestorColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoMeta" msdata:ReadOnly="true" msprop:Generator_UserColumnName="CodigoMeta" msprop:Generator_ColumnPropNameInRow="CodigoMeta" msprop:Generator_ColumnVarNameInTable="columnCodigoMeta" msprop:Generator_ColumnPropNameInTable="CodigoMetaColumn" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="MetaIndicadorUnidade_AnalisePerformance" msdata:parent="MetaIndicadorUnidade" msdata:child="AnalisePerformance" msdata:parentkey="CodigoIndicador" msdata:childkey="CodigoIndicador" msprop:Generator_UserRelationName="MetaIndicadorUnidade_AnalisePerformance" msprop:Generator_RelationVarName="relationMetaIndicadorUnidade_AnalisePerformance" msprop:Generator_UserChildTable="AnalisePerformance" msprop:Generator_UserParentTable="MetaIndicadorUnidade" msprop:Generator_ParentPropName="MetaIndicadorUnidadeRow" msprop:Generator_ChildPropName="GetAnalisePerformanceRows" />
+      <msdata:Relationship name="MetaIndicadorUnidade_Iniciativas2" msdata:parent="MetaIndicadorUnidade" msdata:child="Iniciativas2" msdata:parentkey="CodigoIndicador" msdata:childkey="CodigoIndicador" msprop:Generator_UserRelationName="MetaIndicadorUnidade_Iniciativas2" msprop:Generator_RelationVarName="relationMetaIndicadorUnidade_Iniciativas2" msprop:Generator_UserChildTable="Iniciativas2" msprop:Generator_UserParentTable="MetaIndicadorUnidade" msprop:Generator_ParentPropName="MetaIndicadorUnidadeRow" msprop:Generator_ChildPropName="GetIniciativas2Rows" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

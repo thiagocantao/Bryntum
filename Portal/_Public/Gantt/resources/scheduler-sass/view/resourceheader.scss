@@ -1,0 +1,97 @@
+@import '../variables';
+
+.b-sch-vertical .b-sch-timeaxiscolumn {
+    flex-direction : row;
+    min-height     : 3em;
+}
+
+.b-resourceheader {
+    flex     : 1;
+    position : relative;
+    contain  : strict;
+
+    &.b-has-images {
+        min-height : 3em; // Will not shrinkwrap since resource header cells are absolutely positioned
+    }
+
+    &.b-grouped {
+        height : 6em;
+    }
+}
+
+.b-resourceheader-group-cell {
+    position       : absolute;
+    display        : flex;
+    align-items    : stretch;
+    flex-direction : column;
+    height         : 100%;
+
+    > span {
+        padding           : 0.5em 0;
+        display           : flex;
+        width             : 100%;
+        justify-content   : center;
+        align-items       : center;
+        border-bottom     : 1px solid $grid-header-border-color;
+        border-inline-end : 1px solid $grid-header-border-color;
+    }
+
+    .b-resourceheader-group-children {
+        position : relative;
+        height   : 100%;
+    }
+}
+
+.b-resourceheader-cell {
+    position          : absolute;
+    height            : 100%;
+
+    display           : flex;
+    justify-content   : center;
+    align-items       : center;
+    color             : $grid-header-text-color;
+    border-inline-end : 1px solid $grid-header-border-color;
+    overflow          : hidden;
+    transition        : background-color 0.2s;
+    font-size         : $grid-header-font-size;
+    font-weight       : $grid-header-font-weight;
+    padding           : top($timeaxis-cell-header-padding);
+    white-space       : nowrap;
+    contain           : strict;
+    height            : 100%;
+    @include user-select-none();
+
+    .b-animating & {
+        transition : width 0.2s, left 0.2s, right 0.2s;
+    }
+
+    &:hover {
+        cursor           : pointer;
+        background-color : $grid-header-hover-background-color;
+    }
+
+    &.b-align-start,
+    &.b-align-end {
+        padding-inline : 0.3em;
+    }
+
+    &.b-align-start {
+        justify-content : flex-start;
+    }
+
+    &.b-align-end {
+        justify-content : flex-end;
+    }
+
+    i {
+        margin-inline-end : .5em;
+    }
+
+    .b-resource-name {
+        overflow : hidden;
+    }
+
+    .b-resource-avatar {
+        margin-inline-end : 1em;
+    }
+}

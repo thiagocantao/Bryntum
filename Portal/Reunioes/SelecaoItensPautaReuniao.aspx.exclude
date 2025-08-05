@@ -1,0 +1,126 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SelecaoItensPautaReuniao.aspx.cs"
+    Inherits="Reunioes_SelecaoItensPautaReuniao" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<script language="javascript" type="text/javascript">
+
+    function OnGetSelectedFieldValues(values) {
+        codigosSelecionados = values.join(';');
+        window.top.retornoModal = null;
+        callback.PerformCallback(codigosSelecionados);
+    }
+
+    function GetQueryString() {
+        var a = window.location.search.substr(1).split('&');
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i) {
+            var p = a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = p[1].replace(/\+/g, " ");
+            //b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    }
+</script>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table style="width: 100%;">
+            <tr>
+                <td valign="top" style="height: 600px;">
+                    <dxwgv:ASPxGridView ID="gvDados" runat="server" ClientInstanceName="gvDados" Width="100%"
+                        DataSourceID="sdsDados" KeyFieldName="CodigoObjetoAssociado" 
+                        OnDataBound="gvDados_DataBound" >
+                        <ClientSideEvents SelectionChanged="function(s, e) {
+    btnSalvar.SetEnabled(s.GetSelectedRowCount() &gt; 0);
+}" />
+                        <SettingsBehavior AllowFocusedRow="True" />
+                        <SettingsPager Mode="ShowAllRecords">
+                        </SettingsPager>
+                        <Settings VerticalScrollableHeight="530" VerticalScrollBarMode="Visible" 
+                            ShowFilterRow="True" />
+                    </dxwgv:ASPxGridView>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" valign="bottom">
+                    <table>
+                        <tr>
+                            <td>
+                                <dxe:ASPxButton ID="btnSalvar" runat="server" Text="Salvar" AutoPostBack="False"
+                                    Width="50px"  ClientEnabled="False" 
+                                    ClientInstanceName="btnSalvar">
+                                    <ClientSideEvents Click="function(s, e) {
+	gvDados.GetSelectedFieldValues('CodigoObjetoAssociado', OnGetSelectedFieldValues);
+}" />
+                                </dxe:ASPxButton>
+                            </td>
+                            <td style="padding-left: 10px">
+                                <dxe:ASPxButton ID="btnCancelar" runat="server" Text="Fechar" AutoPostBack="False"
+                                    Width="50px"  
+                                    ClientInstanceName="btnCancelar">
+                                    <ClientSideEvents Click="function(s, e) {
+	window.top.fechaModal();
+}" />
+                                </dxe:ASPxButton>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <asp:SqlDataSource ID="sdsDados" runat="server" 
+        
+        InsertCommand="IF (@IniciaisTipoItensPauta = 'PRA')
+    SET @CodigoTipoObjetoAssociado = 0
+ELSE IF (@IniciaisTipoItensPauta = 'DF')
+    SET @CodigoTipoObjetoAssociado = -1
+ELSE
+    SET @CodigoTipoObjetoAssociado = dbo.f_GetCodigoTipoAssociacao(@IniciaisTipoItensPauta)
+
+    INSERT INTO ObjetoAssociadoEvento 
+               (CodigoEvento
+               ,CodigoObjetoReuniao
+               ,CodigoTipoObjetoAssociado
+               ,CodigoObjetoAssociado
+               ,SequenciaApresentacao)
+         VALUES
+               (@CodigoEvento
+               ,@CodigoObjetoReuniao
+               ,@CodigoTipoObjetoAssociado
+               ,@CodigoObjetoAssociado
+               ,ISNULL((SELECT MAX(SequenciaApresentacao) FROM ObjetoAssociadoEvento WHERE CodigoEvento = @CodigoEvento), 0) + 1)">
+        <InsertParameters>
+            <asp:QueryStringParameter Name="CodigoEvento" QueryStringField="ce" />
+            <asp:QueryStringParameter Name="CodigoObjetoReuniao" QueryStringField="co" />
+            <asp:Parameter Name="CodigoTipoObjetoAssociado" />
+            <asp:Parameter Name="CodigoObjetoAssociado" />
+            <asp:QueryStringParameter Name="IniciaisTipoObjeto" QueryStringField="ini" />
+            <asp:QueryStringParameter Name="IniciaisTipoItensPauta" 
+                QueryStringField="itip" />
+        </InsertParameters>
+        <SelectParameters>
+            <asp:QueryStringParameter Name="CodigoEvento" QueryStringField="ce" />
+            <asp:QueryStringParameter Name="CodigoObjeto" QueryStringField="co" />
+            <asp:QueryStringParameter Name="IniciaisTipoObjeto" QueryStringField="ini" />
+            <asp:QueryStringParameter Name="IniciaisTipoItensPauta" 
+                QueryStringField="itip" />
+        </SelectParameters>
+    </asp:SqlDataSource>
+    <dxcb:ASPxCallback ID="callback" runat="server" ClientInstanceName="callback" 
+        oncallback="callback_Callback">
+        <ClientSideEvents CallbackComplete="function(s, e) {
+    var qs = GetQueryString();
+    window.top.retornoModal = qs['itip'] + '_' + codigosSelecionados;
+	window.top.fechaModal();
+}" />
+    </dxcb:ASPxCallback>
+    </form>
+</body>
+</html>

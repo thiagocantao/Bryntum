@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsGetLicoesAprendidas" targetNamespace="http://tempuri.org/dsGetLicoesAprendidas.xsd" xmlns:mstns="http://tempuri.org/dsGetLicoesAprendidas.xsd" xmlns="http://tempuri.org/dsGetLicoesAprendidas.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsGetLicoesAprendidas" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsGetLicoesAprendidas" msprop:Generator_DataSetName="dsGetLicoesAprendidas">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="licoesAprendidas" msprop:Generator_TableClassName="licoesAprendidasDataTable" msprop:Generator_TableVarName="tablelicoesAprendidas" msprop:Generator_TablePropName="licoesAprendidas" msprop:Generator_RowDeletingName="licoesAprendidasRowDeleting" msprop:Generator_UserTableName="licoesAprendidas" msprop:Generator_RowChangingName="licoesAprendidasRowChanging" msprop:Generator_RowEvHandlerName="licoesAprendidasRowChangeEventHandler" msprop:Generator_RowDeletedName="licoesAprendidasRowDeleted" msprop:Generator_RowEvArgName="licoesAprendidasRowChangeEvent" msprop:Generator_RowChangedName="licoesAprendidasRowChanged" msprop:Generator_RowClassName="licoesAprendidasRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="cla" msprop:Generator_ColumnVarNameInTable="columncla" msprop:Generator_ColumnPropNameInRow="cla" msprop:Generator_ColumnPropNameInTable="claColumn" msprop:Generator_UserColumnName="cla" type="xs:int" minOccurs="0" />
+              <xs:element name="data" msprop:Generator_ColumnVarNameInTable="columndata" msprop:Generator_ColumnPropNameInRow="data" msprop:Generator_ColumnPropNameInTable="dataColumn" msprop:Generator_UserColumnName="data" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="assunto" msprop:Generator_ColumnVarNameInTable="columnassunto" msprop:Generator_ColumnPropNameInRow="assunto" msprop:Generator_ColumnPropNameInTable="assuntoColumn" msprop:Generator_UserColumnName="assunto" type="xs:string" minOccurs="0" />
+              <xs:element name="licao" msprop:Generator_ColumnVarNameInTable="columnlicao" msprop:Generator_ColumnPropNameInRow="licao" msprop:Generator_ColumnPropNameInTable="licaoColumn" msprop:Generator_UserColumnName="licao" type="xs:string" minOccurs="0" />
+              <xs:element name="tipo" msprop:Generator_ColumnVarNameInTable="columntipo" msprop:Generator_ColumnPropNameInRow="tipo" msprop:Generator_ColumnPropNameInTable="tipoColumn" msprop:Generator_UserColumnName="tipo" type="xs:string" minOccurs="0" />
+              <xs:element name="projeto" msprop:Generator_ColumnVarNameInTable="columnprojeto" msprop:Generator_ColumnPropNameInRow="projeto" msprop:Generator_ColumnPropNameInTable="projetoColumn" msprop:Generator_UserColumnName="projeto" type="xs:string" minOccurs="0" />
+              <xs:element name="IncluidoPor" msprop:Generator_ColumnVarNameInTable="columnIncluidoPor" msprop:Generator_ColumnPropNameInRow="IncluidoPor" msprop:Generator_ColumnPropNameInTable="IncluidoPorColumn" msprop:Generator_UserColumnName="IncluidoPor" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

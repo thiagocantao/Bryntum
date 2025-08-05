@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsListaProcessos" targetNamespace="http://tempuri.org/DsListaProcessos.xsd" xmlns:mstns="http://tempuri.org/DsListaProcessos.xsd" xmlns="http://tempuri.org/DsListaProcessos.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsListaProcessos" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msdata:EnforceConstraints="False" msprop:Generator_DataSetName="DsListaProcessos" msprop:Generator_UserDSName="DsListaProcessos">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Lista" msprop:Generator_TableClassName="ListaDataTable" msprop:Generator_TableVarName="tableLista" msprop:Generator_TablePropName="Lista" msprop:Generator_RowDeletingName="ListaRowDeleting" msprop:Generator_RowChangingName="ListaRowChanging" msprop:Generator_RowEvHandlerName="ListaRowChangeEventHandler" msprop:Generator_RowDeletedName="ListaRowDeleted" msprop:Generator_UserTableName="Lista" msprop:Generator_RowChangedName="ListaRowChanged" msprop:Generator_RowEvArgName="ListaRowChangeEvent" msprop:Generator_RowClassName="ListaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoLista" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoLista" msprop:Generator_ColumnPropNameInRow="CodigoLista" msprop:Generator_ColumnPropNameInTable="CodigoListaColumn" msprop:Generator_UserColumnName="CodigoLista" type="xs:int" />
+              <xs:element name="NomeLista" msprop:Generator_ColumnVarNameInTable="columnNomeLista" msprop:Generator_ColumnPropNameInRow="NomeLista" msprop:Generator_ColumnPropNameInTable="NomeListaColumn" msprop:Generator_UserColumnName="NomeLista">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GrupoMenu" msprop:Generator_ColumnVarNameInTable="columnGrupoMenu" msprop:Generator_ColumnPropNameInRow="GrupoMenu" msprop:Generator_ColumnPropNameInTable="GrupoMenuColumn" msprop:Generator_UserColumnName="GrupoMenu" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemMenu" msprop:Generator_ColumnVarNameInTable="columnItemMenu" msprop:Generator_ColumnPropNameInRow="ItemMenu" msprop:Generator_ColumnPropNameInTable="ItemMenuColumn" msprop:Generator_UserColumnName="ItemMenu" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GrupoPermissao" msprop:Generator_ColumnVarNameInTable="columnGrupoPermissao" msprop:Generator_ColumnPropNameInRow="GrupoPermissao" msprop:Generator_ColumnPropNameInTable="GrupoPermissaoColumn" msprop:Generator_UserColumnName="GrupoPermissao">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemPermissao" msprop:Generator_ColumnVarNameInTable="columnItemPermissao" msprop:Generator_ColumnPropNameInRow="ItemPermissao" msprop:Generator_ColumnPropNameInTable="ItemPermissaoColumn" msprop:Generator_UserColumnName="ItemPermissao">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IniciaisPermissao" msprop:Generator_ColumnVarNameInTable="columnIniciaisPermissao" msprop:Generator_ColumnPropNameInRow="IniciaisPermissao" msprop:Generator_ColumnPropNameInTable="IniciaisPermissaoColumn" msprop:Generator_UserColumnName="IniciaisPermissao">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TituloLista" msprop:Generator_ColumnVarNameInTable="columnTituloLista" msprop:Generator_ColumnPropNameInRow="TituloLista" msprop:Generator_ColumnPropNameInTable="TituloListaColumn" msprop:Generator_UserColumnName="TituloLista">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="150" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ComandoSelect" msprop:Generator_ColumnVarNameInTable="columnComandoSelect" msprop:Generator_ColumnPropNameInRow="ComandoSelect" msprop:Generator_ColumnPropNameInTable="ComandoSelectColumn" msprop:Generator_UserColumnName="ComandoSelect" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaPaginacao" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaPaginacao" msprop:Generator_ColumnVarNameInTable="columnIndicaPaginacao" msprop:Generator_ColumnPropNameInTable="IndicaPaginacaoColumn" msprop:Generator_UserColumnName="IndicaPaginacao" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="QuantidadeItensPaginacao" msprop:Generator_ColumnVarNameInTable="columnQuantidadeItensPaginacao" msprop:Generator_ColumnPropNameInRow="QuantidadeItensPaginacao" msprop:Generator_ColumnPropNameInTable="QuantidadeItensPaginacaoColumn" msprop:Generator_UserColumnName="QuantidadeItensPaginacao" type="xs:short" minOccurs="0" />
+              <xs:element name="IndicaOpcaoDisponivel" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaOpcaoDisponivel" msprop:Generator_ColumnVarNameInTable="columnIndicaOpcaoDisponivel" msprop:Generator_ColumnPropNameInTable="IndicaOpcaoDisponivelColumn" msprop:Generator_UserColumnName="IndicaOpcaoDisponivel">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TipoLista" msprop:Generator_ColumnVarNameInTable="columnTipoLista" msprop:Generator_ColumnPropNameInRow="TipoLista" msprop:Generator_ColumnPropNameInTable="TipoListaColumn" msprop:Generator_UserColumnName="TipoLista">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="URL" msprop:Generator_ColumnVarNameInTable="columnURL" msprop:Generator_ColumnPropNameInRow="URL" msprop:Generator_ColumnPropNameInTable="URLColumn" msprop:Generator_UserColumnName="URL" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodigoEntidade" msprop:Generator_ColumnVarNameInTable="columnCodigoEntidade" msprop:Generator_ColumnPropNameInRow="CodigoEntidade" msprop:Generator_ColumnPropNameInTable="CodigoEntidadeColumn" msprop:Generator_UserColumnName="CodigoEntidade" type="xs:int" />
+              <xs:element name="CodigoModuloMenu" msprop:Generator_ColumnVarNameInTable="columnCodigoModuloMenu" msprop:Generator_ColumnPropNameInRow="CodigoModuloMenu" msprop:Generator_ColumnPropNameInTable="CodigoModuloMenuColumn" msprop:Generator_UserColumnName="CodigoModuloMenu" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicaListaZebrada" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaListaZebrada" msprop:Generator_ColumnVarNameInTable="columnIndicaListaZebrada" msprop:Generator_ColumnPropNameInTable="IndicaListaZebradaColumn" msprop:Generator_UserColumnName="IndicaListaZebrada" type="xs:string" minOccurs="0" />
+              <xs:element name="FiltroAplicado" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="FiltroAplicado" msprop:Generator_ColumnVarNameInTable="columnFiltroAplicado" msprop:Generator_ColumnPropNameInTable="FiltroAplicadoColumn" msprop:Generator_UserColumnName="FiltroAplicado" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicaBuscaPalavraChave" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaBuscaPalavraChave" msprop:Generator_ColumnVarNameInTable="columnIndicaBuscaPalavraChave" msprop:Generator_ColumnPropNameInTable="IndicaBuscaPalavraChaveColumn" msprop:Generator_UserColumnName="IndicaBuscaPalavraChave" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicaPossuiListaUsuario" msprop:Generator_ColumnVarNameInTable="columnIndicaPossuiListaUsuario" msprop:Generator_ColumnPropNameInRow="IndicaPossuiListaUsuario" msprop:Generator_ColumnPropNameInTable="IndicaPossuiListaUsuarioColumn" msprop:Generator_UserColumnName="IndicaPossuiListaUsuario" type="xs:string" minOccurs="0" />
+              <xs:element name="NomeListaUsuario" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="NomeListaUsuario" msprop:Generator_ColumnVarNameInTable="columnNomeListaUsuario" msprop:Generator_ColumnPropNameInTable="NomeListaUsuarioColumn" msprop:Generator_UserColumnName="NomeListaUsuario" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoSubLista" msprop:Generator_ColumnVarNameInTable="columnCodigoSubLista" msprop:Generator_ColumnPropNameInRow="CodigoSubLista" msprop:Generator_ColumnPropNameInTable="CodigoSubListaColumn" msprop:Generator_UserColumnName="CodigoSubLista" type="xs:int" minOccurs="0" />
+              <xs:element name="InstrucaoPreFiltroDados" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="InstrucaoPreFiltroDados" msprop:Generator_ColumnVarNameInTable="columnInstrucaoPreFiltroDados" msprop:Generator_ColumnPropNameInTable="InstrucaoPreFiltroDadosColumn" msprop:Generator_UserColumnName="InstrucaoPreFiltroDados" type="xs:string" minOccurs="0" />
+              <xs:element name="InstrucaoPreFiltroOriginal" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="InstrucaoPreFiltroOriginal" msprop:Generator_ColumnVarNameInTable="columnInstrucaoPreFiltroOriginal" msprop:Generator_ColumnPropNameInTable="InstrucaoPreFiltroOriginalColumn" msprop:Generator_UserColumnName="InstrucaoPreFiltroOriginal" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicaPreFiltroCustomizavel" msprop:Generator_ColumnVarNameInTable="columnIndicaPreFiltroCustomizavel" msprop:Generator_ColumnPropNameInRow="IndicaPreFiltroCustomizavel" msprop:Generator_ColumnPropNameInTable="IndicaPreFiltroCustomizavelColumn" msprop:Generator_UserColumnName="IndicaPreFiltroCustomizavel" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoListaUsuario" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CodigoListaUsuario" msprop:Generator_ColumnVarNameInTable="columnCodigoListaUsuario" msprop:Generator_ColumnPropNameInTable="CodigoListaUsuarioColumn" msprop:Generator_UserColumnName="CodigoListaUsuario" type="xs:string" minOccurs="0" />
+              <xs:element name="indicaVisibilidadeExterna" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="indicaVisibilidadeExterna" msprop:Generator_ColumnVarNameInTable="columnindicaVisibilidadeExterna" msprop:Generator_ColumnPropNameInTable="indicaVisibilidadeExternaColumn" msprop:Generator_UserColumnName="indicaVisibilidadeExterna" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ListaFluxo" msprop:Generator_TableClassName="ListaFluxoDataTable" msprop:Generator_TableVarName="tableListaFluxo" msprop:Generator_TablePropName="ListaFluxo" msprop:Generator_RowDeletingName="ListaFluxoRowDeleting" msprop:Generator_RowChangingName="ListaFluxoRowChanging" msprop:Generator_RowEvHandlerName="ListaFluxoRowChangeEventHandler" msprop:Generator_RowDeletedName="ListaFluxoRowDeleted" msprop:Generator_UserTableName="ListaFluxo" msprop:Generator_RowChangedName="ListaFluxoRowChanged" msprop:Generator_RowEvArgName="ListaFluxoRowChangeEvent" msprop:Generator_RowClassName="ListaFluxoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoLista" msprop:Generator_ColumnVarNameInTable="columnCodigoLista" msprop:Generator_ColumnPropNameInRow="CodigoLista" msprop:Generator_ColumnPropNameInTable="CodigoListaColumn" msprop:Generator_UserColumnName="CodigoLista" type="xs:int" />
+              <xs:element name="CodigoFluxo" msprop:Generator_ColumnVarNameInTable="columnCodigoFluxo" msprop:Generator_ColumnPropNameInRow="CodigoFluxo" msprop:Generator_ColumnPropNameInTable="CodigoFluxoColumn" msprop:Generator_UserColumnName="CodigoFluxo" type="xs:int" />
+              <xs:element name="TituloMenu" msprop:Generator_ColumnVarNameInTable="columnTituloMenu" msprop:Generator_ColumnPropNameInRow="TituloMenu" msprop:Generator_ColumnPropNameInTable="TituloMenuColumn" msprop:Generator_UserColumnName="TituloMenu">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ListaCampo" msprop:Generator_TableClassName="ListaCampoDataTable" msprop:Generator_TableVarName="tableListaCampo" msprop:Generator_TablePropName="ListaCampo" msprop:Generator_RowDeletingName="ListaCampoRowDeleting" msprop:Generator_RowChangingName="ListaCampoRowChanging" msprop:Generator_RowEvHandlerName="ListaCampoRowChangeEventHandler" msprop:Generator_RowDeletedName="ListaCampoRowDeleted" msprop:Generator_UserTableName="ListaCampo" msprop:Generator_RowChangedName="ListaCampoRowChanged" msprop:Generator_RowEvArgName="ListaCampoRowChangeEvent" msprop:Generator_RowClassName="ListaCampoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoCampo" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodigoCampo" msprop:Generator_ColumnPropNameInRow="CodigoCampo" msprop:Generator_ColumnPropNameInTable="CodigoCampoColumn" msprop:Generator_UserColumnName="CodigoCampo" type="xs:int" />
+              <xs:element name="CodigoLista" msprop:Generator_ColumnVarNameInTable="columnCodigoLista" msprop:Generator_ColumnPropNameInRow="CodigoLista" msprop:Generator_ColumnPropNameInTable="CodigoListaColumn" msprop:Generator_UserColumnName="CodigoLista" type="xs:int" />
+              <xs:element name="NomeCampo" msprop:Generator_ColumnVarNameInTable="columnNomeCampo" msprop:Generator_ColumnPropNameInRow="NomeCampo" msprop:Generator_ColumnPropNameInTable="NomeCampoColumn" msprop:Generator_UserColumnName="NomeCampo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TituloCampo" msprop:Generator_ColumnVarNameInTable="columnTituloCampo" msprop:Generator_ColumnPropNameInRow="TituloCampo" msprop:Generator_ColumnPropNameInTable="TituloCampoColumn" msprop:Generator_UserColumnName="TituloCampo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OrdemCampo" msprop:Generator_ColumnVarNameInTable="columnOrdemCampo" msprop:Generator_ColumnPropNameInRow="OrdemCampo" msprop:Generator_ColumnPropNameInTable="OrdemCampoColumn" msprop:Generator_UserColumnName="OrdemCampo" type="xs:short" />
+              <xs:element name="OrdemAgrupamentoCampo" msprop:Generator_ColumnVarNameInTable="columnOrdemAgrupamentoCampo" msprop:Generator_ColumnPropNameInRow="OrdemAgrupamentoCampo" msprop:Generator_ColumnPropNameInTable="OrdemAgrupamentoCampoColumn" msprop:Generator_UserColumnName="OrdemAgrupamentoCampo" type="xs:short" />
+              <xs:element name="TipoCampo" msprop:Generator_ColumnVarNameInTable="columnTipoCampo" msprop:Generator_ColumnPropNameInRow="TipoCampo" msprop:Generator_ColumnPropNameInTable="TipoCampoColumn" msprop:Generator_UserColumnName="TipoCampo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Formato" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Formato" msprop:Generator_ColumnVarNameInTable="columnFormato" msprop:Generator_ColumnPropNameInTable="FormatoColumn" msprop:Generator_UserColumnName="Formato" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaAreaFiltro" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaAreaFiltro" msprop:Generator_ColumnVarNameInTable="columnIndicaAreaFiltro" msprop:Generator_ColumnPropNameInTable="IndicaAreaFiltroColumn" msprop:Generator_UserColumnName="IndicaAreaFiltro">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TipoFiltro" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="TipoFiltro" msprop:Generator_ColumnVarNameInTable="columnTipoFiltro" msprop:Generator_ColumnPropNameInTable="TipoFiltroColumn" msprop:Generator_UserColumnName="TipoFiltro">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaAgrupamento" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaAgrupamento" msprop:Generator_ColumnVarNameInTable="columnIndicaAgrupamento" msprop:Generator_ColumnPropNameInTable="IndicaAgrupamentoColumn" msprop:Generator_UserColumnName="IndicaAgrupamento">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TipoTotalizador" msprop:Generator_ColumnVarNameInTable="columnTipoTotalizador" msprop:Generator_ColumnPropNameInRow="TipoTotalizador" msprop:Generator_ColumnPropNameInTable="TipoTotalizadorColumn" msprop:Generator_UserColumnName="TipoTotalizador">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaAreaDado" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaAreaDado" msprop:Generator_ColumnVarNameInTable="columnIndicaAreaDado" msprop:Generator_ColumnPropNameInTable="IndicaAreaDadoColumn" msprop:Generator_UserColumnName="IndicaAreaDado">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaAreaColuna" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaAreaColuna" msprop:Generator_ColumnVarNameInTable="columnIndicaAreaColuna" msprop:Generator_ColumnPropNameInTable="IndicaAreaColunaColumn" msprop:Generator_UserColumnName="IndicaAreaColuna">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaAreaLinha" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaAreaLinha" msprop:Generator_ColumnVarNameInTable="columnIndicaAreaLinha" msprop:Generator_ColumnPropNameInTable="IndicaAreaLinhaColumn" msprop:Generator_UserColumnName="IndicaAreaLinha">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AreaDefault" msprop:Generator_ColumnVarNameInTable="columnAreaDefault" msprop:Generator_ColumnPropNameInRow="AreaDefault" msprop:Generator_ColumnPropNameInTable="AreaDefaultColumn" msprop:Generator_UserColumnName="AreaDefault">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaCampoVisivel" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaCampoVisivel" msprop:Generator_ColumnVarNameInTable="columnIndicaCampoVisivel" msprop:Generator_ColumnPropNameInTable="IndicaCampoVisivelColumn" msprop:Generator_UserColumnName="IndicaCampoVisivel">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndicaCampoControle" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaCampoControle" msprop:Generator_ColumnVarNameInTable="columnIndicaCampoControle" msprop:Generator_ColumnPropNameInTable="IndicaCampoControleColumn" msprop:Generator_UserColumnName="IndicaCampoControle" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IniciaisCampoControlado" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="IniciaisCampoControlado" msprop:Generator_ColumnVarNameInTable="columnIniciaisCampoControlado" msprop:Generator_ColumnPropNameInTable="IniciaisCampoControladoColumn" msprop:Generator_UserColumnName="IniciaisCampoControlado" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicaLink" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaLink" msprop:Generator_ColumnVarNameInTable="columnIndicaLink" msprop:Generator_ColumnPropNameInTable="IndicaLinkColumn" msprop:Generator_UserColumnName="IndicaLink" type="xs:string" minOccurs="0" />
+              <xs:element name="AlinhamentoCampo" msprop:Generator_ColumnVarNameInTable="columnAlinhamentoCampo" msprop:Generator_ColumnPropNameInRow="AlinhamentoCampo" msprop:Generator_ColumnPropNameInTable="AlinhamentoCampoColumn" msprop:Generator_UserColumnName="AlinhamentoCampo" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicaCampoHierarquia" msprop:Generator_ColumnVarNameInTable="columnIndicaCampoHierarquia" msprop:Generator_ColumnPropNameInRow="IndicaCampoHierarquia" msprop:Generator_ColumnPropNameInTable="IndicaCampoHierarquiaColumn" msprop:Generator_UserColumnName="IndicaCampoHierarquia" type="xs:string" minOccurs="0" />
+              <xs:element name="LarguraColuna" msprop:Generator_ColumnVarNameInTable="columnLarguraColuna" msprop:Generator_ColumnPropNameInRow="LarguraColuna" msprop:Generator_ColumnPropNameInTable="LarguraColunaColumn" msprop:Generator_UserColumnName="LarguraColuna" type="xs:short" minOccurs="0" />
+              <xs:element name="TituloColunaAgrupadora" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="TituloColunaAgrupadora" msprop:Generator_ColumnVarNameInTable="columnTituloColunaAgrupadora" msprop:Generator_ColumnPropNameInTable="TituloColunaAgrupadoraColumn" msprop:Generator_UserColumnName="TituloColunaAgrupadora" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicaColunaFixa" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IndicaColunaFixa" msprop:Generator_ColumnVarNameInTable="columnIndicaColunaFixa" msprop:Generator_ColumnPropNameInTable="IndicaColunaFixaColumn" msprop:Generator_UserColumnName="IndicaColunaFixa" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ListaCampoLink" msprop:Generator_TableClassName="ListaCampoLinkDataTable" msprop:Generator_TableVarName="tableListaCampoLink" msprop:Generator_TablePropName="ListaCampoLink" msprop:Generator_RowDeletingName="ListaCampoLinkRowDeleting" msprop:Generator_RowChangingName="ListaCampoLinkRowChanging" msprop:Generator_RowEvHandlerName="ListaCampoLinkRowChangeEventHandler" msprop:Generator_RowDeletedName="ListaCampoLinkRowDeleted" msprop:Generator_UserTableName="ListaCampoLink" msprop:Generator_RowChangedName="ListaCampoLinkRowChanged" msprop:Generator_RowEvArgName="ListaCampoLinkRowChangeEvent" msprop:Generator_RowClassName="ListaCampoLinkRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoCampoLista" msprop:Generator_ColumnVarNameInTable="columnCodigoCampoLista" msprop:Generator_ColumnPropNameInRow="CodigoCampoLista" msprop:Generator_ColumnPropNameInTable="CodigoCampoListaColumn" msprop:Generator_UserColumnName="CodigoCampoLista" type="xs:int" />
+              <xs:element name="CodigoCampoSubLista" msprop:Generator_ColumnVarNameInTable="columnCodigoCampoSubLista" msprop:Generator_ColumnPropNameInRow="CodigoCampoSubLista" msprop:Generator_ColumnPropNameInTable="CodigoCampoSubListaColumn" msprop:Generator_UserColumnName="CodigoCampoSubLista" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Lista" />
+      <xs:field xpath="mstns:CodigoLista" />
+    </xs:unique>
+    <xs:unique name="ListaFluxo_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ListaFluxo" />
+      <xs:field xpath="mstns:CodigoLista" />
+      <xs:field xpath="mstns:CodigoFluxo" />
+    </xs:unique>
+    <xs:unique name="ListaCampo_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ListaCampo" />
+      <xs:field xpath="mstns:CodigoCampo" />
+    </xs:unique>
+    <xs:unique name="ListaCampoLink_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ListaCampoLink" />
+      <xs:field xpath="mstns:CodigoCampoLista" />
+      <xs:field xpath="mstns:CodigoCampoSubLista" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_ListaFluxo_Lista" msdata:parent="Lista" msdata:child="ListaFluxo" msdata:parentkey="CodigoLista" msdata:childkey="CodigoLista" msprop:Generator_UserChildTable="ListaFluxo" msprop:Generator_ChildPropName="GetListaFluxoRows" msprop:Generator_UserRelationName="FK_ListaFluxo_Lista" msprop:Generator_RelationVarName="relationFK_ListaFluxo_Lista" msprop:Generator_UserParentTable="Lista" msprop:Generator_ParentPropName="ListaRow" />
+      <msdata:Relationship name="FK_ListaCampo_Lista" msdata:parent="Lista" msdata:child="ListaCampo" msdata:parentkey="CodigoLista" msdata:childkey="CodigoLista" msprop:Generator_UserChildTable="ListaCampo" msprop:Generator_ChildPropName="GetListaCampoRows" msprop:Generator_UserRelationName="FK_ListaCampo_Lista" msprop:Generator_RelationVarName="relationFK_ListaCampo_Lista" msprop:Generator_UserParentTable="Lista" msprop:Generator_ParentPropName="ListaRow" />
+      <msdata:Relationship name="FK_ListaCampoLink_ListaCampo" msdata:parent="ListaCampo" msdata:child="ListaCampoLink" msdata:parentkey="CodigoCampo" msdata:childkey="CodigoCampoLista" msprop:Generator_UserChildTable="ListaCampoLink" msprop:Generator_ChildPropName="GetListaCampoLinkRows" msprop:Generator_UserRelationName="FK_ListaCampoLink_ListaCampo" msprop:Generator_ParentPropName="ListaCampoRow" msprop:Generator_RelationVarName="relationFK_ListaCampoLink_ListaCampo" msprop:Generator_UserParentTable="ListaCampo" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

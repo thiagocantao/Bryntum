@@ -1,0 +1,385 @@
+@import '../variables';
+@import 'eventrendering';
+@import 'eventrenderingvertical';
+
+.b-sch-canvas,
+.b-sch-foreground-canvas,
+.b-sch-background-canvas {
+    position       : absolute;
+    top            : 0;
+    left           : 0;
+    pointer-events : none;
+    height         : 100%;
+    overflow       : hidden;
+    overflow       : clip;
+    contain        : strict;
+
+    .b-sch-vertical & {
+        min-width : 100%;
+    }
+
+    .b-rtl & {
+        left  : auto;
+        right : 0;
+    }
+}
+
+.b-sch-background-canvas {
+    z-index           : $background-canvas-zindex;
+    background-repeat : repeat; // to fix background which relies on repeating when Vuetify styles are used
+}
+
+.b-sch-foreground-canvas {
+    z-index : $foreground-canvas-zindex;
+
+    // When we're dragging rows, pointer must see right through events and dependency lines
+    // and whatever else is drawn to the canvas to fall through to underlying row.
+    .b-row-reordering & {
+        * {
+            pointer-events : none !important;
+        }
+    }
+}
+
+@include eventrendering(
+    $widget-name                  : 'schedulerbase',
+    $entity-name                  : 'event',
+    $entity-zindex                : $event-zindex,
+    $entity-font-weight           : $event-font-weight,
+    $entity-font-size             : $event-font-size,
+    $entity-default-transition    : $event-default-transition,
+    $interacting-entity-zindex    : $interacting-event-zindex,
+    $entity-bar-padding-left      : null,
+    $entity-selected-zindex       : $selected-event-zindex,
+    $entity-selected-font-weight  : $event-selected-font-weight,
+    $entity-milestone-color       : $event-milestone-color,
+    $entity-milestone-zindex      : $milestone-zindex,
+    $entity-labels-color          : $event-labels-color,
+    $selected-entity-labels-color : $selected-event-labels-color
+);
+
+.b-sch-event-content {
+    z-index : 1;
+}
+
+// Event content in a milestone needs to fit width to align diamond correctly,
+// normal event content is shrinkwrapped for stickiness
+.b-milestone .b-sch-event-content {
+    flex : 1;
+}
+
+.b-sch-event:not(.b-milestone) .b-sch-event-content {
+    margin        : $event-bar-content-margin;
+    text-overflow : ellipsis;
+    overflow      : hidden;
+    display       : flex;
+
+    > :not(i) {
+        text-overflow : ellipsis;
+        overflow      : hidden;
+    }
+}
+
+.b-verticaltimeaxis-row {
+    .b-sch-event:not(.b-milestone) .b-sch-event-content {
+        flex-direction : column;
+    }
+}
+
+// Prevent flickering from transitions during initial animation in FF
+.b-prevent-event-transitions .b-sch-event-wrap {
+    transition : none !important;
+}
+
+// Scheduler supports before/after buffer which is implemented with a grid layout to keep DOM node count low
+// See eventbuffer.scss
+.b-sch-event-wrap {
+    display               : grid;
+
+    // Default behavior should be stretching of the inner event bar el (for drag proxies in drag-from-grid demos etc)
+    grid-template-columns : 1fr;
+    grid-template-rows    : 1fr;
+
+    .b-sch-event {
+        height   : 100%;
+        grid-row : 2;
+    }
+
+    .b-sch-horizontal &,
+        // for drag proxies
+    &.b-sch-horizontal {
+        grid-template-columns : auto min-content minmax(auto, 100%) min-content auto;
+        grid-template-rows    : min-content auto min-content;
+
+        .b-sch-event {
+            grid-column : 3;
+        }
+    }
+
+    &.b-sch-vertical {
+        grid-template-rows    : min-content minmax(auto, 100%) min-content;
+        grid-template-columns : 100%;
+
+        // If the event is vertical, and narrow, rotate the text
+        .b-sch-event-narrow {
+            justify-content      : center;
+            padding-inline-start : 0;
+            padding-inline-end   : 0;
+
+            .b-sch-event-content {
+                flex-direction : column;
+                align-items    : center;
+            }
+
+            i {
+                margin-inline-end : 0;
+                align-self        : center;
+            }
+
+            .b-event-text-wrap {
+                writing-mode : vertical-rl;
+            }
+        }
+
+        .b-sch-event {
+            grid-column : 1;
+        }
+    }
+
+    // If event buffer feature is getting enabled/disabled we turn off certain transition that make event wrap elements
+    // glitch (because wrap size changes and buffer elements get removed)
+    .b-sch-horizontal.b-eventbuffer-transition.b-animating &:not(.b-dragging):not(.b-sch-event-wrap-resizing) {
+        transition : $event-default-transition, height .2s, font-size .2s;
+    }
+
+    .b-sch-vertical.b-eventbuffer-transition.b-animating &:not(.b-dragging):not(.b-sch-event-wrap-resizing) {
+        transition : $event-default-transition, width .2s, font-size .2s;
+    }
+
+}
+
+//region Coloring
+
+.b-sch-event-wrap, .b-gantt-task-wrap {
+    --event-primary-color-h : #{hue($event-bar-background-color)};
+    --event-primary-color-s : #{saturation($event-bar-background-color)};
+    --event-primary-color-l : #{lightness($event-bar-background-color)};
+    --event-primary-color   : hsl(var(--event-primary-color-h), var(--event-primary-color-s), var(--event-primary-color-l));
+
+    // Needs increased specificity, to override any var changes in event styles with hover styles etc
+    > .b-sch-event, > .b-gantt-task {
+        &:hover,
+        &.b-sch-event-selected,
+        &.b-sch-event-resizing {
+            --event-s-factor : var(--event-hover-s-factor);
+            --event-l-factor : var(--event-hover-l-factor);
+            --event-a        : var(--event-hover-a);
+            --event-color    : var(--event-hover-color);
+            --event-opacity  : var(--event-hover-opacity);
+        }
+
+        &.b-sch-event-selected:hover {
+            --event-s-factor : var(--event-selected-hover-s-factor);
+            --event-l-factor : var(--event-selected-hover-l-factor);
+            --event-a        : var(--event-selected-hover-a);
+        }
+    }
+}
+
+.b-sch-color-none {
+    --event-primary-color-h : null;
+    --event-primary-color-s : null;
+    --event-primary-color-l : null;
+    --event-primary-color   : null;
+}
+
+.b-sch-event,
+.b-gantt-task,
+.b-sch-event > .b-sch-event-segments > .b-sch-event {
+    --event-background-h            : var(--event-primary-color-h);
+    --event-background-s            : var(--event-primary-color-s);
+    --event-background-l            : var(--event-primary-color-l);
+
+    --event-s-factor                : 1;
+    --event-l-factor                : 1;
+    --event-a                       : 1;
+
+    --event-hover-s-factor          : 1;
+    --event-hover-l-factor          : 1;
+    --event-hover-a                 : 1;
+
+    --event-selected-hover-s-factor : 1;
+    --event-selected-hover-l-factor : 1;
+    --event-selected-hover-a        : 1;
+
+    --event-background-color        : hsla(
+            var(--event-background-h),
+            calc(var(--event-background-s) * var(--event-s-factor)),
+            calc(var(--event-background-l) * var(--event-l-factor)),
+            var(--event-a)
+    );
+
+    --event-border-color            : var(--event-primary-color);
+    --event-border-width            : 0px; //px needed for calculations to yield correct unit
+    --event-border-style            : solid;
+    --event-border-radius           : 0;
+
+    --event-color                   : #{$event-bar-color};
+    --event-hover-color             : #{$event-bar-color};
+
+    --event-opacity                 : 1;
+    --event-hover-opacity           : 1;
+
+    --event-font-weight             : #{$event-font-weight};
+
+    color                           : var(--event-color);
+    background-color                : var(--event-background-color);
+    border-color                    : var(--event-border-color);
+    border-width                    : var(--event-border-width);
+    border-style                    : var(--event-border-style);
+    border-radius                   : var(--event-border-radius);
+    font-weight                     : var(--event-font-weight);
+    opacity                         : var(--event-opacity);
+
+    &.b-sch-event-startsoutside {
+        border-inline-start : none;
+    }
+}
+
+.b-sch-event-wrap.b-milestone-wrap > .b-sch-event.b-milestone {
+    border-width : 0;
+}
+
+
+// Laid out milestone
+.b-schedulerbase.b-sch-layout-milestones .b-sch-event.b-milestone {
+    background-color : var(--event-background-color);
+    border-color     : var(--event-border-color);
+    border-width     : var(--event-border-width) 0 var(--event-border-width) 0;
+    opacity          : var(--event-opacity);
+    border-style     : var(--event-border-style);
+    font-weight      : var(--event-font-weight);
+
+    &::before {
+        --event-border-width      : inherit;
+        --event-border-radius     : inherit;
+        border-style              : var(--event-border-style);
+        border-color              : var(--event-border-color);
+        border-top-width          : 0;
+        border-inline-end-width   : 0;
+        border-bottom-width       : var(--event-border-width);
+        border-inline-start-width : var(--event-border-width);
+
+        border-bottom-left-radius : var(--event-border-radius);
+    }
+
+    &::after {
+        --event-border-width       : inherit;
+        --event-border-radius      : inherit;
+        border-style               : var(--event-border-style);
+        border-color               : var(--event-border-color);
+        border-top-width           : 0;
+        border-inline-end-width    : var(--event-border-width);
+        border-inline-start-width  : 0;
+        border-bottom-width        : var(--event-border-width);
+
+        border-bottom-right-radius : var(--event-border-radius);
+        top                        : calc(var(--event-border-width) * -1);
+    }
+}
+
+.b-sch-event, .b-gantt-task {
+    // Milestone
+    &.b-milestone {
+        border-radius : 0;
+
+        .b-gantt-task-content,
+        .b-sch-event-content {
+            background-color : var(--event-background-color);
+
+            &::before {
+                border-width  : var(--event-border-width);
+                border-radius : var(--event-border-radius);
+                border-color  : var(--event-border-color);
+                opacity       : var(--event-opacity);
+                border-style  : var(--event-border-style);
+            }
+        }
+    }
+}
+
+// No event style used
+.b-gantt-task,
+.b-sch-style-none .b-sch-event {
+    --event-background-image : none;
+
+    &.b-sch-event-selected {
+        --event-background-image : linear-gradient(#{$event-bar-selected-background-color}, #{$event-bar-selected-background-color});
+
+        &:hover {
+            --event-background-image : linear-gradient(#{$event-bar-selected-hover-background-color}, #{$event-bar-selected-hover-background-color});
+        }
+    }
+
+    &:hover {
+        --event-background-image : linear-gradient(#{$event-bar-hover-background-color}, #{$event-bar-hover-background-color});
+    }
+
+    &:not(.b-milestone) {
+        background-image : var(--event-background-image);
+    }
+
+    &.b-milestone > .b-sch-event-content::before {
+        background-image : var(--event-background-image);
+    }
+}
+
+//endregion
+
+.b-sch-vertical {
+    .b-sch-event {
+        align-items    : flex-start;
+        padding-inline : .75em;
+        white-space    : normal;
+
+        .b-sch-event-content {
+            // $event-bar-content-margin is defined for horizontal bars, so we rotate it.
+            margin : rotateSides($event-bar-content-margin);
+        }
+    }
+
+    // Hide default grid empty text
+    &:not(.b-masked) .b-grid-empty .b-grid-subgrid:first-child::before {
+        content : '';
+        display : none;
+    }
+
+    &:not(.b-masked) .b-grid-empty .b-timeline-subgrid::before {
+        color   : #262626;
+        content : attr(data-empty-text);
+        padding : 1em;
+    }
+
+    // Vertical has single row always, no point in having border on it
+    .b-grid-row {
+        border-bottom : none;
+    }
+}
+
+.b-sch-vertical.b-eventlayout-mixed .b-sch-event {
+    opacity : .8;
+}
+
+.b-timelinebase.b-overlay-scrollbar .b-virtual-scrollers {
+    // Required to go above time ranges etc
+    z-index : 100;
+}
+
+// Milestones taking part in layout are calculated from milestone center, not left edge
+.b-sch-layout-milestone-labels .b-milestone-wrap {
+    padding-inline-start : 1em;
+}
+
+.b-sch-layout-milestone .b-milestone-wrap {
+    min-width : 1em;
+}

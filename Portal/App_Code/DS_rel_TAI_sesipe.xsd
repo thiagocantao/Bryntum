@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS_rel_TAI_sesipe" targetNamespace="http://tempuri.org/DS_rel_TAI_sesipe.xsd" xmlns:mstns="http://tempuri.org/DS_rel_TAI_sesipe.xsd" xmlns="http://tempuri.org/DS_rel_TAI_sesipe.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS_rel_TAI_sesipe" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DS_rel_TAI_sesipe" msprop:Generator_UserDSName="DS_rel_TAI_sesipe">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tbTAIsesipe" msprop:Generator_TableClassName="tbTAIsesipeDataTable" msprop:Generator_TableVarName="tabletbTAIsesipe" msprop:Generator_TablePropName="tbTAIsesipe" msprop:Generator_RowDeletingName="tbTAIsesipeRowDeleting" msprop:Generator_RowChangingName="tbTAIsesipeRowChanging" msprop:Generator_RowEvHandlerName="tbTAIsesipeRowChangeEventHandler" msprop:Generator_RowDeletedName="tbTAIsesipeRowDeleted" msprop:Generator_UserTableName="tbTAIsesipe" msprop:Generator_RowChangedName="tbTAIsesipeRowChanged" msprop:Generator_RowEvArgName="tbTAIsesipeRowChangeEvent" msprop:Generator_RowClassName="tbTAIsesipeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NumeroIniciativa" msprop:Generator_ColumnVarNameInTable="columnNumeroIniciativa" msprop:Generator_ColumnPropNameInRow="NumeroIniciativa" msprop:Generator_ColumnPropNameInTable="NumeroIniciativaColumn" msprop:Generator_UserColumnName="NumeroIniciativa" type="xs:string" minOccurs="0" />
+              <xs:element name="GestorResponsavel" msprop:Generator_ColumnVarNameInTable="columnGestorResponsavel" msprop:Generator_ColumnPropNameInRow="GestorResponsavel" msprop:Generator_ColumnPropNameInTable="GestorResponsavelColumn" msprop:Generator_UserColumnName="GestorResponsavel" type="xs:string" minOccurs="0" />
+              <xs:element name="AreaUnidade" msprop:Generator_ColumnVarNameInTable="columnAreaUnidade" msprop:Generator_ColumnPropNameInRow="AreaUnidade" msprop:Generator_ColumnPropNameInTable="AreaUnidadeColumn" msprop:Generator_UserColumnName="AreaUnidade" type="xs:string" minOccurs="0" />
+              <xs:element name="VigenciaInicio" msprop:Generator_ColumnVarNameInTable="columnVigenciaInicio" msprop:Generator_ColumnPropNameInRow="VigenciaInicio" msprop:Generator_ColumnPropNameInTable="VigenciaInicioColumn" msprop:Generator_UserColumnName="VigenciaInicio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="VigenciaFim" msprop:Generator_ColumnVarNameInTable="columnVigenciaFim" msprop:Generator_ColumnPropNameInRow="VigenciaFim" msprop:Generator_ColumnPropNameInTable="VigenciaFimColumn" msprop:Generator_UserColumnName="VigenciaFim" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ValorEstimado" msprop:Generator_ColumnVarNameInTable="columnValorEstimado" msprop:Generator_ColumnPropNameInRow="ValorEstimado" msprop:Generator_ColumnPropNameInTable="ValorEstimadoColumn" msprop:Generator_UserColumnName="ValorEstimado" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AlinhamentoEstrategico" msprop:Generator_ColumnVarNameInTable="columnAlinhamentoEstrategico" msprop:Generator_ColumnPropNameInRow="AlinhamentoEstrategico" msprop:Generator_ColumnPropNameInTable="AlinhamentoEstrategicoColumn" msprop:Generator_UserColumnName="AlinhamentoEstrategico" type="xs:string" minOccurs="0" />
+              <xs:element name="Objetivo" msprop:Generator_ColumnVarNameInTable="columnObjetivo" msprop:Generator_ColumnPropNameInRow="Objetivo" msprop:Generator_ColumnPropNameInTable="ObjetivoColumn" msprop:Generator_UserColumnName="Objetivo" type="xs:string" minOccurs="0" />
+              <xs:element name="Justificativa" msprop:Generator_ColumnVarNameInTable="columnJustificativa" msprop:Generator_ColumnPropNameInRow="Justificativa" msprop:Generator_ColumnPropNameInTable="JustificativaColumn" msprop:Generator_UserColumnName="Justificativa" type="xs:string" minOccurs="0" />
+              <xs:element name="Escopo" msprop:Generator_ColumnVarNameInTable="columnEscopo" msprop:Generator_ColumnPropNameInRow="Escopo" msprop:Generator_ColumnPropNameInTable="EscopoColumn" msprop:Generator_UserColumnName="Escopo" type="xs:string" minOccurs="0" />
+              <xs:element name="IndicadoresEMetas" msprop:Generator_ColumnVarNameInTable="columnIndicadoresEMetas" msprop:Generator_ColumnPropNameInRow="IndicadoresEMetas" msprop:Generator_ColumnPropNameInTable="IndicadoresEMetasColumn" msprop:Generator_UserColumnName="IndicadoresEMetas" type="xs:string" minOccurs="0" />
+              <xs:element name="DataAprovacao" msprop:Generator_ColumnVarNameInTable="columnDataAprovacao" msprop:Generator_ColumnPropNameInRow="DataAprovacao" msprop:Generator_ColumnPropNameInTable="DataAprovacaoColumn" msprop:Generator_UserColumnName="DataAprovacao" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

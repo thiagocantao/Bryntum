@@ -258,7 +258,7 @@ const gantt = new Gantt({
                             bryntum.gantt.Fullscreen.exit();
                         }
 
-                        alert('AAA');
+                        toggleEdit(true);
                     }
                 },
                 {
@@ -269,8 +269,11 @@ const gantt = new Gantt({
                     tooltip: "Desfazer",
                     disabled: true,
                     onClick() {
-
-
+                        const stm = gantt.project.stm;
+                        if (stm.canUndo) {
+                            stm.undo();
+                        }
+                        updateUndoRedoButtons();
                     }
                 },
                 {
@@ -281,8 +284,11 @@ const gantt = new Gantt({
                     tooltip: "Refazer",
                     disabled: true,
                     onClick() {
-
-
+                        const stm = gantt.project.stm;
+                        if (stm.canRedo) {
+                            stm.redo();
+                        }
+                        updateUndoRedoButtons();
                     }
                 },
                 {
@@ -293,8 +299,7 @@ const gantt = new Gantt({
                     tooltip: "Salvar",
                     disabled: true,
                     onClick() {
-
-
+                        toggleEdit(false);
                     }
                 }
             ]
@@ -448,6 +453,51 @@ const gantt = new Gantt({
         },
     },
 });
+
+const stm = gantt.project.stm;
+stm.autoRecord = true;
+stm.disable();
+stm.on({
+    recordingStop : updateUndoRedoButtons,
+    restoringStop : updateUndoRedoButtons,
+    queueReset    : updateUndoRedoButtons
+});
+
+function updateUndoRedoButtons() {
+    const { DesfazerAlteracoes, RefazerAlteracoes } = gantt.widgetMap;
+    DesfazerAlteracoes.disabled = !stm.canUndo;
+    RefazerAlteracoes.disabled = !stm.canRedo;
+}
+
+function toggleEdit(enable) {
+    const { editarCronograma, DesfazerAlteracoes, RefazerAlteracoes, SalvarAlteracoes, AdicionarTarefa, EditarTarefa } = gantt.widgetMap;
+
+    if (enable) {
+        gantt.readOnly = false;
+
+        editarCronograma.disabled = true;
+        SalvarAlteracoes.disabled = false;
+        AdicionarTarefa.disabled = false;
+        EditarTarefa.disabled = false;
+
+        stm.enable();
+        stm.resetQueue();
+    } else {
+        gantt.readOnly = true;
+
+        editarCronograma.disabled = false;
+        SalvarAlteracoes.disabled = true;
+        AdicionarTarefa.disabled = true;
+        EditarTarefa.disabled = true;
+        DesfazerAlteracoes.disabled = true;
+        RefazerAlteracoes.disabled = true;
+
+        stm.disable();
+        stm.resetQueue();
+    }
+
+    updateUndoRedoButtons();
+}
 
 //gantt.project.load().then(function () {
 //    // Adaptar tamanho

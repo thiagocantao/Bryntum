@@ -76,43 +76,6 @@ const gantt = new Gantt({
         //        customItem: {
         //            text: 'Item Personalizado',
         //            icon: 'b-icon b-icon-add' // Ícone opcional
-        {
-            type: 'buttonGroup',
-            items: [
-                {
-                    type    : 'button',
-                    color   : 'b-blue',
-                    ref     : 'editButton',
-                    icon    : 'b-fa b-fa-edit',
-                    text    : 'Editar',
-                    onClick() {
-                        gantt.readOnly = false;
-                        gantt.widgetMap.addTaskButton.disabled = false;
-                        gantt.widgetMap.editButton.disabled = true;
-                    }
-                }
-            ]
-        },
-        {
-            type: 'buttonGroup',
-            items: [
-                {
-                    type    : 'button',
-                    color   : 'b-green',
-                    ref     : 'addTaskButton',
-                    icon    : 'b-fa b-fa-plus',
-                    text    : 'Adicionar tarefa',
-                    disabled: true,
-                    onClick() {
-                        const added = gantt.taskStore.rootNode.appendChild({ name: 'New task', duration: 1 });
-                        gantt.project.commitAsync().then(() => {
-                            gantt.scrollRowIntoView(added);
-                            gantt.features.cellEdit.startEditing({ record: added, field: 'name' });
-                        });
-                    }
-                }
-            ]
-        },
         //            // ... outras configurações do item ...
         //        },
         //        // Adicione outros itens conforme necessário
@@ -198,90 +161,95 @@ const gantt = new Gantt({
                 }
             ]
         },
-
         {
-            ref: 'exportPdfButton',
-            color: 'b-red',
-            tooltip: getTraducao('mapaEstrategico_exportar_para_pdf'),
-            icon: 'b-icon b-fa b-fa-file-pdf',
-            toggleable: false,
-            onClick() {
-                var arrayTask = [];
-                gantt._store.allRecords.map(function (item) {
-                    var row = {
-                        id: 0,
-                        edtcode: item.edtcode,
-                        isCaminhoCriticoStr: item.isCaminhoCriticoStr,
-                        name: item.name,
-                        inicioLb: item.inicioLb,
-                        terminoLb: item.terminoLb,
-                        previsto: item.previsto,
-                        realizado: item.realizado,
-                        pesoLb: item.pesoLb,
-                        peso: item.peso,
-                        duracao: item.duracao,
-                        trabalho: item.trabalho,
-                        inicio: item.inicio,
-                        isMarcoStr: item.isMarcoStr,
-                        isAtrasoStr: item.isAtrasoStr,
-                        termino: item.termino,
-                        terminoReal: item.terminoReal
-                    };
-                    arrayTask.push(row);
-                });
+            type: 'buttonGroup',
+            items: [
+                {
+                    ref: 'exportPdfButton',
+                    color: 'b-red',
+                    tooltip: getTraducao('mapaEstrategico_exportar_para_pdf'),
+                    icon: 'b-icon b-fa b-fa-file-pdf',
+                    toggleable: false,
+                    onClick() {
+                        var arrayTask = [];
+                        gantt._store.allRecords.map(function (item) {
+                            var row = {
+                                id: 0,
+                                edtcode: item.edtcode,
+                                isCaminhoCriticoStr: item.isCaminhoCriticoStr,
+                                name: item.name,
+                                inicioLb: item.inicioLb,
+                                terminoLb: item.terminoLb,
+                                previsto: item.previsto,
+                                realizado: item.realizado,
+                                pesoLb: item.pesoLb,
+                                peso: item.peso,
+                                duracao: item.duracao,
+                                trabalho: item.trabalho,
+                                inicio: item.inicio,
+                                isMarcoStr: item.isMarcoStr,
+                                isAtrasoStr: item.isAtrasoStr,
+                                termino: item.termino,
+                                terminoReal: item.terminoReal
+                            };
+                            arrayTask.push(row);
+                        });
 
-                var configAjax = {
-                    url: '../../../../ApiHandler/GanttHandler.ashx',
-                    method: 'POST',
-                    data: JSON.stringify(arrayTask)
-                };
+                        var configAjax = {
+                            url: '../../../../ApiHandler/GanttHandler.ashx',
+                            method: 'POST',
+                            data: JSON.stringify(arrayTask)
+                        };
 
-                //isIE é uma função de ~/script/custom/util/browser.js
-                if (isIE()) {
-                    configAjax.headers = { typeResult: "getHtmlGantt", idprojeto: idProjeto };
-                    configAjax.success = function (data) {
-                        var win = window.open('', '_blank', 'toolbar=yes,scrollbars=yes,resizable=yes');
-                        win.document.write(data);
-                        win.document.close();
-                        win.focus();
-                        win.print();
-                        win.close();
+                        //isIE é uma função de ~/script/custom/util/browser.js
+                        if (isIE()) {
+                            configAjax.headers = { typeResult: "getHtmlGantt", idprojeto: idProjeto };
+                            configAjax.success = function (data) {
+                                var win = window.open('', '_blank', 'toolbar=yes,scrollbars=yes,resizable=yes');
+                                win.document.write(data);
+                                win.document.close();
+                                win.focus();
+                                win.print();
+                                win.close();
+                            }
+                        } else {
+                            configAjax.headers = { typeResult: "exportToPdf", idprojeto: idProjeto };
+                            configAjax.xhrFields = { responseType: 'blob' };
+                            configAjax.success = function (data) {
+                                var a = document.createElement('a');
+                                var url = window.URL.createObjectURL(data);
+                                a.href = url;
+                                a.download = 'ganttBrisk.pdf';
+                                document.body.appendChild(a);
+                                a.click();
+                                a.remove();
+                                window.URL.revokeObjectURL(url);
+                            };
+                        }
+                        $.ajax(configAjax);
                     }
-                } else {
-                    configAjax.headers = { typeResult: "exportToPdf", idprojeto: idProjeto };
-                    configAjax.xhrFields = { responseType: 'blob' };
-                    configAjax.success = function (data) {
-                        var a = document.createElement('a');
-                        var url = window.URL.createObjectURL(data);
-                        a.href = url;
-                        a.download = 'ganttBrisk.pdf';
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
-                        window.URL.revokeObjectURL(url);
-                    };
+                },
+                {
+                    type: 'button',
+                    color: 'b-red',
+                    ref: 'criticalPathsButton',
+                    icon: 'b-fa b-fa-fire',
+                    tooltip: getTraducao('caminho_critico'),
+                    toggleable: true,
+                    onClick() {
+                        incluirClassCaminhoCritico();
+                    }
                 }
-                $.ajax(configAjax);
-            }
+            ]
         },
         {
             type: 'buttonGroup',
             items: [
                 {
                     type: 'button',
-                    color: 'b-green',
-                    ref: 'debloquearCronogramaButton',
-                    icon: 'b-fa b-fa-calendar-alt',
-                    tooltip: getTraducao('desbloquear_cronograma'),
-                    hidden: true,
-                    onClick() {
-                        pcInformacao.Show(); 
-                    }
-                }, {
-                    type: 'button',
-                    color: 'b-green',
-                    ref: 'zoomOutButton',
-                    icon: 'b-fa b-fa-calendar-alt',
+                    color: 'b-blue',
+                    ref: 'editarCronograma',
+                    icon: 'b-fa b-fa-edit',
                     tooltip: getTraducao('editar_cronograma'),
                     hidden: false,
                     onClick() {
@@ -290,32 +258,112 @@ const gantt = new Gantt({
                             bryntum.gantt.Fullscreen.exit();
                         }
 
-                        AbrirCronograma();    
+                        alert('AAA');
                     }
                 },
                 {
                     type: 'button',
                     color: 'b-blue',
-                    ref: 'clickOnceButton',
-                    icon: 'b-fa b-fa-info-circle',
-                    tooltip: infoCronograma.DescDownloadClickOnce,
-                    hidden: !infoCronograma.HasLinkDownloadClickOnce,
-                    cls: 'b-blue b-raised',
+                    ref: 'DesfazerAlteracoes',
+                    icon: 'b-fa b-fa-rotate-left',
+                    tooltip: "Desfazer",
+                    disabled: true,
                     onClick() {
-                        if (this.isFullscreen) {
-                            this.isFullscreen = false;
-                            bryntum.gantt.Fullscreen.exit();
-                            window.open(infoCronograma.LinkDownloadClickOnce);
-                        } else {
-                            window.open(infoCronograma.LinkDownloadClickOnce);
-                        }
+
+
                     }
                 },
                 {
                     type: 'button',
+                    color: 'b-blue',
+                    ref: 'RefazerAlteracoes',
+                    icon: 'b-fa b-fa-rotate-right',
+                    tooltip: "Refazer",
+                    disabled: true,
+                    onClick() {
+
+
+                    }
+                },
+                {
+                    type: 'button',
+                    color: 'b-blue',
+                    ref: 'SalvarAlteracoes',
+                    icon: 'b-fa b-fa-save',
+                    tooltip: "Salvar",
+                    disabled: true,
+                    onClick() {
+
+
+                    }
+                }
+            ]
+        },
+        {
+            type: 'buttonGroup',
+            items: [
+                {
+                    type: 'button',
+                    color: 'b-green',
+                    ref: 'AdicionarTarefa',
+                    icon: 'b-fa b-fa-plus',
+                    tooltip: "Nova tarefa",
+                    disabled: true,
+                    onClick() {
+
+                    }
+                }, {
+                    type: 'button',
+                    color: 'b-green',
+                    ref: 'EditarTarefa',
+                    icon: 'b-fa b-fa-edit',
+                    tooltip: "Editar tarefa",
+                    disabled: true,
+                    onClick() {
+                        if (this.isFullscreen) {
+                            this.isFullscreen = false;
+                            bryntum.gantt.Fullscreen.exit();
+                        }
+
+                        alert('AAA');
+                    }
+                },
+                {
+                    type: 'button',
+                    color: 'b-green',
+                    ref: 'visualizarInfoTarefaButton',
+                    icon: 'b-fa b-fa-file-alt',
+                    tooltip: "Detalhes da tarefa",
+                    onClick() {
+
+                        if (this.isFullscreen) {
+                            this.isFullscreen = false;
+                            bryntum.gantt.Fullscreen.exit();
+                        }
+
+                        if (gantt.selectedRecord) {
+                            var dimensions = getDimension();
+
+                            var codTarefa = gantt.selectedRecord.originalData.codTarefa;
+
+                            var tarefaParam = 'CT=' + codTarefa;
+                            var dataParam = '&Data=';
+                            var idProjetoParam = '&IDProjeto=' + idProjeto;
+
+                            window.top.showModal("PopUpCronograma.aspx?" + tarefaParam + idProjetoParam + dataParam, getTraducao('Cronograma_gantt_detalhes_da_tarefa'), 820, 550, "", null);
+                        } else {
+                            bryntum.gantt.Toast.show(getTraducao('Primeiro_selecione_a_tarefa_que_deseja_visualizar'));
+                        }
+                    }
+                }]
+        },
+        {       type: 'buttonGroup',
+                items: [                 
+                {
+                    type: 'button',
                     color: 'b-deep-orange',
                     ref: 'editEapButton',
-                    icon: 'b-fa b-fa-edit',
+                    icon: 'b-fa b-fa-sitemap',
                     tooltip: getTraducao('editar_eap'),
                     hidden: false,
                     onClick() {
@@ -355,46 +403,7 @@ const gantt = new Gantt({
                         myArguments.param2 = ' (VISUALIZAÇÃO) ';
                         window.top.showModal("'" + baseUrlEAP + "&AM=RO&Altura='" + (dimensions.height - 40), 'Visualização', dimensions.width, dimensions.height, recarregar, myArguments);
                     }
-                },
-                {
-                    type: 'button',
-                    color: 'b-blue',
-                    ref: 'visualizarInfoTarefaButton',
-                    icon: 'b-fa b-fa-file-alt',
-                    tooltip: getTraducao('Visualizar'),
-                    onClick() {
-                        
-                        if (this.isFullscreen) {
-                            this.isFullscreen = false;
-                            bryntum.gantt.Fullscreen.exit();
-                        }
-
-                        if (gantt.selectedRecord) {
-                            var dimensions = getDimension();
-
-                            var codTarefa = gantt.selectedRecord.originalData.codTarefa;
-
-                            var tarefaParam = 'CT=' + codTarefa;
-                            var dataParam = '&Data=';
-                            var idProjetoParam = '&IDProjeto=' + idProjeto;
-
-                            window.top.showModal("PopUpCronograma.aspx?" + tarefaParam + idProjetoParam + dataParam, getTraducao('Cronograma_gantt_detalhes_da_tarefa'), 820, 550, "", null);
-                        } else {
-                            bryntum.gantt.Toast.show(getTraducao('Primeiro_selecione_a_tarefa_que_deseja_visualizar'));
-                        }
-                    }
-                },
-                {
-                    type: 'button',
-                    color: 'b-red',
-                    ref: 'criticalPathsButton',
-                    icon: 'b-fa b-fa-fire',
-                    tooltip: getTraducao('caminho_critico'),
-                    toggleable: true,
-                    onClick() {
-                        incluirClassCaminhoCritico();
-                    }
-                } 
+                }
             ]
         },
         {

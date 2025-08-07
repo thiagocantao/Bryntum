@@ -319,6 +319,8 @@ const gantt = new Gantt({
                     disabled: true,
                     onClick() {
                         toggleEdit(false);
+                        const cronogramaJson = JSON.stringify(gantt.project.toJSON());
+                        salvaCronograma(cronogramaJson);
                     }
                 },
                 {

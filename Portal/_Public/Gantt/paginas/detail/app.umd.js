@@ -19,7 +19,7 @@ var getHeadersProject = function () {
         idprojeto: idProjeto,
         numLinhaBase: numLinhaBase
     };
- 
+
     gantt.project.transport.load.requestConfig.headers = headers;
     return headers;
 }
@@ -248,6 +248,22 @@ const gantt = new Gantt({
                 {
                     type: 'button',
                     color: 'b-blue',
+                    ref: 'GerenciarRecursos',
+                    icon: 'b-fa b-fa-briefcase',
+                    tooltip: "Gerenciar Recursos",
+                    hidden: false,
+                    onClick() {
+                        if (this.isFullscreen) {
+                            this.isFullscreen = false;
+                            bryntum.gantt.Fullscreen.exit();
+                        }
+
+
+                    }
+                },
+                {
+                    type: 'button',
+                    color: 'b-blue',
                     ref: 'editarCronograma',
                     icon: 'b-fa b-fa-edit',
                     tooltip: getTraducao('editar_cronograma'),
@@ -297,6 +313,17 @@ const gantt = new Gantt({
                     ref: 'SalvarAlteracoes',
                     icon: 'b-fa b-fa-save',
                     tooltip: "Salvar",
+                    disabled: true,
+                    onClick() {
+                        toggleEdit(false);
+                    }
+                },
+                {
+                    type: 'button',
+                    color: 'b-blue',
+                    ref: 'CancelarAlteracoes',
+                    icon: 'b-fa b-fa-close',
+                    tooltip: "Cancelar",
                     disabled: true,
                     onClick() {
                         toggleEdit(false);
@@ -364,8 +391,9 @@ const gantt = new Gantt({
                     }
                 }]
         },
-        {       type: 'buttonGroup',
-                items: [                 
+        {
+            type: 'buttonGroup',
+            items: [
                 {
                     type: 'button',
                     color: 'b-deep-orange',
@@ -427,7 +455,7 @@ const gantt = new Gantt({
             }) {
                 numLinhaBase = value;
                 getHeadersProject();
-                gantt.project.load();  
+                gantt.project.load();
             }
         }, {
             type: 'button',
@@ -437,9 +465,9 @@ const gantt = new Gantt({
             tooltip: getTraducao('Visualizar_infor_da_linha_de_base'),
             toggleable: false,
             onClick() {
-                    atualizarInfoLb();  
-                }
-            },
+                atualizarInfoLb();
+            }
+        },
     ],
     listeners: {
         // Adiciona um ouvinte para o evento 'beforecontextmenu'
@@ -460,9 +488,9 @@ const stm = gantt.project.stm;
 stm.autoRecord = true;
 stm.disable();
 stm.on({
-    recordingStop : updateUndoRedoButtons,
-    restoringStop : updateUndoRedoButtons,
-    queueReset    : updateUndoRedoButtons
+    recordingStop: updateUndoRedoButtons,
+    restoringStop: updateUndoRedoButtons,
+    queueReset: updateUndoRedoButtons
 });
 
 function updateUndoRedoButtons() {
@@ -472,13 +500,14 @@ function updateUndoRedoButtons() {
 }
 
 function toggleEdit(enable) {
-    const { editarCronograma, DesfazerAlteracoes, RefazerAlteracoes, SalvarAlteracoes, AdicionarTarefa, EditarTarefa } = gantt.widgetMap;
+    const { editarCronograma, DesfazerAlteracoes, RefazerAlteracoes, SalvarAlteracoes, CancelarAlteracoes, AdicionarTarefa, EditarTarefa } = gantt.widgetMap;
 
     if (enable) {
         gantt.readOnly = false;
 
         editarCronograma.disabled = true;
         SalvarAlteracoes.disabled = false;
+        CancelarAlteracoes.disabled = false;
         AdicionarTarefa.disabled = false;
         EditarTarefa.disabled = false;
 
@@ -489,6 +518,7 @@ function toggleEdit(enable) {
 
         editarCronograma.disabled = false;
         SalvarAlteracoes.disabled = true;
+        CancelarAlteracoes.disabled = true;
         AdicionarTarefa.disabled = true;
         EditarTarefa.disabled = true;
         DesfazerAlteracoes.disabled = true;

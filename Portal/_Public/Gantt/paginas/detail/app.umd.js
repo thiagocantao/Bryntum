@@ -589,6 +589,20 @@ async function gerenciarRecursos() {
     }
 }
 
+gantt.project.on('load', () => {
+    const recursos = window.recursosCorporativosAlocados || [];
+    gantt.project.resourceStore.data = recursos.map(r => ({
+        id: r.CodigoRecursoCorporativo,
+        name: r.NomeRecursoCorporativo
+    }));
+
+    const atribuicoes = window.atribuicoesRecursos || [];
+    gantt.project.assignmentStore.data = atribuicoes.map(a => ({
+        id: a.CodigoAtribuicao,
+        event: a.CodigoTarefa,
+        resource: a.CodigoRecursoProjeto
+    }));
+});
 //gantt.project.load().then(function () {
 //    // Adaptar tamanho
 //    gantt.zoomToFit({

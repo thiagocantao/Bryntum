@@ -7,7 +7,9 @@ var {
     ColumnStore,
     ContextMenu,
     TaskModel,
-    Gantt
+    Gantt,
+    Grid,
+    Popup
 } = bryntum.gantt;
 
 
@@ -258,7 +260,7 @@ const gantt = new Gantt({
                             bryntum.gantt.Fullscreen.exit();
                         }
 
-
+                        gerenciarRecursos();
                     }
                 },
                 {
@@ -529,6 +531,44 @@ function toggleEdit(enable) {
     }
 
     updateUndoRedoButtons();
+}
+
+async function gerenciarRecursos() {
+    try {
+        const recursos = window.recursosCorporativos || [];
+
+        const grid = new Grid({
+            columns: [{ text: 'Recurso', field: 'NomeRecursoCorporativo', flex: 1 }],
+            data: recursos,
+            height: 300,
+            width: 400,
+            selectionMode: { mode: 'multi' }
+        });
+
+        const popup = new Popup({
+            title: 'Gerenciar Recursos',
+            modal: true,
+            width: 420,
+            height: 380,
+            closable: true,
+            autoShow: true,
+            items: [grid],
+            bbar: [{
+                text: 'Adicionar ao projeto',
+                onClick() {
+                    const selecionados = grid.selectedRecords || [];
+                    console.log('Recursos selecionados', selecionados);
+                    // TODO: Implementar persistência dos recursos selecionados
+                    popup.close();
+                }
+            }]
+        });
+
+        popup.show();
+    }
+    catch (e) {
+        Toast.show('Não foi possível carregar os recursos.');
+    }
 }
 
 //gantt.project.load().then(function () {

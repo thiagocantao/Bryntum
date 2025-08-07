@@ -282,7 +282,35 @@ public partial class dados
         return getDataSet(comandoSQL);
     }
 
-    public DataSet getRecursosCorporativosProjeto(string codigoProjeto, int CodigoEntidade)
+    public DataSet getAtribuicaoRecursosCronograma(string codigoProjeto)
+    { 
+
+        // ACG: 09/11/2015 - Chamado "P432294". Foi incluído a subquerie para consultar se a atribuição está vinculada a algum lancamento financeiro
+        string comandoSQL = string.Format(
+             @" SELECT ART.CodigoAtribuicao, ART.CodigoTarefa, ART.CodigoRecursoProjeto, ART.UnidadeAtribuicao, ART.Custo, ART.Trabalho,
+                           ART.CustoUso, ART.CustoExtra, ART.PercentualFisicoConcluido, ART.CustoReal, ART.TrabalhoReal, ART.dataAtribuicao as CriadoEm,
+                           ART.CustoHoraRecursoAtribuido, ART.Inicio, ART.Termino, ART.UnidadeAtribuicaoReal, ART.CustoUnitarioReal,
+                           (SELECT count(1) FROM LancamentoFinanceiro 
+						     WHERE CodigoAtribuicao = ART.CodigoAtribuicao 
+							   AND DataExclusao is null) QtdeLancamentoFinanceiro
+                    FROM {0}.{1}.AtribuicaoRecursoTarefa ART INNER JOIN
+                         {0}.{1}.tarefaCronogramaProjeto tcp on tcp.CodigoCronogramaProjeto = art.CodigoCronogramaProjeto and
+                                                                tcp.codigoTarefa = art.codigoTarefa AND
+                                                                tcp.dataExclusao is null
+                   WHERE ART.CodigoCronogramaProjeto = '{2}' 
+                   ORDER BY ART.CodigoTarefa", bancodb, Ownerdb, codigoProjeto);
+
+        DataSet ds = classeDados.getDataSet(comandoSQL);
+        if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+        {
+            return ds;
+        }
+
+        return null;
+    }
+
+
+    public DataSet getRecursosCorporativosDisponiveisProjeto(string codigoProjeto, int CodigoEntidade)
     {       
 
         string comandoSQL = "";
@@ -338,6 +366,61 @@ public partial class dados
         // return null;
     }
 
+    public DataSet getRecursosCorporativosProjeto(string codigoProjeto, int CodigoEntidade)
+    {
+
+        string comandoSQL = "";
+        try
+        {
+            string recursosCronograma = "";
+            string where = "";
+            // se tem codigo do cronograma é para mostrar os recursos corporativos que estejam associados a ele ou para mostrar os que ainda não estão associados a ele.
+            if (codigoProjeto != "")
+            {
+                // OcultarRecursoCronograma define se é para mostrar os RC associados ou se é para ocultá-los
+                string tipoJoin = "INNER ";
+                recursosCronograma = string.Format(
+                    @" {2} JOIN
+                       (SELECT RCP.CodigoRecursoCorporativo
+                          FROM {0}.{1}.RecursoCronogramaProjeto RCP
+                         WHERE RCP.CodigoCronogramaProjeto = '{3}') RCP on (RCP.CodigoRecursoCorporativo = RC.CodigoRecursoCorporativo)
+                     ", bancodb, Ownerdb, tipoJoin, codigoProjeto);
+
+
+                where = " AND RCP.CodigoRecursoCorporativo is not null";
+            }
+
+            // se informou o período, deve retornar a disponibilidade
+            string selectDisponibilidade = ", 0.0 as Disponibilidade";
+
+            selectDisponibilidade = string.Format(", convert(decimal, null) as Disponibilidade");
+
+
+            comandoSQL = string.Format(
+                @"SELECT TR.DescricaoTipoRecurso, RC.CodigoTipoRecurso, RC.NomeRecursoCorporativo, 
+                          dbo.f_GetCustoUnitarioRecursoCorporativo(RC.CodigoRecursoCorporativo, 'HN') as CustoHora, 
+                          dbo.f_GetCustoUnitarioRecursoCorporativo(RC.CodigoRecursoCorporativo, 'HE') as CustoHoraExtra, 
+                          dbo.f_GetCustoUnitarioRecursoCorporativo(RC.CodigoRecursoCorporativo, 'UR') as CustoUso, 
+                          -- RC.CustoHora, RC.CustoHoraExtra, RC.CustoUso, 
+                          RC.CodigoRecursoCorporativo, GR.DescricaoGrupo, GR.CodigoGrupoRecurso, RC.UnidadeMedidaRecurso,
+                          RC.Anotacoes
+                          {5}
+                    FROM  {0}.{1}.RecursoCorporativo RC inner join
+                          {0}.{1}.TipoRecurso TR on (TR.CodigoTipoRecurso = RC.CodigoTipoRecurso) inner join
+                          {0}.{1}.GrupoRecurso GR on (GR.CodigoGrupoRecurso = RC.CodigoGrupoRecurso )  {2}
+                    WHERE RC.CodigoEntidade = {3} {4} AND RC.[DataDesativacaoRecurso] IS NULL AND RC.IndicaRecursoAtivo = 'S'
+                    ORDER By TR.DescricaoTipoRecurso, RC.NomeRecursoCorporativo
+                 ", bancodb, Ownerdb, recursosCronograma, CodigoEntidade, where, selectDisponibilidade);
+
+            return classeDados.getDataSet(comandoSQL);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " " + comandoSQL);
+        }
+
+        // return null;
+    }
 
 
     //todo: Consultar con Ericson a mudança da linha [INNER JOIN  {0}.{1}.TipoAssociacao AS ta ON (ta.CodigoTipoAssociacao = ac.CodigoTipoAssociacao AND ta.IniciaisTipoAssociacao = 'RC')] 

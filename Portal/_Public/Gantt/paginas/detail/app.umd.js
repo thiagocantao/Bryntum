@@ -565,8 +565,8 @@ async function gerenciarRecursos() {
                         Toast.show('Selecione ao menos um recurso.');
                         return;
                     }
-                    console.log('Recursos selecionados', selecionados);
-                    // TODO: Implementar persistência dos recursos selecionados
+                    const ids = selecionados.map(r => r.CodigoRecursoCorporativo);
+                    insereRecursosCorporativos(JSON.stringify(ids));
                     popup.close();
                 }
             }]

@@ -2,6 +2,7 @@
 
 using System.Web;
 using System.Text;
+using CDIS;
 using Cdis.Brisk.Infra.Core.Extensions;
 using Cdis.Brisk.Application;
 using Cdis.Brisk.Application.Applications.Cronograma;
@@ -11,6 +12,7 @@ using Cdis.Brisk.DataTransfer.Gantt;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Data;
 
 
 public class GanttHandler : IHttpHandler
@@ -134,6 +136,30 @@ public class GanttHandler : IHttpHandler
     public void GetJsonProject(HttpContext context, int idProjeto, short numLinhaBase, bool isCarregarHtmlCaminhoCritico)
     {
         var ganttDataset = UowApplication.GetUowApplication<CronogramaGanttApplication>().GetGanttDatasetDataTransfer(idProjeto, numLinhaBase, typeof(Resources.traducao), isCarregarHtmlCaminhoCritico);
+
+        var recursos = new List<ResourceGanttDataTransfer>();
+
+        dados cDados = CdadosUtil.GetCdados(null);
+        object objCodigoEntidade = cDados.getInfoSistema("CodigoEntidade");
+        if (objCodigoEntidade != null)
+        {
+            int codigoEntidade = int.Parse(objCodigoEntidade.ToString());
+            DataSet dsRecursos = cDados.getRecursosCorporativosProjeto(idProjeto.ToString(), codigoEntidade);
+            if (dsRecursos != null && dsRecursos.Tables.Count > 0)
+            {
+                recursos = dsRecursos.Tables[0].Rows.Cast<DataRow>()
+                    .Select(r => new ResourceGanttDataTransfer
+                    {
+                        id = int.Parse(r["CodigoRecursoCorporativo"].ToString()),
+                        name = r["NomeRecursoCorporativo"].ToString()
+                    })
+                    .ToList();
+            }
+        }
+
+        ganttDataset.resources = new ResourcesGanttDataTransfer { rows = recursos };
+        ganttDataset.assignments = new AssignmentsGanttDataTransfer { rows = new List<AssignmentGanttDataTransfer>() };
+
         context.Response.ContentType = "application/json";
         context.Response.ContentEncoding = Encoding.UTF8;
         context.Response.Write(ganttDataset.ToJson());

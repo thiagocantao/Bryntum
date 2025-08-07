@@ -138,6 +138,7 @@ public class GanttHandler : IHttpHandler
         var ganttDataset = UowApplication.GetUowApplication<CronogramaGanttApplication>().GetGanttDatasetDataTransfer(idProjeto, numLinhaBase, typeof(Resources.traducao), isCarregarHtmlCaminhoCritico);
 
         var recursos = new List<ResourceGanttDataTransfer>();
+        var atribuicoes = new List<AssignmentGanttDataTransfer>();
 
         dados cDados = CdadosUtil.GetCdados(null);
         object objCodigoEntidade = cDados.getInfoSistema("CodigoEntidade");
@@ -155,9 +156,22 @@ public class GanttHandler : IHttpHandler
                     })
                     .ToList();
             }
+
+            DataSet dsAtribuicoes = cDados.getAtribuicaoRecursosCronograma(idProjeto.ToString());
+            if (dsAtribuicoes != null && dsAtribuicoes.Tables.Count > 0)
+            {
+                atribuicoes = dsAtribuicoes.Tables[0].Rows.Cast<DataRow>()
+                    .Select(r => new AssignmentGanttDataTransfer
+                    {
+                        id = int.Parse(r["CodigoAtribuicao"].ToString()),
+                        @event = int.Parse(r["CodigoTarefa"].ToString()),
+                        resource = int.Parse(r["CodigoRecursoProjeto"].ToString())
+                    })
+                    .ToList();
+            }
         }
         ganttDataset.resources = new ResourcesGanttDataTransfer { rows = recursos };
-        ganttDataset.assignments = new AssignmentsGanttDataTransfer { rows = new List<AssignmentGanttDataTransfer>() };
+        ganttDataset.assignments = new AssignmentsGanttDataTransfer { rows = atribuicoes };
 
         context.Response.ContentType = "application/json";
         context.Response.ContentEncoding = Encoding.UTF8;

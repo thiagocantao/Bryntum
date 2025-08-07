@@ -198,14 +198,14 @@ App.Gantt = {
           renderer: onRenderDate
         }
       ],
-      tbar: [         
+      tbar: [
           {
               tooltip: "- Zoom",
               cls: 'iconzoom-out',
               height: 22,
               handler: function () {
                   g.zoomOut();
-              }    
+              }
           },
           {
               tooltip: "+ Zoom",
@@ -213,7 +213,7 @@ App.Gantt = {
               height: 22,
               handler: function () {
                   g.zoomIn();
-              }    
+              }
           },
           {
               tooltip: "Zoom to Fit",
@@ -221,11 +221,19 @@ App.Gantt = {
               height: 22,
               handler: function () {
                   g.zoomToFit();
-              }    
+              }
 
+          },
+          {
+              text: 'Gerenciar Recursos',
+              handler: function () {
+                  if (App && App.Gantt && Ext.isFunction(App.Gantt.gerenciarRecursos)) {
+                      App.Gantt.gerenciarRecursos();
+                  }
+              }
           }
           //,
-          //{       
+          //{
           //    itemId: 'viewFullScreen',
           //    reference : 'viewFullScreen',
           //    tooltip: "Full Screen",
@@ -283,6 +291,72 @@ App.Gantt = {
     g.setReadOnly(true);
     g.setHeight(window.innerHeight - 130);
     Ext.QuickTips.init();
+  },
+
+  gerenciarRecursos: function () {
+    Ext.Ajax.request({
+      url: '../wsTasquesreg.asmx/getRecursosCorporativos',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      jsonData: {
+        codigoProjeto: window.codigoProjeto || '',
+        OcultarRecursoCronograma: false,
+        CodigoEntidade: window.codigoEntidade || 0,
+        Inicio: null,
+        Termino: null
+      },
+      success: function (resp) {
+        var result = {};
+        try {
+          result = Ext.decode(resp.responseText).d || {};
+        } catch (e) { }
+
+        var data = [];
+        if (result.Tables && result.Tables.length && result.Tables[0].Rows) {
+          for (var i = 0; i < result.Tables[0].Rows.length; i++) {
+            data.push(result.Tables[0].Rows[i]);
+          }
+        }
+
+        var store = Ext.create('Ext.data.Store', {
+          fields: ['CodigoRecursoCorporativo', 'NomeRecursoCorporativo'],
+          data: data
+        });
+
+        var grid = Ext.create('Ext.grid.Panel', {
+          store: store,
+          columns: [{ text: 'Recurso', dataIndex: 'NomeRecursoCorporativo', flex: 1 }],
+          selModel: { selType: 'rowmodel', mode: 'MULTI' },
+          height: 300,
+          width: 400,
+          tbar: [{
+            text: 'Adicionar ao projeto',
+            handler: function () {
+              var recs = grid.getSelectionModel().getSelection();
+              if (recs.length === 0) {
+                Ext.Msg.alert('Atenção', 'Selecione ao menos um recurso.');
+                return;
+              }
+              // TODO: Implementar persistência dos recursos selecionados
+              console.log('Recursos selecionados', recs);
+              win.close();
+            }
+          }]
+        });
+
+        var win = Ext.create('Ext.window.Window', {
+          title: 'Gerenciar Recursos',
+          modal: true,
+          layout: 'fit',
+          items: [grid]
+        });
+
+        win.show();
+      },
+      failure: function () {
+        Ext.Msg.alert('Erro', 'Não foi possível carregar os recursos.');
+      }
+    });
   }
 };
 

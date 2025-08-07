@@ -156,7 +156,6 @@ public class GanttHandler : IHttpHandler
                     .ToList();
             }
         }
-
         ganttDataset.resources = new ResourcesGanttDataTransfer { rows = recursos };
         ganttDataset.assignments = new AssignmentsGanttDataTransfer { rows = new List<AssignmentGanttDataTransfer>() };
 

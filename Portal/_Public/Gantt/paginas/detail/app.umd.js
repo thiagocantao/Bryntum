@@ -315,7 +315,10 @@ const gantt = new Gantt({
                     tooltip: "Nova tarefa",
                     disabled: true,
                     onClick() {
+                        const parent = gantt.selectedRecord || gantt.taskStore.rootNode;
+                        const nova = parent.appendChild({ name: 'Nova tarefa', duration: 1 });
 
+                        gantt.editTask(nova);
                     }
                 }, {
                     type: 'button',
@@ -325,12 +328,11 @@ const gantt = new Gantt({
                     tooltip: "Editar tarefa",
                     disabled: true,
                     onClick() {
-                        if (this.isFullscreen) {
-                            this.isFullscreen = false;
-                            bryntum.gantt.Fullscreen.exit();
+                        if (gantt.selectedRecord) {
+                            gantt.editTask(gantt.selectedRecord);
+                        } else {
+                            bryntum.gantt.Toast.show('Primeiro selecione a tarefa que deseja editar');
                         }
-
-                        alert('AAA');
                     }
                 },
                 {

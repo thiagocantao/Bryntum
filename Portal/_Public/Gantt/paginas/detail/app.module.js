@@ -345,20 +345,12 @@ class GanttToolbar extends Toolbar {
     }
 
     async onAddTaskClick() {
-        const
-            { gantt } = this,
-            added     = gantt.taskStore.rootNode.appendChild({ name : this.L('New task'), duration : 1 });
+        const { gantt } = this,
+            parent = gantt.selectedRecord || gantt.taskStore.rootNode,
+            added = parent.appendChild({ name : this.L('New task'), duration : 1 });
 
-        // run propagation to calculate new task fields
         await gantt.project.commitAsync();
-
-        // scroll to the added task
-        await gantt.scrollRowIntoView(added);
-
-        gantt.features.cellEdit.startEditing({
-            record : added,
-            field  : 'name'
-        });
+        gantt.editTask(added);
     }
 
     onEditTaskClick() {

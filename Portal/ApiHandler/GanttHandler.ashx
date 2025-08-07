@@ -2,6 +2,7 @@
 
 using System.Web;
 using System.Text;
+using CDIS;
 using Cdis.Brisk.Infra.Core.Extensions;
 using Cdis.Brisk.Application;
 using Cdis.Brisk.Application.Applications.Cronograma;
@@ -136,19 +137,24 @@ public class GanttHandler : IHttpHandler
     {
         var ganttDataset = UowApplication.GetUowApplication<CronogramaGanttApplication>().GetGanttDatasetDataTransfer(idProjeto, numLinhaBase, typeof(Resources.traducao), isCarregarHtmlCaminhoCritico);
 
-        dados cDados = CdadosUtil.GetCdados(null);
-        int codigoEntidade = int.Parse(cDados.getInfoSistema("CodigoEntidade").ToString());
-        DataSet dsRecursos = cDados.getRecursosCorporativosProjeto(idProjeto.ToString(), codigoEntidade);
         var recursos = new List<ResourceGanttDataTransfer>();
-        if (dsRecursos != null && dsRecursos.Tables.Count > 0)
+
+        dados cDados = CdadosUtil.GetCdados(null);
+        object objCodigoEntidade = cDados.getInfoSistema("CodigoEntidade");
+        if (objCodigoEntidade != null)
         {
-            recursos = dsRecursos.Tables[0].Rows.Cast<DataRow>()
-                .Select(r => new ResourceGanttDataTransfer
-                {
-                    id = int.Parse(r["CodigoRecursoCorporativo"].ToString()),
-                    name = r["NomeRecursoCorporativo"].ToString()
-                })
-                .ToList();
+            int codigoEntidade = int.Parse(objCodigoEntidade.ToString());
+            DataSet dsRecursos = cDados.getRecursosCorporativosProjeto(idProjeto.ToString(), codigoEntidade);
+            if (dsRecursos != null && dsRecursos.Tables.Count > 0)
+            {
+                recursos = dsRecursos.Tables[0].Rows.Cast<DataRow>()
+                    .Select(r => new ResourceGanttDataTransfer
+                    {
+                        id = int.Parse(r["CodigoRecursoCorporativo"].ToString()),
+                        name = r["NomeRecursoCorporativo"].ToString()
+                    })
+                    .ToList();
+            }
         }
         ganttDataset.resources = new ResourcesGanttDataTransfer { rows = recursos };
         ganttDataset.assignments = new AssignmentsGanttDataTransfer { rows = new List<AssignmentGanttDataTransfer>() };

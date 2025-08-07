@@ -23,7 +23,9 @@ public partial class Gantt_Default : BriskGanttPageBase
     public string jsonRecursosCorporativos;
     public string jsonComboLinhaBase;
     public string jsonLinhaBase;
-    public string numLinhaBase;
+    public string numLinhaBase; 
+    public string jsonAtribuicaoRecursos;
+    public string jsonRecursosCorporativosAlocados;
 
 
     protected void Page_Load(object sender, EventArgs e)
@@ -33,22 +35,20 @@ public partial class Gantt_Default : BriskGanttPageBase
         listaParametrosDados["RemoteIPUsuario"] = Session["RemoteIPUsuario"] + "";
         listaParametrosDados["NomeUsuario"] = Session["NomeUsuario"] + "";
         CDados = CdadosUtil.GetCdados(listaParametrosDados);
-        
+
         VerificarAuth();
-        idProjeto = Convert.ToInt32(Request.QueryString["IDProjeto"] == null ? "0" : Request.QueryString["IDProjeto"].ToString());             
+        idProjeto = Convert.ToInt32(Request.QueryString["IDProjeto"] == null ? "0" : Request.QueryString["IDProjeto"].ToString());
         langCode = GetLangPage();
         baseUrlEAP = UowApplication.GetUowApplication<CronogramaProjetoApplication>().GetInfoEapDataTransfer(idProjeto, UsuarioLogado.CodigoEntidade, UsuarioLogado.Id).BaseUrl;
 
         //todo -> Essa variável é utilizada dentro do Tasques para validação interna. 
         int controleLocal = Math.Abs(CDados.ObtemCodigoHash(((UsuarioLogado.Id * idProjeto * UsuarioLogado.CodigoEntidade) + (UsuarioLogado.CodigoEntidade - UsuarioLogado.Id)) + "CDIS"));
 
-        InfoCronogramaDataTransfer infoCronograma = UowApplication.GetUowApplication<CronogramaProjetoApplication>().GetInfoCronogramaDataTransfer(UsuarioLogado, idProjeto, typeof(Resources.traducao), controleLocal);        
+        InfoCronogramaDataTransfer infoCronograma = UowApplication.GetUowApplication<CronogramaProjetoApplication>().GetInfoCronogramaDataTransfer(UsuarioLogado, idProjeto, typeof(Resources.traducao), controleLocal);
         //todo -> migração cdados
         //infoCronograma.LinkTasques = CDados.getLinkPortalDesktop(Request.Url, UsuarioLogado.CodigoEntidade, UsuarioLogado.Id, idProjeto, "../../../../");
-        jsonInfoCronograma = infoCronograma.ToJson();                       
-        lblInformacao.Text = infoCronograma.MensagemBloqueio;
-        btnAbrirCronoBloqueado.Text = Resources.traducao.sim;
-        
+        jsonInfoCronograma = infoCronograma.ToJson();
+
         List<string> listTraducaoItem = new List<string>()
         {
             "RecursosHumanos_expandir_todos",
@@ -78,20 +78,20 @@ public partial class Gantt_Default : BriskGanttPageBase
             "Visualizar_infor_da_linha_de_base",
             "carregando___"
         };
-        
+
         numLinhaBase = "-1";
         var listLinhaBase = UowApplication.GetUowApplication<CronogramaProjetoApplication>().GetListNumLinhaBase(idProjeto);
         jsonLinhaBase = listLinhaBase.ToJson().Replace('\\'.ToString() + '"'.ToString(), '\\'.ToString() + '\\'.ToString() + '"');
 
         jsonComboLinhaBase =
-                listLinhaBase.Select(p=> 
+                listLinhaBase.Select(p =>
                     new {
                         value = p.NumVersao.ToString(),
                         text = p.NumVersao == -1 ? Resources.traducao.vers_o_atual : Resources.traducao.linha_de_base + " " + p.NumLinhaBase.ToString() + " - " + p.Situacao
                     }
                 ).ToJson();
 
-        DataSet dsRecursos = CDados.getRecursosCorporativosProjeto(idProjeto.ToString(), UsuarioLogado.CodigoEntidade);
+        DataSet dsRecursos = CDados.getRecursosCorporativosDisponiveisProjeto(idProjeto.ToString(), UsuarioLogado.CodigoEntidade);
         jsonRecursosCorporativos = "[]";
         if (dsRecursos != null && dsRecursos.Tables.Count > 0)
         {
@@ -104,8 +104,37 @@ public partial class Gantt_Default : BriskGanttPageBase
                 .Serialize(rows)
                 .Replace("\\\"", "\\\\\"");
         }
+
+        DataSet dsRecursosAlocados = CDados.getRecursosCorporativosProjeto(idProjeto.ToString(), UsuarioLogado.CodigoEntidade);
+        jsonRecursosCorporativosAlocados = "[]";
+        if (dsRecursosAlocados != null && dsRecursosAlocados.Tables.Count > 0)
+        {
+            var dtRecursosAlocados = dsRecursosAlocados.Tables[0];
+            var rows = dtRecursosAlocados.Rows.Cast<DataRow>()
+                .Select(r => dtRecursosAlocados.Columns.Cast<DataColumn>()
+                    .ToDictionary(c => c.ColumnName, c => r[c]));
+
+            jsonRecursosCorporativosAlocados = new JavaScriptSerializer()
+                .Serialize(rows)
+                .Replace("\\\"", "\\\\\"");
+        }
+
+        DataSet dsAtribuicoes = CDados.getAtribuicaoRecursosCronograma(idProjeto.ToString());
+        jsonAtribuicaoRecursos = "[]";
+        if (dsAtribuicoes != null && dsAtribuicoes.Tables.Count > 0)
+        {
+            var dtAtribuicoes = dsAtribuicoes.Tables[0];
+            var rowsAtribuicoes = dtAtribuicoes.Rows.Cast<DataRow>()
+                .Select(r => dtAtribuicoes.Columns.Cast<DataColumn>()
+                    .ToDictionary(c => c.ColumnName, c => r[c]));
+
+            jsonAtribuicaoRecursos = new JavaScriptSerializer()
+                .Serialize(rowsAtribuicoes)
+                .Replace("\\\"", "\\\\\"");
+        }
+
         jsonTraducao = Cdis.Brisk.Infra.Core.Util.ResourceUtil.GetListResourceItem(typeof(Resources.traducao), listTraducaoItem).ToJson();
-        
+
 
         //todo -> migração cdados
         CDados.aplicaEstiloVisual(this.Page, false);
@@ -120,7 +149,7 @@ public partial class Gantt_Default : BriskGanttPageBase
         string comandoSQL = "";
         comandoSQL = string.Format(@"
             --Desbloquear Cronograma.
-            EXEC dbo.[p_crono_UndoCheckoutEdicaoEAP] @in_IdEdicaoEAP = '{0}'",  e.Parameter);
+            EXEC dbo.[p_crono_UndoCheckoutEdicaoEAP] @in_IdEdicaoEAP = '{0}'", e.Parameter);
         //System.Diagnostics.Debug.WriteLine(comandoSQL);
         int regAfetados = 0;
         CDados.execSQL(comandoSQL, ref regAfetados);

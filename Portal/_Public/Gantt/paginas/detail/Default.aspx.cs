@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Data;
+using System.Web.Script.Serialization;
 using System.Web;
 using Cdis.Brisk.Application.Applications.Cronograma;
 using Cdis.Brisk.DataTransfer.Cronograma;
@@ -16,11 +18,13 @@ public partial class Gantt_Default : BriskGanttPageBase
     protected string langCode;
     protected object jsonCol;
     protected string baseUrlEAP;
-    protected string jsonInfoCronograma;   
+    protected string jsonInfoCronograma;
     public string jsonTraducao;
+    public string jsonRecursosCorporativos;
     public string jsonComboLinhaBase;
     public string jsonLinhaBase;
-    public string numLinhaBase;    
+    public string numLinhaBase;
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -86,8 +90,20 @@ public partial class Gantt_Default : BriskGanttPageBase
                         text = p.NumVersao == -1 ? Resources.traducao.vers_o_atual : Resources.traducao.linha_de_base + " " + p.NumLinhaBase.ToString() + " - " + p.Situacao
                     }
                 ).ToJson();
-        
 
+        DataSet dsRecursos = CDados.getRecursosCorporativos(UsuarioLogado.CodigoEntidade.ToString(), "", "");
+        jsonRecursosCorporativos = "[]";
+        if (dsRecursos != null && dsRecursos.Tables.Count > 0)
+        {
+            var dtRecursos = dsRecursos.Tables[0];
+            var rows = dtRecursos.Rows.Cast<DataRow>()
+                .Select(r => dtRecursos.Columns.Cast<DataColumn>()
+                    .ToDictionary(c => c.ColumnName, c => r[c]));
+
+            jsonRecursosCorporativos = new JavaScriptSerializer()
+                .Serialize(rows)
+                .Replace("\\\"", "\\\\\"");
+        }
         jsonTraducao = Cdis.Brisk.Infra.Core.Util.ResourceUtil.GetListResourceItem(typeof(Resources.traducao), listTraducaoItem).ToJson();
         
 

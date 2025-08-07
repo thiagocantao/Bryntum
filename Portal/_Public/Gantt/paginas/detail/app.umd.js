@@ -328,7 +328,8 @@ const gantt = new Gantt({
                     icon: 'b-fa b-fa-close',
                     tooltip: "Cancelar",
                     disabled: true,
-                    onClick() {
+                    async onClick() {
+                        await stm.undoAll();
                         toggleEdit(false);
                     }
                 }

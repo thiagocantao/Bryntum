@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Gantt_Default" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Gantt_Default" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -155,6 +155,7 @@
             var jsonComboLinhaBase = JSON.parse('<%=jsonComboLinhaBase%>');
             var numLinhaBase = '<%=numLinhaBase%>';
             var idUser = '<%=UsuarioLogado.Id%>';
+            var recursosCorporativos = JSON.parse('<%=jsonRecursosCorporativos%>');
 
             function getTraducao(nameKey) {
                 if (jsonTraducao == null) {

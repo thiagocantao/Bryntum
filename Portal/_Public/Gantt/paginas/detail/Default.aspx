@@ -176,8 +176,8 @@
 
             function salvaCronograma(jsonCronograma)
             {
-                alert(jsonRecursos);
-                console.log(jsonRecursos);
+                alert(jsonCronograma);
+                console.log(jsonCronograma);
             }
 
             function getDimension() {

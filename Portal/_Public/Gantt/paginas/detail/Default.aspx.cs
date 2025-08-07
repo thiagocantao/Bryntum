@@ -91,7 +91,7 @@ public partial class Gantt_Default : BriskGanttPageBase
                     }
                 ).ToJson();
 
-        DataSet dsRecursos = CDados.getRecursosCorporativosDisponiveisProjeto(idProjeto.ToString(), UsuarioLogado.CodigoEntidade);
+        DataSet dsRecursos = CDados.getRecursosCorporativosProjeto(idProjeto.ToString(), UsuarioLogado.CodigoEntidade);
         jsonRecursosCorporativos = "[]";
         if (dsRecursos != null && dsRecursos.Tables.Count > 0)
         {

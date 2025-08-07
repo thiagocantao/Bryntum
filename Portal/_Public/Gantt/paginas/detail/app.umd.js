@@ -379,15 +379,22 @@ const gantt = new Gantt({
                         }
 
                         if (gantt.selectedRecord) {
-                            var dimensions = getDimension();
+                            const editor = gantt.features.taskEdit.editor,
+                                saveButton = editor.widgetMap.saveButton,
+                                deleteButton = editor.widgetMap.deleteButton;
 
-                            var codTarefa = gantt.selectedRecord.originalData.codTarefa;
+                            editor.readOnly = true;
+                            saveButton.hidden = true;
+                            deleteButton.hidden = true;
 
-                            var tarefaParam = 'CT=' + codTarefa;
-                            var dataParam = '&Data=';
-                            var idProjetoParam = '&IDProjeto=' + idProjeto;
+                            gantt.editTask(gantt.selectedRecord);
 
-                            window.top.showModal("PopUpCronograma.aspx?" + tarefaParam + idProjetoParam + dataParam, getTraducao('Cronograma_gantt_detalhes_da_tarefa'), 820, 550, "", null);
+                            editor.on('hide', function restoreEditor() {
+                                editor.off('hide', restoreEditor);
+                                editor.readOnly = false;
+                                saveButton.hidden = false;
+                                deleteButton.hidden = false;
+                            });
                         } else {
                             bryntum.gantt.Toast.show(getTraducao('Primeiro_selecione_a_tarefa_que_deseja_visualizar'));
                         }

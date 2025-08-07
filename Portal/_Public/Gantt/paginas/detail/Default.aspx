@@ -166,6 +166,11 @@
                 }
             }
 
+            function insereRecursosCorporativos(jsonRecursos)
+            {
+                console.log(jsonRecursos);
+            }
+
             function getDimension() {
                 return {
                     width: screen.availWidth - 60,
@@ -340,18 +345,9 @@
 
         <script src="../_shared/shared.umd.js"></script>
         <script src="app.umd.js"></script>
-        <script>
-            gantt.project.on('load', function () {
-                const recursos = (window.recursosCorporativos || []).map(r => ({
-                    id: r.CodigoRecursoCorporativo,
-                    name: r.NomeRecursoCorporativo
-                }));
-                gantt.project.resourceStore.data = recursos;
-            });
-        </script>
         <dxcp:ASPxCallback ID="callbackAtualizaTela" runat="server" ClientInstanceName="callbackAtualizaTela" OnCallback="callbackAtualizaTela_Callback">
             <ClientSideEvents EndCallback="function(s, e) {
-                     window.location.reload();
+	             window.location.reload();
             }" />
         </dxcp:ASPxCallback>
     </form>

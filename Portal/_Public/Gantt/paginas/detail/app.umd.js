@@ -9,7 +9,8 @@ var {
     TaskModel,
     Gantt,
     Grid,
-    Popup
+    Popup,
+    CheckColumn
 } = bryntum.gantt;
 
 
@@ -542,7 +543,10 @@ async function gerenciarRecursos() {
             data: recursos,
             height: 300,
             width: 400,
-            selectionMode: { mode: 'multi' }
+            selectionMode: {
+                checkbox: true,
+                multiSelect: true
+            }
         });
 
         const popup = new Popup({
@@ -557,6 +561,10 @@ async function gerenciarRecursos() {
                 text: 'Adicionar ao projeto',
                 onClick() {
                     const selecionados = grid.selectedRecords || [];
+                    if (!selecionados.length) {
+                        Toast.show('Selecione ao menos um recurso.');
+                        return;
+                    }
                     console.log('Recursos selecionados', selecionados);
                     // TODO: Implementar persistência dos recursos selecionados
                     popup.close();

@@ -44,6 +44,10 @@
     <Compile Include="Gantt\DependencyGanttDataTransfer.cs" />
     <Compile Include="Cronograma\InfoEapDataTransfer.cs" />
     <Compile Include="Gantt\GanttSaveDataTransfer.cs" />
+    <Compile Include="Gantt\ResourceGanttDataTransfer.cs" />
+    <Compile Include="Gantt\ResourcesGanttDataTransfer.cs" />
+    <Compile Include="Gantt\AssignmentGanttDataTransfer.cs" />
+    <Compile Include="Gantt\AssignmentsGanttDataTransfer.cs" />
     <Compile Include="Gantt\PlanoAcao\TaskItemGanttPlanoAcaoDataTransfer.cs" />
     <Compile Include="Gantt\PlanoAcao\TasksGanttPlanoAcaoDataTransfer.cs" />
     <Compile Include="Gantt\ProjetoMeta\TaskItemGanttProjetoMetaDataTransfer.cs" />

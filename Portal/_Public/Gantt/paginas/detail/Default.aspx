@@ -156,6 +156,8 @@
             var numLinhaBase = '<%=numLinhaBase%>';
             var idUser = '<%=UsuarioLogado.Id%>';
             var recursosCorporativos = JSON.parse('<%=jsonRecursosCorporativos%>');
+            var recursosCorporativosAlocados = JSON.parse('<%=jsonRecursosCorporativosAlocados%>');            
+            var atribuicoesRecursos = JSON.parse('<%=jsonAtribuicaoRecursos%>');
 
             function getTraducao(nameKey) {
                 if (jsonTraducao == null) {
@@ -168,6 +170,13 @@
 
             function insereRecursosCorporativos(jsonRecursos)
             {
+                alert(jsonRecursos);
+                console.log(jsonRecursos);
+            }
+
+            function salvaCronograma(jsonCronograma)
+            {
+                alert(jsonRecursos);
                 console.log(jsonRecursos);
             }
 

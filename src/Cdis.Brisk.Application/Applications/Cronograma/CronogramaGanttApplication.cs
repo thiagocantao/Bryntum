@@ -243,7 +243,7 @@ namespace Cdis.Brisk.Application.Applications.Cronograma
         {
             List<TaskGanttDataTransfer> listTaskGantt = new List<TaskGanttDataTransfer>();
 
-            foreach (var task in listTasks.Where(g => g.TarefaSuperior == null))
+            foreach (var task in listTasks.Where(g => string.IsNullOrEmpty(g.TarefaSuperior) || g.TarefaSuperior == g.CodigoRealTarefa))
             {
                 listTaskGantt.Add(MontarTaskGanttDataTransfer(task, listTasks, typeResourceTraducao, isCarregarHtmlCaminhoCritico));
             }

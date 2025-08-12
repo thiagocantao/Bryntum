@@ -247,6 +247,7 @@ namespace Cdis.Brisk.Application.Applications.Cronograma
                                                      string.Equals(g.TarefaSuperior.Trim(),
                                                                    g.CodigoRealTarefa?.Trim(),
                                                                    StringComparison.OrdinalIgnoreCase)))
+
             {
                 listTaskGantt.Add(MontarTaskGanttDataTransfer(task, listTasks, typeResourceTraducao, isCarregarHtmlCaminhoCritico));
             }

@@ -281,33 +281,12 @@ const gantt = new Gantt({
                     }
                 },
                 {
-                    type: 'button',
                     color: 'b-blue',
-                    ref: 'DesfazerAlteracoes',
-                    icon: 'b-fa b-fa-rotate-left',
-                    tooltip: "Desfazer",
-                    disabled: true,
-                    onClick() {
-                        const stm = gantt.project.stm;
-                        if (stm.canUndo) {
-                            stm.undo();
-                        }
-                        updateUndoRedoButtons();
-                    }
-                },
-                {
-                    type: 'button',
-                    color: 'b-blue',
-                    ref: 'RefazerAlteracoes',
-                    icon: 'b-fa b-fa-rotate-right',
-                    tooltip: "Refazer",
-                    disabled: true,
-                    onClick() {
-                        const stm = gantt.project.stm;
-                        if (stm.canRedo) {
-                            stm.redo();
-                        }
-                        updateUndoRedoButtons();
+                    ref: 'undoredoTool',
+                    type: 'undoredo',
+                    text: true,
+                    items: {
+                        transactionsCombo: null
                     }
                 },
                 {

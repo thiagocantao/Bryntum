@@ -243,7 +243,11 @@ namespace Cdis.Brisk.Application.Applications.Cronograma
         {
             List<TaskGanttDataTransfer> listTaskGantt = new List<TaskGanttDataTransfer>();
 
-            foreach (var task in listTasks.Where(g => string.IsNullOrEmpty(g.TarefaSuperior) || g.TarefaSuperior == g.CodigoRealTarefa))
+            foreach (var task in listTasks.Where(g => string.IsNullOrWhiteSpace(g.TarefaSuperior) ||
+                                                     string.Equals(g.TarefaSuperior.Trim(),
+                                                                   g.CodigoRealTarefa?.Trim(),
+                                                                   StringComparison.OrdinalIgnoreCase)))
+
             {
                 listTaskGantt.Add(MontarTaskGanttDataTransfer(task, listTasks, typeResourceTraducao, isCarregarHtmlCaminhoCritico));
             }
@@ -299,11 +303,12 @@ namespace Cdis.Brisk.Application.Applications.Cronograma
         /// </summary>        
         private List<TaskGanttDataTransfer> GetListTaskGanttDataTransfer(FGetCronogramaGanttProjetoDomain task, List<FGetCronogramaGanttProjetoDomain> listTasks, Type typeResourceTraducao, bool isCarregarHtmlCaminhoCritico)
         {
-            if (listTasks.Any(t => t.TarefaSuperior == task.CodigoRealTarefa))
+            var codigo = task.CodigoRealTarefa?.Trim();
+            if (listTasks.Any(t => string.Equals(t.TarefaSuperior?.Trim(), codigo, StringComparison.OrdinalIgnoreCase)))
             {
                 List<TaskGanttDataTransfer> listTaskGantt = new List<TaskGanttDataTransfer>();
 
-                foreach (var taskItem in listTasks.Where(g => g.TarefaSuperior == task.CodigoRealTarefa))
+                foreach (var taskItem in listTasks.Where(g => string.Equals(g.TarefaSuperior?.Trim(), codigo, StringComparison.OrdinalIgnoreCase)))
                 {
                     listTaskGantt.Add((MontarTaskGanttDataTransfer(taskItem, listTasks, typeResourceTraducao, isCarregarHtmlCaminhoCritico)));
                 }

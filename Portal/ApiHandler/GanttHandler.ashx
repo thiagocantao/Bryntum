@@ -173,9 +173,19 @@ public class GanttHandler : IHttpHandler
         ganttDataset.resources = new ResourcesGanttDataTransfer { rows = recursos };
         ganttDataset.assignments = new AssignmentsGanttDataTransfer { rows = atribuicoes };
 
+        var payload = new
+        {
+            ganttDataset.success,
+            ganttDataset.project,
+            tasks = new { rows = ganttDataset.tasks?.rows },
+            ganttDataset.dependencies,
+            ganttDataset.resources,
+            ganttDataset.assignments
+        };
+
         context.Response.ContentType = "application/json";
         context.Response.ContentEncoding = Encoding.UTF8;
-        context.Response.Write(ganttDataset.ToJson());
+        context.Response.Write(payload.ToJson());
     }
 
     public bool IsReusable

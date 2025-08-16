@@ -2,8 +2,9 @@ using System.Collections.Generic;
 
 namespace Cdis.Brisk.DataTransfer.Gantt.Balanceamento
 {
-    public class TasksGanttBalanceamentoDataTransfer
+    public class TasksGanttBalanceamentoDataTransfer : TasksGanttDataTransfer
     {
-        public List<TaskItemGanttBalanceamentoDataTransfer> rows { get; set; }
+        public new List<TaskItemGanttBalanceamentoDataTransfer> rows { get; set; }
     }
 }
+

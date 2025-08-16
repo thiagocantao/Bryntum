@@ -258,7 +258,7 @@ namespace Cdis.Brisk.Application.Applications.Cronograma
         /// <summary>
         /// Montar TaskGanttDataTransfer
         /// </summary>        
-        private TaskGanttDataTransfer MontarTaskGanttDataTransfer(FGetCronogramaGanttProjetoDomain task, List<FGetCronogramaGanttProjetoDomain> listTasks, Type typeResourceTraducao, bool isCarregarHtmlCaminhoCritico)
+        private TaskGanttDataTransfer MontarTaskGanttDataTransfer(FGetCronogramaGanttProjetoDomain task, List<FGetCronogramaGanttProjetoDomain> listTasks, Type typeResourceTraducao, bool isCarregarHtmlCaminhoCritico, int? parentId = null)
         {
             var listResourceTraducao = Cdis.Brisk.Infra.Core.Util.ResourceUtil.GetListResourceItem(typeResourceTraducao, new List<string> { "sim", "nao" });
             string langSim = listResourceTraducao.FirstOrDefault(t => t.Key == "sim").Text.ToUpper();
@@ -293,6 +293,7 @@ namespace Cdis.Brisk.Application.Applications.Cronograma
                 isAtrasoStr = (task.PercentualReal < task.PercentualPrevisto) ? langSim : langNao,
                 recurso = task.StringAlocacaoRecursoTarefa,
                 codTarefa = task.CodigoRealTarefa,
+                parentId = parentId,
                 custo = task.Custo,
                 children = GetListTaskGanttDataTransfer(task, listTasks, typeResourceTraducao, isCarregarHtmlCaminhoCritico)
             };
@@ -310,7 +311,7 @@ namespace Cdis.Brisk.Application.Applications.Cronograma
 
                 foreach (var taskItem in listTasks.Where(g => string.Equals(g.TarefaSuperior?.Trim(), codigo, StringComparison.OrdinalIgnoreCase)))
                 {
-                    listTaskGantt.Add((MontarTaskGanttDataTransfer(taskItem, listTasks, typeResourceTraducao, isCarregarHtmlCaminhoCritico)));
+                    listTaskGantt.Add(MontarTaskGanttDataTransfer(taskItem, listTasks, typeResourceTraducao, isCarregarHtmlCaminhoCritico, task.CodigoTarefa + 1));
                 }
 
                 return listTaskGantt;

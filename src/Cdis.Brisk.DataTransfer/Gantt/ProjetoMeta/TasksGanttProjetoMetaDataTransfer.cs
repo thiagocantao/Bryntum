@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 
-
 namespace Cdis.Brisk.DataTransfer.Gantt.ProjetoMeta
 {
     public class TasksGanttProjetoMetaDataTransfer : TasksGanttDataTransfer

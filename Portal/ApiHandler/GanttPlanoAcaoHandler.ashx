@@ -49,9 +49,19 @@ public class GanttPlanoAcaoHandler : IHttpHandler
                 ? UowApplication.GetUowApplication<CronogramaGanttPlanoAcaoApplication>().GetGanttDatasetDataTransfer(iniciaisObjeto, idObjeto, idEntidade, isIniciativas)
                 : UowApplication.GetUowApplication<CronogramaGanttPlanoAcaoApplication>().GetGanttPlanoAcaoDatasetDataTransfer(idPlanoAcao, iniciaisObjeto, idObjeto, idEntidade, isIniciativas);
 
+        var payload = new
+        {
+            ganttDataset.success,
+            ganttDataset.project,
+            tasks = ganttDataset.tasks,
+            ganttDataset.dependencies,
+            ganttDataset.resources,
+            ganttDataset.assignments
+        };
+
         context.Response.ContentType = "application/json";
         context.Response.ContentEncoding = Encoding.UTF8;
-        context.Response.Write(ganttDataset.ToJson());
+        context.Response.Write(payload.ToJson());
     }
 
     public bool IsReusable {

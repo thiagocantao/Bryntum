@@ -33,6 +33,7 @@ namespace Cdis.Brisk.DataTransfer.Gantt
         public string isAtrasoStr { get; set; }
         public string recurso { get; set; }
         public string codTarefa { get; set; }
+        public int? parentId { get; set; }
         public bool expanded
         {
             get

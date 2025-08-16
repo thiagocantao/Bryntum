@@ -50,9 +50,20 @@ public class GanttBalanceamentoHandler : IHttpHandler
     public void GetJsonProject(HttpContext context,int codEntidade,int codPortfolio,int numCenario)
     {
         var ganttDataset = UowApplication.GetUowApplication<CronogramaGanttBalanceamentoApplication>().GetGanttDatasetDataTransfer(codEntidade, codPortfolio, numCenario, typeof(Resources.traducao));
+
+        var payload = new
+        {
+            ganttDataset.success,
+            ganttDataset.project,
+            tasks = ganttDataset.tasks,
+            ganttDataset.dependencies,
+            ganttDataset.resources,
+            ganttDataset.assignments
+        };
+
         context.Response.ContentType = "application/json";
         context.Response.ContentEncoding = Encoding.UTF8;
-        context.Response.Write(ganttDataset.ToJson());
+        context.Response.Write(payload.ToJson());
     }
 
     public bool IsReusable {

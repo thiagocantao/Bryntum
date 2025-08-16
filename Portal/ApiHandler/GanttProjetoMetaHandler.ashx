@@ -49,9 +49,20 @@ public class GanttProjetoMetaHandler : IHttpHandler
     public void GetJsonProject(HttpContext context,int codEntidade,int idUsuario,int idCarteira)
     {
         var ganttDataset = UowApplication.GetUowApplication<CronogramaGanttProjetoMetaApplication>().GetGanttProjetoMetaDatasetDataTransfer(codEntidade, idUsuario, idCarteira, typeof(Resources.traducao));
+
+        var payload = new
+        {
+            ganttDataset.success,
+            ganttDataset.project,
+            tasks = ganttDataset.tasks,
+            ganttDataset.dependencies,
+            ganttDataset.resources,
+            ganttDataset.assignments
+        };
+
         context.Response.ContentType = "application/json";
         context.Response.ContentEncoding = Encoding.UTF8;
-        context.Response.Write(ganttDataset.ToJson());
+        context.Response.Write(payload.ToJson());
     }
 
     public bool IsReusable {

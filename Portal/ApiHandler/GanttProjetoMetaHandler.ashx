@@ -54,7 +54,7 @@ public class GanttProjetoMetaHandler : IHttpHandler
         {
             ganttDataset.success,
             ganttDataset.project,
-            tasks = new { rows = ganttDataset.tasks?.rows },
+            tasks = ganttDataset.tasks,
             ganttDataset.dependencies,
             ganttDataset.resources,
             ganttDataset.assignments

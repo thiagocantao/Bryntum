@@ -1,26 +1,10 @@
-var columns = [
-    {
-        "type": "column",
-        "field": "edtcode",
-        "text": "#",
-        "width": 50
-    },    
+var columns = [    
     {
         "type": "name",
-        "text": "",
+        "text": "Task",
         filterable: false,
         htmlEncode: false, // allow to use HTML code
         hidden: true
-    },
-    {
-        'type': 'name',
-        'text': 'Task',
-        'width': 450,
-         filterable: false,
-         htmlEncode: false, // allow to use HTML code
-         renderer: ({ record, row }) => {
-            return record.nomeTarefa;
-         }
     },    
     {
         "field": "inicioLb",

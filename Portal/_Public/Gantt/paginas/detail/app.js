@@ -128,6 +128,17 @@ const gantt = new Gantt({
         cellCopyPaste : true,
         taskCopyPaste : {
             useNativeClipboard : true
+        },
+        taskEdit : {
+            editorConfig : {
+                items : {
+                    advancedTab : {
+                        items : {
+                            calendarField : false
+                        }
+                    }
+                }
+            }
         }
     },
 

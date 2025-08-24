@@ -98,7 +98,18 @@ const gantt = new Gantt({
         taskMenu: { disabled: false },
         filter: true,
         nonWorkingTime: { disabled: true },
-        percentBar: false
+        percentBar: false,
+        taskEdit: {
+            editorConfig: {
+                items: {
+                    advancedTab: {
+                        items: {
+                            calendarField: false
+                        }
+                    }
+                }
+            }
+        }
     },
 
     tbar: [

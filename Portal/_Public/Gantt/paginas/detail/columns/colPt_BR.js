@@ -1,28 +1,18 @@
 var columns = [
-    {
-        "type": "column",
-        "field": "edtcode",
-        "text": "#",
-        "width": 50
-    },   
+    //{
+    //    "type": "column",
+    //    "field": "edtcode",
+    //    "text": "#",
+    //    "width": 50,
+    //    region: 'locked'
+    //},   
     {
         "type": "name",
-        "text": "",
+        "text": "Tarefa",
         filterable: true,
         htmlEncode: false, // allow to use HTML code
         hidden: true
-    },
-  {
-    "field": "nomeTarefa",
-    "text": "Tarefa",
-      "width": 450,
-      
-      filterable: true,
-      htmlEncode: false, // allow to use HTML code
-      renderer: ({ record, row }) => {
-          return record.nomeTarefa;
-      }
-  },    
+    },    
   {
     "field": "inicioLb",
      "text": "Início LB",

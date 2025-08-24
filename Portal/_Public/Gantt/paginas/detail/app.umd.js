@@ -13,36 +13,66 @@ var {
     CheckColumn
 } = bryntum.gantt;
 
+// ---------------------------------------------
+// CONTROLE DE FULLSCREEN (fora do escopo do botão)
+let isFullscreen = false;
+// ---------------------------------------------
 
+// Sanitize da sua lista de colunas: remove qualquer coluna 'name' existente,
+// para evitarmos conflito com a taskNameColumn definida no Gantt.
+if (!Array.isArray(columns)) columns = [];
+const otherColumns = columns.filter(c => c && c.type !== 'name');
 
+// Garante headers atualizados para o load do projeto
 var getHeadersProject = function () {
-
     var headers = {
         typeResult: "jsonProject",
         idprojeto: idProjeto,
         numLinhaBase: numLinhaBase
     };
-
     gantt.project.transport.load.requestConfig.headers = headers;
     return headers;
-}
+};
 
-this.isFullscreen = false;
 const gantt = new Gantt({
     appendTo: 'container',
+    selectionMode: {
+        cell: true,
+        dragSelect: true,
+        rowNumber: false
+    },
     locale: 'pt-BR',
     loadMask: getTraducao('carregando___'),
+
+    // >>>>>>> AQUI ESTÁ O PULO DO GATO
+    // Forçamos a coluna de nome (árvore) pelo config "taskNameColumn".
+    // Assim não dependemos do conteúdo de "columns" para a hierarquia aparecer.
+    taskNameColumn: {
+        type: 'name',
+        field: 'name',        // ajuste se o campo do seu dataset tiver outro nome
+        text: 'Tarefa',
+        width: 300,
+        region: 'locked'
+    },
+
+    // Suas demais colunas (sem a 'name'), ficam aqui:
+    columns: otherColumns,
+
+    // >>>>>>> Mantemos locked/normal para o layout
+    subGridConfigs: {
+        locked: { flex: 3 },
+        normal: { flex: 4 }
+    },
+
+    // Projeto: carregamento via transport
     project: {
-        //loadUrl: '../_datasets/calendars.json',
         transport: {
             load: {
-                //url: '../../../..'+resultGantt
                 requestConfig: {
                     url: '../../../../ApiHandler/GanttHandler.ashx',
                     method: 'POST',
                     // get rid of cache-buster parameter
                     disableCaching: false,
-                    //paramName: 'rq',                           
                     // custom request headers
                     headers: {
                         typeResult: "jsonProject",
@@ -52,59 +82,26 @@ const gantt = new Gantt({
                 }
             }
         },
-        autoLoad: true
+        autoLoad: true,
+        // Reset Undo / Redo after each load
+        resetUndoRedoQueuesAfterLoad: true
     },
+
     tickSize: 50,
-    readonly: true,
-    columns: columns,
-    subGridConfigs: {
-        locked: {
-            flex: 3
-        },
-        normal: {
-            flex: 4
-        }
-    },
+    readonly: false,
     contextMenu: false,
+
+    // (Opcional) Garantimos que a feature de árvore está ativa
     features: {
-        progressLine: {
-            disabled: true
-        },
-        taskMenu: {
-            disabled: true
-        },
-        //contextMenu: {
-        //    // Configuração do menu de contexto
-        //    items: {
-        //        customItem: {
-        //            text: 'Item Personalizado',
-        //            icon: 'b-icon b-icon-add' // Ícone opcional
-        //            // ... outras configurações do item ...
-        //        },
-        //        // Adicione outros itens conforme necessário
-        //    },
-        //},
-        //taskNonWorkingTime: {
-        //    tooltipTemplate({
-        //        nomeTarefa,
-        //        startDate,
-        //        endDate,
-        //        iconCls
-        //    }) {
-        //        return `                   
-        //            <p class="b-nonworkingtime-tip-title">${iconCls ? `<i class="${iconCls}"></i>` : ''}${nomeTarefa || 'Non-working time'}</p>
-        //            ${DateHelper.format(startDate, 'L')} - ${DateHelper.format(endDate, 'L')}
-        //        `;
-        //    }
-        //},
+        tree: true,
+        progressLine: { disabled: false },
+        taskMenu: { disabled: false },
         filter: true,
-        nonWorkingTime: {
-            disabled: true
-        },
+        nonWorkingTime: { disabled: true },
         percentBar: false
     },
-    tbar: [
 
+    tbar: [
         {
             type: 'buttonGroup',
             items: [
@@ -114,9 +111,7 @@ const gantt = new Gantt({
                     ref: 'expandAllButton',
                     icon: 'b-fa b-fa-angle-double-down',
                     tooltip: getTraducao('RecursosHumanos_expandir_todos'),
-                    onClick() {
-                        gantt.expandAll();
-                    }
+                    onClick() { gantt.expandAll(); }
                 },
                 {
                     type: 'button',
@@ -124,27 +119,21 @@ const gantt = new Gantt({
                     ref: 'collapseAllButton',
                     icon: 'b-fa b-fa-angle-double-up',
                     tooltip: getTraducao('RecursosHumanos_contrair_todos'),
-                    onClick() {
-                        gantt.collapseAll();
-                    }
+                    onClick() { gantt.collapseAll(); }
                 },
                 {
                     type: 'button',
                     color: 'b-blue',
                     ref: 'zoomInButton',
                     icon: 'b-fa b-fa-search-plus',
-                    onClick() {
-                        gantt.zoomIn();
-                    }
+                    onClick() { gantt.zoomIn(); }
                 },
                 {
                     type: 'button',
                     color: 'b-blue',
                     ref: 'zoomOutButton',
                     icon: 'b-fa b-fa-search-minus',
-                    onClick() {
-                        gantt.zoomOut();
-                    }
+                    onClick() { gantt.zoomOut(); }
                 },
                 {
                     type: 'button',
@@ -153,11 +142,11 @@ const gantt = new Gantt({
                     icon: 'b-icon b-icon-fullscreen',
                     cls: 'b-blue b-raised',
                     onClick() {
-                        if (!this.isFullscreen) {
-                            this.isFullscreen = true;
+                        if (!isFullscreen) {
+                            isFullscreen = true;
                             bryntum.gantt.Fullscreen.request(document.documentElement);
                         } else {
-                            this.isFullscreen = false;
+                            isFullscreen = false;
                             bryntum.gantt.Fullscreen.exit();
                         }
                     }
@@ -175,9 +164,11 @@ const gantt = new Gantt({
                     toggleable: false,
                     onClick() {
                         var arrayTask = [];
-                        gantt._store.allRecords.map(function (item) {
+
+                        // Usar API pública: taskStore
+                        gantt.taskStore.allRecords.forEach(function (item) {
                             var row = {
-                                id: 0,
+                                id: item.id ?? 0,
                                 edtcode: item.edtcode,
                                 isCaminhoCriticoStr: item.isCaminhoCriticoStr,
                                 name: item.name,
@@ -204,7 +195,7 @@ const gantt = new Gantt({
                             data: JSON.stringify(arrayTask)
                         };
 
-                        //isIE é uma função de ~/script/custom/util/browser.js
+                        // isIE é uma função de ~/script/custom/util/browser.js
                         if (isIE()) {
                             configAjax.headers = { typeResult: "getHtmlGantt", idprojeto: idProjeto };
                             configAjax.success = function (data) {
@@ -214,7 +205,7 @@ const gantt = new Gantt({
                                 win.focus();
                                 win.print();
                                 win.close();
-                            }
+                            };
                         } else {
                             configAjax.headers = { typeResult: "exportToPdf", idprojeto: idProjeto };
                             configAjax.xhrFields = { responseType: 'blob' };
@@ -256,11 +247,10 @@ const gantt = new Gantt({
                     tooltip: "Gerenciar Recursos",
                     hidden: false,
                     onClick() {
-                        if (this.isFullscreen) {
-                            this.isFullscreen = false;
+                        if (isFullscreen) {
+                            isFullscreen = false;
                             bryntum.gantt.Fullscreen.exit();
                         }
-
                         gerenciarRecursos();
                     }
                 },
@@ -272,11 +262,10 @@ const gantt = new Gantt({
                     tooltip: getTraducao('editar_cronograma'),
                     hidden: false,
                     onClick() {
-                        if (this.isFullscreen) {
-                            this.isFullscreen = false;
+                        if (isFullscreen) {
+                            isFullscreen = false;
                             bryntum.gantt.Fullscreen.exit();
                         }
-
                         toggleEdit(true);
                     }
                 },
@@ -284,10 +273,8 @@ const gantt = new Gantt({
                     color: 'b-blue',
                     ref: 'undoredoTool',
                     type: 'undoredo',
-                    text: true,
-                    items: {
-                        transactionsCombo: null
-                    }
+                    text: false,
+                    items: { transactionsCombo: null }
                 },
                 {
                     type: 'button',
@@ -329,10 +316,10 @@ const gantt = new Gantt({
                     onClick() {
                         const parent = gantt.selectedRecord || gantt.taskStore.rootNode;
                         const nova = parent.appendChild({ name: 'Nova tarefa', duration: 1 });
-
                         gantt.editTask(nova);
                     }
-                }, {
+                },
+                {
                     type: 'button',
                     color: 'b-green',
                     ref: 'EditarTarefa',
@@ -354,9 +341,8 @@ const gantt = new Gantt({
                     icon: 'b-fa b-fa-file-alt',
                     tooltip: "Detalhes da tarefa",
                     onClick() {
-
-                        if (this.isFullscreen) {
-                            this.isFullscreen = false;
+                        if (isFullscreen) {
+                            isFullscreen = false;
                             bryntum.gantt.Fullscreen.exit();
                         }
 
@@ -381,7 +367,8 @@ const gantt = new Gantt({
                             bryntum.gantt.Toast.show(getTraducao('Primeiro_selecione_a_tarefa_que_deseja_visualizar'));
                         }
                     }
-                }]
+                }
+            ]
         },
         {
             type: 'buttonGroup',
@@ -394,14 +381,14 @@ const gantt = new Gantt({
                     tooltip: getTraducao('editar_eap'),
                     hidden: false,
                     onClick() {
-                        if (this.isFullscreen) {
-                            this.isFullscreen = false;
+                        if (isFullscreen) {
+                            isFullscreen = false;
                             bryntum.gantt.Fullscreen.exit();
                         }
                         'use strict';
                         var dimensions = getDimension();
 
-                        var myArguments = new Object();
+                        var myArguments = {};
                         myArguments.param1 = '';
                         myArguments.param2 = '';
 
@@ -411,21 +398,22 @@ const gantt = new Gantt({
 
                         window.top.showModal("'" + baseUrlEAP + "&AM=RW&Altura='" + (dimensions.height - 40), 'Edição', dimensions.width, dimensions.height, retorno, myArguments);
                     }
-                }, {
+                },
+                {
                     type: 'button',
                     color: 'b-deep-orange',
                     ref: 'visualizarEapButton',
                     icon: 'b-fa b-fa-file-alt',
                     tooltip: getTraducao('visualizar_eap'),
                     onClick() {
-                        if (this.isFullscreen) {
-                            this.isFullscreen = false;
+                        if (isFullscreen) {
+                            isFullscreen = false;
                             bryntum.gantt.Fullscreen.exit();
                         }
                         'use strict';
                         var dimensions = getDimension();
 
-                        var myArguments = new Object();
+                        var myArguments = {};
                         myArguments.param1 = '';
                         myArguments.param2 = ' (VISUALIZAÇÃO) ';
                         window.top.showModal("'" + baseUrlEAP + "&AM=RO&Altura='" + (dimensions.height - 40), 'Visualização', dimensions.width, dimensions.height, recarregar, myArguments);
@@ -442,43 +430,41 @@ const gantt = new Gantt({
             inputWidth: '23em',
             editable: false,
             items: jsonComboLinhaBase,
-            onChange({
-                value
-            }) {
+            onChange({ value }) {
                 numLinhaBase = value;
                 getHeadersProject();
                 gantt.project.load();
             }
-        }, {
+        },
+        {
             type: 'button',
             color: 'b-blue',
             ref: 'visualizarLinhaButton',
             icon: 'b-fa b-fa-info-circle',
             tooltip: getTraducao('Visualizar_infor_da_linha_de_base'),
             toggleable: false,
-            onClick() {
-                atualizarInfoLb();
-            }
-        },
+            onClick() { atualizarInfoLb(); }
+        }
     ],
-    listeners: {
-        // Adiciona um ouvinte para o evento 'beforecontextmenu'
-        beforecontextmenu: event => {
-            // Impede a ação padrão do menu de contexto
-            event.preventDefault();
 
-            // Oculta o menu de contexto (substitua 'contextMenuElement' pelo elemento real do menu)
+    listeners: {
+        // Evita menu de contexto do navegador
+        beforecontextmenu: event => {
+            event.preventDefault();
             const contextMenuElement = document.getElementById('contextMenuElement');
             if (contextMenuElement) {
                 contextMenuElement.style.display = 'none';
             }
-        },
-    },
+        }
+    }
 });
 
+// ---------- State Tracking Manager ----------
 const stm = gantt.project.stm;
 stm.autoRecord = true;
-stm.disable();
+stm.disable(); // desabilitado até entrar no modo edição
+
+
 stm.on({
     recordingStop: updateUndoRedoButtons,
     restoringStop: updateUndoRedoButtons,
@@ -492,7 +478,15 @@ function updateUndoRedoButtons() {
 }
 
 function toggleEdit(enable) {
-    const { editarCronograma, DesfazerAlteracoes, RefazerAlteracoes, SalvarAlteracoes, CancelarAlteracoes, AdicionarTarefa, EditarTarefa } = gantt.widgetMap;
+    const {
+        editarCronograma,
+        DesfazerAlteracoes,
+        RefazerAlteracoes,
+        SalvarAlteracoes,
+        CancelarAlteracoes,
+        AdicionarTarefa,
+        EditarTarefa
+    } = gantt.widgetMap;
 
     if (enable) {
         gantt.readOnly = false;
@@ -581,16 +575,16 @@ gantt.project.on('load', () => {
         event: a.CodigoTarefa,
         resource: a.CodigoRecursoProjeto
     }));
-});
-//gantt.project.load().then(function () {
-//    // Adaptar tamanho
-//    gantt.zoomToFit({
-//        leftMargin: 100,
-//        rightMargin: 100
-//    });
-//    var stm = gantt.project.stm;
-//    stm.disable();
-//    stm.autoRecord = true;
-//    stm.disable = true;
 
-//});
+    // CORREÇÃO: não sobrescrever .disable
+    const _stm = gantt.project.stm;
+    _stm.disable();
+    _stm.autoRecord = true;
+
+    // Logs de verificação (você pode remover depois):
+    try {
+        console.log('[DEBUG] Tree feature?', !!gantt.features.tree);
+        console.log('[DEBUG] Columns:', gantt.columns.map(c => ({ type: c.type, region: c.region, text: c.text })));
+        console.log('[DEBUG] Root children count:', gantt.taskStore?.rootNode?.children?.length);
+    } catch (e) { }
+});
